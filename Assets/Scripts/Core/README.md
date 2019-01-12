@@ -88,19 +88,21 @@
 
 # Packages
 
-* Add some of the more useful packages
-  * HD/Lightweight Render Pipeline (whichever best fits the project)
-  * Input System (https://github.com/Unity-Technologies/InputSystem)
-  * TextMeshPro
-  * Post-processing
-  * ProBuilder
-  * ProGrids
-  * Shader Graph
+* Update default packages
+* Add release packages
   * Asset Bundle Browser
   * Cinemachine
+  * Post Processing
+  * ProBuilder
+* Add preview packages
+  * Input System (https://github.com/Unity-Technologies/InputSystem)
+  * ProGrids
+  * Render-Pipelines.Core
+  * HD/Lightweight Render Pipeline (whichever best fits the project)
   * Burst/Entities (if using ECS)
+  * Shader Graph
 * Add desired assets
-  * ConsoleE
+  * ConsoleE (optional now that Unity has built-in recompile settings)
   * DOTween
 
 # Asset Setup
