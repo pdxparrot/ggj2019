@@ -1,3 +1,17 @@
-﻿{
-	"name": "com.pdxpartyparrot.Core.asmdef"
+{
+    "name": "com.pdxpartyparrot.Core.asmdef",
+    "references": [
+        "Unity.Postprocessing.Runtime",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "Kino.Postprocessing"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
 }

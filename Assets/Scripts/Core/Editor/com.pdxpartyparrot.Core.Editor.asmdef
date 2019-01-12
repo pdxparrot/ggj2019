@@ -1,10 +1,12 @@
 {
-    "name": "com.pdxpartyparrot.Game.asmdef",
+    "name": "com.pdxpartyparrot.Core.Editor",
     "references": [
         "com.pdxpartyparrot.Core.asmdef"
     ],
     "optionalUnityReferences": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

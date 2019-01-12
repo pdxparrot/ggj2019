@@ -105,6 +105,8 @@
   * ConsoleE (optional now that Unity has built-in recompile settings)
   * DOTween (not Pro)
     * Make sure to run the setup
+* Add Keijiro Kino
+  * Add "jp.keijiro.kino.post-processing": "https://github.com/keijiro/kino.git#upm" to package manifest.json dependencies
 
 # Asset Setup
 
@@ -119,13 +121,13 @@
   * Add the Action Map and the desired controls
 * Data/Prefabs/Input/EventSystem.prefab
   * Create using default EventSystem that gets added automatically when adding a UI object
-
-TODO: does "Auto Referenced" mean we can stop with this manual reference setup??
-
 * Scripts/Core/com.pdxpartyparrot.Core.asmdef
-  * References: Unity.InputSystem, Unity.Postprocessing.Runtime, Unity.TextMeshPro
-* Scripts/Game/com.pdxpartyparrot.Game.asmdef
+  * References: Unity.InputSystem, Unity.Postprocessing.Runtime, Unity.TextMeshPro, Kino.Postprocessing
+* Scripts/Core/Editor/com.pdxpartyparrot.Core.Editor
+  * Editor platform only
   * References: com.pdxpartyparrot.Core.asmdef
+* Scripts/Game/com.pdxpartyparrot.Game.asmdef
+  * References: nity.InputSystem, com.pdxpartyparrot.Core.asmdef
 * Scripts/<project>/com.pdxpartyparrot.<projext>.asmdef
   * References: com.pdxpartyparrot.Core.asmdef, com.pdxpartyparrot.Game.asmdef
 
