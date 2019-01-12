@@ -4,7 +4,6 @@ using pdxpartyparrot.Core.Audio;
 
 namespace pdxpartyparrot.Game.Audio
 {
-// TODO: move to Game
     [RequireComponent(typeof(AudioSource))]
     public class AmbientAudioSource : MonoBehaviour
     {

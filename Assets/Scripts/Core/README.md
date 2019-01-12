@@ -127,7 +127,10 @@
   * Editor platform only
   * References: com.pdxpartyparrot.Core.asmdef
 * Scripts/Game/com.pdxpartyparrot.Game.asmdef
-  * References: nity.InputSystem, com.pdxpartyparrot.Core.asmdef
+  * References: com.pdxpartyparrot.Core.asmdef, Unity.InputSystem
+* Scripts/Game/Editor/com.pdxpartyparrot.Game.Editor
+  * Editor platform only
+  * References: com.pdxpartyparrot.Game.asmdef
 * Scripts/<project>/com.pdxpartyparrot.<projext>.asmdef
   * References: com.pdxpartyparrot.Core.asmdef, com.pdxpartyparrot.Game.asmdef
 
