@@ -103,18 +103,25 @@
   * Shader Graph
 * Add desired assets
   * ConsoleE (optional now that Unity has built-in recompile settings)
-  * DOTween
+  * DOTween (not Pro)
+    * Make sure to run the setup
 
 # Asset Setup
 
+* Create Assets/Scripts/Core/Input directory
 * Data/Input/Controls.inputactions
-  * Enable the C# Wrapper Class
+  * Generate C# Class
     * Code Path: Assets\Scripts\Core\Input\Controls.cs
     * Class Name: Controls
     * Namespace: pdxpartyparrot.Core.Input
+    * Generate Events
+    * Generate Interfaces
   * Add the Action Map and the desired controls
 * Data/Prefabs/Input/EventSystem.prefab
   * Create using default EventSystem that gets added automatically when adding a UI object
+
+TODO: does "Auto Referenced" mean we can stop with this manual reference setup??
+
 * Scripts/Core/com.pdxpartyparrot.Core.asmdef
   * References: Unity.InputSystem, Unity.Postprocessing.Runtime, Unity.TextMeshPro
 * Scripts/Game/com.pdxpartyparrot.Game.asmdef
