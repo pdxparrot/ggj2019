@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using System.Collections.Generic;
+
+using pdxpartyparrot.Core.Util;
 
 namespace pdxpartyparrot.Core.Scripting
 {
@@ -13,5 +15,37 @@ namespace pdxpartyparrot.Core.Scripting
 
     public sealed class ScriptingManager : SingletonBehavior<ScriptingManager>
     {
+// TODO: start script coroutines
+
+        private readonly HashSet<ScriptRunner> _coroutineScripts = new HashSet<ScriptRunner>();
+        private readonly HashSet<ScriptRunner> _updateScripts = new HashSet<ScriptRunner>();
+
+        public void Register(ScriptRunner script)
+        {
+            switch(script.Runtime)
+            {
+            case ScriptRunner.RuntimeType.Coroutine:
+                _coroutineScripts.Add(script);
+                break;
+            case ScriptRunner.RuntimeType.Update:
+                _updateScripts.Add(script);
+                break;
+            }
+        }
+
+        public void Unregister(ScriptRunner script)
+        {
+            _coroutineScripts.Remove(script);
+            _updateScripts.Remove(script);
+        }
+
+#region Unity Lifecycle
+        private void Update()
+        {
+            foreach(ScriptRunner script in _updateScripts) {
+                script.Run();
+            }
+        }
+#endregion
     }
 }
