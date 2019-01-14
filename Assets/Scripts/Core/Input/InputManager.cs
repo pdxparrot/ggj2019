@@ -29,13 +29,6 @@ namespace pdxpartyparrot.Core.Input
             public Action<Gamepad> disconnectCallback;
         }
 
-#region Controls
-        [SerializeField]
-        private Controls _controls;
-
-        public Controls Controls => _controls;
-#endregion
-
         [SerializeField]
         private EventSystem _eventSystemPrefab;
 

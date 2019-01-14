@@ -1,0 +1,140 @@
+{
+    "name": "ServerSpectator",
+    "maps": [
+        {
+            "name": "ServerSpectator",
+            "id": "1681b34d-9556-4729-bf48-7fc6079996dc",
+            "actions": [
+                {
+                    "name": "move forward",
+                    "id": "c906fce0-1fa7-4721-bc5c-fdd745b3220d",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move backward",
+                    "id": "b4899855-b309-4bd4-94a7-2b5341fbc775",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move left",
+                    "id": "1c1b3cbe-4d7f-4448-92fe-ea91564e9ae6",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move right",
+                    "id": "da70e428-8b6d-4756-bfc4-8f56b518cfd3",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move up",
+                    "id": "22baea98-a69a-4b2a-a1b6-ef5122658f18",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move down",
+                    "id": "1ebdadea-885b-49a7-b01f-0d0d40ddd991",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "look",
+                    "id": "46873143-1856-417e-952d-3b450dfb3b8d",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "path": "<Keyboard>/w",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move forward",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/s",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move backward",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/a",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move left",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/d",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move right",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/space",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move up",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move down",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "look",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

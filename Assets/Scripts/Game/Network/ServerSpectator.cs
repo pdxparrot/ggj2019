@@ -2,26 +2,28 @@
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Camera;
-using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 
 using pdxpartyparrot.Game.Camera;
+using pdxpartyparrot.Game.Input;
 
 using UnityEngine;
 using UnityEngine.Experimental.Input;
 using UnityEngine.Networking;
 
-// TODO: need a way to setup the controls for this
-
 namespace pdxpartyparrot.Game.Actors
 {
     [RequireComponent(typeof(NetworkIdentity))]
     [RequireComponent(typeof(FollowTarget))]
-    public sealed class ServerSpectator : MonoBehaviour
+    public sealed class ServerSpectator : MonoBehaviour, IServerSpectatorActions
     {
         private const string InvertLookYKey = "serverspectator.invertlooky";
 
-        private bool InvertLookY { get { return PartyParrotManager.Instance.GetBool(InvertLookYKey); } set { PartyParrotManager.Instance.SetBool(InvertLookYKey, value); } }
+        private bool InvertLookY
+        {
+            get => PartyParrotManager.Instance.GetBool(InvertLookYKey);
+            set => PartyParrotManager.Instance.SetBool(InvertLookYKey, value);
+        }
 
         [SerializeField]
         private float _mouseSensitivity = 0.5f;
@@ -39,6 +41,9 @@ namespace pdxpartyparrot.Game.Actors
         [CanBeNull]
         private ServerSpectatorViewer _viewer;
 
+        [SerializeField]
+        private ServerSpectatorControls _controls;
+
 #region Unity Lifecycle
         private void Awake()
         {
@@ -48,53 +53,22 @@ namespace pdxpartyparrot.Game.Actors
             if(null != _viewer) {
                 _viewer.Initialize(this);
             }
-/*
-            InputManager.Instance.Controls.game.pause.performed += OnPause;
 
-            InputManager.Instance.Controls.game.moveforward.started += OnMoveForward;
-            InputManager.Instance.Controls.game.moveforward.performed += OnMoveForwardStop;
-            InputManager.Instance.Controls.game.movebackward.started += OnMoveBackward;
-            InputManager.Instance.Controls.game.movebackward.performed += OnMoveBackwardStop;
-            InputManager.Instance.Controls.game.moveleft.started += OnMoveLeft;
-            InputManager.Instance.Controls.game.moveleft.performed += OnMoveLeftStop;
-            InputManager.Instance.Controls.game.moveright.started += OnMoveRight;
-            InputManager.Instance.Controls.game.moveright.performed += OnMoveRightStop;
-            InputManager.Instance.Controls.game.jump.started += OnMoveUp;
-            InputManager.Instance.Controls.game.jump.performed += OnMoveUpStop;
-            InputManager.Instance.Controls.game.movedown.started += OnMoveDown;
-            InputManager.Instance.Controls.game.movedown.performed += OnMoveDownStop;
+            _controls.ServerSpectator.SetCallbacks(this);
+        }
 
-            InputManager.Instance.Controls.game.look.started += OnLook;
-            InputManager.Instance.Controls.game.look.performed += OnLook;
-            InputManager.Instance.Controls.game.look.cancelled += OnLookStop;
-*/
+        private void OnEnable()
+        {
+            _controls.ServerSpectator.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _controls.ServerSpectator.Disable();
         }
 
         private void OnDestroy()
         {
-            if(InputManager.HasInstance) {
-/*
-                InputManager.Instance.Controls.game.pause.performed -= OnPause;
-
-                InputManager.Instance.Controls.game.moveforward.started -= OnMoveForward;
-                InputManager.Instance.Controls.game.moveforward.performed -= OnMoveForwardStop;
-                InputManager.Instance.Controls.game.movebackward.started -= OnMoveBackward;
-                InputManager.Instance.Controls.game.movebackward.performed -= OnMoveBackwardStop;
-                InputManager.Instance.Controls.game.moveleft.started -= OnMoveLeft;
-                InputManager.Instance.Controls.game.moveleft.performed -= OnMoveLeftStop;
-                InputManager.Instance.Controls.game.moveright.started -= OnMoveRight;
-                InputManager.Instance.Controls.game.moveright.performed -= OnMoveRightStop;
-                InputManager.Instance.Controls.game.jump.started -= OnMoveUp;
-                InputManager.Instance.Controls.game.jump.performed -= OnMoveUpStop;
-                InputManager.Instance.Controls.game.movedown.started -= OnMoveDown;
-                InputManager.Instance.Controls.game.movedown.performed -= OnMoveDownStop;
-
-                InputManager.Instance.Controls.game.look.started -= OnLook;
-                InputManager.Instance.Controls.game.look.performed -= OnLook;
-                InputManager.Instance.Controls.game.look.cancelled -= OnLookStop;
-*/
-            }
-
             if(ViewerManager.HasInstance) {
                 ViewerManager.Instance.ReleaseViewer(_viewer);
             }
@@ -123,156 +97,85 @@ namespace pdxpartyparrot.Game.Actors
             return Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device;
         }
 
-#region Event Handlers
-
-        private void OnPause(InputAction.CallbackContext ctx)
+#region IServerSpectatorActions
+        public void OnMoveforward(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            PartyParrotManager.Instance.TogglePause();
+            if(context.started) {
+                _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.started ? 1.0f : 0.0f);
+            }
         }
 
-#region Move
-        private void OnMoveForward(InputAction.CallbackContext ctx)
+        public void OnMovebackward(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, 1.0f);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.started ? -1.0f : 0.0f);
         }
 
-        private void OnMoveForwardStop(InputAction.CallbackContext ctx)
+        public void OnMoveleft(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, 0.0f);
+            _lastControllerMove = new Vector3(context.started ? -1.0f : 0.0f, _lastControllerMove.y, _lastControllerMove.z);
         }
 
-        private void OnMoveBackward(InputAction.CallbackContext ctx)
+        public void OnMoveright(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, -1.0f);
+            _lastControllerMove = new Vector3(context.started ? 1.0f : 0.0f, _lastControllerMove.y, _lastControllerMove.z);
         }
 
-        private void OnMoveBackwardStop(InputAction.CallbackContext ctx)
+        public void OnMoveup(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, 0.0f);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, context.started ? 1.0f : 0.0f, _lastControllerMove.z);
         }
 
-        private void OnMoveLeft(InputAction.CallbackContext ctx)
+        public void OnMovedown(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            _lastControllerMove = new Vector3(-1.0f, _lastControllerMove.y, _lastControllerMove.z);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, context.started ? -1.0f : 0.0f, _lastControllerMove.z);
         }
 
-        private void OnMoveLeftStop(InputAction.CallbackContext ctx)
+        public void OnLook(InputAction.CallbackContext context)
         {
-            if(!IsOurDevice(ctx)) {
+            if(!IsOurDevice(context)) {
                 return;
             }
 
-            _lastControllerMove = new Vector3(0.0f, _lastControllerMove.y, _lastControllerMove.z);
-        }
+            if(context.cancelled) {
+                _lastControllerLook = Vector3.zero;
 
-        private void OnMoveRight(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
+                FollowTarget.LastLookAxes = _lastControllerLook;
+            } else {
+                Vector2 axes = context.ReadValue<Vector2>();
+                axes.y *= InvertLookY ? -1 : 1;
+
+                bool isMouse = context.control.device is Mouse;
+                if(isMouse) {
+                    axes *= _mouseSensitivity;
+                }
+
+                _lastControllerLook = new Vector3(axes.x, axes.y, 0.0f);
             }
-
-            _lastControllerMove = new Vector3(1.0f, _lastControllerMove.y, _lastControllerMove.z);
         }
-
-        private void OnMoveRightStop(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            _lastControllerMove = new Vector3(0.0f, _lastControllerMove.y, _lastControllerMove.z);
-        }
-
-        private void OnMoveUp(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            _lastControllerMove = new Vector3(_lastControllerMove.x, 1.0f, _lastControllerMove.z);
-        }
-
-        private void OnMoveUpStop(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            _lastControllerMove = new Vector3(_lastControllerMove.x, 0.0f, _lastControllerMove.z);
-        }
-
-        private void OnMoveDown(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            _lastControllerMove = new Vector3(_lastControllerMove.x, -1.0f, _lastControllerMove.z);
-        }
-
-        private void OnMoveDownStop(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            _lastControllerMove = new Vector3(_lastControllerMove.x, 0.0f, _lastControllerMove.z);
-        }
-#endregion
-
-#region Look
-        private void OnLook(InputAction.CallbackContext ctx)
-        {
-            bool isMouse = ctx.control.device is Mouse;
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            Vector2 axes = ctx.ReadValue<Vector2>();
-            axes.y *= InvertLookY ? -1 : 1;
-
-            if(isMouse) {
-                axes *= _mouseSensitivity;
-            }
-
-            _lastControllerLook = new Vector3(axes.x, axes.y, 0.0f);
-        }
-
-        private void OnLookStop(InputAction.CallbackContext ctx)
-        {
-            if(!IsOurDevice(ctx)) {
-                return;
-            }
-
-            _lastControllerLook = Vector3.zero;
-            FollowTarget.LastLookAxes = _lastControllerLook;
-        }
-#endregion
-
 #endregion
     }
 }

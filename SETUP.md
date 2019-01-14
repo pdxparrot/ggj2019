@@ -21,6 +21,31 @@
   * Dynamic Friction: 0
 * Data/Physics/Frictionless 2D.physicsMaterial2D
   * Friction: 0
+* Data/Input/ServerSpectator.inputactions
+  * Generate C# Class
+    * File: Assets\Scripts\Game\Input\ServerSpectatorControls
+      * Need to create containing directory first
+    * Class Name: ServerSpectatorControls
+    * Namespace: pdxpartyparrot.Game.Input
+    * Generate Events
+    * Generate Interfaces
+  * Action Maps
+    * ServerSpectator
+      * Actions
+        * move forward
+          * press and release w
+        * move backward
+          * press and release s
+        * move left
+          * press and release a
+        * move right
+          * press and release d
+        * move up
+          * press and release space
+        * move down
+          * press and release left shift
+        * look
+          * mouse delta
 
 # Project Setup
 
@@ -110,15 +135,6 @@
 
 # Asset Setup
 
-* Create Assets/Scripts/Core/Input directory
-* Data/Input/Controls.inputactions
-  * Generate C# Class
-    * Code Path: Assets\Scripts\Core\Input\Controls.cs
-    * Class Name: Controls
-    * Namespace: pdxpartyparrot.Core.Input
-    * Generate Events
-    * Generate Interfaces
-  * Add the Action Map and the desired controls
 * Data/Prefabs/Input/EventSystem.prefab
   * Create using default EventSystem that gets added automatically when adding a UI object
 * Scripts/Core/com.pdxpartyparrot.Core.asmdef

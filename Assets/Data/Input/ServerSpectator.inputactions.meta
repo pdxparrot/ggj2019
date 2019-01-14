@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: ffaf56a7843086146a09c2608df22103
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400002: ServerSpectator/move backward
+    11400004: ServerSpectator/move forward
+    11400006: ServerSpectator/move left
+    11400008: ServerSpectator/move right
+    11400010: ServerSpectator/move up
+    11400012: ServerSpectator/move down
+    11400014: ServerSpectator/look
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 1
+  wrapperCodePath: Assets\Scripts\Game\Input\ServerSpectatorControls.cs
+  wrapperClassName: ServerSpectatorControls
+  wrapperCodeNamespace: pdxpartyparrot.Game.Input
+  generateActionEvents: 1
+  generateInterfaces: 1
+  actionGuids: []
+  actionMapGuids: []
