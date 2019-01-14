@@ -141,7 +141,7 @@ namespace pdxpartyparrot.Core.Loading
 
         public void SetLoadingScreenPercent(float percent)
         {
-            _loadingScreen.Progress.Percent = Mathf.Clamp01(percent);
+            _loadingScreen.ProgressBar.Percent = Mathf.Clamp01(percent);
         }
 #endregion
     }

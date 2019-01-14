@@ -151,15 +151,33 @@
   * References: com.pdxpartyparrot.Core.asmdef, com.pdxpartyparrot.Game.asmdef
 
 ## Manager Prefabs Setup
+* Managers go in Data/Prefabs/Managers
 * AudioManager
   * Create an empty Prefab and add the AudioManager component to it
   * Attach the main mixer to the prefab Mixer
-  * Add 3 Audio Sources to the prefab
+  * Add 4 Audio Sources to the prefab
     * Disable Play on Awake
-    * Set 2 of them to Loop
-  * Attach the non-looping source to the One Shot Audio Source
-  * Attach the looping sources to the Music Audio Sources
-* CameraManager
+  * Attach each audio source to an audio source on the AudioManager component
+* DebugMenuManager
+  * Create an empty Prefab and add the DebugMenuManager component to it
+* EngineManager
+  * Create an empty Prefab and add the PartyParrotManager component to it
+  * Attach the frictionless physics materials
+  * Set the UI layer to UI
+* InputManager
+  * Create an empty Prefab and add the InputManager component to it
+  * Attach the EventSystem prefab
+* NetworkManager
+  * Create an empty Prefab and add the (not Unity) NetworkManager component to it
+  * Uncheck Don't Destroy on Load
+* ObjectPoolManager
+  * Create an empty Prefab and add the ObjectPoolManager component to it
+* SceneManager
+  * Create an empty Prefab and add the SceneManager component to it
+* ViewerManager
+  * Create an empty Prefab and add the ViewerManager component to it
+
+* TODO: Viewer setup
   * Create a new Viewer script that overrides a Core Viewer
   * Create an empty Prefab and add the Viewer component to it
     * Add a camera under the prefab
@@ -179,29 +197,41 @@
     * Add an empty GameObject under the prefab and add a Post Process Volume to it
     * Attach the Cameras and the Post Process Volume to the Viewer component
     * **Create the Post Process Layer (one per-viewer, Viewer{N}_PostProcess)**
-  * Create an empty Prefab and add the CameraManager component to it
-* InputManager
-  * Create an empty Prefab and add the InputManager component to it
-  * Attach the Controls.inputasset asset
-  * Attach the EventSystem prefab
-* SceneManager
-  * Create an empty Prefab and add the SceneManager component to it
-  * Set the main scene name if necessary
-* NetworkManager
-  * Create an empty Prefab and add the NetworkManager component to it
-    * Disable Don't Destroy on Load
-    * Set the Network Info as desired
-* GameStateManager
-  * Create an empty Prefab and add the GameStateManager component to it
+
+## LoadingManager and GameStateManager Prefabs
+
+* Create a new LoadingManager script that overrides Game LoadingManager
+* Create a new GameStateManager script that overrides Game GameStateManager
+  * Implement the ShowLoadingScreen/UpdateLoadingScreen methods to call the LoadingManager methods
+* Add a connection to the GameStateManager in the LoadingManager
+  * Override CreateManagers() in the loading manager to create the GameStateManager prefab
+  * Override OnLoad() in the loadin gmanager to have the GameStateManager transition to the initial state
+* Create an empty Prefab and add the GameStateManager component to it
+* Create a new Intro script that overrides the Game GameState
+* Create an empty Prefab and add the Intro component to it
+  * Set the Scene Name to intro
+* Set the Intro state as the Initial Game State Prefab in the GameStateManager
 
 # Splash Screen Setup
 
-* Create and save a new scene
+* Create and save a new scene (Scenes/splash.unity)
   * The only object in the scene should be a Main Camera
-  * Leave the Audio Listener attached to the camera for audio to work
+    * Clear Flags: Solid Color
+    * Background: Opaque Black
+    * Culling Mask: Nothing
+    * Projection: Orthographic
+    * Uncheck Occlusion Culling
+    * Uncheck Allow HDR
+    * Uncheck Allow MSAA
+    * Leave the Audio Listener attached to the camera for audio to work
   * Add the AspectRatio component to the camera
+  * Remove the Skybox Material
+  * Environment Lighting Source: Color
+  * Disable Realtime Global Illumination
+  * Disable Baked Global Illumination
+  * Disable Auto Generate lighting
 * Add the scene to the Build Settings and ensure that it is Scene 0
-* Add a new GameObject to the scene and add the SplashScreen component to it
+* Add a new GameObject to the scene (SplashScreen) and add the SplashScreen component to it
 * Attach the camera to the Camera field of the SplashScreen component
 * Add whatever splash screen videos to the list of Splash Screens on the SplashScreen component
 * Set the Main Scene Name to match whatever the name of your main scene is
@@ -212,46 +242,56 @@
 * Create and save a new scene
   * The only object in the scene should be a camera
 * Setup the camera in the scene
-  * Clear Mode: Background Color
-  * Background Color: Opaque Black
+  * Clear Flags: Solid Color
+  * Background: Opaque Black
   * Culling Mask: Nothing
-  * Projection: Perspective (**TODO:** would ortho make more sense for this?)
-  * Turn off Clear Depth
-  * Disable Occlusion Culling (**TODO:** is this right?)
+  * Projection: Orthographic
+  * Uncheck Occlusion Culling
+  * Uncheck Allow HDR
+  * Uncheck Allow MSAA
   * Leave the Audio Listener attached to the camera for audio to work
+* Environment Lighting Source: Color
+* Disable Realtime Global Illumination
+* Disable Baked Global Illumination
+* Disable Auto Generate lighting
 
 ## Loading Screen Setup
 
-* Add a new Canvas object to the scene
-* Configure the Canvas
-  * Additional Shader Channels: Nothing
+* Add a new Canvas object (LoadingScreen) to the scene
   * UI Scale Mode: Scale With Screen Size
   * Reference Resolution: 1280x720
-  * Match: 0.5
+  * Match Width Or Height: 0.5
   * Remove the Graphic Raycaster
   * Add the LoadingScreen component
-* Remove the EventSystem object that gets added (or turn it into a prefab if that hasn't been created yet)
+  * Remove the EventSystem object that gets added (or turn it into a prefab if that hasn't been created yet)
 * Add a Panel under the Canvas
   * Disable Raycast Target
   * Color: (255, 0, 255, 255)
-* Add a Text under the Panel
+* Add a TextMeshPro - Text (Name) under the Panel
   * Text: "Placeholder"
   * Center the text
   * Disable Raycast Target
-* Add an Empty GameObject under the Panel and add the ProgressBar component to it
+* Add an Empty GameObject (Progress) under the Panel and add the ProgressBar component to it
+  * Pos Y: -125
 * Attach the ProgressBar component to the LoadingScreen component
-* Add an Image under the Progress Bar (Background) and another Image under that Image (Foreground)
+* Add an Image under the Progress Bar (Background)
+  * Move the image below the Name text
+  * Color: (0, 0, 0, 255)
+  * Size: (500, 25)
+  * Source Image: Core Progress Image
+  * Disable Raycast Target
+* And an Image under the Background Image (Foreground)
   * Position: (0, 0, 0)
   * Size: (500, 25)
   * Source Image: Core Progress Image
   * Disable Raycast Target
-* Configure the Foreground Image
   * Image Type: Filled
   * Fill Method: Horizontal
   * Fill Origin: Left
-  * Fill Amount: 0.5
+  * Fill Amount: 0.25
 * Attach the images to the ProgressBar component
-* Add a Text (this can go under the Progress Bar if desired)
+* Add a TextMeshPro - Text (Status) under the Progress Bar
+  * Pos Y: -75
   * Text: "Loading..."
   * Center the text
   * Disable Raycast Target
@@ -259,14 +299,33 @@
 
 ## Loader Setup
 
-* Create a new LoadingManager script that overrides Game LoadingManager
-* Add an empty GameObject and add the override LoadingManager component to it
-  * The Default Scene Name will need to be set once a default scene is created
+* Add an empty GameObject (Loader) and add the override LoadingManager component to it
 * Attach the LoadingScreen to the Loader
 * Attach the Manager prefabs to the Loader
 
 # Game Scene Setup
 * Do not add a Main Camera to these scenes
+* Add a scene called intro
+  * Environment Lighting Source: Color
+  * Disable Realtime Global Illumination
+  * Disable Baked Global Illumination
+  * Disable Auto Generate lighting
+  * Add a new Canvas object (TitleScreen) to the scene
+    * UI Scale Mode: Scale With Screen Size
+    * Reference Resolution: 1280x720
+    * Match Width Or Height: 0.5
+    * Remove the Graphic Raycaster
+    * Remove the EventSystem object that gets added (or turn it into a prefab if that hasn't been created yet)
+  * Add a Panel under the Canvas
+    * Disable Raycast Target
+    * Color: (255, 0, 0, 255)
+  * Add a TextMeshPro - Text (Status) under the Progress Bar
+    * Pos Y: 256
+    * Text: "Placeholder"
+    * Center the text
+    * Disable Raycast Target
+
+TODO: here
 
 # Initial Game State Setup
 * Create a new GameState subclass and attach it to a new empty Prefab

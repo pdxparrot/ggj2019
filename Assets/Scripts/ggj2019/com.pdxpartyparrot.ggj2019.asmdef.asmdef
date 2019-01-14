@@ -1,3 +1,15 @@
-﻿{
-	"name": "com.pdxpartyparrot.ggj2019.asmdef"
+{
+    "name": "com.pdxpartyparrot.ggj2019.asmdef",
+    "references": [
+        "com.pdxpartyparrot.Core.asmdef",
+        "com.pdxpartyparrot.Game.asmdef"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
 }

@@ -1,5 +1,4 @@
 ﻿using pdxpartyparrot.Core.Input;
-using pdxpartyparrot.Core.UI;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +13,7 @@ namespace pdxpartyparrot.Game.Menu
         protected Menu Owner => _owner;
 
         [SerializeField]
-        private Core.UI.Button _initialSelection;
+        private Button _initialSelection;
 
 #region Unity Lifecycle
         protected virtual void Update()

@@ -13,16 +13,15 @@ namespace pdxpartyparrot.Core.Loading
         [SerializeField]
         private ProgressBar _progressBar;
 
-        public ProgressBar Progress => _progressBar;
+        public ProgressBar ProgressBar => _progressBar;
 
         [SerializeField]
-        private Text _progressText;
+        private TextMeshProUGUI _progressText;
 
         public string ProgressText
         {
-            get { return _progressText.text; }
-
-            set { _progressText.text = value; }
+            get => _progressText.text;
+            set => _progressText.text = value;
         }
 
 #region Unity Lifecycle

@@ -50,7 +50,6 @@ namespace pdxpartyparrot.Core.UI
 
         private void OnDestroy()
         {
-            Destroy(_videoPlayer.gameObject);
             _videoPlayer = null;
         }
 
@@ -68,13 +67,13 @@ namespace pdxpartyparrot.Core.UI
                 return;
             }
 
-            VideoPlayer.EventHandler eventHandler = null;
-            eventHandler = vp => {
-                _videoPlayer.loopPointReached -= eventHandler;
+            void EventHandler(VideoPlayer vp)
+            {
+                _videoPlayer.loopPointReached -= EventHandler;
 
                 _currentSplashScreen++;
                 PlayNextSplashScreen();
-            };
+            }
 
             SplashScreenConfig config = _splashScreens[_currentSplashScreen];
 
@@ -86,7 +85,7 @@ namespace pdxpartyparrot.Core.UI
                 _videoPlayer.SetDirectAudioVolume(i, config.volume[i]);
             }
 
-            _videoPlayer.loopPointReached += eventHandler;
+            _videoPlayer.loopPointReached += EventHandler;
             _videoPlayer.Play();
         }
     }
