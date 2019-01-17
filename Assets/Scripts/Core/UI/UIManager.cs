@@ -8,8 +8,6 @@ namespace pdxpartyparrot.Core.UI
     {
         private GameObject _uiContainer;
 
-        public GameObject UIContainer => _uiContainer;
-
 #region Unity Lifecycle
         protected virtual void Awake()
         {
@@ -24,5 +22,10 @@ namespace pdxpartyparrot.Core.UI
             base.OnDestroy();
         }
 #endregion
+
+        public V InstantiateUIPrefab<V>(V prefab) where V: Component
+        {
+            return Instantiate(prefab, _uiContainer.transform);
+        }
     }
 }

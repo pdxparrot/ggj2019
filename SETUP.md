@@ -212,6 +212,13 @@
 * Create an empty Prefab and add the MainMenuState component to it
   * Set the Scene Name to main_menu
 * Set the MainMenuState as the Initial Game State Prefab in the GameStateManager
+  * Uncheck Make Scene Active
+
+## UIManager Prefab
+
+* Create a new UIManager script that overrides Core UIManager
+* Create an empty Prefab and add the UIManager component to it
+* Add the UIManager to the LoadingManager
 
 # Splash Scene Setup
 
@@ -304,10 +311,50 @@
 * Attach the LoadingScreen to the Loader
 * Attach the Manager prefabs to the Loader
 
-# Main Menu Scene Setup
+# Main Menu Setup
+
+* Create a new MainMenu script that overrides the Game MenuPanel
+  * Add a public void OnQuitGame() method that calls Application.Quit()
+* Create an empty Prefab and add the Game Menu component to it
+  * Layer: UI
+  * Render Mode: Screen Space - Overlay
+  * UI Scale Mode: Scale With Screen Size
+  * Reference Resolution: 1280x720
+  * Match Width Or Height: 0.5
+* Add a Panel under the Canvas (Main)
+  * Remove the Image
+  * Add a Vertical Layout Group
+    * Spacing: 10
+    * Alignment: Middle Center
+    * Child Controls Width / Height
+    * Force Expand nothing
+  * Add the MainMenu script
+    * Set Owner to the Menu object
+    * Set the Main Panel on the Menu object to the Main panel
+* Add a Button under the Main panel (Quit)
+  * Normal Color: (255, 0, 255, 255)
+  * Highlight Color: (0, 255, 0, 255)
+  * Add an On Click handler that calls the MainMenu OnQuitGame
+  * Add a Layout Element to the Button
+    * Preferred Width: 200
+    * Preferred Height: 50
+  * Replace the Text under the Button with a TextMeshPro - Text
+    * Text: "Quit"
+    * Center the text
+    * Disable Raycast Target
+  * Set the Main Menu Initial Selection to the Quit Button
+    * TODO: not quit, need to do the Single Player button first
+* Add a field for the MainMenu to the MainMenuState and connect it on the prefab
+  * OnEnter create the menu prefab with the UIManager
+  * OnExit destroy the menu prefab
+  * OnResume activate the menu prefab
+  * OnPause deactivate the menu prefab
+
+## Main Menu Scene Setup
 
 * Do not add a Main Camera to these scenes
-* Add a scene called main_menu
+* Create and save a new scene (Scenes/main_menu.unity)
+  * Remove all default objects from the scene
   * Environment Lighting Source: Color
   * Disable Realtime Global Illumination
   * Disable Baked Global Illumination
@@ -326,6 +373,7 @@
     * Text: "Placeholder"
     * Center the text
     * Disable Raycast Target
+* Add the scene to the Build Settings
 
 TODO: here
 

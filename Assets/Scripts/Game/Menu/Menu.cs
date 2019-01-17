@@ -3,10 +3,13 @@
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace pdxpartyparrot.Game.Menu
 {
     [RequireComponent(typeof(Canvas))]
+    [RequireComponent(typeof(GraphicRaycaster))]
+    [RequireComponent(typeof(CanvasScaler))]
     public sealed class Menu : MonoBehaviour
     {
         [SerializeField]

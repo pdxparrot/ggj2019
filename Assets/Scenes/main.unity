@@ -406,6 +406,8 @@ MonoBehaviour:
     type: 3}
   _gameStateManagerPrefab: {fileID: 2831350602231049018, guid: 3fe37d90f148a204aa14e1f49c618b25,
     type: 3}
+  _uiManagerPrefab: {fileID: 8120234190048792315, guid: 80e4c458880000a44808d37f92f23fce,
+    type: 3}
 --- !u!4 &793541510
 Transform:
   m_ObjectHideFlags: 0
