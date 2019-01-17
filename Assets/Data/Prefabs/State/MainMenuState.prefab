@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5549306685262641734}
   - component: {fileID: 9213297631038022371}
   m_Layer: 0
-  m_Name: Intro
+  m_Name: MainMenuState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61820ff0cfbea143a8ea1d29acd9ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: intro
+  _sceneName: main_menu
   _makeSceneActive: 0

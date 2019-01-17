@@ -1,9 +1,9 @@
 # Pre-Asset Setup
 
-* Art/Core/pdxparrot.png
-* Art/Core/progress.png
+* Copy Art/Core/pdxparrot.png
+* Copy Art/Core/progress.png
   * Texture Type: Sprite (2D and UI)
-* Data/Audio/main.mixer
+* Create Data/Audio/main.mixer
   * 3 Master child groups
     * Music
       * Expose the Volume parameter and set it to -5db
@@ -16,12 +16,12 @@
         * Rename it to AmbientVolume
   * Expose the Master Volume parameter and set it to 0db
     * Rename it to MasterVolume
-* Data/Physics/Frictionless.physicMaterial
+* Create Data/Physics/Frictionless.physicMaterial
   * Static Friction: 0
   * Dynamic Friction: 0
-* Data/Physics/Frictionless 2D.physicsMaterial2D
+* Create Data/Physics/Frictionless 2D.physicsMaterial2D
   * Friction: 0
-* Data/Input/ServerSpectator.inputactions
+* Create Data/Input/ServerSpectator.inputactions
   * Generate C# Class
     * File: Assets\Scripts\Game\Input\ServerSpectatorControls
       * Need to create containing directory first
@@ -147,10 +147,11 @@
 * Scripts/Game/Editor/com.pdxpartyparrot.Game.Editor
   * Editor platform only
   * References: com.pdxpartyparrot.Game.asmdef
-* Scripts/<project>/com.pdxpartyparrot.<projext>.asmdef
+* Scripts/{project}/com.pdxpartyparrot.{project}.asmdef
   * References: com.pdxpartyparrot.Core.asmdef, com.pdxpartyparrot.Game.asmdef
 
 ## Manager Prefabs Setup
+
 * Managers go in Data/Prefabs/Managers
 * AudioManager
   * Create an empty Prefab and add the AudioManager component to it
@@ -207,10 +208,10 @@
   * Override CreateManagers() in the loading manager to create the GameStateManager prefab
   * Override OnLoad() in the loadin gmanager to have the GameStateManager transition to the initial state
 * Create an empty Prefab and add the GameStateManager component to it
-* Create a new Intro script that overrides the Game GameState
-* Create an empty Prefab and add the Intro component to it
-  * Set the Scene Name to intro
-* Set the Intro state as the Initial Game State Prefab in the GameStateManager
+* Create a new MainMenuState script that overrides the Game GameState
+* Create an empty Prefab and add the MainMenuState component to it
+  * Set the Scene Name to main_menu
+* Set the MainMenuState as the Initial Game State Prefab in the GameStateManager
 
 # Splash Screen Setup
 
@@ -304,6 +305,7 @@
 * Attach the Manager prefabs to the Loader
 
 # Game Scene Setup
+
 * Do not add a Main Camera to these scenes
 * Add a scene called intro
   * Environment Lighting Source: Color
