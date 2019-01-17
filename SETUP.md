@@ -213,7 +213,7 @@
   * Set the Scene Name to main_menu
 * Set the MainMenuState as the Initial Game State Prefab in the GameStateManager
 
-# Splash Screen Setup
+# Splash Scene Setup
 
 * Create and save a new scene (Scenes/splash.unity)
   * The only object in the scene should be a Main Camera
@@ -240,7 +240,7 @@
 
 # Main Scene Setup
 
-* Create and save a new scene
+* Create and save a new scene (Scenes/main.unity)
   * The only object in the scene should be a camera
 * Setup the camera in the scene
   * Clear Flags: Solid Color
@@ -304,10 +304,10 @@
 * Attach the LoadingScreen to the Loader
 * Attach the Manager prefabs to the Loader
 
-# Game Scene Setup
+# Main Menu Scene Setup
 
 * Do not add a Main Camera to these scenes
-* Add a scene called intro
+* Add a scene called main_menu
   * Environment Lighting Source: Color
   * Disable Realtime Global Illumination
   * Disable Baked Global Illumination
@@ -330,6 +330,7 @@
 TODO: here
 
 # Initial Game State Setup
+
 * Create a new GameState subclass and attach it to a new empty Prefab
   * This state should probably get the ViewerManager and InputManager state setup
 * Attach the new GameState prefab to the GameStateManager prefab
