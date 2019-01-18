@@ -7,6 +7,14 @@ namespace pdxpartyparrot.ggj2019.Menu
     public sealed class MainMenu : MenuPanel
     {
 #region Event Handlers
+        public void OnPlay()
+        {
+        }
+
+        public void OnCredits()
+        {
+        }
+
         public void OnQuitGame()
         {
 #if UNITY_EDITOR

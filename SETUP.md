@@ -70,7 +70,7 @@
 * Physics Settings
   * Set the Default Material to frictionless if desired
   * Only enable the minimum necessary collisions
-    * TODO: water?
+    * **TODO:** water?
     * Vfx -> Vfx
     * Viewer -> Weather
     * Viewer -> World
@@ -80,7 +80,7 @@
 * Physics 2D Settings
   * Set the Default Material to frictionless if desired
   * Only enable the minimum necessary collisions
-    * TODO: water?
+    * **TODO:** water?
     * Vfx -> Vfx
     * Viewer -> Weather
     * Viewer -> World
@@ -100,7 +100,8 @@
   * Scripting Runtime: .NET 4.x
   * Scripting Backend: IL2CPP
   * API Compatability Level: .NET Standard 2.0
-  * Active Input Handling: Both (at least until the old Input Manager is axed)
+  * Active Input Handling: Both
+    * Whenever the new InputSystem handles UI, this can be set to just InputSystem 
   * Minimum Android API: Marshmallow
 * Preset Manager
 * Quality
@@ -177,27 +178,6 @@
   * Create an empty Prefab and add the SceneManager component to it
 * ViewerManager
   * Create an empty Prefab and add the ViewerManager component to it
-
-* TODO: Viewer setup
-  * Create a new Viewer script that overrides a Core Viewer
-  * Create an empty Prefab and add the Viewer component to it
-    * Add a camera under the prefab
-      * Clear Mode: Sky
-      * Background Color: Default
-      * Projection: Depends on viewer needs
-      * Remove the Audio Listener
-      * Add a Post Process Layer component to the Camera object
-      * Add an Aspect Ratio component to the Camera (UI) object
-    * Add another camera under the prefab (UI)
-      * Layer: UI
-      * Clear Mode: None
-      * Culling Mask: UI
-      * Projection: Orthographic
-      * Remove the AudioListener
-      * Add an Aspect Ratio component to the Camera (UI) object
-    * Add an empty GameObject under the prefab and add a Post Process Volume to it
-    * Attach the Cameras and the Post Process Volume to the Viewer component
-    * **Create the Post Process Layer (one per-viewer, Viewer{N}_PostProcess)**
 
 ## LoadingManager and GameStateManager Prefabs
 
@@ -314,6 +294,8 @@
 # Main Menu Setup
 
 * Create a new MainMenu script that overrides the Game MenuPanel
+  * Add a public void OnPlay() method that does nothing
+  * Add a public void OnCredits() method that does nothing
   * Add a public void OnQuitGame() method that calls Application.Quit()
 * Create an empty Prefab and add the Game Menu component to it
   * Layer: UI
@@ -331,19 +313,24 @@
   * Add the MainMenu script
     * Set Owner to the Menu object
     * Set the Main Panel on the Menu object to the Main panel
-* Add a Button under the Main panel (Quit)
+* Add a Button under the Main panel (Play)
   * Normal Color: (255, 0, 255, 255)
   * Highlight Color: (0, 255, 0, 255)
-  * Add an On Click handler that calls the MainMenu OnQuitGame
+  * Add an On Click handler that calls the MainMenu OnPlay method
   * Add a Layout Element to the Button
     * Preferred Width: 200
     * Preferred Height: 50
   * Replace the Text under the Button with a TextMeshPro - Text
-    * Text: "Quit"
+    * Text: "Play"
     * Center the text
     * Disable Raycast Target
-  * Set the Main Menu Initial Selection to the Quit Button
-    * TODO: not quit, need to do the Single Player button first
+  * Set the Main Menu Initial Selection to the Play Button
+* Duplicate the Play Button (Credits)
+  * Set the On Click handler to the MainMenu OnCredits method
+  * Set the Text to "Credits"
+* Duplicate the Credits Button (Quit)
+  * Set the On Click handler to the MainMenu OnQuitGame method
+  * Set the Text to "Quit"
 * Add a field for the MainMenu to the MainMenuState and connect it on the prefab
   * OnEnter create the menu prefab with the UIManager
   * OnExit destroy the menu prefab
@@ -374,17 +361,40 @@
     * Center the text
     * Disable Raycast Target
 * Add the scene to the Build Settings
-
-TODO: here
+* The scene should now load when the main scene is run as long as the name of the scene matches what was set in the MainMenuState prefab
 
 # Initial Game State Setup
 
+* **TODO:** Viewer setup
+  * Create a new Viewer script that overrides a Core Viewer
+  * Create an empty Prefab and add the Viewer component to it
+    * Add a camera under the prefab
+      * Clear Mode: Sky
+      * Background Color: Default
+      * Projection: Depends on viewer needs
+      * Remove the Audio Listener
+      * Add a Post Process Layer component to the Camera object
+      * Add an Aspect Ratio component to the Camera (UI) object
+    * Add another camera under the prefab (UI)
+      * Layer: UI
+      * Clear Mode: None
+      * Culling Mask: UI
+      * Projection: Orthographic
+      * Remove the AudioListener
+      * Add an Aspect Ratio component to the Camera (UI) object
+    * Add an empty GameObject under the prefab and add a Post Process Volume to it
+    * Attach the Cameras and the Post Process Volume to the Viewer component
+    * **Create the Post Process Layer (one per-viewer, Viewer{N}_PostProcess)**
 * Create a new GameState subclass and attach it to a new empty Prefab
   * This state should probably get the ViewerManager and InputManager state setup
 * Attach the new GameState prefab to the GameStateManager prefab
+* **TODO:** More GameStates
+* **TODO:** Pause / Pause Menu
 * **TODO:** Create the PlayerManager script/prefab
   * This must be a prefab due to the abstract base class
 * **TODO:** Create the Player script/prefab
+* **TODO:** How to controls
+* **TODO:** Creating Data
 
 # Performance Notes
 
