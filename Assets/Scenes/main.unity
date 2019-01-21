@@ -410,6 +410,8 @@ MonoBehaviour:
     type: 3}
   _gameManagerPrefab: {fileID: 8705135139697152153, guid: dac648110aa18324ea9434cdd130cae1,
     type: 3}
+  _playerManagerPrefab: {fileID: 3337093606299328013, guid: 0923fa18ab26b1048be80b60e4351024,
+    type: 3}
 --- !u!4 &793541510
 Transform:
   m_ObjectHideFlags: 0

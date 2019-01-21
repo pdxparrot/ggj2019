@@ -21,29 +21,42 @@ namespace pdxpartyparrot.Core.Actors
 
         public string Name => name;
 
+#region Collider
         [SerializeField]
         private Collider _collider;
 
         public Collider Collider => _collider;
 
+        [SerializeField]
+        private Collider2D _collider2D;
+
+        public Collider2D Collider2D => _collider2D;
+#endregion
+
         public abstract float Height { get; }
 
         public abstract float Radius { get; }
 
+#region Model
         [SerializeField]
         private GameObject _model;
 
         public GameObject Model => _model;
+#endregion
 
+#region Controller
         [SerializeField]
         private ActorController _controller;
 
         public ActorController Controller => _controller;
+#endregion
 
+#region Animation
         [SerializeField]
         private Animator _animator;
 
         public Animator Animator => _animator;
+#endregion
 
         public abstract bool IsLocalActor { get; }
 

@@ -484,7 +484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 0
-  _camera: {fileID: 0}
-  _uiCamera: {fileID: 0}
-  _globalPostProcessVolume: {fileID: 0}
+  _camera: {fileID: 2779097547885376191}
+  _uiCamera: {fileID: 3473508580517442035}
+  _globalPostProcessVolume: {fileID: 2918448500653730605}
   _defaultCameraPosition: {x: 0, y: 0, z: 0}
+  _target: {fileID: 0}

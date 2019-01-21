@@ -151,7 +151,7 @@
   * Editor platform only
   * References: com.pdxpartyparrot.Game.asmdef
 * Scripts/{project}/com.pdxpartyparrot.{project}.asmdef
-  * References: com.pdxpartyparrot.Core.asmdef, com.pdxpartyparrot.Game.asmdef
+  * References: com.pdxpartyparrot.Core.asmdef, com.pdxpartyparrot.Game.asmdef, Unity.InputSystem, Unity.TextMeshPro
 
 ## Manager Prefabs Setup
 

@@ -7,6 +7,7 @@ using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Game.Actors;
+using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -31,11 +32,13 @@ namespace pdxpartyparrot.Game.State
 
             if(NetworkClient.active) {
                 AudioManager.Instance.PlayMusic(_music);
+                UIManager.Instance.Initialize();
             }
         }
 
         public override void OnExit()
         {
+            UIManager.Instance.Shutdown();
             AudioManager.Instance.StopMusic();
 
             if(null != _serverSpectator) {
@@ -46,6 +49,14 @@ namespace pdxpartyparrot.Game.State
             if(Core.Network.NetworkManager.HasInstance) {
                 Core.Network.NetworkManager.Instance.ServerDisconnectEvent -= ServerDisconnectEventHandler;
                 Core.Network.NetworkManager.Instance.ClientDisconnectEvent -= ClientDisconnectEventHandler;
+            }
+
+            if(UIManager.HasInstance) {
+                UIManager.Instance.Shutdown();
+            }
+
+            if(GameStateManager.HasInstance) {
+                GameStateManager.Instance.ShutdownNetwork();
             }
 
             base.OnExit();
@@ -61,10 +72,10 @@ namespace pdxpartyparrot.Game.State
             InitializeClient();
         }
 
-        private void InitializeServer()
+        protected virtual bool InitializeServer()
         {
             if(!NetworkServer.active) {
-                return;
+                return false;
             }
 
             Core.Network.NetworkManager.Instance.ServerChangedScene();
@@ -74,6 +85,8 @@ namespace pdxpartyparrot.Game.State
 
                 _serverSpectator = Instantiate(GameStateManager.Instance.ServerSpectatorPrefab);
             }
+
+            return true;
         }
 
         protected virtual bool InitializeClient()

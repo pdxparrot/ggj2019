@@ -1,6 +1,6 @@
 ﻿using System;
 
-using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Game.Camera;
 
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -23,11 +23,13 @@ namespace pdxpartyparrot.Game.Data
         [Space(10)]
 
 #region Viewers
+        [Header("Viewer")]
+
         [SerializeField]
         [FormerlySerializedAs("_viewerPrefab")]
-        private Viewer _playerViewerPrefab;
+        private IPlayerViewer _playerViewerPrefab;
 
-        public Viewer PlayerViewerPrefab => _playerViewerPrefab;
+        public IPlayerViewer PlayerViewerPrefab => _playerViewerPrefab;
 #endregion
 
         [Space(10)]
@@ -51,6 +53,20 @@ namespace pdxpartyparrot.Game.Data
         private float _angularDrag = 0.0f;
 
         public float AngularDrag => _angularDrag;
+#endregion
+
+#region Controls
+        [Header("Controls")]
+
+        [SerializeField]
+        private float _movementLerpSpeed = 1.0f;
+
+        public float MovementLerpSpeed => _movementLerpSpeed;
+
+        [SerializeField]
+        private float _lookLerpSpeed = 1.0f;
+
+        public float LookLerpSpeed => _lookLerpSpeed;
 #endregion
     }
 }

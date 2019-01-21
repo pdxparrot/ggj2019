@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
+using pdxpartyparrot.Game.World;
 
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace pdxpartyparrot.Game.Loading
 
             GameStateManager.CreateFromPrefab(_gameStateManagerPrefab, ManagersContainer);
             UIManager.CreateFromPrefab(_uiManagerPrefab, ManagersContainer);
+            SpawnManager.Create(ManagersContainer);
+            HighScoreManager.Create(ManagersContainer);
         }
 
         protected override void OnLoad()

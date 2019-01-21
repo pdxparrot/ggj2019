@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿#pragma warning disable 0618    // disable obsolete warning for now
+
+using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Camera;

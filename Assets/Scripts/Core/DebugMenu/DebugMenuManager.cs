@@ -207,11 +207,7 @@ namespace pdxpartyparrot.Core.DebugMenu
                     }*/
 
                     if(GUIUtils.LayoutButton("Quit")) {
-#if UNITY_EDITOR
-                        UnityEditor.EditorApplication.isPlaying = false;
-#else
-                        Application.Quit();
-#endif
+                        UnityUtil.Quit();
                     }
                 GUILayout.EndHorizontal();
             } else {

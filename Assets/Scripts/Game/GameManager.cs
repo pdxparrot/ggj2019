@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace pdxpartyparrot.Game
         GameData GameData { get; }
     }
 
-    public abstract class GameManager<T> : SingletonBehavior<GameManager<T>>, IGameManager where T: GameManager<T>
+    public abstract class GameManager<T> : SingletonBehavior<T>, IGameManager where T: GameManager<T>
     {
         [SerializeField]
         private GameData _gameData;

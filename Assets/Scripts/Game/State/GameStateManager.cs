@@ -11,6 +11,7 @@ using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.Camera;
+using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -63,6 +64,20 @@ namespace pdxpartyparrot.Game.State
 #region Network
         [CanBeNull]
         public NetworkClient NetworkClient { get; set; }
+        #endregion
+
+#region Managers
+        [SerializeField]
+        [ReadOnly]
+        private IGameManager _gameManager;
+
+        public IGameManager GameManager => _gameManager;
+
+        [SerializeField]
+        [ReadOnly]
+        private IPlayerManager _playerManager;
+
+        public IPlayerManager PlayerManager => _playerManager;
 #endregion
 
 #region Unity Lifecycle
@@ -87,6 +102,18 @@ namespace pdxpartyparrot.Game.State
             float dt = Time.deltaTime;
 
             _currentGameState?.OnUpdate(dt);
+        }
+        #endregion
+
+#region Register Game Managers
+        public void RegisterGameManager(IGameManager gameManager)
+        {
+            _gameManager = gameManager;
+        }
+
+        public void RegisterPlayerManager(IPlayerManager playerManager)
+        {
+            _playerManager = playerManager;
         }
 #endregion
 

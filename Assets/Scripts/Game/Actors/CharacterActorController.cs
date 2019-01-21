@@ -23,7 +23,11 @@ namespace pdxpartyparrot.Game.Actors
 
         public CharacterActorControllerData ControllerData => _controllerData;
 
+#region Collider
         public CapsuleCollider Capsule => (CapsuleCollider)Owner.Collider;
+
+        public CapsuleCollider2D Capsule2D => (CapsuleCollider2D)Owner.Collider2D;
+#endregion
 
         [Space(10)]
 

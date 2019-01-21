@@ -2,7 +2,9 @@
     "name": "com.pdxpartyparrot.ggj2019.asmdef",
     "references": [
         "com.pdxpartyparrot.Core.asmdef",
-        "com.pdxpartyparrot.Game.asmdef"
+        "com.pdxpartyparrot.Game.asmdef",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

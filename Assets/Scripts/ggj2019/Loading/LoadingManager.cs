@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Game.Loading;
-
+using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.Game.State;
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Loading
@@ -9,10 +10,13 @@ namespace pdxpartyparrot.ggj2019.Loading
         [Space(10)]
 
 #region Manager Prefabs
-        [Header("Game Manager Prefabs")]
+        [Header("Game Prefabs")]
 
         [SerializeField]
         private GameManager _gameManagerPrefab;
+
+        [SerializeField]
+        private PlayerManager _playerManagerPrefab;
 #endregion
 
         protected override void CreateManagers()
@@ -20,6 +24,13 @@ namespace pdxpartyparrot.ggj2019.Loading
             base.CreateManagers();
 
             GameManager.CreateFromPrefab(_gameManagerPrefab, ManagersContainer);
+            PlayerManager.CreateFromPrefab(_playerManagerPrefab, ManagersContainer);
+        }
+
+        protected override void InitializeManagers()
+        {
+            GameStateManager.Instance.RegisterGameManager(GameManager.Instance);
+            GameStateManager.Instance.RegisterPlayerManager(PlayerManager.Instance);
         }
     }
 }
