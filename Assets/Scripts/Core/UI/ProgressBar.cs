@@ -16,9 +16,8 @@ namespace pdxpartyparrot.Core.UI
 
         public float Percent
         {
-            get { return _percent; }
-
-            set { _percent = Mathf.Clamp01(value); }
+            get => _percent;
+            set => _percent = Mathf.Clamp01(value);
         }
 
 #region Unity Lifecycle

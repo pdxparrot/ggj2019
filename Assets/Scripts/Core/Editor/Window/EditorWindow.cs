@@ -5,6 +5,9 @@ namespace pdxpartyparrot.Core.Editor.Window
     public abstract class EditorWindow : UnityEditor.EditorWindow
     {
 /*
+        Example setup:
+        --------------
+
         [MenuItem("PDX Party Parrot/Window")]
         static void Init()
         {

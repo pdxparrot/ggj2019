@@ -200,9 +200,20 @@ namespace pdxpartyparrot.Core.DebugMenu
                     }
                 GUILayout.EndScrollView();
 
-                if(GUIUtils.LayoutButton("Quit")) {
-                    Application.Quit();
-                }
+                GUILayout.BeginHorizontal();
+                    // TODO: reloading doesn't work right
+                    /*if(GUIUtils.LayoutButton("Reload")) {
+                        Scenes.SceneManager.Instance.ReloadMainScene();
+                    }*/
+
+                    if(GUIUtils.LayoutButton("Quit")) {
+#if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+#else
+                        Application.Quit();
+#endif
+                    }
+                GUILayout.EndHorizontal();
             } else {
                 _windowScrollPos = GUILayout.BeginScrollView(_windowScrollPos);
                     _currentNode.RenderContents();

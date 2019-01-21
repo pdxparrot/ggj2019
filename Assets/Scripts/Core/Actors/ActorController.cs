@@ -65,9 +65,8 @@ namespace pdxpartyparrot.Core.Actors
 
         public Vector3 LastMoveAxes
         {
-            get { return _lastMoveAxes; }
-
-            set { _lastMoveAxes = value; }
+            get => _lastMoveAxes;
+            set => _lastMoveAxes = value;
         }
 
         [SerializeField]
@@ -213,7 +212,7 @@ namespace pdxpartyparrot.Core.Actors
             Profiler.BeginSample("ActorController.UpdateAnimations");
             try {
                 if(_animationState.IsFinished) {
-                    Debug.Log("Manual animation complete!");
+                    //Debug.Log("Manual animation complete!");
 
                     _animationState.IsAnimating = false;
 

@@ -14,7 +14,7 @@ using UnityEngine.Networking;
 namespace pdxpartyparrot.Game.Actors
 {
     [RequireComponent(typeof(NetworkIdentity))]
-    [RequireComponent(typeof(FollowTarget))]
+    [RequireComponent(typeof(FollowTarget3D))]
     public sealed class ServerSpectator : MonoBehaviour, IServerSpectatorActions
     {
         private const string InvertLookYKey = "serverspectator.invertlooky";
@@ -36,7 +36,7 @@ namespace pdxpartyparrot.Game.Actors
         [ReadOnly]
         private Vector3 _lastControllerLook;
 
-        public FollowTarget FollowTarget { get; private set; }
+        public FollowTarget3D FollowTarget { get; private set; }
 
         [CanBeNull]
         private ServerSpectatorViewer _viewer;
@@ -47,7 +47,7 @@ namespace pdxpartyparrot.Game.Actors
 #region Unity Lifecycle
         private void Awake()
         {
-            FollowTarget = GetComponent<FollowTarget>();
+            FollowTarget = GetComponent<FollowTarget3D>();
 
             _viewer = ViewerManager.Instance.AcquireViewer<ServerSpectatorViewer>();
             if(null != _viewer) {

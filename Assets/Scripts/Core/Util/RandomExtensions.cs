@@ -13,7 +13,7 @@ namespace pdxpartyparrot.Core.Util
         public static T GetRandomEntry<T>(this Random random, IReadOnlyCollection<T> collection)
         {
             if(collection.Count < 1) {
-                return default(T);
+                return default;
             }
 
             int idx = random.Next(collection.Count);
@@ -24,7 +24,7 @@ namespace pdxpartyparrot.Core.Util
         public static T RemoveRandomEntry<T>(this Random random, IList<T> collection)
         {
             if(collection.Count < 1) {
-                return default(T);
+                return default;
             }
 
             int idx = random.Next(collection.Count);

@@ -9,8 +9,7 @@ namespace pdxpartyparrot.Core.Util
         [CanBeNull]
         public static TV GetOrDefault<TK, TV>(this IReadOnlyDictionary<TK, TV> dict, TK key, TV defaultValue=default(TV))
         {
-            TV value;
-            return dict.TryGetValue(key, out value) ? value : defaultValue;
+            return dict.TryGetValue(key, out var value) ? value : defaultValue;
         }
 
         public static bool Remove<TK, TV>(this IDictionary<TK, TV> dict, TK key, out TV value)

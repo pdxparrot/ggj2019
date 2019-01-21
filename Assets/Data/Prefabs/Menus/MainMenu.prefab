@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3772495284134075579}
   - component: {fileID: 7052727422191120389}
   - component: {fileID: 7488553756146814001}
-  - component: {fileID: 7571871036560093955}
+  - component: {fileID: 1953389124374141540}
   m_Layer: 5
   m_Name: Main
   m_TagString: Untagged
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
---- !u!114 &7571871036560093955
+--- !u!114 &1953389124374141540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3426167249705854221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94c0fa3eb60d2874d87093c7d49d79cf, type: 3}
+  m_Script: {fileID: 11500000, guid: b491ec0ada9e47629183a00ee58e4f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 4050366218483498072}
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7571871036560093955}
+      - m_Target: {fileID: 1953389124374141540}
         m_MethodName: OnCredits
         m_Mode: 1
         m_Arguments:
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7571871036560093955}
+      - m_Target: {fileID: 1953389124374141540}
         m_MethodName: OnQuitGame
         m_Mode: 1
         m_Arguments:
@@ -658,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd55b34bc6953c4698c13e2a7974829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainPanel: {fileID: 7571871036560093955}
+  _mainPanel: {fileID: 1953389124374141540}
   _currentPanel: {fileID: 0}
 --- !u!1 &6214937370967947621
 GameObject:
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7571871036560093955}
+      - m_Target: {fileID: 1953389124374141540}
         m_MethodName: OnPlay
         m_Mode: 1
         m_Arguments:

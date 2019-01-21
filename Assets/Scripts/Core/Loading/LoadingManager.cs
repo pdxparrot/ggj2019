@@ -17,12 +17,23 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Loading
 {
-    public abstract class LoadingManager<T> : SingletonBehavior<T> where T: LoadingManager<T>
+    public interface ILoadingManager
+    {
+        void ShowLoadingScreen(bool show);
+
+        void UpdateLoadingScreen(float percent, string text);
+    }
+
+    public abstract class LoadingManager<T> : SingletonBehavior<T>, ILoadingManager where T: LoadingManager<T>
     {
         [SerializeField]
         private LoadingScreen _loadingScreen;
 
+        [Space(10)]
+
 #region Manager Prefabs
+        [Header("Manager Prefabs")]
+
         [SerializeField]
         private PartyParrotManager _engineManagerPrefab;
 
@@ -99,6 +110,9 @@ namespace pdxpartyparrot.Core.Loading
             // someday when Awake() can be overriden, we can get rid of PreCreateManagers()
             // and just do everything in CreateManagers()
             Instantiate(_networkManagerPrefab, ManagersContainer.transform);
+
+            // do this now so that managers coming up can have access to it
+            PartyParrotManager.Instance.RegisterLoadingManager(this);
         }
 
         protected virtual void CreateManagers()

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 using pdxpartyparrot.Core.UI;
 
-using UnityEngine;
-
 namespace pdxpartyparrot.Core.DebugMenu
 {
     public sealed class DebugMenuNode

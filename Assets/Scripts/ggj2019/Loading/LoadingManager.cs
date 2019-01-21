@@ -1,34 +1,25 @@
-using pdxpartyparrot.Game.Loading;
-using pdxpartyparrot.ggj2019.State;
-using pdxpartyparrot.ggj2019.UI;
+﻿using pdxpartyparrot.Game.Loading;
 
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Loading
 {
-    public sealed class LoadingManager : LoadingManager<LoadingManager>
+    public sealed class LoadingManager : Game.Loading.LoadingManager<LoadingManager>
     {
+        [Space(10)]
+
 #region Manager Prefabs
-        [SerializeField]
-        private GameStateManager _gameStateManagerPrefab;
+        [Header("Game Manager Prefabs")]
 
         [SerializeField]
-        private UIManager _uiManagerPrefab;
+        private GameManager _gameManagerPrefab;
 #endregion
 
         protected override void CreateManagers()
         {
             base.CreateManagers();
 
-            GameStateManager.CreateFromPrefab(_gameStateManagerPrefab, ManagersContainer);
-            UIManager.CreateFromPrefab(_uiManagerPrefab, ManagersContainer);
-        }
-
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-
-            GameStateManager.Instance.TransitionToInitialState();
+            GameManager.CreateFromPrefab(_gameManagerPrefab, ManagersContainer);
         }
     }
 }

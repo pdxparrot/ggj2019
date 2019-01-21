@@ -404,9 +404,11 @@ MonoBehaviour:
     type: 3}
   _objectPoolManagerPrefab: {fileID: 5891187291413071308, guid: 334bbaaa99da9df4ba181d1d67255903,
     type: 3}
-  _gameStateManagerPrefab: {fileID: 2831350602231049018, guid: 3fe37d90f148a204aa14e1f49c618b25,
+  _gameStateManagerPrefab: {fileID: 6489297576636226413, guid: 3fe37d90f148a204aa14e1f49c618b25,
     type: 3}
-  _uiManagerPrefab: {fileID: 8120234190048792315, guid: 80e4c458880000a44808d37f92f23fce,
+  _uiManagerPrefab: {fileID: 7018789065047745901, guid: 80e4c458880000a44808d37f92f23fce,
+    type: 3}
+  _gameManagerPrefab: {fileID: 8705135139697152153, guid: dac648110aa18324ea9434cdd130cae1,
     type: 3}
 --- !u!4 &793541510
 Transform:

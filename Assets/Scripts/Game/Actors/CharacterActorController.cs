@@ -59,7 +59,11 @@ namespace pdxpartyparrot.Game.Actors
         [ReadOnly]
         private bool _isGrounded;
 
-        public bool IsGrounded { get { return _isGrounded; } protected set { _isGrounded = value; } }
+        public bool IsGrounded
+        {
+            get => _isGrounded;
+            protected set => _isGrounded = value;
+        }
 
         public bool IsFalling => UseGravity && (!IsGrounded && !IsSliding && Rigidbody.velocity.y < 0.0f);
 
@@ -98,7 +102,15 @@ namespace pdxpartyparrot.Game.Actors
         [ReadOnly]
         private bool _useGravity;
 
-        public bool UseGravity { get { return _useGravity; } set { _useGravity = value; Rigidbody.velocity = Vector3.zero; } }
+        public bool UseGravity
+        {
+            get => _useGravity;
+            set
+            {
+                _useGravity = value;
+                Rigidbody.velocity = Vector3.zero;
+            }
+        }
 
         private CharacterActorControllerComponent[] _components;
 

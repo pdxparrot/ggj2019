@@ -67,6 +67,15 @@ namespace pdxpartyparrot.Core.Scenes
 
         public IEnumerator UnloadSceneRoutine(string sceneName, Action callback)
         {
+            IEnumerator runner = DoUnloadSceneRoutine(sceneName, callback);
+            while(runner.MoveNext()) {
+                yield return null;
+            }
+            _loadedScenes.Remove(sceneName);
+        }
+
+        private IEnumerator DoUnloadSceneRoutine(string sceneName, Action callback)
+        {
             Debug.Log($"Unloading scene '{sceneName}'");
 
             AsyncOperation asyncOp = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
@@ -74,23 +83,7 @@ namespace pdxpartyparrot.Core.Scenes
                 yield return null;
             }
 
-            // TODO: active scene?
-
-            _loadedScenes.Remove(sceneName);
-
             callback?.Invoke();
-        }
-
-        public void UnloadAllScenes(Action callback)
-        {
-            Debug.Log("Unloading all scenes");
-
-            foreach(string sceneName in _loadedScenes) {
-                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
-            }
-            _loadedScenes.Clear();
-
-            UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(_mainSceneName));
         }
 
         public IEnumerator UnloadAllScenesRoutine(Action callback)
@@ -98,7 +91,7 @@ namespace pdxpartyparrot.Core.Scenes
             Debug.Log("Unloading all scenes");
 
             foreach(string sceneName in _loadedScenes) {
-                IEnumerator runner = UnloadSceneRoutine(sceneName, null);
+                IEnumerator runner = DoUnloadSceneRoutine(sceneName, null);
                 while(runner.MoveNext()) {
                     yield return null;
                 }
@@ -114,11 +107,11 @@ namespace pdxpartyparrot.Core.Scenes
 #region Reload Scene
         public void ReloadMainScene()
         {
-            Debug.Log("Reloading main scene");
-
-            UnloadAllScenes(() => {
+            Debug.Log("Reloading...");
+            StartCoroutine(UnloadAllScenesRoutine(() => {
+                Debug.Log($"Loading main scene '{_mainSceneName}'");
                 UnityEngine.SceneManagement.SceneManager.LoadScene(_mainSceneName);
-            });
+            }));
         }
 
         public void ReloadScene(string sceneName, Action callback)

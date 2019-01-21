@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Actors;
+﻿#pragma warning disable 0618    // disable obsolete warning for now
+
+using pdxpartyparrot.Core.Actors;
 
 using UnityEngine;
 using UnityEngine.Networking;

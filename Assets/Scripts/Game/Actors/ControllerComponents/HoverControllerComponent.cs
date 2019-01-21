@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.ControllerComponents
 {
+    [RequireComponent(typeof(JumpControllerComponent))]
     public sealed class HoverControllerComponent : CharacterActorControllerComponent
     {
         public class HoverAction : CharacterActorControllerAction

@@ -26,8 +26,7 @@ namespace pdxpartyparrot.Core.Util
                 }
             }
 
-            int port;
-            if(!int.TryParse(tokens[tokens.Length - 1], out port)) {
+            if(!int.TryParse(tokens[tokens.Length - 1], out int port)) {
                 return false;
             }
 

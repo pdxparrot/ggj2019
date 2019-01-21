@@ -15,12 +15,20 @@ namespace pdxpartyparrot.Core.Tween
         [FormerlySerializedAs("_runOnAwake")]
         private bool _playOnAwake = true;
 
-        public bool PlayOnAwake { get { return _playOnAwake; } set { _playOnAwake = value; } }
+        public bool PlayOnAwake
+        {
+            get => _playOnAwake;
+            set => _playOnAwake = value;
+        }
 
         [SerializeField]
         private bool _resetOnEnable = true;
 
-        public bool ResetOnEnable { get { return _resetOnEnable; } set { _resetOnEnable = value; } }
+        public bool ResetOnEnable
+        {
+            get => _resetOnEnable;
+            set => _resetOnEnable = value;
+        }
 
 #region Time Scale
         [SerializeField]
@@ -56,7 +64,11 @@ namespace pdxpartyparrot.Core.Tween
         [SerializeField]
         private int _loops;
 
-        public int Loops { get { return _loops; } set { _loops = value; } }
+        public int Loops
+        {
+            get => _loops;
+            set => _loops = value;
+        }
 
         public bool IsInfiniteLoop => Loops < 0;
 
@@ -89,7 +101,11 @@ namespace pdxpartyparrot.Core.Tween
         [ReadOnly]
         private bool _firstRun = true;
 
-        public bool FirstRun { get { return _firstRun; } set { _firstRun = value; } }
+        public bool FirstRun
+        {
+            get => _firstRun;
+            set => _firstRun = value;
+        }
 
         [CanBeNull]
         private Tweener _tweener;

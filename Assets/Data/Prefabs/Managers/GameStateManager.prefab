@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2686815670837227745}
-  - component: {fileID: 2831350602231049018}
+  - component: {fileID: 6489297576636226413}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2831350602231049018
+--- !u!114 &6489297576636226413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,8 +40,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2567824586411497796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a4d0038674475e4e81849f0af440ada, type: 3}
+  m_Script: {fileID: 11500000, guid: aebb4550034e0c645ab0366ef1e7e5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialGameStatePrefab: {fileID: 9213297631038022371, guid: d967744747e566b47ba27ea1e244ef0b,
+  _mainMenuStatePrefab: {fileID: 4407098939536246215, guid: d967744747e566b47ba27ea1e244ef0b,
+    type: 3}
+  _networkConnectStatePrefab: {fileID: 8560679716687372941, guid: 1da55c6ab79afd945ad29a6bf5a22cad,
+    type: 3}
+  _gameStatePrefab: {fileID: 5865676522936435898, guid: 5888adbbf6e886343b14a2efbfc5f342,
+    type: 3}
+  _sceneTesterStatePrefab: {fileID: 5929889422699767970, guid: 4f1774b9fb9c5744e914d4473f5be503,
+    type: 3}
+  _serverSpectatorPrefab: {fileID: 1861802136262844766, guid: 9d2e647f5ce05304aa47b6d948febd7d,
+    type: 3}
+  _serverSpectatorViewer: {fileID: 8252839539329396997, guid: 18cd65631e05a0f469632e92e783f482,
     type: 3}

@@ -63,8 +63,20 @@ namespace pdxpartyparrot.Core.UI
         private void PlayNextSplashScreen()
         {
             if(_currentSplashScreen >= _splashScreens.Length) {
+                Debug.Log($"Loading main scene '{_mainSceneName}'...");
                 SceneManager.LoadScene(_mainSceneName);
                 return;
+            }
+
+            SplashScreenConfig config = _splashScreens[_currentSplashScreen];
+            Debug.Log($"Playing splash screen {config.videoClip.name}");
+
+            _videoPlayer.clip = config.videoClip;
+
+            // config the volume for each track
+            _videoPlayer.SetDirectAudioVolume(0, 1.0f);
+            for(ushort i=0; i<config.volume.Length; ++i) {
+                _videoPlayer.SetDirectAudioVolume(i, config.volume[i]);
             }
 
             void EventHandler(VideoPlayer vp)
@@ -73,16 +85,6 @@ namespace pdxpartyparrot.Core.UI
 
                 _currentSplashScreen++;
                 PlayNextSplashScreen();
-            }
-
-            SplashScreenConfig config = _splashScreens[_currentSplashScreen];
-
-            _videoPlayer.clip = config.videoClip;
-
-            // config the volume for each track
-            _videoPlayer.SetDirectAudioVolume(0, 1.0f);
-            for(ushort i=0; i<config.volume.Length; ++i) {
-                _videoPlayer.SetDirectAudioVolume(i, config.volume[i]);
             }
 
             _videoPlayer.loopPointReached += EventHandler;

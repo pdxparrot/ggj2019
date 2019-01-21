@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.ControllerComponents
 {
+    [RequireComponent(typeof(JumpControllerComponent))]
     public sealed class DoubleJumpControllerComponent : CharacterActorControllerComponent
     {
         [SerializeField]

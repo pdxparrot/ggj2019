@@ -1,5 +1,6 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Loading;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -55,7 +56,7 @@ namespace pdxpartyparrot.Core
 
         public bool IsPaused
         {
-            get { return _isPaused; }
+            get => _isPaused;
 
             set
             {
@@ -80,6 +81,18 @@ namespace pdxpartyparrot.Core
         public LayerMask UILayer => _uiLayer;
 #endregion
 
+        [Space(10)]
+
+#region Managers
+        [Header("Mangers")]
+
+        [SerializeField]
+        [ReadOnly]
+        private ILoadingManager _loadingManager;
+
+        public ILoadingManager LoadingManager => _loadingManager;
+#endregion
+
         public bool IsHeadless => GraphicsDeviceType.Null == SystemInfo.graphicsDeviceType;
 
         public Config Config { get; } = new Config();
@@ -94,6 +107,13 @@ namespace pdxpartyparrot.Core
             Debug.Log($"Gravity: {Physics.gravity}");
 
             Config.Load(Application.streamingAssetsPath, ConfigFileName);
+        }
+#endregion
+
+#region Manager Registration
+        public void RegisterLoadingManager(ILoadingManager loadingManager)
+        {
+            _loadingManager = loadingManager;
         }
 #endregion
 

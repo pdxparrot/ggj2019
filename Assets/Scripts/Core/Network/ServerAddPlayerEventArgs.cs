@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable 0618    // disable obsolete warning for now
+
+using System;
 
 using UnityEngine.Networking;
 

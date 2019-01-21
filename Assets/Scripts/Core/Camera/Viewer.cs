@@ -10,7 +10,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace pdxpartyparrot.Core.Camera
 {
-    public class Viewer : MonoBehaviour
+    public abstract class Viewer : MonoBehaviour
     {
         [SerializeField]
         [ReadOnly]

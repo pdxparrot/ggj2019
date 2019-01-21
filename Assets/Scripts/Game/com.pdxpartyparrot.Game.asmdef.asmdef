@@ -2,7 +2,8 @@
     "name": "com.pdxpartyparrot.Game.asmdef",
     "references": [
         "com.pdxpartyparrot.Core.asmdef",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.TextMeshPro"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -447,8 +447,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _rightHandHitResult = null;
 
-            RaycastHit hit;
-            if(Physics.Raycast(_rightHandTransform.position, transform.forward, out hit, Controller.ControllerData.ArmRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_rightHandTransform.position, transform.forward, out var hit, Controller.ControllerData.ArmRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _rightHandHitResult = hit;
@@ -479,8 +478,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _headHitResult = null;
 
-            RaycastHit hit;
-            if(Physics.Raycast(_headTransform.position, Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward, out hit, Controller.ControllerData.HeadRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_headTransform.position, Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward, out var hit, Controller.ControllerData.HeadRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _headHitResult = hit;
@@ -500,8 +498,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _chestHitResult = null;
 
-            RaycastHit hit;
-            if(Physics.Raycast(_chestTransform.position, transform.forward, out hit, Controller.ControllerData.ChestRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_chestTransform.position, transform.forward, out var hit, Controller.ControllerData.ChestRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _chestHitResult = hit;
@@ -588,8 +585,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _didWrapLeftRaycast = true;
 
-            RaycastHit hit;
-            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out hit, Controller.ControllerData.ArmRayLength * 2.0f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 2.0f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -618,8 +614,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _didRotateLeftRaycast = true;
 
-            RaycastHit hit;
-            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward, out hit, Controller.ControllerData.ArmRayLength * 0.5f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 0.5f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -648,8 +643,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _didWrapRightRaycast = true;
 
-            RaycastHit hit;
-            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(-Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out hit, Controller.ControllerData.ArmRayLength * 2.0f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(-Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 2.0f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -679,8 +673,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _didRotateRightRaycast = true;
 
-            RaycastHit hit;
-            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(90.0f, transform.up) * transform.forward, out hit, Controller.ControllerData.ArmRayLength * 0.5f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(90.0f, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 0.5f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -714,8 +707,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             Vector3 start = _headTransform.position + (Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Controller.ControllerData.HeadRayLength;
             float length = Controller.Owner.Height;
 
-            RaycastHit hit;
-            if(!Physics.Raycast(start, -Vector3.up, out hit, length, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(start, -Vector3.up, out var hit, length, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 

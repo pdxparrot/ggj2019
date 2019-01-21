@@ -50,14 +50,22 @@ namespace pdxpartyparrot.Core.Camera
         [Tooltip("The minimum distance the camera should be from the follow target")]
         private float _orbitMinRadius = 15.0f;
 
-        public float OrbitMinRadius { get { return _orbitMinRadius; } set { _orbitMinRadius = value; } }
+        public float OrbitMinRadius
+        {
+            get => _orbitMinRadius;
+            set => _orbitMinRadius = value;
+        }
 
         [SerializeField]
         [Range(0, 50)]
         [Tooltip("The maximum distance the camera should be from the follow target")]
         private float _orbitMaxRadius = 15.0f;
 
-        public float OrbitMaxRadius { get { return _orbitMaxRadius; } set { _orbitMaxRadius = value; } }
+        public float OrbitMaxRadius
+        {
+            get => _orbitMaxRadius;
+            set => _orbitMaxRadius = value;
+        }
 #endregion
 
 #region Orbit Constraints
@@ -130,10 +138,10 @@ namespace pdxpartyparrot.Core.Camera
         [SerializeField]
         [Tooltip("The target to follow")]
         [CanBeNull]
-        private FollowTarget _target;
+        private FollowTarget3D _target;
 
         [CanBeNull]
-        public FollowTarget Target => _target;
+        public FollowTarget3D Target => _target;
 #endregion
 
         [Space(10)]
@@ -193,7 +201,7 @@ namespace pdxpartyparrot.Core.Camera
         }
 #endregion
 
-        public void SetTarget(FollowTarget target)
+        public void SetTarget(FollowTarget3D target)
         {
             _target = target;
             _orbitRotation = _defaultOrbitRotation;

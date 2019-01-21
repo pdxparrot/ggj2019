@@ -1,3 +1,5 @@
+# This document is pretty out of date already :(
+
 # Pre-Asset Setup
 
 * Copy Art/Core/pdxparrot.png
@@ -144,7 +146,7 @@
   * Editor platform only
   * References: com.pdxpartyparrot.Core.asmdef
 * Scripts/Game/com.pdxpartyparrot.Game.asmdef
-  * References: com.pdxpartyparrot.Core.asmdef, Unity.InputSystem
+  * References: com.pdxpartyparrot.Core.asmdef, Unity.InputSystem, Unity.TextMeshPro
 * Scripts/Game/Editor/com.pdxpartyparrot.Game.Editor
   * Editor platform only
   * References: com.pdxpartyparrot.Game.asmdef
@@ -365,26 +367,41 @@
 
 # Initial Game State Setup
 
-* **TODO:** Viewer setup
-  * Create a new Viewer script that overrides a Core Viewer
-  * Create an empty Prefab and add the Viewer component to it
-    * Add a camera under the prefab
-      * Clear Mode: Sky
-      * Background Color: Default
-      * Projection: Depends on viewer needs
-      * Remove the Audio Listener
-      * Add a Post Process Layer component to the Camera object
-      * Add an Aspect Ratio component to the Camera (UI) object
-    * Add another camera under the prefab (UI)
-      * Layer: UI
-      * Clear Mode: None
-      * Culling Mask: UI
-      * Projection: Orthographic
-      * Remove the AudioListener
-      * Add an Aspect Ratio component to the Camera (UI) object
-    * Add an empty GameObject under the prefab and add a Post Process Volume to it
-    * Attach the Cameras and the Post Process Volume to the Viewer component
-    * **Create the Post Process Layer (one per-viewer, Viewer{N}_PostProcess)**
+## Game Data
+
+* Create a new GameData script that overrides Game GameData and adds an Asset Menu item for it
+* Create a new GameData data object
+  * Set the World Layer to World
+  * Create and attach a ServerSpectator prefab if desired
+    * **TODO:** Configure this
+    * **TODO:** Create a viewer prefab for it
+
+## Player Data
+
+* Create a new PlayerData script that overrides Game PlayerData and adds an Asset Menu item for it
+* Create a new PlayerData data object
+  * Set the Player Layer to Player
+  * Set the Viewer Layer to Viewer
+  * **TODO:** Create a viewer prefab for it
+    * Create a new Viewer script that overrides a Core Viewer (? Core or Game?)
+    * Create an empty Prefab and add the Viewer component to it
+      * Add a camera under the prefab
+        * Clear Mode: Sky
+        * Background Color: Default
+        * Projection: Depends on viewer needs
+        * Remove the Audio Listener
+        * Add a Post Process Layer component to the Camera object
+        * Add an Aspect Ratio component to the Camera (UI) object
+      * Add another camera under the prefab (UI)
+        * Layer: UI
+        * Clear Mode: None
+        * Culling Mask: UI
+        * Projection: Orthographic
+        * Remove the AudioListener
+        * Add an Aspect Ratio component to the Camera (UI) object
+      * Add an empty GameObject under the prefab and add a Post Process Volume to it
+      * Attach the Cameras and the Post Process Volume to the Viewer component
+      * **Create the Post Process Layer (one per-viewer, Viewer{N}_PostProcess)**
 * Create a new GameState subclass and attach it to a new empty Prefab
   * This state should probably get the ViewerManager and InputManager state setup
 * Attach the new GameState prefab to the GameStateManager prefab
@@ -395,6 +412,7 @@
 * **TODO:** Create the Player script/prefab
 * **TODO:** How to controls
 * **TODO:** Creating Data
+* **TODO:** Credits
 
 # Performance Notes
 
