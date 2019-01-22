@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b89a37734c1b04d9c2bcdc89df762b, type: 3}
+  m_Name: CharacterActorControllerData
+  m_EditorClassIdentifier: 
+  _collisionCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  _moveXAxisParam: InputX
+  _moveZAxisParam: InputZ
+  _groundedParam: Landed
+  _fallingParam: Falling
+  _jumpParam: Jump
+  _longJumpParam: LongJump
+  _doubleJumpParam: DoubleJump
+  _hoverParam: Hover
+  _climbingParam: Climbing
+  _hangingParam: Hanging
+  _wrapTimeSeconds: 1
+  _climbUpTimeSeconds: 1
+  _climbDownTimeSeconds: 1
+  _hangTimeSeconds: 1
+  _moveSpeed: 1
+  _runThreshold: 1
+  _fallSpeedAdjustment: 0
+  _terminalVelocity: 50
+  _GroundedEpsilon: 0.1
+  _groundCheckLength: 1
+  _slopeLimit: 30
+  _jumpHeight: 1
+  _longJumpHoldSeconds: 1
+  _longJumpHeight: 5
+  _doubleJumpHeight: 1
+  _doubleJumpCount: 0
+  _hoverHoldSeconds: 1
+  _hoverTimeSeconds: 10
+  _hoverCooldownSeconds: 1
+  _hoverRechargeRate: 1
+  _hoverAcceleration: 20
+  _hoverMoveSpeed: 1
+  _hoverWhenGrounded: 0
+  _attachDistance: 0.1
+  _armRayLength: 1
+  _wrapAroundAngle: 45
+  _headRayLength: 1
+  _headRayAngle: 45
+  _hangRayLength: 1
+  _chestRayLength: 1
+  _climbSpeed: 1
+  _hangSpeed: 1
+  _allowAirControl: 0

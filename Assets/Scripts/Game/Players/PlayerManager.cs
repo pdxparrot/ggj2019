@@ -15,9 +15,13 @@ namespace pdxpartyparrot.Game.Players
     public interface IPlayerManager
     {
         PlayerData PlayerData { get; }
+
+        void Register(Player player);
+
+        void Unregister(Player player);
     }
 
-    public abstract class PlayerManager<T, TV> : ActorManager<T, TV>, IPlayerManager where T: Player where TV: PlayerManager<T, TV>
+    public abstract class PlayerManager<T> : ActorManager<Player, T>, IPlayerManager where T: PlayerManager<T>
     {
 #region Data
         [SerializeField]
@@ -29,7 +33,7 @@ namespace pdxpartyparrot.Game.Players
         [Space(10)]
 
         [SerializeField]
-        private T _playerPrefab;
+        private Player _playerPrefab;
 
         private GameObject _playerContainer;
 
@@ -83,7 +87,7 @@ namespace pdxpartyparrot.Game.Players
             spawnPoint.Spawn(player.Player);
         }
 
-        public void RespawnPlayer(T player)
+        public void RespawnPlayer(Player player)
         {
             Assert.IsTrue(NetworkServer.active);
 
@@ -110,7 +114,7 @@ namespace pdxpartyparrot.Game.Players
             _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.PlayerManager");
             _debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Players", GUI.skin.box);
-                    foreach(T player in Actors) {
+                    foreach(Player player in Actors) {
                         GUILayout.Label($"{player.name} {player.transform.position}");
                     }
                 GUILayout.EndVertical();

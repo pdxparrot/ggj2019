@@ -46,3 +46,5 @@ MonoBehaviour:
   _sceneName: game
   _makeSceneActive: 1
   _music: {fileID: 0}
+  _gameOverState: {fileID: 7106532551911913696, guid: 6f92524e3a5ef9245a779d73df482385,
+    type: 3}

@@ -1,6 +1,6 @@
 ﻿using pdxpartyparrot.Game.Loading;
 using pdxpartyparrot.ggj2019.Players;
-using pdxpartyparrot.Game.State;
+
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Loading
@@ -25,12 +25,6 @@ namespace pdxpartyparrot.ggj2019.Loading
 
             GameManager.CreateFromPrefab(_gameManagerPrefab, ManagersContainer);
             PlayerManager.CreateFromPrefab(_playerManagerPrefab, ManagersContainer);
-        }
-
-        protected override void InitializeManagers()
-        {
-            GameStateManager.Instance.RegisterGameManager(GameManager.Instance);
-            GameStateManager.Instance.RegisterPlayerManager(PlayerManager.Instance);
         }
     }
 }

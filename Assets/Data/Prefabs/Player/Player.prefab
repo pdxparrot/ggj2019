@@ -40,6 +40,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4855100557147422379}
+  - {fileID: 5926793209235918053}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,7 +76,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!95 &6235580022285233835
 Animator:
   serializedVersion: 3
@@ -161,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea561564ea29ef479ef925dfcb80268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 0}
-  _targetTransform: {fileID: 0}
+  _collider: {fileID: 5152764809481462325}
+  _targetTransform: {fileID: 5926793209235918053}
   _lastLookAxes: {x: 0, y: 0, z: 0}
 --- !u!82 &8936537100142633831
 AudioSource:
@@ -278,7 +279,6 @@ MonoBehaviour:
   _model: {fileID: 4855100557147422423}
   _controller: {fileID: 7747072911206289872}
   _animator: {fileID: 0}
-  _networkPlayer: {fileID: 0}
   _driver: {fileID: 2548825590258864176}
 --- !u!136 &5152764809481462325
 CapsuleCollider:
@@ -335,11 +335,11 @@ MonoBehaviour:
     StartRotation: {x: 0, y: 0, z: 0, w: 0}
     EndRotation: {x: 0, y: 0, z: 0, w: 0}
     IsKinematic: 0
-  _owner: {fileID: 0}
+  _owner: {fileID: 7595935749090751375}
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
-  _controllerData: {fileID: 0}
+  _controllerData: {fileID: 11400000, guid: 1dc5a7a67dba6df4caec3ac998e2ff24, type: 2}
   _raycastRoutineRate: 0.1
   _didGroundCheckCollide: 0
   _groundCheckNormal: {x: 0, y: 0, z: 0}
@@ -367,6 +367,36 @@ MonoBehaviour:
   _mouseSensitivity: 0.5
   _lastControllerMove: {x: 0, y: 0, z: 0}
   _lastControllerLook: {x: 0, y: 0, z: 0}
+--- !u!1 &6808161514657572277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5926793209235918053}
+  m_Layer: 0
+  m_Name: ViewerTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5926793209235918053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6808161514657572277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7620153835371573773}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &847680866662524096
 PrefabInstance:
   m_ObjectHideFlags: 0

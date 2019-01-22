@@ -30,9 +30,9 @@ namespace pdxpartyparrot.Game.Menu
         }
 #endregion
 
-        public void Reset()
+        public void ResetMenu()
         {
-            _currentPanel.Reset();
+            _currentPanel.ResetMenu();
         }
 
         public void PushPanel(MenuPanel panel)

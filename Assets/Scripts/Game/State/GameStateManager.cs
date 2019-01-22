@@ -73,11 +73,15 @@ namespace pdxpartyparrot.Game.State
 
         public IGameManager GameManager => _gameManager;
 
+        public bool HasGameManager => null != _gameManager;
+
         [SerializeField]
         [ReadOnly]
         private IPlayerManager _playerManager;
 
         public IPlayerManager PlayerManager => _playerManager;
+
+        public bool HasPlayerManager => null != _playerManager;
 #endregion
 
 #region Unity Lifecycle
@@ -103,7 +107,7 @@ namespace pdxpartyparrot.Game.State
 
             _currentGameState?.OnUpdate(dt);
         }
-        #endregion
+#endregion
 
 #region Register Game Managers
         public void RegisterGameManager(IGameManager gameManager)
@@ -111,9 +115,19 @@ namespace pdxpartyparrot.Game.State
             _gameManager = gameManager;
         }
 
+        public void UnregisterGameManager()
+        {
+            _gameManager = null;
+        }
+
         public void RegisterPlayerManager(IPlayerManager playerManager)
         {
             _playerManager = playerManager;
+        }
+
+        public void UnregisterPlayerManager()
+        {
+            _gameManager = null;
         }
 #endregion
 

@@ -32,6 +32,10 @@ namespace pdxpartyparrot.Game.Menu
                 _multiplayerPanel.gameObject.SetActive(false);
             }
 
+            if(null != _creditsPanel) {
+                _creditsPanel.gameObject.SetActive(false);
+            }
+
             InitDebugMenu();
         }
 

@@ -5,8 +5,9 @@ using UnityEngine;
 namespace pdxpartyparrot.Game.Data
 {
     // TODO: this could probably be split into separate data objects for each controller component
+    [CreateAssetMenu(fileName="CharacterActorControllerData", menuName="pdxpartyparrot/Game/Data/CharacterActorController Data")]
     [Serializable]
-    public abstract class CharacterActorControllerData : ScriptableObject
+    public class CharacterActorControllerData : ScriptableObject
     {
         [SerializeField]
         private LayerMask _collisionCheckLayerMask;

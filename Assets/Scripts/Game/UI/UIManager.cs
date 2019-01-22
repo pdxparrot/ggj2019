@@ -74,7 +74,7 @@ namespace pdxpartyparrot.Game.UI
 
             if(PartyParrotManager.Instance.IsPaused) {
                 _pauseMenu.gameObject.SetActive(true);
-                _pauseMenu.Reset();
+                _pauseMenu.ResetMenu();
             } else {
                 _pauseMenu.gameObject.SetActive(false);
             }

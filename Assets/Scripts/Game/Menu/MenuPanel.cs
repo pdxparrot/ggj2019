@@ -16,15 +16,28 @@ namespace pdxpartyparrot.Game.Menu
         private Button _initialSelection;
 
 #region Unity Lifecycle
+        private void Awake()
+        {
+            if(null == _initialSelection) {
+                Debug.LogWarning("MenuPanel missing initial selection");
+            }
+        }
+
         protected virtual void Update()
         {
+#if UNITY_EDITOR
+            if(null == _initialSelection) {
+                return;
+            }
+#endif
+
             if(null == InputManager.Instance.EventSystem.currentSelectedGameObject || (!InputManager.Instance.EventSystem.currentSelectedGameObject.activeInHierarchy && _initialSelection.gameObject.activeInHierarchy)) {
                 _initialSelection.Select();
             }
         }
 #endregion
 
-        public void Reset()
+        public void ResetMenu()
         {
             Debug.Log($"TODO: reset menu {name}");
 

@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Camera;
 using pdxpartyparrot.Game.State;
 
@@ -20,7 +21,6 @@ namespace pdxpartyparrot.Game.Players
 #region Network
         public override bool IsLocalActor => NetworkPlayer.isLocalPlayer;
 
-        [SerializeField]
         private NetworkPlayer _networkPlayer;
 
         public NetworkPlayer NetworkPlayer => _networkPlayer;
@@ -56,11 +56,12 @@ namespace pdxpartyparrot.Game.Players
             }
 #endif
 
+            _networkPlayer = GetComponent<NetworkPlayer>();
+
             _audioSource = GetComponent<AudioSource>();
             AudioManager.Instance.InitSFXAudioMixerGroup(_audioSource);
 
-Debug.Log("TODO: register player");
-//            PlayerManager.Instance.Register(this);
+            GameStateManager.Instance.PlayerManager.Register(this);
         }
 
         protected override void OnDestroy()
@@ -70,10 +71,9 @@ Debug.Log("TODO: register player");
             }
             _viewer = null;
 
-Debug.Log("TODO: unregister player");
-            /*if(PlayerManager.HasInstance) {
-                PlayerManager.Instance.Unregister(this);
-            }*/
+            if(GameStateManager.HasInstance && GameStateManager.Instance.HasPlayerManager) {
+                GameStateManager.Instance.PlayerManager.Unregister(this);
+            }
 
             base.OnDestroy();
         }
