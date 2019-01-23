@@ -45,6 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneName: 
   _makeSceneActive: 1
+  _gameOverState: {fileID: 0}
   _music: {fileID: 0}
-  _testScenes:
-  - test
+  _testScenes: []
