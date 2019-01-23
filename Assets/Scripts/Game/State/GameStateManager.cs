@@ -277,7 +277,7 @@ namespace pdxpartyparrot.Game.State
 
                 if(NetworkServer.active) {
                     GUILayout.BeginVertical("Server Stats", GUI.skin.box);
-                    NetworkServer.GetStatsIn(out int numMsgs, out int numBytes);
+                        NetworkServer.GetStatsIn(out int numMsgs, out int numBytes);
                         GUILayout.Label($"Messages received: {numMsgs}");
                         GUILayout.Label($"Bytes received: {numBytes}");
 
@@ -288,20 +288,25 @@ namespace pdxpartyparrot.Game.State
                         GUILayout.Label($"Messages buffered per second: {lastBufferedPerSecond}");
                     GUILayout.EndVertical();
                 }
+            };
 
-                foreach(string sceneName in _sceneTesterStatePrefab.TestScenes) {
-                    if(GUIUtils.LayoutButton($"Load Test Scene {sceneName}")) {
-                        TransitionToInitialState(null, () => {
-                            PushSubState(_networkConnectStatePrefab, connectState => {
-                                connectState.Initialize(NetworkConnectState.ConnectType.SinglePlayer, _sceneTesterStatePrefab, state => {
-                                    SceneTester sceneTester = (SceneTester)state;
-                                    sceneTester.SetScene(sceneName);
+            DebugMenuNode testSceneDebugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.GameStateManager.TestScenes");
+            testSceneDebugMenuNode.RenderContentsAction = () => {
+                GUILayout.BeginVertical("Test Scenes", GUI.skin.box);
+                    foreach(string sceneName in _sceneTesterStatePrefab.TestScenes) {
+                        if(GUIUtils.LayoutButton($"Load Test Scene {sceneName}")) {
+                            TransitionToInitialState(null, () => {
+                                PushSubState(_networkConnectStatePrefab, connectState => {
+                                    connectState.Initialize(NetworkConnectState.ConnectType.SinglePlayer, _sceneTesterStatePrefab, state => {
+                                        SceneTester sceneTester = (SceneTester)state;
+                                        sceneTester.SetScene(sceneName);
+                                    });
                                 });
                             });
-                        });
-                        break;
+                            break;
+                        }
                     }
-                }
+                GUILayout.EndVertical();
             };
         }
     }
