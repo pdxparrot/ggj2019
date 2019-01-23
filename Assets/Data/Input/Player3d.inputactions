@@ -1,0 +1,194 @@
+{
+    "name": "Player3d",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "eb0fa0dc-a089-4476-beeb-f045a8d5bdb8",
+            "actions": [
+                {
+                    "name": "move",
+                    "id": "28e9668b-c2ab-4765-9c01-0e223f59a602",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "look",
+                    "id": "10c18ae1-5de6-439c-8177-3776f63015ca",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "jump",
+                    "id": "ed587532-0a1c-4381-b721-92b1eca2b6c2",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "Pause",
+                    "id": "cd3f0036-5277-4d0a-8437-1fc31195d39c",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move forward",
+                    "id": "5a814028-acec-4506-a2f0-80a948e20861",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move backward",
+                    "id": "68e65cea-0ad5-44fe-976e-c615d0c3ca38",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move left",
+                    "id": "5e473936-00f1-461c-8a3b-d25e014fcf10",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "move right",
+                    "id": "728c72d4-35c0-40a8-ad7a-a063b63d9ed2",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "Stick",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "Stick",
+                    "processors": "",
+                    "groups": "",
+                    "action": "look",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "look",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/start",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/w",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move forward",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/s",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move backward",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/a",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move left",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/d",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move right",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

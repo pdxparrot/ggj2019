@@ -171,6 +171,7 @@ namespace pdxpartyparrot.Game.Actors
         protected virtual void Awake()
         {
             _components = GetComponents<CharacterActorControllerComponent>();
+            Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
 
             StartCoroutine(RaycastRoutine());
         }
@@ -248,6 +249,8 @@ namespace pdxpartyparrot.Game.Actors
 
         private IEnumerator RaycastRoutine()
         {
+            Debug.Log("Starting character raycast routine");
+
             WaitForSeconds wait = new WaitForSeconds(RaycastRoutineRate);
             while(true) {
                 UpdateIsGrounded();

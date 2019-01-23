@@ -13,6 +13,8 @@ namespace pdxpartyparrot.Game.Players
         [SerializeField]
         private float _mouseSensitivity = 0.5f;
 
+        protected float MouseSensitivity => _mouseSensitivity;
+
         [SerializeField]
         [ReadOnly]
         private Vector3 _lastControllerMove;

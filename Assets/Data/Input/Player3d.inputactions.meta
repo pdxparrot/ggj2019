@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 53b2c5cf1fa81f94cb18cb61823e02e5
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400002: Player/move
+    11400004: Player/look
+    11400006: Player/jump
+    11400008: Player/Pause
+    11400010: Player/move forward
+    11400012: Player/move backward
+    11400014: Player/move left
+    11400016: Player/move right
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 1
+  wrapperCodePath: Assets\Scripts\ggj2019\Input\PlayerControls.cs
+  wrapperClassName: PlayerControls
+  wrapperCodeNamespace: pdxpartyparrot.ggj2019Input
+  generateActionEvents: 1
+  generateInterfaces: 1
+  actionGuids: []
+  actionMapGuids: []

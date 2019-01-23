@@ -30,7 +30,7 @@ namespace pdxpartyparrot.Game.Actors
 
         [SerializeField]
         [ReadOnly]
-        private bool _useGravity;
+        private bool _useGravity = true;
 
         public virtual bool UseGravity
         {

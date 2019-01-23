@@ -71,6 +71,8 @@ namespace pdxpartyparrot.Game.Actors
 
         private void OnDestroy()
         {
+            _controls.ServerSpectator.SetCallbacks(null);
+
             if(ViewerManager.HasInstance) {
                 ViewerManager.Instance.ReleaseViewer(_viewer);
             }
@@ -106,9 +108,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            if(context.started) {
-                _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.started ? 1.0f : 0.0f);
-            }
+            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.started ? 1.0f : 0.0f);
         }
 
         public void OnMovebackward(InputAction.CallbackContext context)

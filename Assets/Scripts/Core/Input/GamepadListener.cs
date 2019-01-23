@@ -39,9 +39,9 @@ namespace pdxpartyparrot.Game.Actors
         }
 #endregion
 
-        public bool IsOurGamepad(InputAction.CallbackContext ctx)
+        public bool IsOurGamepad(InputAction.CallbackContext context)
         {
-            return ctx.control.device == _gamepad;
+            return context.control.device == _gamepad;
         }
 
 #region Event Handlers
