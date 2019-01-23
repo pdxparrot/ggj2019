@@ -8,6 +8,8 @@ namespace pdxpartyparrot.Game
     public interface IGameManager
     {
         GameData GameData { get; }
+
+        bool IsGameOver { get; }
     }
 
     public abstract class GameManager<T> : SingletonBehavior<T>, IGameManager where T: GameManager<T>
@@ -16,5 +18,7 @@ namespace pdxpartyparrot.Game
         private GameData _gameData;
 
         public GameData GameData => _gameData;
+
+        public abstract bool IsGameOver { get; }
     }
 }

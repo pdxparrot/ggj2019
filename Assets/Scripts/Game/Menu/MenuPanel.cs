@@ -39,7 +39,7 @@ namespace pdxpartyparrot.Game.Menu
 
         public void ResetMenu()
         {
-            Debug.Log($"TODO: reset menu {name}");
+            Debug.LogWarning($"TODO: reset menu {name}");
 
             _initialSelection.Select();
         }

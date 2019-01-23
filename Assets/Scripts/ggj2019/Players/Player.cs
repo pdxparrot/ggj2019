@@ -5,15 +5,18 @@ using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
     [RequireComponent(typeof(FollowTarget3D))]
-    public sealed class Player : Game.Players.Player
+    public sealed class Player : Game.Players.Player3D
     {
-        public override float Height => PlayerController.Capsule.height;
+        public PlayerController GamePlayerController => (PlayerController)PlayerController;
 
-        public override float Radius => PlayerController.Capsule.radius;
+        public override float Height => GamePlayerController.Capsule.height;
+
+        public override float Radius => GamePlayerController.Capsule.radius;
 
         public FollowTarget3D FollowTarget { get; private set; }
 
@@ -22,11 +25,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Awake();
 
-#if UNITY_EDITOR
-            if(!(Controller is PlayerController)) {
-                Debug.LogError("Player controller must be a PlayerController!");
-            }
-#endif
+            Assert.IsTrue(PlayerController is PlayerController);
 
             FollowTarget = GetComponent<FollowTarget3D>();
         }
@@ -38,7 +37,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return false;
             }
 
-Debug.Log("TODO: init player HUD");
+Debug.LogWarning("TODO: init player HUD");
 /*
             UIManager.Instance.InitializePlayerUI(this);
             if(null != UIManager.Instance.PlayerUI) {

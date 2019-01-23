@@ -4,6 +4,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.State;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Players
 {
@@ -32,9 +33,9 @@ namespace pdxpartyparrot.Game.Players
             set => _lastControllerLook = value;
         }
 
-        private PlayerController PlayerController => (PlayerController)Controller;
+        protected IPlayerController PlayerController => (IPlayerController)Controller;
 
-        private Player Player => PlayerController.Player;
+        protected IPlayer Player => PlayerController.Player;
 
         protected override bool CanDrive => base.CanDrive && Player.IsLocalActor;
 
@@ -43,6 +44,11 @@ namespace pdxpartyparrot.Game.Players
         private DebugMenuNode _debugMenuNode;
 
 #region Unity Lifecycle
+        protected virtual void Awake()
+        {
+            Assert.IsTrue(Controller is IPlayerController);
+        }
+
         protected virtual void Update()
         {
             if(!Player.IsLocalActor) {
@@ -60,7 +66,7 @@ namespace pdxpartyparrot.Game.Players
         }
 #endregion
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             if(!Player.IsLocalActor) {
                 return;
@@ -71,7 +77,7 @@ namespace pdxpartyparrot.Game.Players
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Player.name} Driver");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Player.Name} Driver");
             _debugMenuNode.RenderContentsAction = () => {
                 /*GUILayout.BeginHorizontal();
                     GUILayout.Label("Mouse Sensitivity:");

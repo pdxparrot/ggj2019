@@ -3,6 +3,7 @@
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.State;
 
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
@@ -10,7 +11,7 @@ namespace pdxpartyparrot.ggj2019
 {
     public sealed class GameManager : Game.GameManager<GameManager>
     {
-        public bool IsGameOver => false;
+        public override bool IsGameOver => false;
 
 #region Unity Lifecycle
         private void Awake()
@@ -32,6 +33,8 @@ namespace pdxpartyparrot.ggj2019
         public void StartGame()
         {
             Assert.IsTrue(NetworkServer.active);
+
+            Debug.LogWarning("TODO: start game");
         }
     }
 }

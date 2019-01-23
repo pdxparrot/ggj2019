@@ -1,133 +1,65 @@
-﻿using pdxpartyparrot.Core.Math;
+﻿using JetBrains.Annotations;
+
 using pdxpartyparrot.Core.Util;
 
-using JetBrains.Annotations;
-
 using UnityEngine;
-using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Core.Camera
 {
-    public sealed class FollowCamera : MonoBehaviour
+    public abstract class FollowCamera : MonoBehaviour
     {
-#region Orbit Config
-        [Header("Orbit")]
-
-        [SerializeField]
-        [Tooltip("Enable looking around the follow target")]
-        private bool _enableOrbit = true;
-
-        [SerializeField]
-        [Range(0, 500)]
-        private float _orbitSpeedX = 100.0f;
-
-        [SerializeField]
-        [Range(0, 500)]
-        private float _orbitSpeedY = 100.0f;
-
-        [SerializeField]
-        [Tooltip("Return to the default orbit rotation when released")]
-        private bool _returnToDefault;
-
-        [SerializeField]
-        private Vector2 _defaultOrbitRotation = new Vector2(0.0f, 30.0f);
-
-        [SerializeField]
-        [Range(0, 1)]
-        private float _defaultOrbitReturnTime = 0.5f;
-
-        [SerializeField]
-        [ReadOnly]
-        private Vector2 _orbitReturnVelocity;
-
-        [SerializeField]
-        [ReadOnly]
-        private Vector2 _orbitRotation;
-
-        // TODO: use this
-        [SerializeField]
-        [Range(0, 50)]
-        [Tooltip("The minimum distance the camera should be from the follow target")]
-        private float _orbitMinRadius = 15.0f;
-
-        public float OrbitMinRadius
-        {
-            get => _orbitMinRadius;
-            set => _orbitMinRadius = value;
-        }
-
-        [SerializeField]
-        [Range(0, 50)]
-        [Tooltip("The maximum distance the camera should be from the follow target")]
-        private float _orbitMaxRadius = 15.0f;
-
-        public float OrbitMaxRadius
-        {
-            get => _orbitMaxRadius;
-            set => _orbitMaxRadius = value;
-        }
-#endregion
-
-#region Orbit Constraints
-        [SerializeField]
-        [Range(-360, 0)]
-        private float _orbitXMin = -90.0f;
-
-        [SerializeField]
-        [Range(0, 360)]
-        private float _orbitXMax = 90.0f;
-
-        [SerializeField]
-        [Range(-360, 0)]
-        private float _orbitYMin = -90.0f;
-
-        [SerializeField]
-        [Range(0, 360)]
-        private float _orbitYMax = 90.0f;
-#endregion
-
-        [Space(10)]
-
-#region Zoom Config
+#region Zoom
         [Header("Zoom")]
 
         [SerializeField]
         [Tooltip("Enable zooming in and out relative to the follow target")]
         private bool _enableZoom;
 
+        protected bool EnableZoom => _enableZoom;
+
         [SerializeField]
         [Range(0, 10)]
         private float _minZoomDistance = 5.0f;
+
+        protected float MinZoomDistance => _minZoomDistance;
 
         [SerializeField]
         [Range(0, 100)]
         private float _maxZoomDistance = 100.0f;
 
+        protected float MaxZoomDistance => _maxZoomDistance;
+
         [SerializeField]
         [Range(0, 500)]
         private float _zoomSpeed = 500.0f;
+
+        protected float ZoomSpeed => _zoomSpeed;
 #endregion
 
         [Space(10)]
 
-#region Look Config
-        [Header("Look")]
+#region Smooth
+        [SerializeField]
+        [Tooltip("Smooth the camera movement as it follows the target")]
+        private bool _smooth;
+
+        protected bool Smooth => _smooth;
 
         [SerializeField]
-        [Tooltip("Enable rotating the camera around its local axes")]
-        private bool _enableLook;
+        [Range(0, 0.5f)]
+        private float _smoothTime = 0.05f;
 
-        [SerializeField]
-        [Range(0, 100)]
-        private float _lookSpeedX = 100.0f;
-
-        [SerializeField]
-        [Range(0, 100)]
-        private float _lookSpeedY = 100.0f;
+        protected float SmoothTime => _smoothTime;
 
         [SerializeField]
         [ReadOnly]
-        private Vector2 _lookRotation;
+        private Vector3 _velocity;
+
+        protected Vector3 Velocity
+        {
+            get => _velocity;
+            set => _velocity = value;
+        }
 #endregion
 
         [Space(10)]
@@ -138,47 +70,35 @@ namespace pdxpartyparrot.Core.Camera
         [SerializeField]
         [Tooltip("The target to follow")]
         [CanBeNull]
-        private FollowTarget3D _target;
+        private FollowTarget _target;
 
         [CanBeNull]
-        public FollowTarget3D Target => _target;
-#endregion
-
-        [Space(10)]
-
-#region Smooth
-        [SerializeField]
-        [Tooltip("Smooth the camera movement as it follows the target")]
-        private bool _smooth;
-
-        [SerializeField]
-        [Range(0, 0.5f)]
-        private float _smoothTime = 0.05f;
-
-        [SerializeField]
-        [ReadOnly]
-        private Vector3 _velocity;
-#endregion
+        public FollowTarget Target
+        {
+            get => _target;
+            protected set => _target = value;
+        }
 
         [SerializeField]
         [ReadOnly]
         private Vector3 _lastTargetPosition;
 
-        [SerializeField]
-        [ReadOnly]
-        private bool _isLooking;
-
-        public bool IsLooking => _isLooking;
+        protected Vector3 LastTargetPosition
+        {
+            get => _lastTargetPosition;
+            set => _lastTargetPosition = value;
+        }
+#endregion
 
 #region Unity Lifecycle
-        private void Update()
+        protected virtual void Update()
         {
             float dt = Time.deltaTime;
 
             HandleInput(dt);
         }
 
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
             if(_smooth) {
                 return;
@@ -189,7 +109,7 @@ namespace pdxpartyparrot.Core.Camera
             FollowTarget(dt);
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if(!_smooth) {
                 return;
@@ -201,113 +121,8 @@ namespace pdxpartyparrot.Core.Camera
         }
 #endregion
 
-        public void SetTarget(FollowTarget3D target)
-        {
-            _target = target;
-            _orbitRotation = _defaultOrbitRotation;
-        }
+        protected abstract void HandleInput(float dt);
 
-        private void HandleInput(float dt)
-        {
-            if(null == Target) {
-                return;
-            }
-
-            Profiler.BeginSample("FollowCamera.HandleInput");
-            try {
-                _isLooking = Target.LastLookAxes.sqrMagnitude > float.Epsilon;
-
-                Orbit(Target.LastLookAxes, dt);
-                Zoom(Target.LastLookAxes, dt);
-                Look(Target.LastLookAxes, dt);
-            } finally {
-                Profiler.EndSample();
-            }
-        }
-
-        private void Orbit(Vector3 axes, float dt)
-        {
-            if(!_enableOrbit) {
-                return;
-            }
-
-            // TODO: this is fighting too hard at max rotation
-            // (or maybe the max rotation clamping is killing it)
-            if(_returnToDefault) {
-                _orbitRotation = Vector2.SmoothDamp(_orbitRotation, _defaultOrbitRotation, ref _orbitReturnVelocity, _defaultOrbitReturnTime, Mathf.Infinity, dt);
-            }
-
-            _orbitRotation.x = Mathf.Clamp(MathUtil.WrapAngle(_orbitRotation.x + axes.x * _orbitSpeedX * dt), _orbitXMin, _orbitXMax);
-            _orbitRotation.y = Mathf.Clamp(MathUtil.WrapAngle(_orbitRotation.y - axes.y * _orbitSpeedY * dt), _orbitYMin, _orbitYMax);
-        }
-
-        private void Zoom(Vector3 axes, float dt)
-        {
-            if(!_enableZoom) {
-                return;
-            }
-
-            float zoomAmount = axes.z * _zoomSpeed * dt;
-
-            float minDistance = _minZoomDistance, maxDistance = _maxZoomDistance;
-            if(null != Target) {
-                // avoid zooming into the target
-                Vector3 closestBoundsPoint = Target.Collider.ClosestPointOnBounds(transform.position);
-                float distanceToPoint = (closestBoundsPoint - Target.TargetTransform.position).magnitude;
-
-                minDistance += distanceToPoint;
-                maxDistance += distanceToPoint;
-
-                _orbitMaxRadius = Mathf.Clamp(_orbitMaxRadius + zoomAmount, minDistance, maxDistance);
-            } else {
-                _orbitMaxRadius += zoomAmount;
-            }
-        }
-
-        private void Look(Vector3 axes, float dt)
-        {
-            if(!_enableLook) {
-                return;
-            }
-
-            _lookRotation.x = MathUtil.WrapAngle(_lookRotation.x + axes.x * _lookSpeedX * dt);
-            _lookRotation.y = MathUtil.WrapAngle(_lookRotation.y - axes.y * _lookSpeedY * dt);
-        }
-
-        private void FollowTarget(float dt)
-        {
-            if(null == Target) {
-                return;
-            }
-
-            Profiler.BeginSample("FollowCamera.FollowTarget");
-            try {
-                Quaternion orbitRotation = Quaternion.Euler(_orbitRotation.y, _orbitRotation.x, 0.0f);
-                Quaternion lookRotation = Quaternion.Euler(_lookRotation.y, _lookRotation.x, 0.0f);
-
-                // if we're going to try and return to default, including the target's rotation
-                Quaternion finalOrbitRotation;
-                if(_returnToDefault) {
-                    Quaternion targetRotation = Quaternion.Euler(0.0f, Target.TargetTransform.eulerAngles.y, 0.0f);
-                    finalOrbitRotation = targetRotation * orbitRotation;
-                } else {
-                    finalOrbitRotation = orbitRotation;
-                }
-
-                transform.rotation = finalOrbitRotation * lookRotation;
-
-                // TODO: this doens't work if we free-look and zoom
-                // because we're essentially moving the target position, not the camera position
-                // TODO: also enabling/disabling this causes the camera to zoom in and out, not sure why
-                _lastTargetPosition = Target.TargetTransform.position;
-                _lastTargetPosition = _smooth
-                    ? Vector3.SmoothDamp(transform.position, _lastTargetPosition, ref _velocity, _smoothTime)
-                    : _lastTargetPosition;
-
-                transform.position = _lastTargetPosition + finalOrbitRotation * new Vector3(0.0f, 0.0f, -_orbitMaxRadius);
-            } finally {
-                Profiler.EndSample();
-            }
-        }
+        protected abstract void FollowTarget(float dt);
     }
 }

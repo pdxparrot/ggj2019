@@ -15,19 +15,70 @@ using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    [RequireComponent(typeof(CapsuleCollider))]
-    public class CharacterActorController : ActorController
+    public interface ICharacterActorController
+    {
+        CharacterActorControllerData ControllerData { get; }
+
+        // TODO: this could move to the data
+        float RaycastRoutineRate { get; }
+
+        Actor Owner { get; }
+
+        Vector3 Position { get; }
+
+        Quaternion Rotation3D { get; set; }
+
+        float Rotation2D { get; set; }
+
+        Vector3 Velocity { get; set; }
+
+        bool CanMove { get; }
+
+        bool IsMoving { get; }
+
+        bool IsGrounded { get; }
+
+        bool DidGroundCheckCollide { get; }
+
+        bool IsSliding { get; }
+
+        bool IsAnimating { get; }
+
+        bool UseGravity { get; set; }
+
+        Vector3 LastMoveAxes { get; }
+
+        void StartAnimation3D(Vector3 targetPosition, Quaternion targetRotation, float timeSeconds, Action onComplete=null);
+
+        void StartAnimation2D(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete=null);
+
+        void MoveTo(Vector3 position);
+
+        void MovePosition(Vector3 position);
+
+        void AddForce(Vector3 force);
+
+        void DefaultAnimationMove(Vector3 axes, float dt);
+
+        void DefaultPhysicsMove(Vector3 axes, float speed, float dt);
+
+        void Jump(float height, string animationParam);
+    }
+
+    // TODO: what's left of this can be broken down into components
+    // that can be added to the 2D/3D components
+    // (this thing is vestigial from the pre-dimension split era)
+    public class CharacterActorController : MonoBehaviour
     {
         [SerializeField]
         private CharacterActorControllerData _controllerData;
 
         public CharacterActorControllerData ControllerData => _controllerData;
 
-#region Collider
-        public CapsuleCollider Capsule => (CapsuleCollider)Owner.Collider;
+        [SerializeField]
+        private Actor _owner;
 
-        public CapsuleCollider2D Capsule2D => (CapsuleCollider2D)Owner.Collider2D;
-#endregion
+        public Actor Owner => _owner;
 
         [Space(10)]
 
@@ -55,6 +106,8 @@ namespace pdxpartyparrot.Game.Actors
         [ReadOnly]
         private Vector3 _groundCheckNormal;
 
+        public Vector3 GroundCheckNormal => _groundCheckNormal;
+
         [SerializeField]
         [ReadOnly]
         private float _groundCheckMinDistance;
@@ -69,9 +122,7 @@ namespace pdxpartyparrot.Game.Actors
             protected set => _isGrounded = value;
         }
 
-        public bool IsFalling => UseGravity && (!IsGrounded && !IsSliding && Rigidbody.velocity.y < 0.0f);
-
-        private float GroundCheckRadius => Capsule.radius - 0.1f;
+        private float GroundCheckRadius => _owner.Radius - 0.1f;
 
         protected Vector3 GroundCheckCenter => transform.position + (GroundCheckRadius * Vector3.up);
 #endregion
@@ -84,6 +135,8 @@ namespace pdxpartyparrot.Game.Actors
         [SerializeField]
         [ReadOnly]
         private float _groundSlope;
+
+        public float GroundSlope => _groundSlope;
 
         [SerializeField]
         [ReadOnly]
@@ -104,50 +157,22 @@ namespace pdxpartyparrot.Game.Actors
 
         [SerializeField]
         [ReadOnly]
-        private bool _useGravity;
+        private bool _isKinematic;
 
-        public bool UseGravity
+        public bool IsKinematic
         {
-            get => _useGravity;
-            set
-            {
-                _useGravity = value;
-                Rigidbody.velocity = Vector3.zero;
-            }
+            get => _isKinematic;
+            set => _isKinematic = value;
         }
 
         private CharacterActorControllerComponent[] _components;
 
 #region Unity Lifecycle
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
-
             _components = GetComponents<CharacterActorControllerComponent>();
 
-            InitRigidbody();
-
             StartCoroutine(RaycastRoutine());
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-
-            Owner.Animator.SetBool(ControllerData.FallingParam, IsFalling);
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            float dt = Time.fixedDeltaTime;
-
-            FudgeVelocity(dt);
-
-            // turn off gravity if we're grounded and not moving and not sliding
-            // this should stop us sliding down slopes we shouldn't slide down
-            Rigidbody.useGravity = UseGravity && (!IsGrounded || IsMoving || IsSliding);
         }
 
         protected virtual void OnDrawGizmos()
@@ -156,12 +181,6 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(Rigidbody.position, Rigidbody.position + Rigidbody.angularVelocity);
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(Rigidbody.position, Rigidbody.position + Rigidbody.velocity);
-
             Gizmos.color = IsGrounded ? Color.red : Color.yellow;
             Gizmos.DrawWireSphere(GroundCheckCenter + (ControllerData.GroundedEpsilon * Vector3.down), GroundCheckRadius);
 
@@ -169,98 +188,6 @@ namespace pdxpartyparrot.Game.Actors
             Gizmos.DrawWireSphere(GroundCheckCenter + (ControllerData.GroundCheckLength * Vector3.down), GroundCheckRadius);
         }
 #endregion
-
-        private void InitRigidbody()
-        {
-            Rigidbody.isKinematic = false;
-            Rigidbody.useGravity = true;
-            Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            Rigidbody.detectCollisions = true;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-            // we run the follow cam in FixedUpdate() and interpolation interferes with that
-            Rigidbody.interpolation = RigidbodyInterpolation.None;
-        }
-
-        public override void AnimationMove(Vector3 axes, float dt)
-        {
-            if(!CanMove) {
-                return;
-            }
-
-            if(RunOnComponents(c => c.OnAnimationMove(axes, dt))) {
-                return;
-            }
-
-            DefaultAnimationMove(axes, dt);
-        }
-
-        public void DefaultAnimationMove(Vector3 axes, float dt)
-        {
-            if(!CanMove) {
-                return;
-            }
-
-            Vector3 forward = new Vector3(axes.x, 0.0f, axes.y);
-
-            // align the movement with the camera
-            if(null != Owner.Viewer) {
-                forward = (Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) * forward).normalized;
-            }
-
-            // align the player with the movement
-            if(forward.sqrMagnitude > float.Epsilon) {
-                transform.forward = forward;
-            }
-
-            Owner.Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
-            Owner.Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
-        }
-
-        public override void PhysicsMove(Vector3 axes, float dt)
-        {
-            if(!CanMove) {
-                return;
-            }
-
-            if(RunOnComponents(c => c.OnPhysicsMove(axes, dt))) {
-                return;
-            }
-
-            if(!ControllerData.AllowAirControl && IsFalling) {
-                return;
-            }
-
-            DefaultPhysicsMove(axes, ControllerData.MoveSpeed, dt);
-        }
-
-        public void DefaultPhysicsMove(Vector3 axes, float speed, float dt)
-        {
-            if(!CanMove) {
-                return;
-            }
-
-            Vector3 fixedAxes = new Vector3(axes.x, 0.0f, axes.y);
-
-            // prevent moving up slopes we can't move up
-            if(_groundSlope >= ControllerData.SlopeLimit) {
-                float dp = Vector3.Dot(transform.forward, _groundCheckNormal);
-                if(dp < 0.0f) {
-                    fixedAxes.z = 0.0f;
-                }
-            }
-
-            Vector3 velocity = fixedAxes * speed;
-            Quaternion rotation = null != Owner.Viewer ? Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) : Rigidbody.rotation;
-            velocity = rotation * velocity;
-            velocity.y = Rigidbody.velocity.y;
-
-            if(Rigidbody.isKinematic) {
-                Rigidbody.MovePosition(Rigidbody.position + velocity * dt);
-            } else {
-                Rigidbody.velocity = velocity;
-            }
-        }
 
 #region Components
         [CanBeNull]
@@ -286,7 +213,7 @@ namespace pdxpartyparrot.Game.Actors
             }
         }
 
-        private bool RunOnComponents(Func<CharacterActorControllerComponent, bool> f)
+        public bool RunOnComponents(Func<CharacterActorControllerComponent, bool> f)
         {
             foreach(var component in _components) {
                 if(f(component)) {
@@ -314,25 +241,9 @@ namespace pdxpartyparrot.Game.Actors
         }
 #endregion
 
-        public void Jump(float height, string animationParam)
+        public void ResetGroundCheck()
         {
-            if(!CanMove) {
-                return;
-            }
-
-            // force physics to a sane state for the first frame of the jump
-            Rigidbody.useGravity = true;
             _didGroundCheckCollide = _isGrounded = false;
-
-            // factor in fall speed adjust
-            float gravity = -Physics.gravity.y + ControllerData.FallSpeedAdjustment;
-
-            // v = sqrt(2gh)
-            Vector3 velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
-
-            Rigidbody.velocity = velocity;
-
-            Owner.Animator.SetTrigger(animationParam);
         }
 
         private IEnumerator RaycastRoutine()
@@ -380,7 +291,7 @@ namespace pdxpartyparrot.Game.Actors
 
                 _didGroundCheckCollide = CheckIsGrounded(out _groundCheckMinDistance);
 
-                if(Rigidbody.isKinematic) {
+                if(IsKinematic) {
                     // something else is handling this case?
                 } else {
                     _isGrounded = _didGroundCheckCollide && _groundCheckMinDistance < ControllerData.GroundedEpsilon;
@@ -390,7 +301,10 @@ namespace pdxpartyparrot.Game.Actors
                 _isSliding = _groundSlope >= ControllerData.SlopeLimit;
 
                 if(!wasGrounded && IsGrounded) {
-                    Owner.Animator.SetTrigger(ControllerData.GroundedParam);
+                    if(null != _owner.Animator) {
+                        _owner.Animator.SetTrigger(ControllerData.GroundedParam);
+                    }
+
                     if(null != _groundedEffect) {
                         _groundedEffect.Trigger();
                     }
@@ -400,27 +314,5 @@ namespace pdxpartyparrot.Game.Actors
             }
         }
 #endregion
-
-        private void FudgeVelocity(float dt)
-        {
-            Vector3 adjustedVelocity = Rigidbody.velocity;
-
-            if(IsGrounded && !IsMoving) {
-                // prevent any weird ground adjustment shenanigans
-                // when we're grounded and not moving
-                adjustedVelocity.y = 0.0f;
-            } else if(Rigidbody.useGravity) {
-                // do some fudging to jumping/falling so it feels better
-                float adjustment = ControllerData.FallSpeedAdjustment * dt;
-                adjustedVelocity.y -= adjustment;
-
-                // apply terminal velocity
-                if(adjustedVelocity.y < -ControllerData.TerminalVelocity) {
-                    adjustedVelocity.y = -ControllerData.TerminalVelocity;
-                }
-            }
-
-            Rigidbody.velocity = adjustedVelocity;
-        }
     }
 }

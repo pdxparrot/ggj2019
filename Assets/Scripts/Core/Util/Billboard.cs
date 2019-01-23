@@ -12,8 +12,9 @@ namespace pdxpartyparrot.Core.Util
 #region Unity Lifecycle
         private void LateUpdate()
         {
+            Transform ctransform = transform;
             if(null != Camera) {
-                transform.forward = (Camera.transform.position - transform.position).normalized;
+                ctransform.forward = (Camera.transform.position - ctransform.position).normalized;
             }
         }
 #endregion

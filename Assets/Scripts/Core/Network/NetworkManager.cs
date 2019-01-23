@@ -91,13 +91,13 @@ namespace pdxpartyparrot.Core.Network
 #region Network Prefabs
         public void RegisterNetworkPrefab<T>(T networkPrefab) where T: NetworkBehaviour
         {
-            Debug.Log($"[NetworkManager]: Registering network prefab {networkPrefab.name}");
+            Debug.Log($"[NetworkManager]: Registering network prefab '{networkPrefab.name}'");
             ClientScene.RegisterPrefab(networkPrefab.gameObject);
         }
 
         public void UnregisterNetworkPrefab<T>(T networkPrefab) where T: NetworkBehaviour
         {
-            Debug.Log($"[NetworkManager]: Unregistering network prefab {networkPrefab.name}");
+            Debug.Log($"[NetworkManager]: Unregistering network prefab '{networkPrefab.name}'");
             ClientScene.UnregisterPrefab(networkPrefab.gameObject);
         }
 
@@ -109,7 +109,7 @@ namespace pdxpartyparrot.Core.Network
                 return null;
             }
 
-            Debug.Log($"[NetworkManager]: Spawning network prefab {networkPrefab.name}");
+            Debug.Log($"[NetworkManager]: Spawning network prefab '{networkPrefab.name}'");
 
             T obj = Instantiate(networkPrefab);
             if(null == obj) {
@@ -152,7 +152,7 @@ namespace pdxpartyparrot.Core.Network
                 return;
             }
 
-            Debug.Log($"[NetworkManager]: Destroying network object {networkObject.name}");
+            Debug.Log($"[NetworkManager]: Destroying network object '{networkObject.name}'");
 
             NetworkServer.Destroy(networkObject.gameObject);
         }
@@ -161,7 +161,7 @@ namespace pdxpartyparrot.Core.Network
 #region Player Prefab
         public void RegisterPlayerPrefab<T>(T prefab) where T: NetworkActor
         {
-            Debug.Log($"[NetworkManager]: Registering player prefab {prefab.name}");
+            Debug.Log($"[NetworkManager]: Registering player prefab '{prefab.name}'");
             // TODO: warn if already set?
             playerPrefab = prefab.gameObject;
             RegisterNetworkPrefab(prefab);
@@ -169,7 +169,7 @@ namespace pdxpartyparrot.Core.Network
 
         public void UnregisterPlayerPrefab()
         {
-            Debug.Log($"[NetworkManager]: Unregistering player prefab {playerPrefab.name}");
+            Debug.Log($"[NetworkManager]: Unregistering player prefab '{playerPrefab.name}'");
             // TODO: warn if not set?
             UnregisterNetworkPrefab(playerPrefab.GetComponent<NetworkBehaviour>());
             playerPrefab = null;

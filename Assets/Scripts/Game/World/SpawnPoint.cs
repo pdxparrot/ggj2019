@@ -28,10 +28,13 @@ namespace pdxpartyparrot.Game.World
 
         private void InitActor(Actor actor)
         {
-            actor.GameObject.transform.position = transform.position;
-            actor.GameObject.transform.rotation = transform.rotation;
+            Transform actorTransform = actor.transform;
+            Transform thisTransform = transform;
 
-            actor.GameObject.SetActive(true);
+            actorTransform.position = thisTransform.position;
+            actorTransform.rotation = thisTransform.rotation;
+
+            actor.gameObject.SetActive(true);
         }
 
         public virtual void Spawn(Actor actor)

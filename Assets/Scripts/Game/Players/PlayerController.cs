@@ -1,25 +1,11 @@
-﻿using pdxpartyparrot.Game.Actors;
-using pdxpartyparrot.Game.Data;
-
-using UnityEngine;
+﻿using pdxpartyparrot.Game.Data;
 
 namespace pdxpartyparrot.Game.Players
 {
-    public abstract class PlayerController : CharacterActorController
+    public interface IPlayerController
     {
-        [SerializeField]
-        private PlayerControllerData _playerControllerData;
+        PlayerControllerData PlayerControllerData { get; }
 
-        public PlayerControllerData PlayerControllerData => _playerControllerData;
-
-        public Player Player => (Player)Owner;
-
-#region Unity Lifecycle
-        protected override void FixedUpdate()
-        {
-            // fixes sketchy rigidbody angular momentum shit
-            Rigidbody.angularVelocity = Vector3.zero;
-        }
-#endregion
+        IPlayer Player { get; }
     }
 }

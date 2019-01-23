@@ -11,9 +11,6 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Core.Input
 {
-    // https://github.com/Unity-Technologies/InputSystem/wiki/How-Do-I...
-    // https://github.com/Unity-Technologies/InputSystem/wiki/OldVsNewInputSystem
-
     public sealed class InputManager : SingletonBehavior<InputManager>
     {
         private static int _lastListenerId;

@@ -2,10 +2,12 @@
 {
     public sealed class JumpControllerComponent : CharacterActorControllerComponent
     {
+#region Actions
         public class JumpAction : CharacterActorControllerAction
         {
             public static JumpAction Default = new JumpAction();
         }
+#endregion
 
         public override bool OnPerformed(CharacterActorControllerAction action)
         {

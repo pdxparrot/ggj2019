@@ -3,6 +3,7 @@ using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Game.Actors;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.ggj2019.Players
@@ -17,15 +18,22 @@ namespace pdxpartyparrot.ggj2019.Players
             set => PartyParrotManager.Instance.SetBool(InvertLookYKey, value);
         }
 
-        private PlayerController GamePlayerController => (PlayerController)Controller;
+        private PlayerController GamePlayerController => (PlayerController)PlayerController;
 
-        private Player Player => GamePlayerController.GamePlayer;
+        private Player GamePlayer => GamePlayerController.GamePlayer;
 
         private GamepadListener _gamepadListener;
 
         private DebugMenuNode _debugMenuNode;
 
-#region Unity Lifecycle
+        #region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Assert.IsTrue(PlayerController is PlayerController);
+        }
+
         protected override void Update()
         {
             base.Update();
@@ -36,7 +44,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             float dt = Time.deltaTime;
 
-            Player.FollowTarget.LastLookAxes = Vector3.Lerp(Player.FollowTarget.LastLookAxes, LastControllerLook, dt * PlayerManager.Instance.PlayerData.LookLerpSpeed);
+            GamePlayer.FollowTarget.LastLookAxes = Vector3.Lerp(GamePlayer.FollowTarget.LastLookAxes, LastControllerLook, dt * PlayerManager.Instance.PlayerData.LookLerpSpeed);
         }
 
         protected override void OnDestroy()
@@ -46,7 +54,10 @@ namespace pdxpartyparrot.ggj2019.Players
 
             DestroyDebugMenu();
 
-Debug.Log("TODO: player input");
+// TODO: where did enable / disable controls go?
+// we should mirror that also for the server spectator rather than using just unity enable / disable callbacks
+
+Debug.LogWarning("TODO: player input");
 /*
             if(InputManager.HasInstance) {
                 InputManager.Instance.Controls.game.pause.performed -= OnPause;
@@ -77,15 +88,17 @@ Debug.Log("TODO: player input");
         }
 #endregion
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+
             if(!Player.IsLocalActor) {
                 return;
             }
 
             _gamepadListener = gameObject.AddComponent<GamepadListener>();
 
-Debug.Log("TODO: player input");
+Debug.LogWarning("TODO: player input");
 /*
             InputManager.Instance.Controls.game.pause.performed += OnPause;
 
@@ -291,7 +304,7 @@ Debug.Log("TODO: player input");
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"ggj2019.Player {Player.name} Driver");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"ggj2019.Player {Player.Name} Driver");
             _debugMenuNode.RenderContentsAction = () => {
                 InvertLookY = GUILayout.Toggle(InvertLookY, "Invert Look Y");
             };

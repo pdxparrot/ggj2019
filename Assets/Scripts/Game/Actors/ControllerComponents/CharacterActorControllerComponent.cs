@@ -8,16 +8,18 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 // TODO: if subclasses could register for specific action types (and we keep a dictionary ActionType => Listener)
 // then that would work out a lot faster and cleaner than how this is currently done
 
+#region Actions
         public abstract class CharacterActorControllerAction
         {
         }
+#endregion
 
-        protected CharacterActorController Controller { get; private set; }
+        protected ICharacterActorController Controller { get; private set; }
 
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            Controller = GetComponent<CharacterActorController>();
+            Controller = GetComponent<ICharacterActorController>();
         }
 
         protected virtual void OnDestroy()

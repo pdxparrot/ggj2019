@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6297127685362122668}
   - component: {fileID: 7610738845913210240}
-  - component: {fileID: 7234432045114288802}
   - component: {fileID: 6859429570231896928}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,14 +74,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7234432045114288802
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259860319975399722}
-  m_Enabled: 1
 --- !u!114 &6859429570231896928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,11 +98,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1310557776527782232}
-  - component: {fileID: 3962975942229752947}
-  - component: {fileID: 4368889329823901599}
-  - component: {fileID: 5100901357454156853}
-  - component: {fileID: 8252839539329396997}
-  m_Layer: 0
+  - component: {fileID: 2204871521284202605}
+  - component: {fileID: 104619107034480901}
+  - component: {fileID: 6050605875602572710}
+  - component: {fileID: 2248788094749424721}
+  m_Layer: 11
   m_Name: ServerSpectatorViewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +125,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3962975942229752947
+--- !u!135 &2204871521284202605
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,47 +138,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4368889329823901599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2644183247820065343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30fdc18110cac7c4590207a07f16f2e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enableOrbit: 1
-  _orbitSpeedX: 100
-  _orbitSpeedY: 100
-  _returnToDefault: 0
-  _defaultOrbitRotation: {x: 0, y: 30}
-  _defaultOrbitReturnTime: 0.5
-  _orbitReturnVelocity: {x: 0, y: 0}
-  _orbitRotation: {x: 0, y: 0}
-  _orbitMinRadius: 15
-  _orbitMaxRadius: 15
-  _orbitXMin: -90
-  _orbitXMax: 90
-  _orbitYMin: -90
-  _orbitYMax: 90
-  _enableZoom: 0
-  _minZoomDistance: 5
-  _maxZoomDistance: 100
-  _zoomSpeed: 500
-  _enableLook: 0
-  _lookSpeedX: 100
-  _lookSpeedY: 100
-  _lookRotation: {x: 0, y: 0}
-  _target: {fileID: 0}
-  _smooth: 0
-  _smoothTime: 0.05
-  _velocity: {x: 0, y: 0, z: 0}
-  _lastTargetPosition: {x: 0, y: 0, z: 0}
-  _isLooking: 0
---- !u!54 &5100901357454156853
+--- !u!54 &104619107034480901
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,7 +154,47 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8252839539329396997
+--- !u!114 &6050605875602572710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644183247820065343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd79ba5b38cfea4fbbfacebc23dc390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableZoom: 0
+  _minZoomDistance: 5
+  _maxZoomDistance: 100
+  _zoomSpeed: 500
+  _smooth: 0
+  _smoothTime: 0.05
+  _velocity: {x: 0, y: 0, z: 0}
+  _target: {fileID: 0}
+  _lastTargetPosition: {x: 0, y: 0, z: 0}
+  _enableOrbit: 1
+  _orbitSpeedX: 100
+  _orbitSpeedY: 100
+  _returnToDefault: 0
+  _defaultOrbitRotation: {x: 0, y: 30}
+  _defaultOrbitReturnTime: 0.5
+  _orbitReturnVelocity: {x: 0, y: 0}
+  _orbitRotation: {x: 0, y: 0}
+  _orbitMinRadius: 15
+  _orbitMaxRadius: 15
+  _orbitXMin: -90
+  _orbitXMax: 90
+  _orbitYMin: -90
+  _orbitYMax: 90
+  _enableLook: 0
+  _lookSpeedX: 100
+  _lookSpeedY: 100
+  _lookRotation: {x: 0, y: 0}
+  _isLooking: 0
+--- !u!114 &2248788094749424721
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,9 +221,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4577835358627964842}
   - component: {fileID: 8784782024086465776}
-  - component: {fileID: 325656213865988820}
   - component: {fileID: 9070026691261011844}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,14 +285,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &325656213865988820
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3267480500756560996}
-  m_Enabled: 1
 --- !u!114 &9070026691261011844
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,6 @@ namespace pdxpartyparrot.Game.Camera
     {
         Viewer Viewer { get; }
 
-        void Initialize(Player target, int id);
+        void Initialize(IPlayer player, int id);
     }
 }

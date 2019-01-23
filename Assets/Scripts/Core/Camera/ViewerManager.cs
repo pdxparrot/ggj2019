@@ -86,6 +86,7 @@ namespace pdxpartyparrot.Core.Camera
         public T AcquireViewer<T>() where T: Viewer
         {
             if(_unassignedViewers.Count < 1) {
+                Debug.LogWarning("Attempt to acquire a viewer when there are none!");
                 return null;
             }
 
@@ -121,8 +122,9 @@ namespace pdxpartyparrot.Core.Camera
             foreach(Viewer viewer in _viewers) {
                 ReleaseViewer(viewer);
 
-                viewer.transform.position = Vector3.zero;
-                viewer.transform.rotation = Quaternion.identity;
+                Transform viewerTransform = viewer.transform;
+                viewerTransform.position = Vector3.zero;
+                viewerTransform.rotation = Quaternion.identity;
             }
             ResizeViewports();
         }

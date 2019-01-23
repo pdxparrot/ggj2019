@@ -9,21 +9,10 @@ namespace pdxpartyparrot.ggj2019.State
 {
     public sealed class MainGameState : Game.State.MainGameState
     {
-        [SerializeField]
-        private GameOverState _gameOverState;
-
-        public override void OnUpdate(float dt)
-        {
-            if(GameManager.Instance.IsGameOver) {
-                GameStateManager.Instance.PushSubState(_gameOverState, state => {
-                    state.Initialize();
-                });
-            }
-        }
-
         protected override bool InitializeServer()
         {
             if(!base.InitializeServer()) {
+                Debug.LogWarning("Failed to initialize server!");
                 return false;
             }
 
@@ -34,11 +23,12 @@ namespace pdxpartyparrot.ggj2019.State
 
         protected override bool InitializeClient()
         {
+            ViewerManager.Instance.AllocateViewers(1, (PlayerViewer)PlayerManager.Instance.PlayerData.PlayerViewerPrefab);
+
             if(!base.InitializeClient()) {
+                Debug.LogWarning("Failed to initialize client!");
                 return false;
             }
-
-            ViewerManager.Instance.AllocateViewers(1, PlayerManager.Instance.PlayerData.PlayerViewerPrefab as PlayerViewer);
 
             return true;
         }

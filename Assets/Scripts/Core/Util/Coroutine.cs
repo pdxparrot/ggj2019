@@ -30,7 +30,7 @@ namespace pdxpartyparrot.Core.Util
                 return _result;
             }
 
-            private set { _result = value; }
+            private set => _result = value;
         }
 #endregion
 

@@ -10,7 +10,7 @@ namespace pdxpartyparrot.ggj2019.Loading
         [Space(10)]
 
 #region Manager Prefabs
-        [Header("Game Prefabs")]
+        [Header("Game Manager Prefabs")]
 
         [SerializeField]
         private GameManager _gameManagerPrefab;

@@ -17,51 +17,45 @@ namespace pdxpartyparrot.Core.Actors
 
         public int Id => _id;
 
-        public GameObject GameObject => gameObject;
-
         public string Name => name;
 
-#region Collider
-        [SerializeField]
-        private Collider _collider;
-
-        public Collider Collider => _collider;
-
-        [SerializeField]
-        private Collider2D _collider2D;
-
-        public Collider2D Collider2D => _collider2D;
-#endregion
+        public Vector3 Position => transform.position;
 
         public abstract float Height { get; }
 
         public abstract float Radius { get; }
 
+        [CanBeNull]
+        public virtual Viewer Viewer { get; set; }
+
 #region Model
+        [CanBeNull]
         [SerializeField]
         private GameObject _model;
 
+        [CanBeNull]
         public GameObject Model => _model;
 #endregion
 
 #region Controller
+        [CanBeNull]
         [SerializeField]
         private ActorController _controller;
 
+        [CanBeNull]
         public ActorController Controller => _controller;
 #endregion
 
 #region Animation
+        [CanBeNull]
         [SerializeField]
         private Animator _animator;
 
+        [CanBeNull]
         public Animator Animator => _animator;
 #endregion
 
         public abstract bool IsLocalActor { get; }
-
-        [CanBeNull]
-        public abstract Viewer Viewer { get; }
 
 #region Unity Lifecycle
         protected virtual void Awake()
@@ -91,7 +85,9 @@ namespace pdxpartyparrot.Core.Actors
 #region Event Handlers
         private void PauseEventHandler(object sender, EventArgs args)
         {
-            Animator.enabled = !PartyParrotManager.Instance.IsPaused;
+            if(Animator != null) {
+                Animator.enabled = !PartyParrotManager.Instance.IsPaused;
+            }
         }
 #endregion
     }

@@ -3,7 +3,7 @@ using pdxpartyparrot.ggj2019.Data;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class PlayerController : Game.Players.PlayerController
+    public sealed class PlayerController : Game.Players.PlayerController3D
     {
         public Data.PlayerControllerData GamePlayerControllerData => (Data.PlayerControllerData)PlayerControllerData;
 

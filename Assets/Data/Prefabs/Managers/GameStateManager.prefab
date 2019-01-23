@@ -51,7 +51,7 @@ MonoBehaviour:
     type: 3}
   _sceneTesterStatePrefab: {fileID: 5929889422699767970, guid: 4f1774b9fb9c5744e914d4473f5be503,
     type: 3}
-  _serverSpectatorPrefab: {fileID: 1861802136262844766, guid: 9d2e647f5ce05304aa47b6d948febd7d,
+  _serverSpectatorPrefab: {fileID: 6347463828376247753, guid: 9d2e647f5ce05304aa47b6d948febd7d,
     type: 3}
-  _serverSpectatorViewer: {fileID: 8252839539329396997, guid: 18cd65631e05a0f469632e92e783f482,
+  _serverSpectatorViewer: {fileID: 2248788094749424721, guid: 18cd65631e05a0f469632e92e783f482,
     type: 3}

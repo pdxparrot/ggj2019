@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Players
 {
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(IPlayerController))]
     public abstract class PlayerControllerComponent : CharacterActorControllerComponent
     {
-        protected PlayerController PlayerController => (PlayerController)Controller;
+        protected IPlayerController PlayerController => (IPlayerController)Controller;
     }
 }

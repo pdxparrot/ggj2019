@@ -64,7 +64,7 @@ namespace pdxpartyparrot.Game.State
 #region Network
         [CanBeNull]
         public NetworkClient NetworkClient { get; set; }
-        #endregion
+#endregion
 
 #region Managers
         [SerializeField]
@@ -92,7 +92,7 @@ namespace pdxpartyparrot.Game.State
             InitDebugMenu();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             ExitCurrentState(null);
 

@@ -43,3 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ea0d09e644493fbabf681ac4ad8174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseMenuPrefab: {fileID: 8912950028800563810, guid: 18d587ac9018ca54890aa156d49308ee,
+    type: 3}

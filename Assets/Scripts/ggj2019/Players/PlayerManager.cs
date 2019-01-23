@@ -8,8 +8,10 @@ namespace pdxpartyparrot.ggj2019.Players
         public PlayerData GamePlayerData => (PlayerData)PlayerData;
 
 #region Unity Lifecycle
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             GameStateManager.Instance.RegisterPlayerManager(this);
         }
 

@@ -17,6 +17,9 @@ namespace pdxpartyparrot.Game.State
     public abstract class MainGameState : GameState
     {
         [SerializeField]
+        private GameOverState _gameOverState;
+
+        [SerializeField]
         private AudioClip _music;
 
         private ServerSpectator _serverSpectator;
@@ -33,6 +36,15 @@ namespace pdxpartyparrot.Game.State
             if(NetworkClient.active) {
                 AudioManager.Instance.PlayMusic(_music);
                 UIManager.Instance.Initialize();
+            }
+        }
+
+        public override void OnUpdate(float dt)
+        {
+            if(GameStateManager.Instance.GameManager.IsGameOver) {
+                GameStateManager.Instance.PushSubState(_gameOverState, state => {
+                    state.Initialize();
+                });
             }
         }
 

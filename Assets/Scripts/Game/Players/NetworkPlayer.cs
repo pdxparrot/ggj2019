@@ -6,6 +6,7 @@ using pdxpartyparrot.Core.Network;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 namespace pdxpartyparrot.Game.Players
@@ -14,12 +15,14 @@ namespace pdxpartyparrot.Game.Players
     public abstract class NetworkPlayer : NetworkActor
     {
         [CanBeNull]
-        public Player Player => (Player)Actor;
+        public IPlayer Player => (IPlayer)Actor;
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
+
+            Assert.IsTrue(Actor is IPlayer);
 
             NetworkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncRigidbody3D;
             NetworkTransform.syncRotationAxis = NetworkTransform.AxisSyncMode.AxisY;
@@ -29,10 +32,10 @@ namespace pdxpartyparrot.Game.Players
         [Server]
         public virtual void ResetPlayer(PlayerData playerData)
         {
-            if(null != Player) {
-                Player.Controller.Rigidbody.mass = playerData.Mass;
-                Player.Controller.Rigidbody.drag = playerData.Drag;
-                Player.Controller.Rigidbody.angularDrag = playerData.AngularDrag;
+            if(null != Player && null != Player.Controller) {
+                Player.Controller.Mass = playerData.Mass;
+                Player.Controller.LinearDrag = playerData.Drag;
+                Player.Controller.AngularDrag = playerData.AngularDrag;
             }
         }
 

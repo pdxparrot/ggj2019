@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4787523081657020210}
   - component: {fileID: 2918448500653730605}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PostProcessVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,9 +58,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3921110100430259900}
   - component: {fileID: 3473508580517442035}
-  - component: {fileID: 7542922564913775060}
   - component: {fileID: 709747187012081507}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,14 +122,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7542922564913775060
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6961062614899350472}
-  m_Enabled: 1
 --- !u!114 &709747187012081507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,11 +147,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7785593175876455062}
   - component: {fileID: 2779097547885376191}
-  - component: {fileID: 7653924952402384154}
   - component: {fileID: 4665280679901225539}
   - component: {fileID: 4704697714037848707}
   - component: {fileID: 6057515659239129830}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,14 +213,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7653924952402384154
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7278880765250310912}
-  m_Enabled: 1
 --- !u!114 &4665280679901225539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,10 +357,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6565186795881872307}
   - component: {fileID: 4986122861790259886}
-  - component: {fileID: 6157318718206547192}
-  - component: {fileID: 3633219479317393078}
-  - component: {fileID: 3136748009235386733}
-  m_Layer: 0
+  - component: {fileID: 7188633352861802348}
+  - component: {fileID: 4085735361072586493}
+  - component: {fileID: 1188256405820769467}
+  m_Layer: 11
   m_Name: PlayerViewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,47 +397,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6157318718206547192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844862100883784830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30fdc18110cac7c4590207a07f16f2e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enableOrbit: 1
-  _orbitSpeedX: 100
-  _orbitSpeedY: 100
-  _returnToDefault: 0
-  _defaultOrbitRotation: {x: 0, y: 30}
-  _defaultOrbitReturnTime: 0.5
-  _orbitReturnVelocity: {x: 0, y: 0}
-  _orbitRotation: {x: 0, y: 0}
-  _orbitMinRadius: 15
-  _orbitMaxRadius: 15
-  _orbitXMin: -90
-  _orbitXMax: 90
-  _orbitYMin: -90
-  _orbitYMax: 90
-  _enableZoom: 0
-  _minZoomDistance: 5
-  _maxZoomDistance: 100
-  _zoomSpeed: 500
-  _enableLook: 0
-  _lookSpeedX: 100
-  _lookSpeedY: 100
-  _lookRotation: {x: 0, y: 0}
-  _target: {fileID: 0}
-  _smooth: 0
-  _smoothTime: 0.05
-  _velocity: {x: 0, y: 0, z: 0}
-  _lastTargetPosition: {x: 0, y: 0, z: 0}
-  _isLooking: 0
---- !u!54 &3633219479317393078
+--- !u!54 &7188633352861802348
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -471,7 +413,47 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3136748009235386733
+--- !u!114 &4085735361072586493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844862100883784830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd79ba5b38cfea4fbbfacebc23dc390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableZoom: 0
+  _minZoomDistance: 5
+  _maxZoomDistance: 100
+  _zoomSpeed: 500
+  _smooth: 0
+  _smoothTime: 0.05
+  _velocity: {x: 0, y: 0, z: 0}
+  _target: {fileID: 0}
+  _lastTargetPosition: {x: 0, y: 0, z: 0}
+  _enableOrbit: 1
+  _orbitSpeedX: 100
+  _orbitSpeedY: 100
+  _returnToDefault: 0
+  _defaultOrbitRotation: {x: 0, y: 30}
+  _defaultOrbitReturnTime: 0.5
+  _orbitReturnVelocity: {x: 0, y: 0}
+  _orbitRotation: {x: 0, y: 0}
+  _orbitMinRadius: 15
+  _orbitMaxRadius: 15
+  _orbitXMin: -90
+  _orbitXMax: 90
+  _orbitYMin: -90
+  _orbitYMax: 90
+  _enableLook: 0
+  _lookSpeedX: 100
+  _lookSpeedY: 100
+  _lookRotation: {x: 0, y: 0}
+  _isLooking: 0
+--- !u!114 &1188256405820769467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -488,4 +470,4 @@ MonoBehaviour:
   _uiCamera: {fileID: 3473508580517442035}
   _globalPostProcessVolume: {fileID: 2918448500653730605}
   _defaultCameraPosition: {x: 0, y: 0, z: 0}
-  _target: {fileID: 0}
+  _player: {fileID: 0}

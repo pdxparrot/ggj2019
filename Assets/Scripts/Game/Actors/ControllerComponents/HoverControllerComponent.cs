@@ -8,10 +8,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
     [RequireComponent(typeof(JumpControllerComponent))]
     public sealed class HoverControllerComponent : CharacterActorControllerComponent
     {
+#region Actions
         public class HoverAction : CharacterActorControllerAction
         {
             public static HoverAction Default = new HoverAction();
         }
+#endregion
 
         [SerializeField]
         [ReadOnly]
@@ -87,7 +89,8 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             }
 
             Vector3 acceleration = (Controller.ControllerData.HoverAcceleration + Controller.ControllerData.FallSpeedAdjustment) * Vector3.up;
-            Controller.Rigidbody.AddForce(acceleration, ForceMode.Acceleration);
+            // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
+            Controller.AddForce(acceleration);
 
             Controller.DefaultPhysicsMove(axes, Controller.ControllerData.HoverMoveSpeed, dt);
 
@@ -143,10 +146,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             _isHovering = true;
 
-            Controller.Owner.Animator.SetBool(Controller.ControllerData.HoverParam, true);
+            if(null != Controller.Owner.Animator) {
+                Controller.Owner.Animator.SetBool(Controller.ControllerData.HoverParam, true);
+            }
 
             // stop all vertical movement immediately
-            Controller.Rigidbody.velocity = new Vector3(Controller.Rigidbody.velocity.x, 0.0f, Controller.Rigidbody.velocity.z);
+            Controller.Velocity = new Vector3(Controller.Velocity.x, 0.0f, Controller.Velocity.z);
         }
 
         public void StopHovering()
@@ -154,7 +159,9 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             bool wasHovering = IsHovering;
             _isHovering = false;
 
-            Controller.Owner.Animator.SetBool(Controller.ControllerData.HoverParam, false);
+            if(null != Controller.Owner.Animator) {
+                Controller.Owner.Animator.SetBool(Controller.ControllerData.HoverParam, false);
+            }
 
             if(wasHovering) {
                 _cooldownTimer.Start(Controller.ControllerData.HoverCooldownSeconds);

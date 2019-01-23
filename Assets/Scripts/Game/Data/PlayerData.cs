@@ -1,9 +1,8 @@
 ﻿using System;
-
+using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Camera;
 
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Data
 {
@@ -26,10 +25,9 @@ namespace pdxpartyparrot.Game.Data
         [Header("Viewer")]
 
         [SerializeField]
-        [FormerlySerializedAs("_viewerPrefab")]
-        private IPlayerViewer _playerViewerPrefab;
+        private Viewer _playerViewerPrefab;
 
-        public IPlayerViewer PlayerViewerPrefab => _playerViewerPrefab;
+        public IPlayerViewer PlayerViewerPrefab => (IPlayerViewer)_playerViewerPrefab;
 #endregion
 
         [Space(10)]

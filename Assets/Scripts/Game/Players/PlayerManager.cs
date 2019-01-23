@@ -1,5 +1,7 @@
 ﻿#pragma warning disable 0618    // disable obsolete warning for now
 
+using System.Collections.Generic;
+
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Network;
@@ -14,14 +16,16 @@ namespace pdxpartyparrot.Game.Players
 {
     public interface IPlayerManager
     {
+        IReadOnlyCollection<Actor> Actors { get; }
+
         PlayerData PlayerData { get; }
 
-        void Register(Player player);
+        void Register(Actor player);
 
-        void Unregister(Player player);
+        void Unregister(Actor player);
     }
 
-    public abstract class PlayerManager<T> : ActorManager<Player, T>, IPlayerManager where T: PlayerManager<T>
+    public abstract class PlayerManager<T> : ActorManager<Actor, T>, IPlayerManager where T: PlayerManager<T>
     {
 #region Data
         [SerializeField]
@@ -33,18 +37,22 @@ namespace pdxpartyparrot.Game.Players
         [Space(10)]
 
         [SerializeField]
-        private Player _playerPrefab;
+        private Actor _playerPrefab;
+
+        private IPlayer PlayerPrefab => (IPlayer)_playerPrefab;
 
         private GameObject _playerContainer;
 
         private DebugMenuNode _debugMenuNode;
 
 #region Unity Lifecycle
-        private void Awake()
+        protected virtual void Awake()
         {
+            Assert.IsTrue(_playerPrefab is IPlayer);
+
             _playerContainer = new GameObject("Players");
 
-            Core.Network.NetworkManager.Instance.RegisterPlayerPrefab(_playerPrefab.NetworkPlayer);
+            Core.Network.NetworkManager.Instance.RegisterPlayerPrefab(PlayerPrefab.NetworkPlayer);
 
             Core.Network.NetworkManager.Instance.ServerAddPlayerEvent += ServerAddPlayerEventHandler;
 
@@ -72,6 +80,8 @@ namespace pdxpartyparrot.Game.Players
         {
             Assert.IsTrue(NetworkServer.active);
 
+            Debug.Log("Spawning player...");
+
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint();
             if(null == spawnPoint) {
                 Debug.LogError("Failed to get player spawnpoint!");
@@ -84,14 +94,14 @@ namespace pdxpartyparrot.Game.Players
                 return;
             }
 
-            spawnPoint.Spawn(player.Player);
+            spawnPoint.Spawn((Actor)player.Player);
         }
 
-        public void RespawnPlayer(Player player)
+        public void RespawnPlayer(IPlayer player)
         {
             Assert.IsTrue(NetworkServer.active);
 
-            Debug.Log($"Respawning player {player.name}");
+            Debug.Log($"Respawning player {player.Name}");
 
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint();
             if(null == spawnPoint) {
@@ -99,7 +109,7 @@ namespace pdxpartyparrot.Game.Players
                 return;
             }
 
-            spawnPoint.ReSpawn(player);
+            spawnPoint.ReSpawn((Actor)player);
         }
 
 #region Event Handlers
@@ -114,8 +124,8 @@ namespace pdxpartyparrot.Game.Players
             _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.PlayerManager");
             _debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Players", GUI.skin.box);
-                    foreach(Player player in Actors) {
-                        GUILayout.Label($"{player.name} {player.transform.position}");
+                    foreach(IPlayer player in Actors) {
+                        GUILayout.Label($"{player.Name} {player.Position}");
                     }
                 GUILayout.EndVertical();
             };

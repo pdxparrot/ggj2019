@@ -8,7 +8,7 @@ using UnityEngine.Experimental.Input;
 namespace pdxpartyparrot.Game.Players
 {
     // TODO: create a FlightControllerData, similar to CharacterControllerData
-    public class FlightController : ActorController
+    public class FlightController : ActorController3D
     {
 #region Physics
         [SerializeField]
@@ -19,7 +19,7 @@ namespace pdxpartyparrot.Game.Players
 
         public float Speed => CanMove ? 0.0f : (PartyParrotManager.Instance.IsPaused ? PauseState.Velocity.magnitude : Rigidbody.velocity.magnitude);
 
-        public float Altitude => Owner.GameObject.transform.position.y;
+        public float Altitude => Owner.gameObject.transform.position.y;
 #endregion
 
 #region Movement Params
@@ -94,7 +94,7 @@ namespace pdxpartyparrot.Game.Players
             Rigidbody.useGravity = true;
             Rigidbody.freezeRotation = true;
             Rigidbody.detectCollisions = true;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
             // we run the follow cam in FixedUpdate() and interpolation interferes with that
             Rigidbody.interpolation = RigidbodyInterpolation.None;
@@ -112,8 +112,10 @@ namespace pdxpartyparrot.Game.Players
             Debug.Log($"Redirecting player {Owner.Id}: {velocity}");
 
             // unwind all of the rotations
-            Owner.Model.transform.localRotation = Quaternion.Euler(0.0f, Owner.Model.transform.localEulerAngles.y, 0.0f);
-            Rigidbody.transform.rotation = Quaternion.Euler(0.0f, Rigidbody.transform.eulerAngles.y, 0.0f);
+            if(null != Owner.Model) {
+                Owner.Model.transform.localRotation = Quaternion.Euler(0.0f, Owner.Model.transform.localEulerAngles.y, 0.0f);
+            }
+            Rigidbody.rotation = Quaternion.Euler(0.0f, Rigidbody.transform.eulerAngles.y, 0.0f);
 
             // stop moving
             Rigidbody.velocity = Vector3.zero;
@@ -137,7 +139,7 @@ namespace pdxpartyparrot.Game.Players
 
         public override void AnimationMove(Vector3 axes, float dt)
         {
-            if(!CanMove) {
+            if(!CanMove || null == Owner.Model) {
                 return;
             }
 
@@ -161,7 +163,7 @@ namespace pdxpartyparrot.Game.Players
             Quaternion rotation = Quaternion.AngleAxis(turnSpeed * dt, Vector3.up);
             Rigidbody.MoveRotation(Rigidbody.rotation * rotation);
 #else
-            // TODO: this only works if Y rotatoin is unconstrained
+            // TODO: this only works if Y rotation is unconstrained
             // it also breaks because the model rotates :(
             const float AngularThrust = 0.5f;
             Rigidbody.AddRelativeTorque(Vector3.up * AngularThrust * axes.x);
@@ -191,8 +193,9 @@ namespace pdxpartyparrot.Game.Players
             }
 
             // cap our fall speed
-            if(Rigidbody.velocity.y < -TerminalVelocity) {
-                Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, -TerminalVelocity, Rigidbody.velocity.z);
+            Vector3 velocity = Rigidbody.velocity;
+            if(velocity.y < -TerminalVelocity) {
+                Rigidbody.velocity = new Vector3(velocity.x, -TerminalVelocity, velocity.z);
             }
         }
     }
