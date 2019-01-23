@@ -392,6 +392,8 @@ MonoBehaviour:
     type: 3}
   _debugMenuManagerPrefab: {fileID: 7812979617479560367, guid: 01f244cfab2135044bcd17bba0ad8dbc,
     type: 3}
+  _localizationManagerPrefab: {fileID: 7237645413708916831, guid: 020c6bfa53d03404484c7ee1e1371d6f,
+    type: 3}
   _audioManagerPrefab: {fileID: 6512914830613661079, guid: c5456fdbff3b138489fd52c36dac097a,
     type: 3}
   _viewerManagerPrefab: {fileID: 1167533013707377246, guid: 8060f5123ee7bab4c8a8599261b1b80b,

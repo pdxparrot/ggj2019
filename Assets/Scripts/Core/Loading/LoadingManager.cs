@@ -10,6 +10,7 @@ using pdxpartyparrot.Core.Network;
 using pdxpartyparrot.Core.Scenes;
 using pdxpartyparrot.Core.Scripting;
 using pdxpartyparrot.Core.Terrain;
+using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 
@@ -39,6 +40,9 @@ namespace pdxpartyparrot.Core.Loading
 
         [SerializeField]
         private DebugMenuManager _debugMenuManagerPrefab;
+
+        [SerializeField]
+        private LocalizationManager _localizationManagerPrefab;
 
         [SerializeField]
         private AudioManager _audioManagerPrefab;
@@ -105,6 +109,7 @@ namespace pdxpartyparrot.Core.Loading
             // core managers
             DebugMenuManager.CreateFromPrefab(_debugMenuManagerPrefab, ManagersContainer);
             PartyParrotManager.CreateFromPrefab(_engineManagerPrefab, ManagersContainer);
+            LocalizationManager.CreateFromPrefab(_localizationManagerPrefab, ManagersContainer);
 
             // TODO: for now this dude does stuff in Start() rather than Awake()
             // someday when Awake() can be overriden, we can get rid of PreCreateManagers()
