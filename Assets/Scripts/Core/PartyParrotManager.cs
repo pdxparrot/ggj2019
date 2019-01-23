@@ -1,5 +1,6 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Loading;
 using pdxpartyparrot.Core.Util;
 
@@ -14,7 +15,16 @@ namespace pdxpartyparrot.Core
 
 #region Events
         public event EventHandler<EventArgs> PauseEvent;
+        #endregion
+
+#region Data
+        [SerializeField]
+        private UIData _uiData;
+
+        public UIData UIData => _uiData;
 #endregion
+
+        [Space(10)]
 
 #region VR Config
         [SerializeField]

@@ -1,4 +1,5 @@
-﻿using pdxpartyparrot.Game.Menu;
+﻿using pdxpartyparrot.Core.Audio;
+using pdxpartyparrot.Game.Menu;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
@@ -12,15 +13,22 @@ namespace pdxpartyparrot.Game.State
 
         private Menu.Menu _menu;
 
+        [SerializeField]
+        private AudioClip _music;
+
         public override void OnEnter()
         {
             base.OnEnter();
 
             _menu = UIManager.Instance.InstantiateUIPrefab(_menuPrefab);
+
+            AudioManager.Instance.PlayMusic(_music);
         }
 
         public override void OnExit()
         {
+            AudioManager.Instance.StopMusic();
+
             Destroy(_menu.gameObject);
             _menu = null;
 

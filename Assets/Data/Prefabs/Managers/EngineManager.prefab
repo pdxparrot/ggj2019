@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99822a96ad6e836468827bd80059a506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiData: {fileID: 11400000, guid: d730e1ac386174348bfe945d08ade4cb, type: 2}
   _enableVR: 0
   _enableGoogleVR: 0
   _frictionlesssMaterial: {fileID: 13400000, guid: 21324c3bf79808a448a8bc92105ce162,

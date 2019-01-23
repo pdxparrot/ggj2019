@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 6106915897943335952}
   - component: {fileID: 8724160600195420977}
   - component: {fileID: 3959321523457674904}
+  - component: {fileID: 7667363104328266685}
   - component: {fileID: 6284364461109993250}
   m_Layer: 5
   m_Name: Back
@@ -636,6 +637,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &7667363104328266685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131117170417821249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e290b7fa8b4a9cbc27f3855db1a4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hoverAudioClip: {fileID: 0}
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &6284364461109993250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1148,6 +1163,7 @@ GameObject:
   - component: {fileID: 1720767343850100228}
   - component: {fileID: 4348026540053989898}
   - component: {fileID: 7906200925818633055}
+  - component: {fileID: 1568197644028671541}
   - component: {fileID: 4159856341807523033}
   m_Layer: 5
   m_Name: Settings
@@ -1266,6 +1282,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1568197644028671541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5599792599633010270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e290b7fa8b4a9cbc27f3855db1a4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hoverAudioClip: {fileID: 0}
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &4159856341807523033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,6 +1328,7 @@ GameObject:
   - component: {fileID: 1052183129570939420}
   - component: {fileID: 667302027418853290}
   - component: {fileID: 5773968032684672447}
+  - component: {fileID: 7042605519453236658}
   - component: {fileID: 6927361378042094169}
   m_Layer: 5
   m_Name: MainMenu
@@ -1416,6 +1447,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &7042605519453236658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028359843722212809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e290b7fa8b4a9cbc27f3855db1a4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hoverAudioClip: {fileID: 0}
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &6927361378042094169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,6 +1493,7 @@ GameObject:
   - component: {fileID: 5857191318286288887}
   - component: {fileID: 8143059122013358683}
   - component: {fileID: 2783606223250914112}
+  - component: {fileID: 6162716853300188619}
   - component: {fileID: 6753625896842032518}
   m_Layer: 5
   m_Name: Quit
@@ -1566,6 +1612,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &6162716853300188619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8717917622855804873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e290b7fa8b4a9cbc27f3855db1a4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hoverAudioClip: {fileID: 0}
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &6753625896842032518
 MonoBehaviour:
   m_ObjectHideFlags: 0
