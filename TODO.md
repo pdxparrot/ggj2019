@@ -4,4 +4,4 @@
 * Player UI
 * Test running around a level
 * Test a 2D scene
-* Player input
+* Split up actor components and reduce subclassing
