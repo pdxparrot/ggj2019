@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Camera;
 
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace pdxpartyparrot.Game.Players
         NetworkPlayer NetworkPlayer { get; }
 
         ActorController Controller { get; }
+
+        Viewer Viewer { get; }
 
         Vector3 Position { get; }
 

@@ -7,6 +7,7 @@ using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Camera;
 using pdxpartyparrot.Game.State;
+using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -102,6 +103,8 @@ namespace pdxpartyparrot.Game.Players
             } else {
                 PlayerViewer.Initialize(this, id);
             }
+
+            UIManager.Instance.InitializePlayerUI(this);
 
             return true;
         }

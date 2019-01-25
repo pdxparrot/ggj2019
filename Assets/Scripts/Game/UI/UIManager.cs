@@ -6,6 +6,7 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Menu;
+using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 
@@ -13,6 +14,15 @@ namespace pdxpartyparrot.Game.UI
 {
     public sealed class UIManager : SingletonBehavior<UIManager>
     {
+        [SerializeField]
+        private PlayerUI _playerUIPrefab;
+
+        [CanBeNull]
+        private PlayerUI _playerUI;
+
+        [CanBeNull]
+        public PlayerUI PlayerUI => _playerUI;
+
         [SerializeField]
         private Menu.Menu _pauseMenuPrefab;
 
@@ -52,8 +62,21 @@ namespace pdxpartyparrot.Game.UI
             }
         }
 
+        public void InitializePlayerUI(IPlayer player)
+        {
+            _playerUI = InstantiateUIPrefab(_playerUIPrefab);
+            if(null != _playerUI) {
+                _playerUI.Initialize(player);
+            }
+        }
+
         public void Shutdown()
         {
+            if(null != _playerUI) {
+                Destroy(_playerUI.gameObject);
+            }
+            _playerUI = null;
+
             if(null != _pauseMenu) {
                 Destroy(_pauseMenu.gameObject);
             }

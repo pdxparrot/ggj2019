@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
+#pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
 

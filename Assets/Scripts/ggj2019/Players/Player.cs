@@ -39,7 +39,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
 Debug.LogWarning("TODO: init player HUD");
 /*
-            UIManager.Instance.InitializePlayerUI(this);
             if(null != UIManager.Instance.PlayerUI) {
                 UIManager.Instance.PlayerUI.PlayerHUD.ShowInfoText();
             }

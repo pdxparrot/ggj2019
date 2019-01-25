@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.DebugMenu;
+﻿//#define ENABLE_MULTIPLAYER
+
+using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.State;
@@ -24,9 +26,15 @@ namespace pdxpartyparrot.Game.Menu
 #region Unity Lifecycle
         private void Awake()
         {
-            if(null!= _multiplayerButton && !Application.isEditor) {
+#if ENABLE_MULTIPLAYER
+            if(null!= _multiplayerButton && Application.isEditor) {
+                _multiplayerButton.gameObject.SetActive(true);
+            }
+#else
+            if(null!= _multiplayerButton) {
                 _multiplayerButton.gameObject.SetActive(false);
             }
+#endif
 
             if(null != _multiplayerPanel) {
                 _multiplayerPanel.gameObject.SetActive(false);
@@ -69,6 +77,7 @@ namespace pdxpartyparrot.Game.Menu
 
         private void InitDebugMenu()
         {
+#if ENABLE_MULTIPLAYER
 // TODO: this should change depending on if we're hosting/joining or whatever
 // so that we don't get into a fucked up state
             _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Multiplayer Menu");
@@ -83,6 +92,7 @@ namespace pdxpartyparrot.Game.Menu
                     return;
                 }
             };
+#endif
         }
 
         private void DestroyDebugMenu()
