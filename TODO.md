@@ -5,3 +5,5 @@
 * Test running around a level
 * Test a 2D scene
 * Split up actor components and reduce subclassing
+    * The player junk in Game is probably just stuff that should merge into Actor components
+    
