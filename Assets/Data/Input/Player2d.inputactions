@@ -94,7 +94,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/escape",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
