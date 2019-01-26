@@ -23,25 +23,20 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
-        protected override bool InitializeLocalPlayer(int id)
+        protected override void InitializeViewer()
         {
-            if(!base.InitializeLocalPlayer(id)) {
-                return false;
-            }
+            PlayerViewer = GameManager.Instance.Viewer;
+        }
 
-Debug.LogWarning("TODO: init player HUD");
+        protected override void InitializePlayerUI()
+        {
+Debug.LogWarning($"TODO: Initialize UI for player {Id}");
 /*
             if(null != UIManager.Instance.PlayerUI) {
                 UIManager.Instance.PlayerUI.PlayerHUD.ShowInfoText();
             }
 */
 
-            return true;
-        }
-
-        protected override void InitializeViewer()
-        {
-            PlayerViewer = GameManager.Instance.Viewer;
         }
     }
 }

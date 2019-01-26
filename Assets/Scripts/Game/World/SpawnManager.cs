@@ -38,5 +38,15 @@ namespace pdxpartyparrot.Game.World
             }
             return PartyParrotManager.Instance.Random.GetRandomEntry(_spawnPoints);
         }
+
+        [CanBeNull]
+        public SpawnPoint GetPlayerSpawnPoint(int controllerId)
+        {
+            if(_spawnPoints.Count < 1) {
+                Debug.LogWarning("No spawn points registered on spawn, are there any in the scene?");
+                return null;
+            }
+            return PartyParrotManager.Instance.Random.GetRandomEntry(_spawnPoints);
+        }
     }
 }

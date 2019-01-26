@@ -334,15 +334,21 @@ namespace pdxpartyparrot.Core.Network
             }
         }
 
-        public void LocalClientReady(NetworkConnection conn, short playerControllerId)
+        public void LocalClientReady(NetworkConnection conn)
         {
-            if(null == conn) {
+            if(null == conn || conn.isReady) {
                 return;
             }
 
-            Debug.Log("[NetworkManager]: Local client ready!");
+            Debug.Log($"[NetworkManager]: Local client ready!");
 
             ClientScene.Ready(conn);
+        }
+
+        public void AddLocalPlayer(short playerControllerId)
+        {
+            Debug.Log($"[NetworkManager]: Adding local player {playerControllerId}!");
+
             ClientScene.AddPlayer(playerControllerId);
         }
 

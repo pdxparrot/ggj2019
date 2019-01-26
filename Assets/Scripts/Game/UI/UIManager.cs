@@ -6,7 +6,6 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Menu;
-using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 
@@ -62,11 +61,13 @@ namespace pdxpartyparrot.Game.UI
             }
         }
 
-        public void InitializePlayerUI(IPlayer player)
+        public void InitializePlayerUI(UnityEngine.Camera camera)
         {
+            Debug.Log("Initializing player UI...");
+
             _playerUI = InstantiateUIPrefab(_playerUIPrefab);
             if(null != _playerUI) {
-                _playerUI.Initialize(player);
+                _playerUI.Initialize(camera);
             }
         }
 

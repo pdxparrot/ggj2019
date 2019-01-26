@@ -80,7 +80,7 @@ namespace pdxpartyparrot.Game.Players
         {
             Assert.IsTrue(NetworkServer.active);
 
-            Debug.Log("Spawning player...");
+            Debug.Log($"Spawning player for controller {controllerId}...");
 
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint();
             if(null == spawnPoint) {
@@ -103,7 +103,7 @@ namespace pdxpartyparrot.Game.Players
 
             Debug.Log($"Respawning player {player.Name}");
 
-            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint();
+            SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(player.NetworkPlayer.playerControllerId);
             if(null == spawnPoint) {
                 Debug.LogError("Failed to get player spawnpoint!");
                 return;

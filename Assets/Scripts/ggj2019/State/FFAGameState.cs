@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.State;
+using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 
@@ -29,6 +30,7 @@ namespace pdxpartyparrot.ggj2019.State
             }
 
             GameManager.Instance.InitViewer();
+            UIManager.Instance.InitializePlayerUI(GameManager.Instance.Viewer.UICamera);
 
             return true;
         }

@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: teamswarm01
-  _makeSceneActive: 0
+  _makeSceneActive: 1
+  _maxLocalPlayers: 4
+  _gamepadsArePlayers: 1
   _gameOverState: {fileID: 7106532551911913696, guid: 6f92524e3a5ef9245a779d73df482385,
     type: 3}
   _music: {fileID: 0}

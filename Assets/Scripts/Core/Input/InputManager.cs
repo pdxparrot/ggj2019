@@ -10,6 +10,8 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Core.Input
 {
+    // TODO: InputSystem is still fleshing out multiple controller support
+    // so this will need an update once that's done
     public sealed class InputManager : SingletonBehavior<InputManager>
     {
         private static int _lastListenerId;
@@ -29,6 +31,8 @@ namespace pdxpartyparrot.Core.Input
         private EventSystemHelper _eventSystemPrefab;
 
         public EventSystemHelper EventSystem { get; private set; }
+
+        public int GamepadCount => _unacquiredGamepads.Count + _acquiredGamepads.Count;
 
 #region Gamepads
         private readonly List<Gamepad> _unacquiredGamepads = new List<Gamepad>();

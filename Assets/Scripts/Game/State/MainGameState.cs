@@ -6,6 +6,7 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.UI;
 
@@ -16,6 +17,12 @@ namespace pdxpartyparrot.Game.State
 {
     public abstract class MainGameState : GameState
     {
+        [SerializeField]
+        private int _maxLocalPlayers = 1;
+
+        [SerializeField]
+        private bool _gamepadsArePlayers = false;
+
         [SerializeField]
         private GameOverState _gameOverState;
 
@@ -109,7 +116,16 @@ namespace pdxpartyparrot.Game.State
                 return false;
             }
 
-            Core.Network.NetworkManager.Instance.LocalClientReady(GameStateManager.Instance.NetworkClient?.connection, 0);
+            Core.Network.NetworkManager.Instance.LocalClientReady(GameStateManager.Instance.NetworkClient?.connection);
+
+            if(_gamepadsArePlayers) {
+                Debug.Log($"Spawning a player for each controller ({InputManager.Instance.GamepadCount})...");
+                for(short i=0; i<InputManager.Instance.GamepadCount && i<_maxLocalPlayers; ++i) {
+                    Core.Network.NetworkManager.Instance.AddLocalPlayer(i);
+                }
+            } else {
+                Core.Network.NetworkManager.Instance.AddLocalPlayer(0);
+            }
 
             return true;
         }

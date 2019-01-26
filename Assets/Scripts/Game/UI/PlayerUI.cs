@@ -9,6 +9,8 @@ namespace pdxpartyparrot.Game.UI
     {
         private Canvas _canvas;
 
+        protected Canvas Canvas => _canvas;
+
 #region Unity Lifecycle
         private void Awake()
         {
@@ -16,11 +18,9 @@ namespace pdxpartyparrot.Game.UI
         }
 #endregion
 
-        public void Initialize(IPlayer player)
+        public virtual void Initialize(UnityEngine.Camera uiCamera)
         {
-            if(null != player.Viewer) {
-                _canvas.worldCamera = player.Viewer.UICamera;
-            }
+            _canvas.worldCamera = uiCamera;
         }
     }
 }

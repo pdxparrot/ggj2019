@@ -1,4 +1,5 @@
-﻿using pdxpartyparrot.Game.UI;
+﻿using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.UI;
 
 namespace pdxpartyparrot.ggj2019.UI
 {
