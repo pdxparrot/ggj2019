@@ -19,7 +19,7 @@ ScriptedImporter:
   generateWrapperCode: 1
   wrapperCodePath: Assets\Scripts\ggj2019\Input\PlayerControls.cs
   wrapperClassName: PlayerControls
-  wrapperCodeNamespace: pdxpartyparrot.ggj2019Input
+  wrapperCodeNamespace: pdxpartyparrot.ggj2019.Input
   generateActionEvents: 1
   generateInterfaces: 1
   actionGuids: []

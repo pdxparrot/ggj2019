@@ -1,7 +1,10 @@
-﻿using pdxpartyparrot.Core;
+﻿using System;
+
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Game.Actors;
-using pdxpartyparrot.ggj2019Input;
+using pdxpartyparrot.ggj2019.Input;
+using pdxpartyparrot.ggj2019.Players.ControllerComponents;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -41,6 +44,10 @@ namespace pdxpartyparrot.ggj2019.Players
 
         protected override void OnDestroy()
         {
+            if(PartyParrotManager.HasInstance) {
+                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
+            }
+
             _controls.Player.Disable();
             _controls.Player.SetCallbacks(null);
 
@@ -65,6 +72,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
             _controls.Player.SetCallbacks(this);
             _controls.Player.Enable();
+
+            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
 
             InitDebugMenu();
         }
@@ -163,7 +172,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            Debug.LogError("TODO: gather controller action");
+            if(context.started) {
+                GamePlayerController.CharacterController.ActionStarted(GatherControllerComponent.GatherAction.Default);
+            }
         }
 
         public void OnContext(InputAction.CallbackContext context)
@@ -172,7 +183,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            Debug.LogError("TODO: context controller action");
+            if(context.started) {
+                GamePlayerController.CharacterController.ActionStarted(ContextControllerComponent.ContextAction.Default);
+            }
         }
 #endregion
 
@@ -191,5 +204,16 @@ namespace pdxpartyparrot.ggj2019.Players
             }
             _debugMenuNode = null;
         }
+
+#region Event Handlers
+        private void PauseEventHandler(object sender, EventArgs args)
+        {
+            if(PartyParrotManager.Instance.IsPaused) {
+                _controls.Disable();
+            } else {
+                _controls.Enable();
+            }
+        }
+#endregion
     }
 }
