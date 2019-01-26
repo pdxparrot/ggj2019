@@ -78,7 +78,7 @@ public class NPCSpawner : MonoBehaviour
         int ct = random.Next(grp.Count.Min, grp.Count.Max);
         Instantiate(grp.NPC);
 
-        SpawnTimers[grpidx] = random.NextDouble(grp.Delay);
+        //SpawnTimers[grpidx] = random.NextDouble(grp.Delay);
     }
 
 
