@@ -30,9 +30,6 @@ namespace pdxpartyparrot.Game.State
         private NetworkConnectState _networkConnectStatePrefab;
 
         [SerializeField]
-        private MainGameState _gameStatePrefab;
-
-        [SerializeField]
         private SceneTester _sceneTesterStatePrefab;
 
         [SerializeField]
@@ -227,24 +224,24 @@ namespace pdxpartyparrot.Game.State
 #endregion
 
 #region Start Game
-        public void StartSinglePlayer()
+        public void StartLocal(MainGameState mainGameStatePrefab, Action<GameState> gameStateInit=null)
         {
             PushSubState(_networkConnectStatePrefab, state => {
-                state.Initialize(NetworkConnectState.ConnectType.SinglePlayer, _gameStatePrefab);
+                state.Initialize(NetworkConnectState.ConnectType.Local, mainGameStatePrefab, gameStateInit);
             });
         }
 
-        public void StartHost()
+        public void StartHost(MainGameState mainGameStatePrefab, Action<GameState> gameStateInit=null)
         {
             PushSubState(_networkConnectStatePrefab, state => {
-                state.Initialize(NetworkConnectState.ConnectType.Server, _gameStatePrefab);
+                state.Initialize(NetworkConnectState.ConnectType.Server, mainGameStatePrefab, gameStateInit);
             });
         }
 
-        public void StartJoin()
+        public void StartJoin(MainGameState mainGameStatePrefab, Action<GameState> gameStateInit=null)
         {
             PushSubState(_networkConnectStatePrefab, state => {
-                state.Initialize(NetworkConnectState.ConnectType.Client, _gameStatePrefab);
+                state.Initialize(NetworkConnectState.ConnectType.Client, mainGameStatePrefab, gameStateInit);
             });
         }
 #endregion
@@ -297,7 +294,7 @@ namespace pdxpartyparrot.Game.State
                         if(GUIUtils.LayoutButton($"Load Test Scene {sceneName}")) {
                             TransitionToInitialState(null, () => {
                                 PushSubState(_networkConnectStatePrefab, connectState => {
-                                    connectState.Initialize(NetworkConnectState.ConnectType.SinglePlayer, _sceneTesterStatePrefab, state => {
+                                    connectState.Initialize(NetworkConnectState.ConnectType.Local, _sceneTesterStatePrefab, state => {
                                         SceneTester sceneTester = (SceneTester)state;
                                         sceneTester.SetScene(sceneName);
                                     });

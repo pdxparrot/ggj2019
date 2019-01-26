@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
+#pragma warning disable 0618    // disable obsolete warning for now
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Util;
@@ -63,6 +63,7 @@ private void Update()
 _gameTimer.Start(30, () => IsGameOver = true);
         }
 
+        //[Client]
         public void InitViewer()
         {
             Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>();  

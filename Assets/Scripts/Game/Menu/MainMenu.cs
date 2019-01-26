@@ -51,7 +51,8 @@ namespace pdxpartyparrot.Game.Menu
         // these are all just demo methods
         public void OnPlay()
         {
-            GameStateManager.Instance.StartSinglePlayer();
+            // TODO: this takes in the main game state now
+            //GameStateManager.Instance.StartLocal();
         }
 
         public void OnMultiplayer()
@@ -72,11 +73,12 @@ namespace pdxpartyparrot.Game.Menu
 
         private void InitDebugMenu()
         {
-            if(UseMultiplayer) {
+            /*if(UseMultiplayer) {
 // TODO: this should change depending on if we're hosting/joining or whatever
 // so that we don't get into a fucked up state
                 _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Multiplayer Menu");
                 _debugMenuNode.RenderContentsAction = () => {
+                    // TODO: these take in the main game state now
                     if(GUIUtils.LayoutButton("Host")) {
                         GameStateManager.Instance.StartHost();
                         return;
@@ -87,7 +89,7 @@ namespace pdxpartyparrot.Game.Menu
                         return;
                     }
                 };
-            }
+            }*/
         }
 
         private void DestroyDebugMenu()

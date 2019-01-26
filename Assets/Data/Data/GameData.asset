@@ -18,6 +18,10 @@ MonoBehaviour:
   _viewerLayer:
     serializedVersion: 2
     m_Bits: 2048
+  _ffaGameStatePrefab: {fileID: 29742012200218022, guid: 0df0709c42ad34140ac759786c4c2832,
+    type: 3}
+  _teamsGameStatePrefab: {fileID: 1643600861973749352, guid: ef04082b978cb0d4fb73e45acecbf67f,
+    type: 3}
   _viewerPrefab: {fileID: 1920754528598710306, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}

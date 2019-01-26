@@ -15,7 +15,7 @@ namespace pdxpartyparrot.Game.State
     {
         public enum ConnectType
         {
-            SinglePlayer,
+            Local,
             Server,
             Client
         }
@@ -31,7 +31,7 @@ namespace pdxpartyparrot.Game.State
 
         [SerializeField]
         [ReadOnly]
-        private ConnectType _connectType = ConnectType.SinglePlayer;
+        private ConnectType _connectType = ConnectType.Local;
 
         public void Initialize(ConnectType connectType, GameState gameStatePrefab, Action<GameState> gameStateInit=null)
         {
@@ -46,7 +46,7 @@ namespace pdxpartyparrot.Game.State
 
             switch(_connectType)
             {
-            case ConnectType.SinglePlayer:
+            case ConnectType.Local:
                 Core.Network.NetworkManager.Instance.StopHost();
                 break;
             case ConnectType.Server:
@@ -69,7 +69,7 @@ namespace pdxpartyparrot.Game.State
 
             switch(_connectType)
             {
-            case ConnectType.SinglePlayer:
+            case ConnectType.Local:
                 StartSinglePlayer();
                 break;
             case ConnectType.Server:

@@ -1,6 +1,4 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
-
-using pdxpartyparrot.Game.Players;
+﻿using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;

@@ -2,6 +2,7 @@
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.ggj2019.State;
 
 using UnityEngine;
 
@@ -15,6 +16,20 @@ namespace pdxpartyparrot.ggj2019.Data
         private LayerMask _viewerLayer;
 
         public LayerMask ViewerLayer => _viewerLayer;
+
+        [Space(10)]
+
+        [Header("Game Mode States")]
+
+        [SerializeField]
+        private FFAGameState _ffaGameStatePrefab;
+
+        public FFAGameState FFAGameStatePrefab => _ffaGameStatePrefab;
+
+        [SerializeField]
+        private TeamsGameState _teamsGameStatePrefab;
+
+        public TeamsGameState TeamsGameStatePrefab => _teamsGameStatePrefab;
 
         [Space(10)]
 

@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Game.Menu;
 using pdxpartyparrot.Game.State;
+using pdxpartyparrot.ggj2019.State;
 
 namespace pdxpartyparrot.ggj2019.Menu
 {
@@ -8,12 +9,12 @@ namespace pdxpartyparrot.ggj2019.Menu
 #region Event Handlers
         public void OnFreeForAll()
         {
-            GameStateManager.Instance.StartSinglePlayer();
+            GameStateManager.Instance.StartLocal(GameManager.Instance.GameGameData.FFAGameStatePrefab);
         }
 
         public void OnTeams()
         {
-            GameStateManager.Instance.StartSinglePlayer();
+            GameStateManager.Instance.StartLocal(GameManager.Instance.GameGameData.TeamsGameStatePrefab);
         }
 
         public void OnBack()
