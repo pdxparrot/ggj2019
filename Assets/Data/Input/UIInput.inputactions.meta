@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 5dc583e21b932a44c81606d815850780
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400002: ui/submit
+    11400004: ui/cancel
+    11400008: ui/point
+    11400010: ui/left click
+    11400012: ui/navigate
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 0
+  wrapperCodePath: 
+  wrapperClassName: 
+  wrapperCodeNamespace: 
+  generateActionEvents: 0
+  generateInterfaces: 0
+  actionGuids: []
+  actionMapGuids: []

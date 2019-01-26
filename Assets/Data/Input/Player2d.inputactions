@@ -46,7 +46,19 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/leftStick",
-                    "interactions": "Stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move",
@@ -58,7 +70,7 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/start",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
@@ -70,7 +82,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/escape",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
@@ -82,7 +94,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/w",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move up",
@@ -94,7 +106,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/s",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move down",
@@ -106,7 +118,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/a",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move left",
@@ -118,7 +130,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/d",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move right",

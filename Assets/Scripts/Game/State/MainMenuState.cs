@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Audio;
+using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Game.Menu;
 using pdxpartyparrot.Game.UI;
 
@@ -20,6 +21,8 @@ namespace pdxpartyparrot.Game.State
         {
             base.OnEnter();
 
+            InputManager.Instance.UIInputModule.EnableAllActions();
+
             _menu = UIManager.Instance.InstantiateUIPrefab(_menuPrefab);
 
             AudioManager.Instance.PlayMusic(_music);
@@ -28,6 +31,8 @@ namespace pdxpartyparrot.Game.State
         public override void OnExit()
         {
             AudioManager.Instance.StopMusic();
+
+            InputManager.Instance.UIInputModule.DisableAllActions();
 
             Destroy(_menu.gameObject);
             _menu = null;

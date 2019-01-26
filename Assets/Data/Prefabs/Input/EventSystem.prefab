@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9217922729178015293}
   - component: {fileID: 8148684628222166439}
-  - component: {fileID: 8194045042557701832}
+  - component: {fileID: 4371513851374595516}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &8194045042557701832
+--- !u!114 &4371513851374595516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,13 +56,78 @@ MonoBehaviour:
   m_GameObject: {fileID: 2150599154748717952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  clickSpeed: 0.3
+  moveDeadzone: 0.6
+  repeatDelay: 0.5
+  repeatRate: 0.1
+  trackedDeviceDragThresholdMultiplier: 2
+  m_SendEventsWhenInBackground: 0
+  m_PointAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 11400008, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+  m_MoveAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 11400012, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+  m_SubmitAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 11400002, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+  m_CancelAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 11400004, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+  m_LeftClickAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 11400010, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+  m_MiddleClickAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_RightClickAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_ScrollWheelAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Action
+      m_ExpectedControlLayout: 
+      m_Id: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_Touches: []
+  m_TrackedDevices: []
