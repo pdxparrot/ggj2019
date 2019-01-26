@@ -82,7 +82,7 @@ namespace pdxpartyparrot.Game.Players
 
             Debug.Log($"Spawning player for controller {controllerId}...");
 
-            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint();
+            SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(controllerId);
             if(null == spawnPoint) {
                 Debug.LogError("Failed to get player spawnpoint!");
                 return;
