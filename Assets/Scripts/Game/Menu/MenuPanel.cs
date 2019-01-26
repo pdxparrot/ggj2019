@@ -1,4 +1,5 @@
-﻿using pdxpartyparrot.Core.UI;
+﻿using pdxpartyparrot.Core.Input;
+using pdxpartyparrot.Core.UI;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,20 @@ namespace pdxpartyparrot.Game.Menu
             if(null == _initialSelection) {
                 Debug.LogWarning("MenuPanel missing initial selection");
             } else {
+                _initialSelection.Select();
+                _initialSelection.Highlight();
+            }
+        }
+
+        private void Update()
+        {
+#if UNITY_EDITOR	
+            if(null == _initialSelection) {	
+                return;	
+            }	
+#endif	
+
+            if(null == InputManager.Instance.EventSystem.currentSelectedGameObject || (!InputManager.Instance.EventSystem.currentSelectedGameObject.activeInHierarchy && _initialSelection.gameObject.activeInHierarchy)) {
                 _initialSelection.Select();
                 _initialSelection.Highlight();
             }
