@@ -21,7 +21,7 @@ namespace pdxpartyparrot.Game.State
         {
             base.OnEnter();
 
-            InputManager.Instance.UIInputModule.EnableAllActions();
+            InputManager.Instance.EventSystem.UIModule.EnableAllActions();
 
             _menu = UIManager.Instance.InstantiateUIPrefab(_menuPrefab);
 
@@ -32,7 +32,7 @@ namespace pdxpartyparrot.Game.State
         {
             AudioManager.Instance.StopMusic();
 
-            InputManager.Instance.UIInputModule.DisableAllActions();
+            InputManager.Instance.EventSystem.UIModule.DisableAllActions();
 
             Destroy(_menu.gameObject);
             _menu = null;

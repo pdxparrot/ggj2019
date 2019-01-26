@@ -6,9 +6,7 @@ using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Input;
-using UnityEngine.Experimental.Input.Plugins.UI;
 
 namespace pdxpartyparrot.Core.Input
 {
@@ -28,11 +26,9 @@ namespace pdxpartyparrot.Core.Input
         }
 
         [SerializeField]
-        private EventSystem _eventSystemPrefab;
+        private EventSystemHelper _eventSystemPrefab;
 
-        public EventSystem EventSystem { get; private set; }
-
-        public UIActionInputModule UIInputModule { get; private set; }
+        public EventSystemHelper EventSystem { get; private set; }
 
 #region Gamepads
         private readonly List<Gamepad> _unacquiredGamepads = new List<Gamepad>();
@@ -52,7 +48,6 @@ namespace pdxpartyparrot.Core.Input
             } else {
                 Debug.Log("Creating EventSystem (no VR)...");
                 EventSystem = Instantiate(_eventSystemPrefab, transform);
-                UIInputModule = EventSystem.GetComponent<UIActionInputModule>();
             }
 
             InitGamepads();

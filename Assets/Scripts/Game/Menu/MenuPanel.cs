@@ -35,7 +35,8 @@ namespace pdxpartyparrot.Game.Menu
             }	
 #endif	
 
-            if(null == InputManager.Instance.EventSystem.currentSelectedGameObject || (!InputManager.Instance.EventSystem.currentSelectedGameObject.activeInHierarchy && _initialSelection.gameObject.activeInHierarchy)) {
+            if(null == InputManager.Instance.EventSystem.EventSystem.currentSelectedGameObject ||
+                (!InputManager.Instance.EventSystem.EventSystem.currentSelectedGameObject.activeInHierarchy && _initialSelection.gameObject.activeInHierarchy)) {
                 _initialSelection.Select();
                 _initialSelection.Highlight();
             }
