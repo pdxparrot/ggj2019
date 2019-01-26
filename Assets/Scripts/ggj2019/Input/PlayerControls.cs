@@ -65,6 +65,20 @@ namespace pdxpartyparrot.ggj2019Input
                 m_Player_moveright.performed += m_PlayerMoverightActionPerformed.Invoke;
             if (m_PlayerMoverightActionCancelled != null)
                 m_Player_moveright.cancelled += m_PlayerMoverightActionCancelled.Invoke;
+            m_Player_gather = m_Player.GetAction("gather");
+            if (m_PlayerGatherActionStarted != null)
+                m_Player_gather.started += m_PlayerGatherActionStarted.Invoke;
+            if (m_PlayerGatherActionPerformed != null)
+                m_Player_gather.performed += m_PlayerGatherActionPerformed.Invoke;
+            if (m_PlayerGatherActionCancelled != null)
+                m_Player_gather.cancelled += m_PlayerGatherActionCancelled.Invoke;
+            m_Player_context = m_Player.GetAction("context");
+            if (m_PlayerContextActionStarted != null)
+                m_Player_context.started += m_PlayerContextActionStarted.Invoke;
+            if (m_PlayerContextActionPerformed != null)
+                m_Player_context.performed += m_PlayerContextActionPerformed.Invoke;
+            if (m_PlayerContextActionCancelled != null)
+                m_Player_context.cancelled += m_PlayerContextActionCancelled.Invoke;
             m_Initialized = true;
         }
         private void Uninitialize()
@@ -116,6 +130,20 @@ namespace pdxpartyparrot.ggj2019Input
                 m_Player_moveright.performed -= m_PlayerMoverightActionPerformed.Invoke;
             if (m_PlayerMoverightActionCancelled != null)
                 m_Player_moveright.cancelled -= m_PlayerMoverightActionCancelled.Invoke;
+            m_Player_gather = null;
+            if (m_PlayerGatherActionStarted != null)
+                m_Player_gather.started -= m_PlayerGatherActionStarted.Invoke;
+            if (m_PlayerGatherActionPerformed != null)
+                m_Player_gather.performed -= m_PlayerGatherActionPerformed.Invoke;
+            if (m_PlayerGatherActionCancelled != null)
+                m_Player_gather.cancelled -= m_PlayerGatherActionCancelled.Invoke;
+            m_Player_context = null;
+            if (m_PlayerContextActionStarted != null)
+                m_Player_context.started -= m_PlayerContextActionStarted.Invoke;
+            if (m_PlayerContextActionPerformed != null)
+                m_Player_context.performed -= m_PlayerContextActionPerformed.Invoke;
+            if (m_PlayerContextActionCancelled != null)
+                m_Player_context.cancelled -= m_PlayerContextActionCancelled.Invoke;
             m_Initialized = false;
         }
         public void SetAsset(InputActionAsset newAsset)
@@ -157,6 +185,14 @@ namespace pdxpartyparrot.ggj2019Input
         [SerializeField] private ActionEvent m_PlayerMoverightActionStarted;
         [SerializeField] private ActionEvent m_PlayerMoverightActionPerformed;
         [SerializeField] private ActionEvent m_PlayerMoverightActionCancelled;
+        private InputAction m_Player_gather;
+        [SerializeField] private ActionEvent m_PlayerGatherActionStarted;
+        [SerializeField] private ActionEvent m_PlayerGatherActionPerformed;
+        [SerializeField] private ActionEvent m_PlayerGatherActionCancelled;
+        private InputAction m_Player_context;
+        [SerializeField] private ActionEvent m_PlayerContextActionStarted;
+        [SerializeField] private ActionEvent m_PlayerContextActionPerformed;
+        [SerializeField] private ActionEvent m_PlayerContextActionCancelled;
         public struct PlayerActions
         {
             private PlayerControls m_Wrapper;
@@ -185,6 +221,14 @@ namespace pdxpartyparrot.ggj2019Input
             public ActionEvent moverightStarted { get { return m_Wrapper.m_PlayerMoverightActionStarted; } }
             public ActionEvent moverightPerformed { get { return m_Wrapper.m_PlayerMoverightActionPerformed; } }
             public ActionEvent moverightCancelled { get { return m_Wrapper.m_PlayerMoverightActionCancelled; } }
+            public InputAction @gather { get { return m_Wrapper.m_Player_gather; } }
+            public ActionEvent gatherStarted { get { return m_Wrapper.m_PlayerGatherActionStarted; } }
+            public ActionEvent gatherPerformed { get { return m_Wrapper.m_PlayerGatherActionPerformed; } }
+            public ActionEvent gatherCancelled { get { return m_Wrapper.m_PlayerGatherActionCancelled; } }
+            public InputAction @context { get { return m_Wrapper.m_Player_context; } }
+            public ActionEvent contextStarted { get { return m_Wrapper.m_PlayerContextActionStarted; } }
+            public ActionEvent contextPerformed { get { return m_Wrapper.m_PlayerContextActionPerformed; } }
+            public ActionEvent contextCancelled { get { return m_Wrapper.m_PlayerContextActionCancelled; } }
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -213,6 +257,12 @@ namespace pdxpartyparrot.ggj2019Input
                     moveright.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveright;
                     moveright.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveright;
                     moveright.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveright;
+                    gather.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGather;
+                    gather.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGather;
+                    gather.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGather;
+                    context.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnContext;
+                    context.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnContext;
+                    context.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnContext;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -235,6 +285,12 @@ namespace pdxpartyparrot.ggj2019Input
                     moveright.started += instance.OnMoveright;
                     moveright.performed += instance.OnMoveright;
                     moveright.cancelled += instance.OnMoveright;
+                    gather.started += instance.OnGather;
+                    gather.performed += instance.OnGather;
+                    gather.cancelled += instance.OnGather;
+                    context.started += instance.OnContext;
+                    context.performed += instance.OnContext;
+                    context.cancelled += instance.OnContext;
                 }
             }
         }
@@ -259,5 +315,7 @@ namespace pdxpartyparrot.ggj2019Input
         void OnMovedown(InputAction.CallbackContext context);
         void OnMoveleft(InputAction.CallbackContext context);
         void OnMoveright(InputAction.CallbackContext context);
+        void OnGather(InputAction.CallbackContext context);
+        void OnContext(InputAction.CallbackContext context);
     }
 }

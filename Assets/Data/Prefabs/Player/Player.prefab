@@ -164,7 +164,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 0.5, y: 0.4}
   m_Direction: 1
 --- !u!82 &1219087108319792121
 AudioSource:
@@ -460,6 +460,36 @@ MonoBehaviour:
       m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     m_PlayerMoverightActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerGatherActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerGatherActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerGatherActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerContextActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerContextActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerContextActionCancelled:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,

@@ -156,6 +156,24 @@ namespace pdxpartyparrot.ggj2019.Players
                 Controller.LastMoveAxes = LastControllerMove;
             }
         }
+
+        public void OnGather(InputAction.CallbackContext context)
+        {
+            if(!IsOurDevice(context) || !CanDrive) {
+                return;
+            }
+
+            Debug.LogError("TODO: gather controller action");
+        }
+
+        public void OnContext(InputAction.CallbackContext context)
+        {
+            if(!IsOurDevice(context) || !CanDrive) {
+                return;
+            }
+
+            Debug.LogError("TODO: context controller action");
+        }
 #endregion
 
         private void InitDebugMenu()
