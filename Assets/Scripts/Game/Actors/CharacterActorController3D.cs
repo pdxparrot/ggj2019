@@ -28,6 +28,8 @@ namespace pdxpartyparrot.Game.Actors
 
         public bool IsSliding => _characterController.IsSliding;
 
+        public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
+
 #region Physics
         [Header("Physics")]
 

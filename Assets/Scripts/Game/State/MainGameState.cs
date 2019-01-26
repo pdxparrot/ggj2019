@@ -50,6 +50,8 @@ namespace pdxpartyparrot.Game.State
 
         public override void OnExit()
         {
+            ViewerManager.Instance.FreeViewers();
+
             UIManager.Instance.Shutdown();
             AudioManager.Instance.StopMusic();
 

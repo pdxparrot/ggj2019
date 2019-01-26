@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.ggj2019.Data;
 
 namespace pdxpartyparrot.ggj2019.Players

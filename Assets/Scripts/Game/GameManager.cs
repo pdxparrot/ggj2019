@@ -19,6 +19,6 @@ namespace pdxpartyparrot.Game
 
         public GameData GameData => _gameData;
 
-        public abstract bool IsGameOver { get; }
+        public abstract bool IsGameOver { get; protected set; }
     }
 }
