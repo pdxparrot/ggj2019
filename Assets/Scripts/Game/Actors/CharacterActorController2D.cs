@@ -134,7 +134,9 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            if(_characterController.RunOnComponents(c => c.OnPhysicsMove(axes, dt))) {
+            float speed = ControllerData.MoveSpeed;
+
+            if(_characterController.RunOnComponents(c => c.OnPhysicsMove(axes, speed, dt))) {
                 return;
             }
 
@@ -142,7 +144,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            DefaultPhysicsMove(axes, ControllerData.MoveSpeed, dt);
+            DefaultPhysicsMove(axes, speed, dt);
         }
 
         public void DefaultPhysicsMove(Vector3 axes, float speed, float dt)
@@ -151,11 +153,9 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Vector3 fixedAxes = new Vector3(axes.x, axes.y, 0.0f);
-
             // TODO: handle slopes
 
-            Vector2 velocity = fixedAxes * speed;
+            Vector2 velocity = axes * speed;
             if(!Rigidbody.isKinematic) {
                 velocity.y = Rigidbody.velocity.y;
             }

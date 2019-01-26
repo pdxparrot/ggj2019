@@ -11,5 +11,10 @@ namespace pdxpartyparrot.Game.Data
         private LayerMask _worldLayer;
 
         public LayerMask WorldLayer => _worldLayer;
+
+        [SerializeField]
+        private float _gameSize2D = 10;
+
+        public float GameSize2D => _gameSize2D;
     }
 }

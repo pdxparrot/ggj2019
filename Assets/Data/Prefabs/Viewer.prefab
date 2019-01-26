@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 7785593175876455062}
   - component: {fileID: 2779097547885376191}
   - component: {fileID: 4665280679901225539}
-  - component: {fileID: 4704697714037848707}
   m_Layer: 11
   m_Name: Camera
   m_TagString: Untagged
@@ -286,21 +285,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   - assemblyQualifiedName: Kino.PostProcessing.Sharpen, Kino.Postprocessing, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &4704697714037848707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7278880765250310912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd7c9a7ebc80044d9aea9e7574c8e2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _aspectWidth: 16
-  _aspectHeight: 9
-  _targetAspectRatio: 0
 --- !u!1 &7844862100883784830
 GameObject:
   m_ObjectHideFlags: 0

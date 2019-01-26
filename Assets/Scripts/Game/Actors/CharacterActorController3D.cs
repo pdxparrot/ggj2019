@@ -154,7 +154,9 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            if(_characterController.RunOnComponents(c => c.OnPhysicsMove(axes, dt))) {
+            float speed = ControllerData.MoveSpeed;
+
+            if(_characterController.RunOnComponents(c => c.OnPhysicsMove(axes, speed, dt))) {
                 return;
             }
 
@@ -162,7 +164,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            DefaultPhysicsMove(axes, ControllerData.MoveSpeed, dt);
+            DefaultPhysicsMove(axes, speed, dt);
         }
 
         public void DefaultPhysicsMove(Vector3 axes, float speed, float dt)

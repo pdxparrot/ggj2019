@@ -34,7 +34,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         }
 
         // NOTE: axes are (x, y, 0)
-        public virtual bool OnPhysicsMove(Vector3 axes, float dt)
+        public virtual bool OnPhysicsMove(Vector3 axes, float speed, float dt)
         {
             return false;
         }

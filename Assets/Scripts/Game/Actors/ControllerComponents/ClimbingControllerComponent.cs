@@ -265,7 +265,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             return true;
         }
 
-        public override bool OnPhysicsMove(Vector3 axes, float dt)
+        public override bool OnPhysicsMove(Vector3 axes, float speed, float dt)
         {
             if(!IsClimbing) {
                 return false;

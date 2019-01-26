@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 7566827058745012155}
   - component: {fileID: 4359218613803387002}
   - component: {fileID: 6318285324892847177}
+  - component: {fileID: 3020218383355416943}
   m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
@@ -463,6 +464,18 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: pdxpartyparrot.ggj2019Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &3020218383355416943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f581599d3ef44a4c969a05b38d0cebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9078082320007288478
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 namespace pdxpartyparrot.Core.Camera
 {
     // http://2sa-studio.blogspot.com/2015/01/handling-aspect-ratio-in-unity2d.html
+    // TODO: rename this to UICameraAspectRatio or something to make it clear what it's for
     [RequireComponent(typeof(UnityEngine.Camera))]
     public sealed class AspectRatio : MonoBehaviour
     {

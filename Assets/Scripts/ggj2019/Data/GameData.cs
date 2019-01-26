@@ -17,6 +17,7 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public LayerMask ViewerLayer => _viewerLayer;
 
+#region Game Mode States
         [Space(10)]
 
         [Header("Game Mode States")]
@@ -30,6 +31,7 @@ namespace pdxpartyparrot.ggj2019.Data
         private TeamsGameState _teamsGameStatePrefab;
 
         public TeamsGameState TeamsGameStatePrefab => _teamsGameStatePrefab;
+#endregion
 
         [Space(10)]
 

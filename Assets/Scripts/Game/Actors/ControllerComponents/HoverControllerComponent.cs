@@ -82,7 +82,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         }
 #endregion
 
-        public override bool OnPhysicsMove(Vector3 axes, float dt)
+        public override bool OnPhysicsMove(Vector3 axes, float speed, float dt)
         {
             if(!IsHovering) {
                 return false;

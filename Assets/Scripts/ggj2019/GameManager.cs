@@ -28,21 +28,11 @@ namespace pdxpartyparrot.ggj2019
 
         public int Round => _round;
 
-// TODO: timer is temporary until we have a fail condition
-[SerializeField]
-[ReadOnly]
-private Core.Util.Timer _gameTimer;
-
 #region Unity Lifecycle
         private void Awake()
         {
             GameStateManager.Instance.RegisterGameManager(this);
         }
-
-private void Update()
-{
-    _gameTimer.Update(Time.deltaTime);
-}
 
         protected override void OnDestroy()
         {
@@ -60,15 +50,17 @@ private void Update()
             Assert.IsTrue(NetworkServer.active);
 
             IsGameOver = false;
-_gameTimer.Start(30, () => IsGameOver = true);
         }
 
         //[Client]
         public void InitViewer()
         {
-            Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>();  
-            Viewer.Set2D();
-            Viewer.transform.position = GameGameData.ViewerPosition;
+            Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>();
+            if(null != Viewer) {
+                Viewer.Set2D();
+                Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
+                Viewer.transform.position = GameGameData.ViewerPosition;
+            }
         }
     }
 }
