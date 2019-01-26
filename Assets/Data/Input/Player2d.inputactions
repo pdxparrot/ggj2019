@@ -40,6 +40,18 @@
                     "id": "728c72d4-35c0-40a8-ad7a-a063b63d9ed2",
                     "expectedControlLayout": "",
                     "bindings": []
+                },
+                {
+                    "name": "gather",
+                    "id": "35df6f66-304c-434d-8bf4-c790b692e261",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "context",
+                    "id": "bb0c3b7e-2f68-4586-84c5-b2442ffcde2a",
+                    "expectedControlLayout": "",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -134,6 +146,30 @@
                     "processors": "",
                     "groups": "",
                     "action": "move right",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "gather",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "context",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

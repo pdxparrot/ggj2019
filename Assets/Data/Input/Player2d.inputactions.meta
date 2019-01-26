@@ -4,6 +4,8 @@ ScriptedImporter:
   fileIDToRecycleName:
     11400000: <root>
     11400002: Player/move
+    11400004: Player/gather
+    11400006: Player/context
     11400008: Player/Pause
     11400014: Player/move left
     11400016: Player/move right
