@@ -38,7 +38,7 @@ namespace pdxpartyparrot.Game.Data
         [Header("Physics")]
 
         [SerializeField]
-        private float _mass = 1.0f;
+        private float _mass = 45.0f;
 
         public float Mass => _mass;
 
@@ -57,12 +57,12 @@ namespace pdxpartyparrot.Game.Data
         [Header("Controls")]
 
         [SerializeField]
-        private float _movementLerpSpeed = 1.0f;
+        private float _movementLerpSpeed = 5.0f;
 
         public float MovementLerpSpeed => _movementLerpSpeed;
 
         [SerializeField]
-        private float _lookLerpSpeed = 1.0f;
+        private float _lookLerpSpeed = 10.0f;
 
         public float LookLerpSpeed => _lookLerpSpeed;
 #endregion

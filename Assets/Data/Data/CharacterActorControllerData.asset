@@ -29,24 +29,24 @@ MonoBehaviour:
   _climbUpTimeSeconds: 1
   _climbDownTimeSeconds: 1
   _hangTimeSeconds: 1
-  _moveSpeed: 1
-  _runThreshold: 1
-  _fallSpeedAdjustment: 0
+  _moveSpeed: 30
+  _runThreshold: 0.75
+  _fallSpeedAdjustment: 200
   _terminalVelocity: 50
   _GroundedEpsilon: 0.1
   _groundCheckLength: 1
   _slopeLimit: 30
-  _jumpHeight: 1
-  _longJumpHoldSeconds: 1
-  _longJumpHeight: 5
-  _doubleJumpHeight: 1
-  _doubleJumpCount: 0
-  _hoverHoldSeconds: 1
+  _jumpHeight: 30
+  _longJumpHoldSeconds: 0.5
+  _longJumpHeight: 50
+  _doubleJumpHeight: 25
+  _doubleJumpCount: 1
+  _hoverHoldSeconds: 0.5
   _hoverTimeSeconds: 10
   _hoverCooldownSeconds: 1
-  _hoverRechargeRate: 1
-  _hoverAcceleration: 20
-  _hoverMoveSpeed: 1
+  _hoverRechargeRate: 0.5
+  _hoverAcceleration: 5
+  _hoverMoveSpeed: 30
   _hoverWhenGrounded: 0
   _attachDistance: 0.1
   _armRayLength: 1

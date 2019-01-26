@@ -20,8 +20,8 @@ MonoBehaviour:
     m_Bits: 2048
   _playerViewerPrefab: {fileID: 1188256405820769467, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}
-  _mass: 1
+  _mass: 45
   _drag: 0
   _angularDrag: 0
-  _movementLerpSpeed: 1
-  _lookLerpSpeed: 1
+  _movementLerpSpeed: 5
+  _lookLerpSpeed: 10

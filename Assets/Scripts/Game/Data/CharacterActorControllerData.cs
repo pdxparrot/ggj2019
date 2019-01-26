@@ -98,14 +98,14 @@ namespace pdxpartyparrot.Game.Data
         [SerializeField]
         [Range(0, 50)]
         [Tooltip("Move speed in m/s")]
-        private float _moveSpeed = 1.0f;
+        private float _moveSpeed = 30.0f;
 
         public float MoveSpeed => _moveSpeed;
 
         [SerializeField]
         [Range(0, 1)]
         [Tooltip("The controller-based threshold that we consider the character to be running")]
-        private float _runThreshold = 1.0f;
+        private float _runThreshold = 0.75f;
 
         public float RunThreshold => _runThreshold;
 
@@ -114,7 +114,7 @@ namespace pdxpartyparrot.Game.Data
         [SerializeField]
         [Range(0, 500)]
         [Tooltip("Add this many m/s to the player's fall speed, to make movement feel better without changing actual gravity")]
-        private float _fallSpeedAdjustment = 0.0f;
+        private float _fallSpeedAdjustment = 200.0f;
 
         public float FallSpeedAdjustment => _fallSpeedAdjustment;
 
@@ -149,9 +149,9 @@ namespace pdxpartyparrot.Game.Data
         [Header("Jumping")]
 
         [SerializeField]
-        [Range(0, 50)]
+        [Range(0, 100)]
         [Tooltip("How high does the character jump")]
-        private float _jumpHeight = 1.0f;
+        private float _jumpHeight = 30.0f;
 
         public float JumpHeight => _jumpHeight;
 #endregion
@@ -164,14 +164,14 @@ namespace pdxpartyparrot.Game.Data
         [SerializeField]
         [Range(0, 10)]
         [Tooltip("How long to hold jump before allowing a long jump")]
-        private float _longJumpHoldSeconds = 1.0f;
+        private float _longJumpHoldSeconds = 0.5f;
 
         public float LongJumpHoldSeconds => _longJumpHoldSeconds;
 
         [SerializeField]
-        [Range(0, 50)]
+        [Range(0, 100)]
         [Tooltip("How high does the character jump when long jumping")]
-        private float _longJumpHeight = 5.0f;
+        private float _longJumpHeight = 50.0f;
 
         public float LongJumpHeight => _longJumpHeight;
 #endregion
@@ -182,15 +182,15 @@ namespace pdxpartyparrot.Game.Data
         [Header("Double Jumping")]
 
         [SerializeField]
-        [Range(0, 50)]
+        [Range(0, 100)]
         [Tooltip("How high does the character jump when double jumping")]
-        private float _doubleJumpHeight = 1.0f;
+        private float _doubleJumpHeight = 25.0f;
 
         public float DoubleJumpHeight => _doubleJumpHeight;
 
         [SerializeField]
         [Tooltip("How many times is the player able to double jump (-1 is infinite)")]
-        private int _doubleJumpCount;
+        private int _doubleJumpCount = 1;
 
         public int DoubleJumpCount => _doubleJumpCount;
 #endregion
@@ -203,7 +203,7 @@ namespace pdxpartyparrot.Game.Data
         [SerializeField]
         [Range(0, 10)]
         [Tooltip("How long to hold hover before hovering starts")]
-        private float _hoverHoldSeconds = 1.0f;
+        private float _hoverHoldSeconds = 0.5f;
 
         public float HoverHoldSeconds => _hoverHoldSeconds;
 
@@ -215,28 +215,28 @@ namespace pdxpartyparrot.Game.Data
         public float HoverTimeSeconds => _hoverTimeSeconds;
 
         [SerializeField]
-        [Range(0, 60)]
+        [Range(0, 10)]
         private float _hoverCooldownSeconds = 1.0f;
 
         public float HoverCooldownSeconds => _hoverCooldownSeconds;
 
         [SerializeField]
-        [Range(0, 60)]
+        [Range(0, 10)]
         [Tooltip("Seconds of charge to recover every second after cooldown")]
-        private float _hoverRechargeRate = 1.0f;
+        private float _hoverRechargeRate = 0.5f;
 
         public float HoverRechargeRate => _hoverRechargeRate;
 
         [SerializeField]
         [Range(0, 100)]
         [Tooltip("The acceleration caused by hovering")]
-        private float _hoverAcceleration = 20.0f;
+        private float _hoverAcceleration = 5.0f;
 
         public float HoverAcceleration => _hoverAcceleration;
 
         [SerializeField]
         [Range(0, 100)]
-        private float _hoverMoveSpeed = 1.0f;
+        private float _hoverMoveSpeed = 30.0f;
 
         public float HoverMoveSpeed => _hoverMoveSpeed;
 
@@ -309,7 +309,7 @@ namespace pdxpartyparrot.Game.Data
 
         [SerializeField]
         [Tooltip("Allow movement while not grounded")]
-        private bool _allowAirControl;
+        private bool _allowAirControl = true;
 
         public bool AllowAirControl => _allowAirControl;
     }
