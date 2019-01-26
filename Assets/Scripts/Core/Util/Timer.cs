@@ -7,7 +7,7 @@ using UnityEngine;
 namespace pdxpartyparrot.Core.Util
 {
     [Serializable]
-    public struct Timer
+    public class Timer
     {
         [SerializeField]
         [ReadOnly]
