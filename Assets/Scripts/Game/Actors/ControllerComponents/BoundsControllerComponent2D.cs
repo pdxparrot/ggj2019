@@ -14,23 +14,26 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             Vector2 gameSize = new Vector2(GameStateManager.Instance.GameManager.GameData.GameSize2D * aspectRatio,
                                            GameStateManager.Instance.GameManager.GameData.GameSize2D);
 
-            // TODO: copied from DefaultPhysicsMove() and probably should be smarter than that
+            Vector2 halfSize = new Vector2(Controller2D.Owner.Radius / 2.0f, Controller2D.Owner.Height / 2.0f);
+
+            // TODO: this was originally copied from DefaultPhysicsMove() and probably should be smarter than that
+
             Vector2 velocity = axes * speed;
             if(!Controller2D.Rigidbody.isKinematic) {
                 velocity.y = Controller2D.Rigidbody.velocity.y;
             }
 
             Vector2 updatedPosition = Controller2D.Rigidbody.position + velocity * dt;
-            if(updatedPosition.x > gameSize.x) {
-                updatedPosition.x = gameSize.x;
-            } else if(updatedPosition.x < -gameSize.x) {
-                updatedPosition.x = -gameSize.x;
+            if(updatedPosition.x + halfSize.x > gameSize.x) {
+                updatedPosition.x = gameSize.x - halfSize.x;
+            } else if(updatedPosition.x - halfSize.x < -gameSize.x) {
+                updatedPosition.x = -gameSize.x + halfSize.x;
             }
 
-            if(updatedPosition.y > gameSize.y) {
-                updatedPosition.y = gameSize.y;
-            } else if(updatedPosition.y < -gameSize.y) {
-                updatedPosition.y = -gameSize.y;
+            if(updatedPosition.y + halfSize.y > gameSize.y) {
+                updatedPosition.y = gameSize.y - halfSize.y;
+            } else if(updatedPosition.y - halfSize.y < -gameSize.y) {
+                updatedPosition.y = -gameSize.y + halfSize.y;
             }
 
             Controller2D.Rigidbody.MovePosition(updatedPosition);
