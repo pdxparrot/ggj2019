@@ -49,3 +49,4 @@ crashlytics-build.properties
 
 # don't commit Spine runtime
 Assets/Spine*
+Assets/AmplifyShaderEditor*
