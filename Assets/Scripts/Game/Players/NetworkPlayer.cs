@@ -23,9 +23,6 @@ namespace pdxpartyparrot.Game.Players
             base.Awake();
 
             Assert.IsTrue(Actor is IPlayer);
-
-            NetworkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncRigidbody3D;
-            NetworkTransform.syncRotationAxis = NetworkTransform.AxisSyncMode.AxisY;
         }
 #endregion
 

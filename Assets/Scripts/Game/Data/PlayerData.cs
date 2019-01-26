@@ -14,22 +14,6 @@ namespace pdxpartyparrot.Game.Data
 
         public LayerMask PlayerLayer => _playerLayer;
 
-        [SerializeField]
-        private LayerMask _viewerLayer;
-
-        public LayerMask ViewerLayer => _viewerLayer;
-
-        [Space(10)]
-
-#region Viewers
-        [Header("Viewer")]
-
-        [SerializeField]
-        private Viewer _playerViewerPrefab;
-
-        public IPlayerViewer PlayerViewerPrefab => (IPlayerViewer)_playerViewerPrefab;
-#endregion
-
         [Space(10)]
 
 // TODO: this could probably go into an Actor/Character data object
@@ -51,6 +35,11 @@ namespace pdxpartyparrot.Game.Data
         private float _angularDrag = 0.0f;
 
         public float AngularDrag => _angularDrag;
+
+        [SerializeField]
+        private bool _isKinematic = false;
+
+        public bool IsKinematic => _isKinematic;
 #endregion
 
 #region Controls

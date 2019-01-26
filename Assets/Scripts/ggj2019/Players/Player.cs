@@ -1,6 +1,5 @@
 ﻿#pragma warning disable 0618    // disable obsolete warning for now
 
-using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
@@ -9,16 +8,13 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    [RequireComponent(typeof(FollowTarget3D))]
-    public sealed class Player : Game.Players.Player3D
+    public sealed class Player : Player2D
     {
         public PlayerController GamePlayerController => (PlayerController)PlayerController;
 
-        public override float Height => GamePlayerController.Capsule.height;
+        public override float Height => GamePlayerController.Collider.bounds.size.y;
 
-        public override float Radius => GamePlayerController.Capsule.radius;
-
-        public FollowTarget3D FollowTarget { get; private set; }
+        public override float Radius => GamePlayerController.Collider.bounds.size.x;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -26,8 +22,6 @@ namespace pdxpartyparrot.ggj2019.Players
             base.Awake();
 
             Assert.IsTrue(PlayerController is PlayerController);
-
-            FollowTarget = GetComponent<FollowTarget3D>();
         }
 #endregion
 
@@ -45,6 +39,11 @@ Debug.LogWarning("TODO: init player HUD");
 */
 
             return true;
+        }
+
+        protected override void InitializeViewer()
+        {
+            PlayerViewer = GameManager.Instance.Viewer;
         }
     }
 }

@@ -1,6 +1,7 @@
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 
@@ -98,8 +99,8 @@ namespace pdxpartyparrot.Game.Actors
 
         private void InitRigidbody()
         {
-            Rigidbody.isKinematic = false;
-            Rigidbody.useGravity = true;
+            Rigidbody.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
+            Rigidbody.useGravity = !GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
             Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Rigidbody.detectCollisions = true;
             Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;

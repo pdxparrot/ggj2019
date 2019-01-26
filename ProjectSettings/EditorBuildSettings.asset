@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/main_menu.unity
     guid: a294e60380f4b8c449d2e169724113b6
   - enabled: 1
-    path: Assets/Scenes/game3d.unity
-    guid: 0446c058c1357744c98521cd267663a8
+    path: Assets/Scenes/beeswarm01.unity
+    guid: 77ee5396822289a4e87c45e59550ea02
   m_configObjects: {}

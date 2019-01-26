@@ -1,7 +1,6 @@
 ﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Game.Actors;
-using pdxpartyparrot.Game.Actors.ControllerComponents;
 using pdxpartyparrot.ggj2019Input;
 
 using UnityEngine;
@@ -38,19 +37,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
             Assert.IsTrue(PlayerController is PlayerController);
             Assert.IsNull(GetComponent<GamepadListener>());
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-
-            if(!Player.IsLocalActor) {
-                return;
-            }
-
-            float dt = Time.deltaTime;
-
-            GamePlayer.FollowTarget.LastLookAxes = Vector3.Lerp(GamePlayer.FollowTarget.LastLookAxes, LastControllerLook, dt * PlayerManager.Instance.PlayerData.LookLerpSpeed);
         }
 
         protected override void OnDestroy()
@@ -123,7 +109,7 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
-        public void OnMoveforward(InputAction.CallbackContext context)
+        public void OnMoveup(InputAction.CallbackContext context)
         {
             if(!IsOurDevice(context) || !CanDrive) {
                 return;
@@ -135,7 +121,7 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
-        public void OnMovebackward(InputAction.CallbackContext context)
+        public void OnMovedown(InputAction.CallbackContext context)
         {
             if(!IsOurDevice(context) || !CanDrive) {
                 return;
@@ -168,41 +154,6 @@ namespace pdxpartyparrot.ggj2019.Players
             LastControllerMove = new Vector3(context.started ? 1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
                 Controller.LastMoveAxes = LastControllerMove;
-            }
-        }
-
-        public void OnLook(InputAction.CallbackContext context)
-        {
-            bool isMouse = context.control.device is Mouse;
-            if(!IsOurDevice(context) || !CanDrive || (isMouse && !EnableMouseLook)) {
-                return;
-            }
-
-            if(context.cancelled) {
-                LastControllerLook = Vector3.zero;
-                GamePlayer.FollowTarget.LastLookAxes = Vector3.zero;
-            } else {
-                Vector2 axes = context.ReadValue<Vector2>();
-                axes.y *= InvertLookY ? -1 : 1;
-
-                if(isMouse) {
-                    axes *= MouseSensitivity;
-                }
-
-                LastControllerLook = new Vector3(axes.x, axes.y, 0.0f);
-            }
-        }
-
-        public void OnJump(InputAction.CallbackContext context)
-        {
-            if(!IsOurDevice(context) || !CanDrive) {
-                return;
-            }
-
-            if(context.started) {
-                GamePlayerController.CharacterController.ActionStarted(JumpControllerComponent.JumpAction.Default);
-            } else if(context.performed) {
-                GamePlayerController.CharacterController.ActionPerformed(JumpControllerComponent.JumpAction.Default);
             }
         }
 #endregion

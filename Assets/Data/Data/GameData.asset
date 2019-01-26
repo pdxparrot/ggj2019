@@ -15,5 +15,9 @@ MonoBehaviour:
   _worldLayer:
     serializedVersion: 2
     m_Bits: 8192
-  _serverSpectatorPrefab: {fileID: 1861802136262844766, guid: 9d2e647f5ce05304aa47b6d948febd7d,
+  _viewerLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  _viewerPrefab: {fileID: 1920754528598710306, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}
+  _viewerPosition: {x: 0, y: 0, z: -10}

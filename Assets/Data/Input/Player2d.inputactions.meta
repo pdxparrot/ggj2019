@@ -1,16 +1,14 @@
 fileFormatVersion: 2
-guid: 53b2c5cf1fa81f94cb18cb61823e02e5
+guid: 439ee066910ddf94890260a4bc6f9c4d
 ScriptedImporter:
   fileIDToRecycleName:
     11400000: <root>
     11400002: Player/move
-    11400004: Player/look
-    11400006: Player/jump
     11400008: Player/Pause
-    11400010: Player/move forward
-    11400012: Player/move backward
     11400014: Player/move left
     11400016: Player/move right
+    11400018: Player/move up
+    11400020: Player/move down
   externalObjects: {}
   userData: 
   assetBundleName: 

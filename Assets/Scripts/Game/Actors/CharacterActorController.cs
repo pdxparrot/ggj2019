@@ -9,6 +9,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors.ControllerComponents;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Effects;
+using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -173,7 +174,9 @@ namespace pdxpartyparrot.Game.Actors
             _components = GetComponents<CharacterActorControllerComponent>();
             Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
 
-            StartCoroutine(RaycastRoutine());
+            if(!GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic) {
+                StartCoroutine(RaycastRoutine());
+            }
         }
 
         protected virtual void OnDrawGizmos()

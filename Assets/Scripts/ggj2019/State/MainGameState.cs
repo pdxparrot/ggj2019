@@ -1,7 +1,5 @@
 ﻿using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.State;
-using pdxpartyparrot.ggj2019.Camera;
-using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 
@@ -23,12 +21,14 @@ namespace pdxpartyparrot.ggj2019.State
 
         protected override bool InitializeClient()
         {
-            ViewerManager.Instance.AllocateViewers(1, (PlayerViewer)PlayerManager.Instance.PlayerData.PlayerViewerPrefab);
+            ViewerManager.Instance.AllocateViewers(1, GameManager.Instance.GameGameData.ViewerPrefab);
 
             if(!base.InitializeClient()) {
                 Debug.LogWarning("Failed to initialize client!");
                 return false;
             }
+
+            GameManager.Instance.InitViewer();
 
             return true;
         }

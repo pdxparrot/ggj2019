@@ -1,5 +1,5 @@
 {
-    "name": "Player3d",
+    "name": "Player2d",
     "maps": [
         {
             "name": "Player",
@@ -12,31 +12,19 @@
                     "bindings": []
                 },
                 {
-                    "name": "look",
-                    "id": "10c18ae1-5de6-439c-8177-3776f63015ca",
-                    "expectedControlLayout": "",
-                    "bindings": []
-                },
-                {
-                    "name": "jump",
-                    "id": "ed587532-0a1c-4381-b721-92b1eca2b6c2",
-                    "expectedControlLayout": "",
-                    "bindings": []
-                },
-                {
                     "name": "Pause",
                     "id": "cd3f0036-5277-4d0a-8437-1fc31195d39c",
                     "expectedControlLayout": "",
                     "bindings": []
                 },
                 {
-                    "name": "move forward",
+                    "name": "move up",
                     "id": "5a814028-acec-4506-a2f0-80a948e20861",
                     "expectedControlLayout": "",
                     "bindings": []
                 },
                 {
-                    "name": "move backward",
+                    "name": "move down",
                     "id": "68e65cea-0ad5-44fe-976e-c615d0c3ca38",
                     "expectedControlLayout": "",
                     "bindings": []
@@ -62,54 +50,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "move",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "Stick",
-                    "processors": "",
-                    "groups": "",
-                    "action": "look",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "look",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "PressAndRelease",
-                    "processors": "",
-                    "groups": "",
-                    "action": "jump",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "jump",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
@@ -145,7 +85,7 @@
                     "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
-                    "action": "move forward",
+                    "action": "move up",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
@@ -157,7 +97,7 @@
                     "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
-                    "action": "move backward",
+                    "action": "move down",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

@@ -40,7 +40,7 @@ namespace pdxpartyparrot.Game.Players
 #region Viewer
 
         [CanBeNull]
-        public IPlayerViewer PlayerViewer { get; private set; }
+        public IPlayerViewer PlayerViewer { get; protected set; }
 
         [CanBeNull]
         public override Viewer Viewer
@@ -97,17 +97,17 @@ namespace pdxpartyparrot.Game.Players
 
             _driver.Initialize();
 
-            PlayerViewer = ViewerManager.Instance.AcquireViewer<Viewer>() as IPlayerViewer;
-            if(null == PlayerViewer) {
-                Debug.LogError("Unable to acquire player viewer!");
-            } else {
-                PlayerViewer.Initialize(this, id);
-            }
+            NetworkPlayer.NetworkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncRigidbody3D;
+            NetworkPlayer.NetworkTransform.syncRotationAxis = NetworkTransform.AxisSyncMode.AxisY;
+
+            InitializeViewer();
 
             UIManager.Instance.InitializePlayerUI(this);
 
             return true;
         }
+
+        protected abstract void InitializeViewer();
 
         public override void OnSpawn()
         {

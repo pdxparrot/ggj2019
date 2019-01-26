@@ -1,6 +1,7 @@
-﻿using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 
@@ -8,12 +9,12 @@ namespace pdxpartyparrot.Game.Actors
 {
     // TODO: reduce the copy paste in this
     [RequireComponent(typeof(CharacterActorController))]
-    [RequireComponent(typeof(CapsuleCollider2D))]
+    [RequireComponent(typeof(Collider2D))]
     public class CharacterActorController2D : ActorController2D, ICharacterActorController
     {
         public CharacterActorControllerData ControllerData => _characterController.ControllerData;
 
-        public CapsuleCollider2D Capsule2D => (CapsuleCollider2D)PhysicsOwner.Collider;
+        public Collider2D Collider => PhysicsOwner.Collider;
 
         private CharacterActorController _characterController;
 
@@ -91,7 +92,7 @@ namespace pdxpartyparrot.Game.Actors
 
         private void InitRigidbody()
         {
-            Rigidbody.isKinematic = false;
+            Rigidbody.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
             Rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
             // we run the follow cam in FixedUpdate() and interpolation interferes with that
@@ -117,17 +118,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Vector3 forward = new Vector3(axes.x, 0.0f, axes.y);
-
-            // align the movement with the camera
-            if(null != Owner.Viewer) {
-                forward = (Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) * forward).normalized;
-            }
-
-            // align the player with the movement
-            if(forward.sqrMagnitude > float.Epsilon) {
-                transform.forward = forward;
-            }
+            // TODO: do we need to rotate to face the direction of movement?
 
             if(null != Owner.Animator) {
                 Owner.Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
@@ -158,20 +149,14 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Vector3 fixedAxes = new Vector3(axes.x, 0.0f, axes.y);
+            Vector3 fixedAxes = new Vector3(axes.x, axes.y, 0.0f);
 
-            // prevent moving up slopes we can't move up
-            if(_characterController.GroundSlope >= ControllerData.SlopeLimit) {
-                float dp = Vector3.Dot(transform.forward, _characterController.GroundCheckNormal);
-                if(dp < 0.0f) {
-                    fixedAxes.z = 0.0f;
-                }
-            }
+            // TODO: handle slopes
 
             Vector2 velocity = fixedAxes * speed;
-            Quaternion rotation = null != Owner.Viewer ? Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) : transform.rotation;
-            velocity = rotation * velocity;
-            velocity.y = Rigidbody.velocity.y;
+            if(!Rigidbody.isKinematic) {
+                velocity.y = Rigidbody.velocity.y;
+            }
 
             if(Rigidbody.isKinematic) {
                 Rigidbody.MovePosition(Rigidbody.position + velocity * dt);

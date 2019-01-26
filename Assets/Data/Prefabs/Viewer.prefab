@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 2779097547885376191}
   - component: {fileID: 4665280679901225539}
   - component: {fileID: 4704697714037848707}
-  - component: {fileID: 6057515659239129830}
   m_Layer: 11
   m_Name: Camera
   m_TagString: Untagged
@@ -302,51 +301,6 @@ MonoBehaviour:
   _aspectWidth: 16
   _aspectHeight: 9
   _targetAspectRatio: 0
---- !u!114 &6057515659239129830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7278880765250310912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ab554858205ec47b006e27b3ab49d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _distances:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
 --- !u!1 &7844862100883784830
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,12 +310,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6565186795881872307}
-  - component: {fileID: 4986122861790259886}
-  - component: {fileID: 7188633352861802348}
-  - component: {fileID: 4085735361072586493}
-  - component: {fileID: 1188256405820769467}
+  - component: {fileID: 1920754528598710306}
   m_Layer: 11
-  m_Name: PlayerViewer
+  m_Name: Viewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,36 +335,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4986122861790259886
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844862100883784830}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7188633352861802348
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844862100883784830}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &4085735361072586493
+--- !u!114 &1920754528598710306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,47 +344,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7844862100883784830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd79ba5b38cfea4fbbfacebc23dc390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enableZoom: 0
-  _minZoomDistance: 5
-  _maxZoomDistance: 100
-  _zoomSpeed: 500
-  _smooth: 0
-  _smoothTime: 0.05
-  _velocity: {x: 0, y: 0, z: 0}
-  _target: {fileID: 0}
-  _lastTargetPosition: {x: 0, y: 0, z: 0}
-  _enableOrbit: 1
-  _orbitSpeedX: 100
-  _orbitSpeedY: 100
-  _returnToDefault: 0
-  _defaultOrbitRotation: {x: 0, y: 30}
-  _defaultOrbitReturnTime: 0.5
-  _orbitReturnVelocity: {x: 0, y: 0}
-  _orbitRotation: {x: 0, y: 0}
-  _orbitMinRadius: 15
-  _orbitMaxRadius: 15
-  _orbitXMin: -90
-  _orbitXMax: 90
-  _orbitYMin: -90
-  _orbitYMax: 90
-  _enableLook: 0
-  _lookSpeedX: 100
-  _lookSpeedY: 100
-  _lookRotation: {x: 0, y: 0}
-  _isLooking: 0
---- !u!114 &1188256405820769467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844862100883784830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e953a3d199055459ed0a82c6720097, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c6ecc7f62a8072418a1f1ff9948d03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 0
@@ -470,4 +352,3 @@ MonoBehaviour:
   _uiCamera: {fileID: 3473508580517442035}
   _globalPostProcessVolume: {fileID: 2918448500653730605}
   _defaultCameraPosition: {x: 0, y: 0, z: 0}
-  _player: {fileID: 0}
