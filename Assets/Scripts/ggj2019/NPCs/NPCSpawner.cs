@@ -50,32 +50,34 @@ public class NPCSpawner : MonoBehaviour
     public List<SpawnWave> Waves;
 
     // Runtime state
-    public int WaveIndex { get; private set; }
-    public Timer WaveTimer { get; private set; }
-    public List<Timer> SpawnTimers { get; private set; }
+    private int _waveIndex;
+    private Timer _waveTimer;
+    private List<Timer> _spawnTimers;
 
     private readonly System.Random random = new System.Random();
 
     // The current wave
     public SpawnWave Wave {
         get {
-            return Waves[WaveIndex];
+            return Waves[_waveIndex];
         }
     }
 
     void Start() {
+        _waveTimer = new Timer();
+        _spawnTimers = new List<Timer>();
         FirstWave();
     }
 
     void Update() {
-        WaveTimer.Update(Time.deltaTime);
-        if(!WaveTimer.IsRunning) {
+        _waveTimer.Update(Time.deltaTime);
+        if(!_waveTimer.IsRunning) {
             NextWave();
         }
 
-        for(int i = 0; i < SpawnTimers.Count; ++i) {
-            SpawnTimers[i].Update(Time.deltaTime);
-            if(!SpawnTimers[i].IsRunning) {
+        for(int i = 0; i < _spawnTimers.Count; ++i) {
+            _spawnTimers[i].Update(Time.deltaTime);
+            if(!_spawnTimers[i].IsRunning) {
                 Spawn(i);
             }
         }
@@ -83,21 +85,21 @@ public class NPCSpawner : MonoBehaviour
 
     // Advance Waves
     public void FirstWave() {
-        WaveIndex = -1;
+        _waveIndex = -1;
         NextWave();
     }
     public void NextWave() {
-        if(WaveIndex + 1 < Waves.Count)
-            ++WaveIndex;
+        if(_waveIndex + 1 < Waves.Count)
+            ++_waveIndex;
 
-        WaveTimer.Start(Wave.Duration);
+        _waveTimer.Start(Wave.Duration);
 
-        SpawnTimers.Clear();
+        _spawnTimers.Clear();
         for(int i = 0; i < Wave.SpawnGroups.Count; ++i) {
             var grp = Wave.SpawnGroups[i];
 
-            SpawnTimers.Add(new Timer());
-            SpawnTimers[i].Start(random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+            _spawnTimers.Add(new Timer());
+            _spawnTimers[i].Start(random.NextSingle(grp.Delay.Min, grp.Delay.Max));
         }
     }
 
@@ -110,10 +112,11 @@ public class NPCSpawner : MonoBehaviour
 
         var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
         if(spawnpt) {
-            spawnpt.Spawn(npc.Prefab);
-        }
+            var actor = Instantiate(npc.Prefab);
+            spawnpt.Spawn(actor);
 
-        SpawnTimers[grpidx].Start(random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+            _spawnTimers[grpidx].Start(random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+        }
     }
 
 

@@ -44,72 +44,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPCTypes:
-  - Prefab: {fileID: 0}
+  - Prefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+      type: 3}
     Tag: wasp
-  - Prefab: {fileID: 0}
+  - Prefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+      type: 3}
     Tag: beetle
-  - Prefab: {fileID: 0}
+  - Prefab: {fileID: 3669868280244915196, guid: 85f0e295d0379524ba0ac462ca0cfefc,
+      type: 3}
     Tag: flower
   Waves:
   - SpawnGroups:
+    - Type: 2
+      Delay:
+        Min: 8
+        Max: 10
+      Count:
+        Min: 2
+        Max: 5
+    - Type: 1
+      Delay:
+        Min: 6
+        Max: 10
+      Count:
+        Min: 1
+        Max: 1
     - Type: 0
       Delay:
-        Min: 0
-        Max: 0
+        Min: 8
+        Max: 12
       Count:
-        Min: 0
-        Max: 0
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    Duration: 60
-  - SpawnGroups:
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    Duration: 60
-  - SpawnGroups:
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    - Type: 0
-      Delay:
-        Min: 0
-        Max: 0
-      Count:
-        Min: 0
-        Max: 0
-    Duration: 60
+        Min: 1
+        Max: 1
+    Duration: 300
