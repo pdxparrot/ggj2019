@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.Experimental.Input;
 
 
-namespace pdxpartyparrot.ggj2019Input
+namespace pdxpartyparrot.ggj2019.Input
 {
     [Serializable]
     public class PlayerControls : InputActionAssetReference

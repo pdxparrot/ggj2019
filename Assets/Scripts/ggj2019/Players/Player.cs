@@ -38,5 +38,17 @@ Debug.LogWarning($"TODO: Initialize UI for player {Id}");
 */
 
         }
+
+#region Actions
+        public void DoGather()
+        {
+            Debug.LogWarning("TODO: gather the swarm");
+        }
+
+        public void DoContext()
+        {
+            Debug.LogWarning("TODO: do a context thing");
+        }
+#endregion
     }
 }
