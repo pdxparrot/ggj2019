@@ -1,6 +1,4 @@
-﻿//#define ENABLE_MULTIPLAYER
-
-using pdxpartyparrot.Core.DebugMenu;
+﻿using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.State;
@@ -10,7 +8,7 @@ using UnityEngine.UI;
 
 namespace pdxpartyparrot.Game.Menu
 {
-    public sealed class MainMenu : MenuPanel
+    public abstract class MainMenu : MenuPanel
     {
         [SerializeField]
         private Button _multiplayerButton;
@@ -21,20 +19,16 @@ namespace pdxpartyparrot.Game.Menu
         [SerializeField]
         private CreditsMenu _creditsPanel;
 
+        protected abstract bool UseMultiplayer { get; }
+
         private DebugMenuNode _debugMenuNode;
 
 #region Unity Lifecycle
-        private void Awake()
+        protected virtual void Awake()
         {
-#if ENABLE_MULTIPLAYER
-            if(null!= _multiplayerButton && Application.isEditor) {
+            if(UseMultiplayer && null!= _multiplayerButton && Application.isEditor) {
                 _multiplayerButton.gameObject.SetActive(true);
             }
-#else
-            if(null!= _multiplayerButton) {
-                _multiplayerButton.gameObject.SetActive(false);
-            }
-#endif
 
             if(null != _multiplayerPanel) {
                 _multiplayerPanel.gameObject.SetActive(false);
@@ -47,13 +41,14 @@ namespace pdxpartyparrot.Game.Menu
             InitDebugMenu();
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             DestroyDebugMenu();
         }
 #endregion
 
 #region Event Handlers
+        // these are all just demo methods
         public void OnPlay()
         {
             GameStateManager.Instance.StartSinglePlayer();
@@ -77,22 +72,22 @@ namespace pdxpartyparrot.Game.Menu
 
         private void InitDebugMenu()
         {
-#if ENABLE_MULTIPLAYER
+            if(UseMultiplayer) {
 // TODO: this should change depending on if we're hosting/joining or whatever
 // so that we don't get into a fucked up state
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Multiplayer Menu");
-            _debugMenuNode.RenderContentsAction = () => {
-                if(GUIUtils.LayoutButton("Host")) {
-                    GameStateManager.Instance.StartHost();
-                    return;
-                }
+                _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Multiplayer Menu");
+                _debugMenuNode.RenderContentsAction = () => {
+                    if(GUIUtils.LayoutButton("Host")) {
+                        GameStateManager.Instance.StartHost();
+                        return;
+                    }
 
-                if(GUIUtils.LayoutButton("Join")) {
-                    GameStateManager.Instance.StartJoin();
-                    return;
-                }
-            };
-#endif
+                    if(GUIUtils.LayoutButton("Join")) {
+                        GameStateManager.Instance.StartJoin();
+                        return;
+                    }
+                };
+            }
         }
 
         private void DestroyDebugMenu()
