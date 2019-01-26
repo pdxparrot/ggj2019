@@ -82,7 +82,7 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/start",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
@@ -154,7 +154,7 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "gather",
@@ -166,7 +166,7 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "context",

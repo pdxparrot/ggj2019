@@ -18,6 +18,8 @@ namespace pdxpartyparrot.Game.Actors
 
         private CharacterActorController _characterController;
 
+        public CharacterActorController CharacterController => _characterController;
+
         public float RaycastRoutineRate => _characterController.RaycastRoutineRate;
 
         public bool IsGrounded => _characterController.IsGrounded;

@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Menu;
 
@@ -99,7 +100,9 @@ namespace pdxpartyparrot.Game.UI
             if(PartyParrotManager.Instance.IsPaused) {
                 _pauseMenu.gameObject.SetActive(true);
                 _pauseMenu.ResetMenu();
+                InputManager.Instance.EventSystem.UIModule.EnableAllActions();
             } else {
+                InputManager.Instance.EventSystem.UIModule.DisableAllActions();
                 _pauseMenu.gameObject.SetActive(false);
             }
         }
