@@ -6,6 +6,11 @@ namespace pdxpartyparrot.Game.World
 {
     public class SpawnPoint : MonoBehaviour
     {
+        [SerializeField]
+        private string _tag;
+
+        public string Tag => _tag;
+
 #region Unity Lifecycle
         protected virtual void Awake()
         {

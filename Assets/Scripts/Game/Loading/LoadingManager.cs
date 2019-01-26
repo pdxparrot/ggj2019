@@ -10,6 +10,9 @@ namespace pdxpartyparrot.Game.Loading
     {
 #region Manager Prefabs
         [SerializeField]
+        private SpawnManager _spawnManagerPrefab;
+
+        [SerializeField]
         private GameStateManager _gameStateManagerPrefab;
 
         [SerializeField]
@@ -22,7 +25,7 @@ namespace pdxpartyparrot.Game.Loading
 
             GameStateManager.CreateFromPrefab(_gameStateManagerPrefab, ManagersContainer);
             UIManager.CreateFromPrefab(_uiManagerPrefab, ManagersContainer);
-            SpawnManager.Create(ManagersContainer);
+            SpawnManager.CreateFromPrefab(_spawnManagerPrefab, ManagersContainer);
             HighScoreManager.Create(ManagersContainer);
         }
 
