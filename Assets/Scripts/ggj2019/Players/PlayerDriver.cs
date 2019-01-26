@@ -2,6 +2,7 @@
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.ggj2019.Input;
 using pdxpartyparrot.ggj2019.Players.ControllerComponents;
@@ -12,7 +13,7 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class PlayerDriver : Game.Players.PlayerDriver, IPlayerActions
+    public sealed class PlayerDriver : Game.Players.PlayerDriver, IPlayerActions, IPauseActionHandler
     {
         private const string InvertLookYKey = "playerdriver.invertlooky";
 
@@ -208,6 +209,7 @@ namespace pdxpartyparrot.ggj2019.Players
 #region Event Handlers
         private void PauseEventHandler(object sender, EventArgs args)
         {
+            // have to disable player controls or the pause menu breaks
             if(PartyParrotManager.Instance.IsPaused) {
                 _controls.Disable();
             } else {

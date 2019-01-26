@@ -63,6 +63,18 @@
                 },
                 {
                     "name": "",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "cancel",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Gamepad>/dpad",
                     "interactions": "",
                     "processors": "",
