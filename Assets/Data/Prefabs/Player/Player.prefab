@@ -59,7 +59,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &6649148686452114287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
-  _useGravity: 0
+  _useGravity: 1
   _playerControllerData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,
     type: 2}
 --- !u!114 &5755756762834594327
@@ -571,7 +571,7 @@ PrefabInstance:
     - target: {fileID: 5234125574431185515, guid: 089d056ffb3d9154db34de30dc96d067,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5234125574431185515, guid: 089d056ffb3d9154db34de30dc96d067,
         type: 3}

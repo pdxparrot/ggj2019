@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
 
@@ -40,7 +40,9 @@ namespace pdxpartyparrot.Game.Actors
             set
             {
                 _useGravity = value;
-                Rigidbody.velocity = Vector3.zero;
+                if(!_useGravity) {
+                    Rigidbody.velocity = Vector3.zero;
+                }
             }
         }
 

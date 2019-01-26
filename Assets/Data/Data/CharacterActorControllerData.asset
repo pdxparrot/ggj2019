@@ -57,4 +57,4 @@ MonoBehaviour:
   _chestRayLength: 1
   _climbSpeed: 1
   _hangSpeed: 1
-  _allowAirControl: 0
+  _allowAirControl: 1

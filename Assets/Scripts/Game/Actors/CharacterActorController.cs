@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -122,7 +122,7 @@ namespace pdxpartyparrot.Game.Actors
             protected set => _isGrounded = value;
         }
 
-        private float GroundCheckRadius => _owner.Radius - 0.1f;
+        private float GroundCheckRadius => _owner.Height - 0.1f;
 
         protected Vector3 GroundCheckCenter => transform.position + (GroundCheckRadius * Vector3.up);
 #endregion
