@@ -53,10 +53,3 @@ crashlytics-build.properties
 
 # don't commit Spine runtime
 Assets/Spine*
-Assets/AmplifyShaderEditor*
-Assets/Resources/DOTweenSettings.asset
-Assets/Scripts/Core/Input/UIInput.cs
-Assets/Scripts/Game/Input/ServerSpectatorControls.cs
-Assets/Scripts/ggj2019/Input/PlayerControls.cs
-Packages/manifest.json
-Assets/Data/Data/GameData.asset
