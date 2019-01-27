@@ -50,11 +50,11 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
-        public bool Collides(Vector3 pos) {
+        public bool Collides(Vector3 pos, float distance = float.Epsilon) {
             Vector3 offset = pos - transform.position;
             offset.y /= yscale; // since we're an ellipse
 
-            return (Vector3.Magnitude(offset) < radius);
+            return (Vector3.Magnitude(offset) < radius + distance);
         }
 
         private int neighbor1(int pc) {

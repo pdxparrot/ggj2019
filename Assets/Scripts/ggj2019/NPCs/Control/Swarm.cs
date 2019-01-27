@@ -32,8 +32,9 @@ public class Swarm : MonoBehaviour
         return (_iSwarmables.Count > 0);
     }
 
-    public void kill(int amount)
+    public void Kill(int amount)
     {
+// TODO: fix this logic
 
         if (amount >= _iSwarmables.Count)
         {

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
@@ -47,10 +46,14 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void Damage(int amount)
         {
-            _swarm.kill(amount);
+// TODO: off until we have more bees spawning
+/*
+            _swarm.Kill(amount);
 
+// TOOD: no, we don't die if we killed the last bee, it's if we have no bees and take a damage
             if (!_swarm.HasSwarm())
                 PlayerDeath();
+*/
         }
 
         private void PlayerDeath()
@@ -68,14 +71,11 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void DoContext()
         {
-            if (_swarm.HasSwarm())
-            {
-                // No more context
-                //_swarm.DoContext();
+            if(!_swarm.HasSwarm()) {
                 return;
             }
 
-            // No swarm so the player does the thing
+            _swarm.DoContext();
         }
 #endregion
     }
