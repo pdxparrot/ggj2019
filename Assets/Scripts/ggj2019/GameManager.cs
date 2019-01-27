@@ -25,9 +25,13 @@ namespace pdxpartyparrot.ggj2019
 
         [SerializeField]
         [ReadOnly]
-        private int _round = 1;
+        private long _gameStartTime;
 
-        public int Round => _round;
+        [SerializeField]
+        [ReadOnly]
+        private long _gameEndTime;
+
+        public long Score => _gameEndTime - _gameStartTime;
 
 #region Unity Lifecycle
         private void Awake()
@@ -53,6 +57,15 @@ namespace pdxpartyparrot.ggj2019
             SpawnManager.Instance.Initialize();
 
             IsGameOver = false;
+            _gameStartTime = _gameEndTime = TimeManager.Instance.CurrentUnixMs;
+        }
+
+        //[Server]
+        public void EndGame()
+        {
+            IsGameOver = true;
+
+            _gameEndTime = TimeManager.Instance.CurrentUnixMs;
         }
 
         //[Client]

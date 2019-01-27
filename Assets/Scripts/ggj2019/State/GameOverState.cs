@@ -11,7 +11,7 @@ namespace pdxpartyparrot.ggj2019.State
         public override void Initialize()
         {
             foreach(Players.Player player in PlayerManager.Instance.Actors) {
-                HighScoreManager.Instance.AddHighScore($"{player.Id}", GameManager.Instance.Round);
+                HighScoreManager.Instance.AddHighScore($"{player.Id}", (int)GameManager.Instance.Score);
             }
         }
 
