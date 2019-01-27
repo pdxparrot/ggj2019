@@ -1,12 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using pdxpartyparrot.Core.Util;
 using UnityEngine;
 
 public class NPCBeetle : NPCEnemy
 {
+    [SerializeField]
+    private float _harvestCooldown = 1.0f;
+
     public NPCFlower Flower { get; private set; }
 
     public int Pollen { get; private set; }
+
+    private readonly Timer _harvestCooldownTimer = new Timer();
 
     private void Start() {
         Pool.Add(this);
@@ -25,8 +29,26 @@ public class NPCBeetle : NPCEnemy
             return;
         }
 
-        if(Flower)
-            Pollen += Flower.Harvest();
+        if(null == Flower) {
+            Kill();
+            return;
+        }
+
+        float dt = Time.deltaTime;
+
+        _harvestCooldownTimer.Update(dt);
+
+        if(_harvestCooldownTimer.IsRunning) {
+            return;
+        }
+
+        Pollen += Flower.Harvest();
+        if(Flower.IsDead) {
+            Kill();
+            return;
+        }
+
+        _harvestCooldownTimer.Start(_harvestCooldown);
     }
 
     public static ProxPool<NPCBeetle> Pool = new ProxPool<NPCBeetle>();

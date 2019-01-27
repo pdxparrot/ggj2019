@@ -33,7 +33,7 @@ public class NPCEnemy : NPCBase
     }
 #endregion
 
-    private void Kill()
+    protected void Kill()
     {
         _isDead = true;
 
