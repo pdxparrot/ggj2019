@@ -52,7 +52,7 @@
                 {
                     "name": "",
                     "path": "*/{Cancel}",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "cancel",
