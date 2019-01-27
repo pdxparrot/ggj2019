@@ -5,6 +5,7 @@ using pdxpartyparrot.Core.Actors;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.World;
 
@@ -51,6 +52,9 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
         private void Update() {
+            if(GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
+                return;
+            }
 
             float dt = Time.deltaTime;
             _beeSpawnTimer.Update(dt);

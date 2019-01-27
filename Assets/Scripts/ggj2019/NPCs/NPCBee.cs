@@ -132,7 +132,7 @@ public class NPCBee : NPCBase, ISwarmable
     private void Think(float dt)
     {
         // TODO: but still let them flock, that's cool looking
-        if(GameManager.Instance.IsGameOver) {
+        if(GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
             return;
         }
 

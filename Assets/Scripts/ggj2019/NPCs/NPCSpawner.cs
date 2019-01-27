@@ -70,7 +70,7 @@ public class NPCSpawner : MonoBehaviour
     }
 
     void Update() {
-        if(GameManager.Instance.IsGameOver) {
+        if(GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
             return;
         }
 
