@@ -21,12 +21,18 @@ namespace pdxpartyparrot.Core.Editor
             // physics
             Rigidbody,
 
+            // 2d physics
+            Rigidbody2D,
+
             // colliders
             Collider,
             BoxCollider,
             CapsuleCollider,
             SphereCollider,
             MeshCollider,
+
+            // 2d colliders
+            Collider2D,
 
             // particles
             ParticleSystem,
@@ -86,6 +92,8 @@ namespace pdxpartyparrot.Core.Editor
                 return typeof(AudioSource);
             case ComponentType.Rigidbody:
                 return typeof(Rigidbody);
+            case ComponentType.Rigidbody2D:
+                return typeof(Rigidbody2D);
             case ComponentType.Collider:
                 return typeof(Collider);
             case ComponentType.BoxCollider:
@@ -96,6 +104,8 @@ namespace pdxpartyparrot.Core.Editor
                 return typeof(SphereCollider);
             case ComponentType.MeshCollider:
                 return typeof(MeshCollider);
+            case ComponentType.Collider2D:
+                return typeof(Collider2D);
             case ComponentType.ParticleSystem:
                 return typeof(ParticleSystem);
             case ComponentType.NavMeshAgent:

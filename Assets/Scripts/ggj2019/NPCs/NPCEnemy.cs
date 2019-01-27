@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.ggj2019.Players;
 
@@ -16,7 +16,7 @@ public class NPCEnemy : NPCBase
     public bool IsDead => _isDead;
 
 #region Unity Lifecycle
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Player player = other.gameObject.GetComponent<Player>();
         if(null == player) {
