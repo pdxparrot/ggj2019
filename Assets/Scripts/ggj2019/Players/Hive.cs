@@ -89,8 +89,18 @@ namespace pdxpartyparrot.ggj2019.Players
             default:
             case 0: return 1;
             case 1: return 2;
-            case 2: return 1;
+            case 2: return -1;
             case 3: return 4;
+            case 4: return 5;
+            case 5: return -1;
+        }}
+        private int neighbor3(int pc) {
+            switch(pc) {
+            default:
+            case 0: return -1;
+            case 1: return 0;
+            case 2: return 1;
+            case 3: return -1;
             case 4: return 3;
             case 5: return 4;
         }}
@@ -122,7 +132,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _armor[armoridx].GetComponent<SpriteRenderer>().color = c;
         }
 
-        public bool TakeDamage(int armoridx, int d = 0) {
+        public bool TakeDamage(int armoridx, bool recurse = true) {
             if(_health[armoridx] > 0) {
                 --_health[armoridx];
 
@@ -134,16 +144,30 @@ namespace pdxpartyparrot.ggj2019.Players
                     ShowDamage(armoridx);
                 }
             }
-            else if(d < 3) {
+            else if(recurse) {
                 int n1 = neighbor1(armoridx);
                 int n2 = neighbor2(armoridx);
+                int n3 = neighbor3(armoridx);
 
-                if(_health[n1] > 0)
-                    return TakeDamage(n1);
-                if(_health[n2] > 0)
-                    return TakeDamage(n2);
-                else
-                    return true;
+                if(_health[n1] > 0
+                || (n2 != -1 && _health[n2] > 0)
+                || (n3 != -1 && _health[n3] > 0)) {
+                    bool result  = TakeDamage(n1);
+                         if(n2 != -1)
+                             result |= TakeDamage(n2, false);
+                         if(n3 != -1)
+                             result |= TakeDamage(n3, false);
+                    return result;
+                }
+                else {
+                    bool result  = TakeDamage(0, false);
+                         result |= TakeDamage(1, false);
+                         result |= TakeDamage(2, false);
+                         result |= TakeDamage(3, false);
+                         result |= TakeDamage(4, false);
+                         result |= TakeDamage(5, false);
+                    return result;
+                }
             }
 
             return false;

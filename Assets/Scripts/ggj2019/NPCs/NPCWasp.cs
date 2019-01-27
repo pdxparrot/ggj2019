@@ -9,6 +9,7 @@ public class NPCWasp : NPCEnemy
     [SerializeField] private float MaxVel;
     [SerializeField] private float Accel;
     [SerializeField] private float pushback;
+    [SerializeField] private float pushbackvel;
    
     private Vector3 _accel;
     private Vector3 _velocity;
@@ -63,7 +64,7 @@ public class NPCWasp : NPCEnemy
 
     void PushBack() {
         transform.position -= _velocity.normalized * pushback;
-        _velocity = new Vector3();
+        _velocity = _velocity.normalized * pushbackvel;
 
         _cooldown = true;
     }

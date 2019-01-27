@@ -293,10 +293,10 @@ MonoBehaviour:
   _animator: {fileID: 0}
   armorhealth: 2
   _armor:
-  - {fileID: 586423956843921338}
   - {fileID: 3647004047578513709}
-  - {fileID: 4830398774795512281}
   - {fileID: 2963483834823916901}
+  - {fileID: 4830398774795512281}
+  - {fileID: 586423956843921338}
   - {fileID: 8225554324597598380}
   - {fileID: 7772616670779647220}
   _topRow: 2.5
