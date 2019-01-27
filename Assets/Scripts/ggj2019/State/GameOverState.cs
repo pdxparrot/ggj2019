@@ -1,6 +1,8 @@
 ﻿using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.ggj2019.UI;
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.State;
+using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 
@@ -19,10 +21,9 @@ namespace pdxpartyparrot.ggj2019.State
         {
             base.OnEnter();
 
-Debug.LogWarning("TODO: Game over Player HUD");
-            /*if(null != UIManager.Instance.PlayerUI) {
-                UIManager.Instance.PlayerUI.PlayerHUD.ShowGameOverText();
-            }*/
+            if(null != UIManager.Instance.PlayerUI) {
+                ((UI.PlayerUI)(UIManager.Instance.PlayerUI)).ShowGameOver(true);
+            }
         }
     }
 }
