@@ -108,7 +108,9 @@ namespace pdxpartyparrot.Game.Players
 
         protected abstract void InitializeViewer();
 
-        protected abstract void InitializePlayerUI();
+        protected virtual void InitializePlayerUI()
+        {
+        }
 
         public override void OnSpawn()
         {
