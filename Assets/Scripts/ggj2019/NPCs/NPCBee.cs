@@ -312,7 +312,7 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         if(_targetHive.Collides(Collider.bounds)) {
-            _targetHive.UnloadPollen(_pollenCount);
+            _targetHive.UnloadPollen(null, _pollenCount);
             _pollenCount = 0;
 
             _targetHive = null;

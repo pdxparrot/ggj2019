@@ -23,7 +23,7 @@ namespace pdxpartyparrot.Game.World
                 _nextRoundRobinIndex = PartyParrotManager.Instance.Random.Next(SpawnPoints.Count);
             }
 
-            public SpawnPoint GetSpawnPoint(SpawnData.SpawnMethod spawnMethod)
+            public SpawnPoint GetSpawnPoint(SpawnData.SpawnPointType spawnType)
             {
                 if(SpawnPoints.Count < 1) {
                     return null;
@@ -34,18 +34,37 @@ namespace pdxpartyparrot.Game.World
                     AdvanceRoundRobin();
                 }
 
-                switch(spawnMethod)
-                {
-                case SpawnData.SpawnMethod.RoundRobin:
-                    SpawnPoint spawnPoint = SpawnPoints[_nextRoundRobinIndex];
-                    AdvanceRoundRobin();
-                    return spawnPoint;
-                case SpawnData.SpawnMethod.Random:
-                    return PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
-                default:
-                    Debug.LogWarning($"Unsupported spawn method {spawnMethod}, using Random");
-                    return PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
-                }
+                // TODO hack for CheckOccupied
+                int maxiters = SpawnPoints.Count * 2;
+                int i = 0;
+
+                SpawnPoint result = null;
+
+                do {
+                    switch(spawnType.SpawnMethod)
+                    {
+                    case SpawnData.SpawnMethod.RoundRobin:
+                        SpawnPoint spawnPoint = SpawnPoints[_nextRoundRobinIndex];
+                        AdvanceRoundRobin();
+                        result = spawnPoint;
+                        break;
+                    case SpawnData.SpawnMethod.Random:
+                        result = PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
+                        break;
+                    default:
+                        Debug.LogWarning($"Unsupported spawn method {spawnType.SpawnMethod}, using Random");
+                        result = PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
+                        break;
+                    }
+
+                    if(spawnType.CheckOccupied && result.Occupied) {
+                        result = null;
+                    }
+
+                    ++i;
+                } while(result == null && i < maxiters);
+
+                return result;
             }
 
             private void AdvanceRoundRobin()
@@ -101,7 +120,7 @@ namespace pdxpartyparrot.Game.World
             }
 
             var spawnPointType = _spawnData.GetType(tag);
-            return spawnPoints.GetSpawnPoint(spawnPointType.SpawnMethod);
+            return spawnPoints.GetSpawnPoint(spawnPointType);
         }
 
         [CanBeNull]

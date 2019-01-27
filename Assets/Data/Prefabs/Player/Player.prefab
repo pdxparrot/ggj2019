@@ -286,6 +286,7 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _networkPlayer: {fileID: 7579413692694895314}
   _driver: {fileID: 6318285324892847177}
+  _harvestRadius: 1
   _interactables: {fileID: 5023084697306132187}
   _respawnTime: 3
   _isDead: 0

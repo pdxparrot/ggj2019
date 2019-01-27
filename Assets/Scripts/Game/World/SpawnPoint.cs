@@ -11,6 +11,8 @@ namespace pdxpartyparrot.Game.World
 
         public string Tag => _tag;
 
+        private Actor _actor = null;
+
 #region Unity Lifecycle
         protected virtual void Awake()
         {
@@ -42,14 +44,17 @@ namespace pdxpartyparrot.Game.World
             actor.gameObject.SetActive(true);
         }
 
-        public virtual void SpawnPrefab(Actor prefab)
+        public virtual Actor SpawnPrefab(Actor prefab)
         {
+            Actor actor = Instantiate(prefab);
             //Debug.LogWarning("You probably meant to use NetworkManager.SpawnNetworkPrefab");
-            Spawn(Instantiate(prefab));
+            Spawn(actor);
+            return actor;
         }
 
         public virtual void Spawn(Actor actor)
         {
+            _actor = actor;
             InitActor(actor);
 
             actor.OnSpawn();
@@ -60,6 +65,12 @@ namespace pdxpartyparrot.Game.World
             InitActor(actor);
 
             actor.OnReSpawn();
+        }
+
+        public bool Occupied {
+            get {
+                return _actor != null;
+            }
         }
     }
 }

@@ -18,6 +18,11 @@ public class NPCWasp : NPCEnemy
         Pool.Add(this);
         float dir = (transform.position.x > 0) ? -1 : 1;
         _accel = new Vector3(1,0,0) * Accel * dir;
+        if(transform.position.x < 0.0f)
+            transform.localScale = new Vector3(
+                transform.localScale.x * -1.0f,
+                transform.localScale.y,
+                transform.localScale.z);
     }
 
     protected override void OnDestroy() {

@@ -36,6 +36,7 @@ public class NPCSpawner : MonoBehaviour
         [SerializeField] public NPCType Type;
         [SerializeField] public Range Delay;
         [SerializeField] public Range Count;
+        [SerializeField] public bool Once;
     };
 
     // Each wave of npc spawning
@@ -114,11 +115,16 @@ public class NPCSpawner : MonoBehaviour
 
         int ct = PartyParrotManager.Instance.Random.Next(grp.Count.Min, grp.Count.Max);
 
-        var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
-        if(spawnpt) {
-            spawnpt.SpawnPrefab(npc.Prefab);
+        for(int i = 0; i < ct; ++i) {
+            var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
+            if(spawnpt) {
+                spawnpt.SpawnPrefab(npc.Prefab);
+            }
 
-            _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+            if(grp.Once)
+                _spawnTimers[grpidx].Start(1000000);
+            else
+                _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
         }
     }
 }

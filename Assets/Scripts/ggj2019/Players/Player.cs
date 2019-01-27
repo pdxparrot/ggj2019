@@ -17,6 +17,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public override float Radius => GamePlayerController.Collider.bounds.size.x;
 
+        [SerializeField] private float _harvestRadius;
         [SerializeField]
         private Interactables _interactables;
 
@@ -39,6 +40,9 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private Swarm _swarm;
 
+        private int _pollen;
+        public bool HasPollen { get { return _pollen > 0; } }
+
 #region Unity Lifecycle
         protected override void Awake()
         {
@@ -49,8 +53,20 @@ namespace pdxpartyparrot.ggj2019.Players
             Assert.IsTrue(PlayerController is PlayerController);
         }
 
-        private void Update()
+        protected void Update()
         {
+            if(!HasPollen) {
+                var flower = NPCFlower.Nearest(transform.position, _harvestRadius);
+                if(flower && flower.HasPollen)
+                    _pollen += flower.Harvest();
+            }
+            else {
+                var hive = Hive.Nearest(transform.position);
+                if(hive && hive.Collides(Collider.bounds)) {
+                    hive.UnloadPollen(this, _pollen);
+                    _pollen = 0;
+                }
+            }
             float dt = Time.deltaTime;
 
             _deathTimer.Update(dt);

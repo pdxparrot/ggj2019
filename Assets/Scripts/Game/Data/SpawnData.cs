@@ -23,6 +23,8 @@ namespace pdxpartyparrot.Game.Data
             public string Tag;
 
             public SpawnMethod SpawnMethod;
+
+            public bool CheckOccupied;
         }
 
         [SerializeField]

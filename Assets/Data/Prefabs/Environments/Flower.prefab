@@ -308,6 +308,9 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _initialPollen: 5
   _pollenRate: 1
+  _pollenFirstTime: 5
+  _pollenDelayTime: 5
+  _pollenObj: {fileID: 3803678262119560155}
   _pollen: 0
 --- !u!1001 &5212150432038961635
 PrefabInstance:
@@ -412,11 +415,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
-    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
-        type: 3}
-      propertyPath: m_Name
-      value: PollenReady
-      objectReference: {fileID: 0}
     - target: {fileID: 6796283527104758459, guid: 4f761f372f2de0d4da34e9d474e044c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -472,8 +470,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
+        type: 3}
+      propertyPath: m_Name
+      value: PollenReady
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353785323651305715, guid: 4f761f372f2de0d4da34e9d474e044c7,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f761f372f2de0d4da34e9d474e044c7, type: 3}
+--- !u!1 &3803678262119560155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5479233392553224929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1322679921985513562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6796283527104758459, guid: 4f761f372f2de0d4da34e9d474e044c7,

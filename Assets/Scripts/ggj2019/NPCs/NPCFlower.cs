@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class NPCFlower : NPCBase
 {
-    [SerializeField]
-    private int _initialPollen = 10;
+    [SerializeField] private int _initialPollen = 5;
+    [SerializeField] private int _pollenRate = 1;
+    [SerializeField] private float _pollenFirstTime = 5;
+    [SerializeField] private float _pollenDelayTime = 5;
 
-    [SerializeField]
-    private int _pollenRate = 1;
+    [SerializeField] private GameObject _pollenObj;
 
     [SerializeField]
     [ReadOnly]
@@ -15,9 +16,11 @@ public class NPCFlower : NPCBase
 
     public int Pollen => _pollen;
 
-    public bool HasPollen => Pollen > 0;
+    public bool HasPollen => Pollen > 0 && !_pollenTimer.IsRunning;
 
     public bool IsDead { get; private set; }
+
+    private Timer _pollenTimer;
 
 #region Unity Lifecycle
     protected override void Awake() {
@@ -28,6 +31,15 @@ public class NPCFlower : NPCBase
 
     private void Start() {
         Pool.Add(this);
+        _pollenTimer = new Timer();
+        _pollenTimer.Start(_pollenFirstTime);
+    }
+
+    private void Update() {
+        _pollenTimer.Update(Time.deltaTime);
+        if(HasPollen) {
+            _pollenObj.SetActive(true);
+        }
     }
 
     protected override void OnDestroy() {
@@ -40,8 +52,13 @@ public class NPCFlower : NPCBase
     public int Harvest() {
         int result =  Mathf.Min(_pollen, _pollenRate);
         _pollen -= result;
+        _pollenObj.SetActive(false);
+
         if(_pollen <= 0) {
             Wither();
+        }
+        else {
+            _pollenTimer.Start(_pollenDelayTime);
         }
 
         return result;
