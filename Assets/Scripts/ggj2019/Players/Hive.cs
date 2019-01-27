@@ -5,15 +5,14 @@ using pdxpartyparrot.Core.Actors;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.World;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class Hive : Actor
+    public sealed class Hive : PhysicsActor2D
     {
         [SerializeField] private int armorhealth;
-        [SerializeField] private float height;
-        [SerializeField] private float radius;
-        [SerializeField] private float yscale;
 
         // [0 3]
         // [1 4]
@@ -24,13 +23,16 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private List<int> _health;
 
-        public override float Height { get { return height; } }
-        public override float Radius { get { return radius; } }
+        public override float Height => Collider.bounds.size.y;
+        public override float Radius => Collider.bounds.size.x;
 
-        public override bool IsLocalActor { get { return true; } }
+        public override bool IsLocalActor => true;
 
         public override void OnSpawn() { }
         public override void OnReSpawn() { }
+
+        [SerializeField] private float _beeSpawnCooldown = 10.0f;
+        private readonly Timer _beeSpawnTimer = new Timer();
 
 #region Unity Lifecycle
         protected override void Awake() {
@@ -44,17 +46,24 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
+        private void Update() {
+
+            float dt = Time.deltaTime;
+            _beeSpawnTimer.Update(dt);
+
+            SpawnBee();
+        }
+
         protected override void OnDestroy() {
             Pool.Remove(this);
             base.OnDestroy();
         }
 #endregion
 
-        public bool Collides(Vector3 pos, float distance = float.Epsilon) {
-            Vector3 offset = pos - transform.position;
-            offset.y /= yscale; // since we're an ellipse
-
-            return (Vector3.Magnitude(offset) < radius + distance);
+        public bool Collides(Bounds other, float distance = float.Epsilon) {
+            Bounds bounds = Collider.bounds;
+            bounds.Expand(distance);
+            return bounds.Intersects(other);
         }
 
         private int neighbor1(int pc) {
@@ -143,6 +152,14 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void UnloadPollen(int amount) {
             Debug.LogWarning($"TODO unload pollen");
+        }
+
+        private void SpawnBee() {
+            if(_beeSpawnTimer.IsRunning) {
+                return;
+            }
+
+
         }
 
         public static ProxPool<Hive> Pool = new ProxPool<Hive>();

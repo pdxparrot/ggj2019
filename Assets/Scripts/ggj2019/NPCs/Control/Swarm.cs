@@ -22,9 +22,11 @@ public class Swarm : MonoBehaviour
         if (!HasSwarm())
             return false;
 
-        _iSwarmables[0].DoContext();
-       _iSwarmables.RemoveAt(0);
-       return true;
+        if(_iSwarmables[0].DoContext()) {
+            _iSwarmables.RemoveAt(0);
+            return true;
+        }
+        return false;
     }
 
     public bool HasSwarm()

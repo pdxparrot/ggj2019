@@ -151,28 +151,32 @@ public class NPCBee : NPCBase, ISwarmable
         }
     }
 
-    public void DoContext()
+    public bool DoContext()
     {
-        _targetSwarm = null;
-        _targetHive = null;
-        _targetFlower = null;
-
         Vector2 position = transform.position;
 
         Hive hive = Hive.Nearest(position);
         NPCFlower flower = NPCFlower.Nearest(position);
 
-        if(hive != null && hive.Collides(transform.position, _repairDistance)) {
+        if(hive != null && hive.Collides(Collider.bounds, _repairDistance)) {
 // TODO: leave our swarm?
+            _targetSwarm = null;
             _targetHive = hive;
+
             SetState(NPCBeeState.PathToRepair);
-        } else if(flower != null && flower.Collides(transform.position, _harvestDistance)) {
+            return true;
+        } else if(flower != null && flower.Collides(Collider.bounds, _harvestDistance)) {
 // TODO: leave our swarm?
+            _targetSwarm = null;
             _targetFlower = flower;
+
             SetState(NPCBeeState.PathToHarvest);
-        } else {
-            SetState(NPCBeeState.Idle);
+            return true;
+        /*} else {
+            SetState(NPCBeeState.Idle);*/
         }
+
+        return false;
     }
 
     public void Kill()
@@ -224,7 +228,7 @@ public class NPCBee : NPCBase, ISwarmable
     private bool AcquireFlower()
     {
         _targetFlower = NPCFlower.Nearest(transform.position);
-        return null != _targetFlower && _targetFlower.Collides(transform.position, _harvestDistance);
+        return null != _targetFlower && _targetFlower.Collides(Collider.bounds, _harvestDistance);
     }
 
     private bool AcquireHive()
@@ -254,7 +258,7 @@ public class NPCBee : NPCBase, ISwarmable
             return;
         }
 
-        if(_targetFlower.Collides(transform.position)) {
+        if(_targetFlower.Collides(Collider.bounds)) {
             _harvestCooldownTimer.Start(_harvestTime);
             SetState(NPCBeeState.Harvest);
             return;
@@ -297,7 +301,7 @@ public class NPCBee : NPCBase, ISwarmable
             return;
         }
 
-        if(_targetHive.Collides(transform.position)) {
+        if(_targetHive.Collides(Collider.bounds)) {
             _targetHive.UnloadPollen(_pollenCount);
             _pollenCount = 0;
 
@@ -318,7 +322,7 @@ public class NPCBee : NPCBase, ISwarmable
             return;
         }
 
-        if(_targetHive.Collides(transform.position)) {
+        if(_targetHive.Collides(Collider.bounds)) {
             _repairCooldownTimer.Start(_repairCooldown);
             SetState(NPCBeeState.Repair);
             return;

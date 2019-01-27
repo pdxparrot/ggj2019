@@ -264,9 +264,9 @@ MonoBehaviour:
   _swarmSpeedModifier: 2
   _fullSPeedModifier: 0.5
   _offsetChangeTimer: {x: 0.2, y: 0.5}
-  _harvestDistance: 1
+  _harvestDistance: 2
   _harvestTime: 10
-  _repairDistance: 1
+  _repairDistance: 2
   _repairCooldown: 10
   _state: 0
   _targetSwarm: {fileID: 0}

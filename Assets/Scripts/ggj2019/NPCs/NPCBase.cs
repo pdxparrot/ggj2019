@@ -11,9 +11,10 @@ public class NPCBase : PhysicsActor2D
     public override void OnSpawn() { }
     public override void OnReSpawn() { }
 
-    public bool Collides(Vector3 pos, float distance = float.Epsilon) {
-        Vector3 offset = pos - transform.position;
-        return (Vector3.Magnitude(offset) < Radius + distance);
+    public bool Collides(Bounds other, float distance = float.Epsilon) {
+        Bounds bounds = Collider.bounds;
+        bounds.Expand(distance);
+        return bounds.Intersects(other);
     }
 
 }
