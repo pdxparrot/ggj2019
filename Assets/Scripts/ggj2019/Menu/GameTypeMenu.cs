@@ -3,13 +3,26 @@ using pdxpartyparrot.Game.Menu;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.State;
 
+using UnityEngine;
 using UnityEngine.Experimental.Input;
+using UnityEngine.UI;
 
 namespace pdxpartyparrot.ggj2019.Menu
 {
     public sealed class GameTypeMenu : MenuPanel, ICancelActionHandler
     {
+        [SerializeField]
+        private Button _teamsButton;
+
 #region Unity Lifecycle
+        private void Awake()
+        {
+            // disable the team map for now
+            if(null != _teamsButton) {
+                _teamsButton.gameObject.SetActive(false);
+            }
+        }
+
         private void OnEnable()
         {
             InputManager.Instance.EventSystem.UIModule.cancel.action.performed += OnCancel;
