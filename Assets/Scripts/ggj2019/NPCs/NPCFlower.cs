@@ -73,8 +73,11 @@ public class NPCFlower : NPCBase
                 Quaternion.identity);
 
             _hasPollen = false;
+        }
 
-            //_pollenObj.SetActive(true);
+        if (HasPollen)
+        {
+            _pollenObj.SetActive(true);
         }
     }
 

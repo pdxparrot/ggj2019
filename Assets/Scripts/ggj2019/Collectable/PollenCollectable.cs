@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.Game.State;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
+using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(Collider2D))]
 public class PollenCollectable: MonoBehaviour
@@ -10,23 +13,31 @@ public class PollenCollectable: MonoBehaviour
 
     //TODO Use screen borrders
     [SerializeField]
-    private Vector2 FloatUpAmount = new Vector2(5f,10f);
+    private float _sideDistance = 0.25f;
+    [SerializeField]
+    private float _sideSpeed = 0.5f;
 
-    [SerializeField] private float _upwardSpeed = 0.001f;
+    [SerializeField]
+    private float _upwardSpeed = 0.001f;
 
     [SerializeField]
     private ParticleSystem _particleSystem;
+
+    [SerializeField] public float _height = 4f;
 
     private int _pollen = 1;
 
     private Player followPlayer;
     private bool _hasFollowedPlayer = false;
     private bool _isCollected = false;
-    private float _yTargetPosition = 0;
+
+    private float _signTime = 0;
+
+    private Vector3 _startPont = new Vector3();
 
     void Start()
     {
-        _yTargetPosition = Random.Range(FloatUpAmount.x, FloatUpAmount.y) + transform.position.y;
+        _startPont = transform.position;
     }
 
     // Update is called once per frame
@@ -47,7 +58,7 @@ public class PollenCollectable: MonoBehaviour
                 return;
             }
 
-            transform.position = followPlayer.Position;
+            transform.position = Vector3.Lerp(transform.position, followPlayer.Position + new Vector3(0.25f,0f), 20f*Time.deltaTime);
 
             // pollen was deposited
             if (!followPlayer.HasPollen)
@@ -59,10 +70,20 @@ public class PollenCollectable: MonoBehaviour
         if(_hasFollowedPlayer)
             return;
 
-        Vector3 newPos = transform.position + new Vector3(0,_upwardSpeed);
-        newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, -1000000, _yTargetPosition), newPos.z);
-        transform.position = newPos;
+        Move(Time.deltaTime);
 
+        if (transform.position.y + -_height > GameStateManager.Instance.GameManager.GameData.GameSize2D)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Move(float dt)
+    {
+        _signTime += dt * _sideSpeed;
+
+        transform.position = new Vector3((Mathf.Sin(_signTime) * _sideDistance) + _startPont.x,
+            transform.position.y + (_upwardSpeed * dt));
     }
 
     public void SetPollenAmt(int amt)

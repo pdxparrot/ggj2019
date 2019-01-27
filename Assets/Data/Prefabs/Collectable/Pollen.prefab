@@ -61,8 +61,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233f78f4d5d4d5448b4c52f31c4ed8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloatUpAmount: {x: 3, y: 9}
-  _upwardSpeed: 0.008
+  _sideDistance: 0.25
+  _sideSpeed: 3
+  _upwardSpeed: 1.5
   _particleSystem: {fileID: 7202681780061667075}
 --- !u!1001 &1802346918974191056
 PrefabInstance:
