@@ -14,10 +14,16 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public override float Radius => GamePlayerController.Collider.bounds.size.x;
 
+        [SerializeField] private Interactables _interactables;
+
+        private Swarm _swarm;
+
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
+
+            _swarm = GetComponent<Swarm>();
 
             Assert.IsTrue(PlayerController is PlayerController);
         }
@@ -42,12 +48,21 @@ Debug.LogWarning($"TODO: Initialize UI for player {Id}");
 #region Actions
         public void DoGather()
         {
-            Debug.LogWarning("TODO: gather the swarm");
+            NPCBee npcBee = _interactables.GetBee();
+            Debug.Log(npcBee);
+            if (npcBee != null)
+                _swarm.Add(npcBee);
         }
 
         public void DoContext()
         {
-            Debug.LogWarning("TODO: do a context thing");
+            if (_swarm.HasSwarm())
+            {
+                _swarm.DoContext();
+                return;
+            }
+
+            // No swarm so the player does the thing
         }
 #endregion
     }
