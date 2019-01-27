@@ -59,7 +59,11 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
         public void Repair() {
-// TODO
+            Debug.LogWarning("TODO: repair");
+        }
+
+        public void UnloadPollen(int amount) {
+            Debug.LogWarning($"TODO unload pollen");
         }
 
         public static ProxPool<Hive> Pool = new ProxPool<Hive>();

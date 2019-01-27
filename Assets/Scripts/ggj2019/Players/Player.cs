@@ -36,11 +36,6 @@ namespace pdxpartyparrot.ggj2019.Players
             PlayerViewer = GameManager.Instance.Viewer;
         }
 
-        public void CollectResource()
-        {
-            Debug.LogWarning("got a resource!");
-        }
-
 #region Actions
         public void DoGather()
         {

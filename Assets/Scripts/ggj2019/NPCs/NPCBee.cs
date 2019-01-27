@@ -19,17 +19,16 @@ public class NPCBee : NPCBase, ISwarmable
     [SerializeField] private float _speed = 5f;
     private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
 
-    [SerializeField] private float _attackCooldown = 1.0f;
+    [SerializeField] private float _attackDistance = 5.0f;
     [SerializeField] private float _repairCooldown = 10.0f;
     [SerializeField] private float _harvestTime = 10.0f;
 
-    private readonly Timer _attackCooldownTimer = new Timer();
     private readonly Timer _repairCooldownTimer = new Timer();
     private readonly Timer _harvestCooldownTimer = new Timer();
 
-    private float _offsetRadius = 0f;
-    private Vector3 _offsetPosition = new Vector3(0,0,0);
-    private Timer _offsetUpdateTimer = new Timer();
+    private float _offsetRadius;
+    private Vector2 _offsetPosition = new Vector3(0, 0);
+    private readonly Timer _offsetUpdateTimer = new Timer();
 
     [SerializeField]
     [ReadOnly]
@@ -100,7 +99,6 @@ public class NPCBee : NPCBase, ISwarmable
             );
         }
 
-        _attackCooldownTimer.Update(dt);
         _repairCooldownTimer.Update(dt);
         _harvestCooldownTimer.Update(dt);
     }
@@ -141,9 +139,11 @@ public class NPCBee : NPCBase, ISwarmable
         if(hive != null && hive.Collides(transform.position)) {
             SetState(NPCBeeState.Repair);
             _targetHive = hive;
+            _repairCooldownTimer.Start(_repairCooldown);
         /*} else if(flower != null && flower.Collides(transform.position)) {
             SetState(NPCBeeState.Harvest);
-            _targetFlower = flower;*/
+            _targetFlower = flower;
+            _harvestTimer.Start(_harvestTime)*/
         } else {
             SetState(NPCBeeState.Defend);
         }
@@ -154,7 +154,7 @@ public class NPCBee : NPCBase, ISwarmable
         if(!CanJoinSwarm) {
             return;
         }
-Debug.Log("joining swarm");
+
         _targetSwarm = swarm;
         SetState(NPCBeeState.Follow);
 
@@ -164,17 +164,21 @@ Debug.Log("joining swarm");
 
     private void UpdateOffset()
     {
-        _offsetPosition = new Vector3(
-            Random.Range(-_offsetRadius, _offsetRadius),
+        _offsetPosition = new Vector2(
             Random.Range(-_offsetRadius, _offsetRadius),
             Random.Range(-_offsetRadius, _offsetRadius)
-            );
+        );
     }
 
     private void SetState(NPCBeeState state)
     {
         Debug.Log($"setting state: {state}");
         _state = state;
+    }
+
+    private void AcquireEnemy()
+    {
+// TODO
     }
 
 #region the things they bee doing
@@ -188,8 +192,6 @@ Debug.Log("joining swarm");
         }
 
         MoveToTarget(dt, _targetSwarm.transform);
-
-        // TODO: flock and stuff
     }
 
     private void Harvest(float dt)
@@ -206,6 +208,8 @@ Debug.Log("joining swarm");
         }
 
         _pollenCount = _targetFlower.Harvest();
+        _targetFlower = null;
+
         SetState(NPCBeeState.ReturnHome);
     }
 
@@ -217,12 +221,30 @@ Debug.Log("joining swarm");
             return;
         }
 
+        if(_targetHive.Collides(transform.position)) {
+            _targetHive.UnloadPollen(_pollenCount);
+            _pollenCount = 0;
+
+            _targetHive = null;
+
+            SetState(NPCBeeState.Defend);
+            return;
+        }
+
         MoveToTarget(dt, _targetHive.transform);
     }
 
     private void Defend(float dt)
     {
-// TODO: find a thing and attack that sumbitch
+        if(null == _targetEnemy) {
+            AcquireEnemy();
+            if(null== _targetEnemy) {
+                return;
+            }
+        }
+
+        MoveToTarget(dt, _targetEnemy.transform);
+// TODO: this is going to crash when we kill it
     }
 
     private void Repair(float dt)
@@ -238,6 +260,7 @@ Debug.Log("joining swarm");
         }
 
         _targetHive.Repair();
+        _repairCooldownTimer.Start(_repairCooldown);
     }
 
     private void MoveToTarget(float dt, Transform target)
@@ -246,7 +269,12 @@ Debug.Log("joining swarm");
             return;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, target.position + _offsetPosition, _speed * dt);
+        Vector2 position = target.position;
+        if(IsInSwarm) {
+            position += _offsetPosition;
+        }
+
+        transform.position = Vector2.MoveTowards(transform.position,position, _speed * dt);
     }
 #endregion
 }

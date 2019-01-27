@@ -261,6 +261,15 @@ MonoBehaviour:
   _controller: {fileID: 0}
   _animator: {fileID: 0}
   _speed: 6
+  _attackCooldown: 5
+  _repairCooldown: 10
+  _harvestTime: 10
+  _state: 0
+  _targetSwarm: {fileID: 0}
+  _targetHive: {fileID: 0}
+  _targetEnemy: {fileID: 0}
+  _targetFlower: {fileID: 0}
+  _pollenCount: 0
 --- !u!1001 &5500608303440458347
 PrefabInstance:
   m_ObjectHideFlags: 0
