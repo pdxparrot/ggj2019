@@ -49,4 +49,4 @@ MonoBehaviour:
   _gamepadsArePlayers: 1
   _gameOverState: {fileID: 7106532551911913696, guid: 6f92524e3a5ef9245a779d73df482385,
     type: 3}
-  _music: {fileID: 0}
+  _music: {fileID: 8300000, guid: 0a08d89f9a356fa489c458bdbc8c85e4, type: 3}

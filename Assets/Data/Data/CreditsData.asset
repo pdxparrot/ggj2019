@@ -12,4 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12190fc89b77a5e4f95762466cf5e0b4, type: 3}
   m_Name: CreditsData
   m_EditorClassIdentifier: 
-  _credits: []
+  _preAmble: <align="center">Global Game Jam 2019!</align>
+  _credits:
+  - title: Creative Director
+    contributors:
+    - Peet Cooper
+  - title: Implementation
+    contributors:
+    - Tien Tam
+  - title: Programming
+    contributors:
+    - Jeremy Nikolai
+    - Julius Jockusch
+    - Shane Lillie
+  - title: Animation
+    contributors:
+    - Taylor Lane
+  - title: 2D Artist
+    contributors:
+    - Egil Thompson
+  - title: Visual Effects
+    contributors:
+    - Brice Anderson
+  - title: Music
+    contributors:
+    - Jessica Clark
+    - Jesse Clark
+  - title: Special Thanks
+    contributors:
+    - Gabe Selinger
+    - Vince Castillo
+  _postAmble: <link="pigsquad">http://www.pigsquad.com</link>
