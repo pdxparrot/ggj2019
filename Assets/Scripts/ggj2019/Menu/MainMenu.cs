@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using pdxpartyparrot.Game.State;
+using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Menu
 {
@@ -23,7 +24,8 @@ namespace pdxpartyparrot.ggj2019.Menu
 #region Event Handlers
         public void OnStart()
         {
-            Owner.PushPanel(_gameTypePanel);
+            //Owner.PushPanel(_gameTypePanel);
+            GameStateManager.Instance.StartLocal(GameManager.Instance.GameGameData.FFAGameStatePrefab);
         }
 #endregion
     }
