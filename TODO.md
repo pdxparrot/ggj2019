@@ -6,4 +6,5 @@
 * Test a 2D scene
 * Split up actor components and reduce subclassing
     * The player junk in Game is probably just stuff that should merge into Actor components
-    
+* Would be cool to do some SkeletonAnimation tools for Spine
+* Setting sprite layers and stuff from data / code might be useful

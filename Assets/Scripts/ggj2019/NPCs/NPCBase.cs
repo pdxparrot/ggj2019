@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using pdxpartyparrot.Core.Actors;
 
-public class NPCBase : MonoBehaviour
+public class NPCBase : PhysicsActor2D
 {
-    void Start() {
-    }
+    public override float Height => Collider.bounds.size.y;
+    public override float Radius => Collider.bounds.size.x;
 
-    void Update() {
-    }
+    public override bool IsLocalActor => true;
+
+    public override void OnSpawn() { }
+    public override void OnReSpawn() { }
 }
