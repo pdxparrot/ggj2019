@@ -4,7 +4,8 @@
         "com.pdxpartyparrot.Core.asmdef",
         "com.pdxpartyparrot.Game.asmdef",
         "Unity.InputSystem",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "spine-unity"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
