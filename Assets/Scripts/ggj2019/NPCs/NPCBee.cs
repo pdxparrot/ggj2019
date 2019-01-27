@@ -16,7 +16,11 @@ public class NPCBee : NPCBase, ISwarmable
         Repair
     }
 
-    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _swarmSpeedModifier = 2.0f;
+    [SerializeField] private float _fullSPeedModifier = 0.5f;
+
+    [SerializeField]
+    [ReadOnly]
     private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
 
     [SerializeField] private float _harvestDistance = 5.0f;
@@ -190,6 +194,18 @@ public class NPCBee : NPCBase, ISwarmable
         NPCBeetle beetle = NPCBeetle.Nearest(transform.position);
     }
 
+    private float CurrentSpeed()
+    {
+        float modifier = 1.0f;
+        if(IsInSwarm) {
+            modifier = _swarmSpeedModifier;
+        } else if(_pollenCount > 0) {
+            modifier = _fullSPeedModifier;
+        }
+
+        return PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * modifier;
+    }
+
 #region the things they bee doing
 
     private void Swarm(float dt)
@@ -216,6 +232,9 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         _pollenCount = _targetFlower.Harvest();
+        if(_pollenCount < 1) {
+            Debug.LogError($"wtf I got {_pollenCount} pollen");
+        }
         _targetFlower = null;
 
         Debug.Log($"harvested {_pollenCount} pollen");
@@ -292,7 +311,7 @@ public class NPCBee : NPCBase, ISwarmable
             position += _offsetPosition;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position,position, _speed * dt);
+        transform.position = Vector2.MoveTowards(transform.position,position, CurrentSpeed() * dt);
     }
 #endregion
 }

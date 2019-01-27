@@ -21,6 +21,10 @@ public class NPCBeetle : NPCEnemy
     }
 
     void Update() {
+        if(IsDead) {
+            return;
+        }
+
         if(Flower)
             Pollen += Flower.Harvest();
     }

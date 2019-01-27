@@ -26,6 +26,10 @@ public class NPCWasp : NPCEnemy
     }
 
     void Update() {
+        if(IsDead) {
+            return;
+        }
+
         _velocity += _accel * Time.deltaTime;
         _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
         transform.position += _velocity * Time.deltaTime;

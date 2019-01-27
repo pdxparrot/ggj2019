@@ -1,6 +1,4 @@
 ﻿using System;
-using pdxpartyparrot.Core.Camera;
-using pdxpartyparrot.Game.Camera;
 
 using UnityEngine;
 
@@ -17,6 +15,11 @@ namespace pdxpartyparrot.Game.Data
         [Space(10)]
 
 // TODO: this could probably go into an Actor/Character data object
+
+        [SerializeField]
+        private CharacterActorControllerData _playerControllerData;
+
+        public CharacterActorControllerData PlayerControllerData => _playerControllerData;
 
 #region Physics
         [Header("Physics")]

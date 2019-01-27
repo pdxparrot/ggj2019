@@ -15,6 +15,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 4096
+  _playerControllerData: {fileID: 11400000, guid: 1dc5a7a67dba6df4caec3ac998e2ff24,
+    type: 2}
   _mass: 1
   _drag: 0
   _angularDrag: 0
