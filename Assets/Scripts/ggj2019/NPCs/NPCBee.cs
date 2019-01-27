@@ -4,9 +4,6 @@ using UnityEngine;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
-using pdxpartyparrot.Game;
-using pdxpartyparrot.Game.Effects;
-using Spine.Unity;
 using UnityEngine.Assertions;
 
 public class NPCBee : NPCBase, ISwarmable
@@ -73,9 +70,6 @@ public class NPCBee : NPCBase, ISwarmable
     [SerializeField]
     [ReadOnly]
     private int _pollenCount;
-
-    [SerializeField]
-    private EffectTrigger _deathEffect;
 
     #region Unity Life Cycle
 
@@ -215,13 +209,6 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         return false;
-    }
-
-    public void Kill()
-    {
-        _deathEffect.Trigger(() => {
-            Destroy(gameObject);
-        });
     }
 
     public void JoinSwarm(Swarm swarm, float radius)

@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2190932312394926369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
@@ -61,6 +61,8 @@ GameObject:
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 5512433957614832504}
+  - component: {fileID: 7498956286358863322}
+  - component: {fileID: 6498468760859895621}
   m_Layer: 12
   m_Name: Flower
   m_TagString: Untagged
@@ -307,15 +309,49 @@ MonoBehaviour:
   _model: {fileID: 3500989833709476057}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
+  _isDead: 0
+  _spawnEffect: {fileID: 7498956286358863322}
+  _deathEffect: {fileID: 6498468760859895621}
   _animation: {fileID: 0}
-  _initialPollen: 2
+  _initialPollen: 1
   _pollenRate: 1
   _pollenDelayMin: 1
   _pollenDelayMax: 5
-  _pollenObj: {fileID: 4478823037114562459, guid: 7c1c873417b7ce844968e893ebb54512,
+  _floatingPollenObj: {fileID: 4478823037114562459, guid: 7c1c873417b7ce844968e893ebb54512,
     type: 3}
+  _pollenObj: {fileID: 3803678262119560155}
   _pollen: 0
   CanSpawnPollen: 1
+--- !u!114 &7498956286358863322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _audioSource: {fileID: 0}
+--- !u!114 &6498468760859895621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _audioSource: {fileID: 0}
 --- !u!1001 &5212150432038961635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -491,6 +527,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f761f372f2de0d4da34e9d474e044c7, type: 3}
+--- !u!1 &3803678262119560155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5479233392553224929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1322679921985513562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6796283527104758459, guid: 4f761f372f2de0d4da34e9d474e044c7,

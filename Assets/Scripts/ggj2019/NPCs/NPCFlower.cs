@@ -9,6 +9,8 @@ public class NPCFlower : NPCBase
     [SerializeField] private float _pollenDelayMin = 1;
     [SerializeField] private float _pollenDelayMax = 5;
 
+    [SerializeField] private GameObject _floatingPollenObj;
+
     [SerializeField] private GameObject _pollenObj;
 
     [SerializeField]
@@ -19,6 +21,7 @@ public class NPCFlower : NPCBase
 
     public bool HasPollen => Pollen > 0 && _hasPollen;
     private bool _hasPollen = false;
+
 
     public bool IsDead { get; private set; }
 
@@ -66,15 +69,12 @@ public class NPCFlower : NPCBase
 
         if(HasPollen)
         {
-            if (_pollen > 1)
-            {
-                Instantiate(_pollenObj, transform.position,
-                    Quaternion.identity);
+            Instantiate(_floatingPollenObj, transform.position,
+                Quaternion.identity);
 
-                _pollen -= 1;
-            }
+            _hasPollen = false;
 
-            _pollenObj.SetActive(true);
+            //_pollenObj.SetActive(true);
         }
     }
 
@@ -96,16 +96,11 @@ public class NPCFlower : NPCBase
             _pollenObj.SetActive(false);
 
             if(_pollen <= 0) {
-                Wither();
+                Kill();
             }
         }
 
         return result;
-    }
-
-    private void Wither() {
-        IsDead = true;
-        Destroy(gameObject, 0.1f);
     }
 
     public static ProxPool<NPCFlower> Pool = new ProxPool<NPCFlower>();
