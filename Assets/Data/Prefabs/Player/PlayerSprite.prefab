@@ -38,6 +38,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6796283527104758459}
     m_Modifications:
+    - target: {fileID: 4758112438255681545, guid: cbb3dbd4cbfd63149a666ea942a89569,
+        type: 3}
+      propertyPath: m_Name
+      value: Spine GameObject (character_bee)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3804971736241221242, guid: cbb3dbd4cbfd63149a666ea942a89569,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6935914349046667551, guid: cbb3dbd4cbfd63149a666ea942a89569,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -108,16 +118,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.15
       objectReference: {fileID: 0}
-    - target: {fileID: 4758112438255681545, guid: cbb3dbd4cbfd63149a666ea942a89569,
-        type: 3}
-      propertyPath: m_Name
-      value: Spine GameObject (character_bee)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804971736241221242, guid: cbb3dbd4cbfd63149a666ea942a89569,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 409380341927065099, guid: cbb3dbd4cbfd63149a666ea942a89569,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -133,6 +133,17 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 409380341927065099, guid: cbb3dbd4cbfd63149a666ea942a89569,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af4e6f69440237f4dac76a07948be8cf, type: 2}
+    - target: {fileID: 6470774444324705967, guid: cbb3dbd4cbfd63149a666ea942a89569,
+        type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 360fe40e34f05b648915ae976f9d2d76,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbb3dbd4cbfd63149a666ea942a89569, type: 3}
 --- !u!4 &759329695368427925 stripped

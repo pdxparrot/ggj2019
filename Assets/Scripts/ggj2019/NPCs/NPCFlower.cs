@@ -31,8 +31,19 @@ public class NPCFlower : NPCBase
     }
 
     private void Start() {
+        Pool.Add(this);
+    }
+
+    private void OnDestroy() {
+        Pool.Remove(this);
     }
 
     private void Update() {
+    }
+
+    public static ProxPool<NPCFlower> Pool = new ProxPool<NPCFlower>();
+
+    public static NPCFlower Nearest(Vector3 pos, float dist = 1000000.0f) {
+        return Pool.Nearest(pos, dist) as NPCFlower;
     }
 }

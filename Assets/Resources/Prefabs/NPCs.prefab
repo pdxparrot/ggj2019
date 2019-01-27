@@ -57,11 +57,11 @@ MonoBehaviour:
   - SpawnGroups:
     - Type: 2
       Delay:
-        Min: 8
-        Max: 10
+        Min: 5
+        Max: 8
       Count:
-        Min: 2
-        Max: 5
+        Min: 1
+        Max: 1
     - Type: 1
       Delay:
         Min: 6

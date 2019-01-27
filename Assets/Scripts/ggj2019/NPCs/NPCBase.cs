@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Actors;
+using UnityEngine;
 
 public class NPCBase : PhysicsActor2D
 {
@@ -9,4 +10,10 @@ public class NPCBase : PhysicsActor2D
 
     public override void OnSpawn() { }
     public override void OnReSpawn() { }
+
+    public bool Collides(Vector3 pos) {
+        Vector3 offset = pos - transform.position;
+        return (Vector3.Magnitude(offset) < Radius);
+    }
+
 }

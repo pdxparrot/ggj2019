@@ -12,9 +12,14 @@ public class NPCWasp : NPCEnemy
     private Vector3 _accel;
     private Vector3 _velocity;
 
-    void Start() {
+    private void Start() {
+        Pool.Add(this);
         float dir = (transform.position.x > 0) ? -1 : 1;
         _accel = new Vector3(1,0,0) * Accel * dir;
+    }
+
+    private void OnDestroy() {
+        Pool.Remove(this);
     }
 
     void Update() {
@@ -32,5 +37,11 @@ public class NPCWasp : NPCEnemy
     void Die() {
         // TODO effects
         Destroy(gameObject, 0.01f);
+    }
+
+    public static ProxPool<NPCWasp> Pool = new ProxPool<NPCWasp>();
+
+    public static NPCWasp Nearest(Vector3 pos, float dist = 1000000.0f) {
+        return Pool.Nearest(pos, dist) as NPCWasp;
     }
 }

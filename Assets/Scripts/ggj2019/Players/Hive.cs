@@ -32,19 +32,11 @@ namespace pdxpartyparrot.ggj2019.Players
 #region Unity Lifecycle
         protected override void Awake() {
             base.Awake();
-
-            if(_hives == null)
-                _hives = new List<Hive>();
-            _hives.Add(this);
+            Pool.Add(this);
         }
 
         protected void OnDestroy() {
-            for(int i = 0; i < _hives.Count; ++i) {
-                if(_hives[i] == this) {
-                    _hives.RemoveAt(i);
-                    return;
-                }
-            }
+            Pool.Remove(this);
         }
 
         protected void Update() {
@@ -70,23 +62,10 @@ namespace pdxpartyparrot.ggj2019.Players
 // TODO
         }
 
-        private static List<Hive> _hives;
+        public static ProxPool<Hive> Pool = new ProxPool<Hive>();
 
-        public static Hive Nearest(Vector3 pos) {
-            int best = -1;
-            float bestT = 0.0f;
-            if(_hives == null)
-                return null;
-
-            for(int i = 0; i < _hives.Count; ++i) {
-                float dist = (_hives[i].transform.position - pos).magnitude;
-                if(best == -1 || dist < bestT) {
-                    bestT = dist;
-                    best = i;
-                }
-            }
-
-            return (best >= 0) ? _hives[best] : null;
+        public static Hive Nearest(Vector3 pos, float dist = 1000000.0f) {
+            return Pool.Nearest(pos, dist) as Hive;
         }
     }
 }
