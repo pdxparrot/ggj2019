@@ -55,9 +55,10 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void PlayerDeath()
         {
-            Debug.Log("kill and respawn player");
+            //PlayerManager.Instance.RespawnPlayer(this);
         }
 
+        // TODO remove when spawned bees attach to player
         public void DoGather()
         {
             NPCBee npcBee = _interactables.GetBee();
