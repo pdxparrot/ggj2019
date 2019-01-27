@@ -1,0 +1,90 @@
+
+character_wasp.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm1
+  rotate: true
+  xy: 629, 188
+  size: 147, 191
+  orig: 147, 191
+  offset: 0, 0
+  index: -1
+Arm2
+  rotate: false
+  xy: 888, 308
+  size: 71, 196
+  orig: 71, 196
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 745, 2
+  size: 78, 93
+  orig: 78, 93
+  offset: 0, 0
+  index: -1
+L antennae purple
+  rotate: true
+  xy: 378, 29
+  size: 30, 60
+  orig: 30, 60
+  offset: 0, 0
+  index: -1
+L antennae red
+  rotate: false
+  xy: 961, 318
+  size: 50, 80
+  orig: 50, 80
+  offset: 0, 0
+  index: -1
+Layer 2
+  rotate: false
+  xy: 378, 195
+  size: 249, 309
+  orig: 249, 309
+  offset: 0, 0
+  index: -1
+R antennae
+  rotate: false
+  xy: 961, 400
+  size: 61, 104
+  orig: 61, 104
+  offset: 0, 0
+  index: -1
+Upper Body
+  rotate: false
+  xy: 378, 61
+  size: 214, 132
+  orig: 214, 132
+  offset: 0, 0
+  index: -1
+Wid1
+  rotate: true
+  xy: 745, 82
+  size: 104, 93
+  orig: 104, 93
+  offset: 0, 0
+  index: -1
+Wing1
+  rotate: false
+  xy: 629, 337
+  size: 257, 167
+  orig: 257, 167
+  offset: 0, 0
+  index: -1
+Wing2 copy
+  rotate: false
+  xy: 594, 40
+  size: 149, 146
+  orig: 149, 146
+  offset: 0, 0
+  index: -1
+character_bee.atlas.txt
+  rotate: false
+  xy: 2, 17
+  size: 374, 487
+  orig: 374, 487
+  offset: 0, 0
+  index: -1
