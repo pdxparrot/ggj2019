@@ -50,7 +50,11 @@ MonoBehaviour:
   - Prefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
       type: 3}
     Tag: beetle
+<<<<<<< HEAD
+  - Prefab: {fileID: 3666041006512711152, guid: aa9785111cf10bf43a0f46a04c309938,
+=======
   - Prefab: {fileID: 5512433957614832504, guid: aa9785111cf10bf43a0f46a04c309938,
+>>>>>>> things and things
       type: 3}
     Tag: flower
   Waves:
