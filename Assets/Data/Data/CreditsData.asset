@@ -17,18 +17,29 @@ MonoBehaviour:
   - title: Creative Director
     contributors:
     - Peet Cooper
-  - title: Design
+  - title: Implementation
     contributors:
     - Tien Tam
   - title: Programming
     contributors:
     - Jeremy Nikolai
-    - Julius J
+    - Julius Jockusch
     - Shane Lillie
   - title: Animation
     contributors:
     - Taylor Lane
+  - title: 2D Artist
+    contributors:
+    - Egil Thompson
   - title: Visual Effects
     contributors:
     - Brice Anderson
+  - title: Music
+    contributors:
+    - Jessica Clark
+    - Jesse Clark
+  - title: Special Thanks
+    contributors:
+    - Gabe Selinger
+    - Vince Castillo
   _postAmble: <link="pigsquad">http://www.pigsquad.com</link>
