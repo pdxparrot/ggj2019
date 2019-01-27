@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Util;
 
 public class ProxPool<T> where T : MonoBehaviour {
 
@@ -30,5 +32,10 @@ public class ProxPool<T> where T : MonoBehaviour {
         }
 
         return (best >= 0) ? _objects[best] : null;
+    }
+
+    public T Random() {
+        int i = PartyParrotManager.Instance.Random.Next(_objects.Count);
+        return _objects[i];
     }
 }

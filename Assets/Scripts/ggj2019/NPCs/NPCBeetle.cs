@@ -46,7 +46,7 @@ public class NPCBeetle : NPCEnemy
             return;
         }
 
-        Pollen += Flower.Harvest();
+        Pollen += Flower.Harvest(true);
         if(Flower.IsDead) {
             Kill();
             return;
