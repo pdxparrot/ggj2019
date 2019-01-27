@@ -29,7 +29,7 @@ MonoBehaviour:
   _climbUpTimeSeconds: 1
   _climbDownTimeSeconds: 1
   _hangTimeSeconds: 1
-  _moveSpeed: 5
+  _moveSpeed: 7.5
   _runThreshold: 0.75
   _fallSpeedAdjustment: 200
   _terminalVelocity: 50
