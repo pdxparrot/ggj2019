@@ -3,6 +3,7 @@ using pdxpartyparrot.ggj2019;
 using UnityEngine;
 
 using pdxpartyparrot.ggj2019.Players;
+using Spine.Unity;
 
 public class NPCWasp : NPCEnemy
 {
@@ -13,17 +14,15 @@ public class NPCWasp : NPCEnemy
    
     private Vector3 _accel;
     private Vector3 _velocity;
-    private bool _cooldown;
 
     private void Start() {
         Pool.Add(this);
+
         float dir = (transform.position.x > 0) ? -1 : 1;
         _accel = new Vector3(1,0,0) * Accel * dir;
-        if(transform.position.x < 0.0f)
-            transform.localScale = new Vector3(
-                transform.localScale.x * -1.0f,
-                transform.localScale.y,
-                transform.localScale.z);
+        _animation.Skeleton.ScaleX = _accel.x < 0 ? 1.0f : -1.0f;
+
+        SetHoverAnimation();
     }
 
     protected override void OnDestroy() {
@@ -37,14 +36,12 @@ public class NPCWasp : NPCEnemy
             return;
         }
 
-        // wait for physics to catch up
-        if(_cooldown) {
-            return;
-        }
-
         _velocity += _accel * Time.deltaTime;
         _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
         transform.position += _velocity * Time.deltaTime;
+
+        SetFlightAnimation();
+        _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
 
         var hive = Hive.Nearest(transform.position);
         if(hive.Collides(this)) {
@@ -55,18 +52,34 @@ public class NPCWasp : NPCEnemy
         }
     }
 
-    private void FixedUpdate() {
-        // this is hacky because PushBack() is a teleport
-        if(_cooldown) {
-            _cooldown = false;
+
+
+    // start true to force the animation the first time
+    private bool _isFlying = true;
+
+    private void SetHoverAnimation()
+    {
+        if(!_isFlying) {
+            return;
         }
+
+        SetAnimation("wasp_hover", true);
+        _isFlying = false;
+    }
+
+    private void SetFlightAnimation()
+    {
+        if(_isFlying) {
+            return;
+        }
+
+        SetAnimation("wasp_attack", true);
+        _isFlying = true;
     }
 
     void PushBack() {
         transform.position -= _velocity.normalized * pushback;
         _velocity = _velocity.normalized * pushbackvel;
-
-        _cooldown = true;
     }
 
     public static ProxPool<NPCWasp> Pool = new ProxPool<NPCWasp>();

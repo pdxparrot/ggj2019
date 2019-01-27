@@ -6,6 +6,7 @@ using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.Effects;
+using Spine.Unity;
 using UnityEngine.Assertions;
 
 public class NPCBee : NPCBase, ISwarmable
@@ -87,6 +88,10 @@ public class NPCBee : NPCBase, ISwarmable
                 _offsetChangeTimer.x,
                 _offsetChangeTimer.y)
             );
+
+        _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
+
+        SetHoverAnimation();
     }
 
     private void Update()
@@ -108,6 +113,29 @@ public class NPCBee : NPCBase, ISwarmable
     }
 
     #endregion
+
+    // start true to force the animation the first time
+    private bool _isFlying = true;
+
+    private void SetHoverAnimation()
+    {
+        if(!_isFlying) {
+            return;
+        }
+
+        SetAnimation("bee_hover", true);
+        _isFlying = false;
+    }
+
+    private void SetFlightAnimation()
+    {
+        if(_isFlying) {
+            return;
+        }
+
+        SetAnimation("bee-flight", true);
+        _isFlying = true;
+    }
 
     private void CheckTimers(float dt)
     {
@@ -221,6 +249,19 @@ public class NPCBee : NPCBase, ISwarmable
     {
         //Debug.Log($"setting state: {state}");
         _state = state;
+
+        switch(state)
+        {
+        case NPCBeeState.Idle:
+            SetHoverAnimation();
+            break;
+        case NPCBeeState.Harvest:
+            SetHoverAnimation();
+            break;
+        case NPCBeeState.Repair:
+            SetHoverAnimation();
+            break;
+        }
     }
 
     private float CurrentSpeed()
@@ -375,6 +416,11 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         transform.position = Vector2.MoveTowards(transform.position,position, CurrentSpeed() * dt);
+
+        SetFlightAnimation();
+
+        Vector2 direction = target.position - transform.position;
+        _animation.Skeleton.ScaleX = direction.x < 0 ? -1.0f : 1.0f;
     }
 #endregion
 

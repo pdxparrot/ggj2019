@@ -30,7 +30,7 @@ public class NPCEnemy : NPCBase
             return;
         }
 
-        Debug.Log(gameObject.name);
+        //Debug.Log(gameObject.name);
 
         if (player.Damage(_damage)) {
             Kill();

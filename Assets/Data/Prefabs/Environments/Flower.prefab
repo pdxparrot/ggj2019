@@ -191,9 +191,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.25}
+  m_Offset: {x: 0, y: -0.1}
   m_Size: {x: 2, y: 2}
-  m_Direction: 0
+  m_Direction: 1
 --- !u!82 &1219087108319792121
 AudioSource:
   m_ObjectHideFlags: 0
@@ -415,6 +415,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
+    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
+        type: 3}
+      propertyPath: m_Name
+      value: PollenReady
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6796283527104758459, guid: 4f761f372f2de0d4da34e9d474e044c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -468,16 +478,6 @@ PrefabInstance:
     - target: {fileID: 6796283527104758459, guid: 4f761f372f2de0d4da34e9d474e044c7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
-        type: 3}
-      propertyPath: m_Name
-      value: PollenReady
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701874253786847546, guid: 4f761f372f2de0d4da34e9d474e044c7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8353785323651305715, guid: 4f761f372f2de0d4da34e9d474e044c7,
