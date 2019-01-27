@@ -5085,13 +5085,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
         type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: ShapeModule.type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
       propertyPath: ShapeModule.m_Scale.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273995620383007979, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2737259853979102377, guid: 52d3aaf2a9b0cf147ab40197c914685a,
         type: 3}
       propertyPath: m_VertexStreams.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737259853979102377, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1196388667
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737259853979102377, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2737259853979102377, guid: 52d3aaf2a9b0cf147ab40197c914685a,
         type: 3}
