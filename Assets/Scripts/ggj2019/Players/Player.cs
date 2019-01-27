@@ -2,6 +2,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -64,18 +65,19 @@ namespace pdxpartyparrot.ggj2019.Players
 
 #region Actions
 
-        public void Damage(int amount)
+        public bool Damage(int amount)
         {
             if(IsDead) {
-                return;
+                return false;
             }
 
             if(!_swarm.HasSwarm()) {
                 Kill();
-                return;
+                return true;
             }
 
             _swarm.Kill(amount);
+            return true;
         }
 
         private void Kill()

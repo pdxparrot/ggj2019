@@ -1,4 +1,5 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.ggj2019;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class NPCBeetle : NPCEnemy
     }
 
     void Update() {
-        if(IsDead || GameManager.Instance.IsGameOver) {
+        if(IsDead || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
             return;
         }
 

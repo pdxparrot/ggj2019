@@ -25,9 +25,9 @@ public class NPCEnemy : NPCBase
             return;
         }
 
-        player.Damage(_damage);
-
-        Kill();
+        if(player.Damage(_damage)) {
+            Kill();
+        }
     }
 #endregion
 
