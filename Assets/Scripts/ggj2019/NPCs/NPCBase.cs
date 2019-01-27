@@ -27,6 +27,9 @@ public class NPCBase : PhysicsActor2D
     [SerializeField]
     protected EffectTrigger _deathEffect;
 
+    [SerializeField]
+    protected SkeletonAnimation _animation;
+
     public override void OnSpawn() {
         IsDead = false;
 
@@ -61,9 +64,6 @@ public class NPCBase : PhysicsActor2D
         float r = other.Radius + Radius;
         return Vector3.Magnitude(offset) < r + distance;
     }
-
-    [SerializeField]
-    protected SkeletonAnimation _animation;
 
     protected void SetAnimation(string animationName, bool loop)
     {
