@@ -219,7 +219,7 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void SetState(NPCBeeState state)
     {
-        Debug.Log($"setting state: {state}");
+        //Debug.Log($"setting state: {state}");
         _state = state;
     }
 
