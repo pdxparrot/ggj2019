@@ -1,4 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Collections;
+
+using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Audio;
 
@@ -20,6 +23,10 @@ namespace pdxpartyparrot.Game.Effects
         [CanBeNull]
         private AudioSource _audioSource;
 
+        private bool IsVfxPlaying => null != _vfx && _vfx.isPlaying;
+
+        private bool IsAudioPlaying => null != _audioSource && _audioSource.isPlaying;
+
 // TODO: add animations to this
 
 #region Unity Lifecycle
@@ -38,7 +45,7 @@ namespace pdxpartyparrot.Game.Effects
         }
 #endregion
 
-        public void Trigger()
+        public void Trigger(Action callback=null)
         {
             if(null != _vfx) {
                 _vfx.Play();
@@ -50,6 +57,16 @@ namespace pdxpartyparrot.Game.Effects
                 _audioSource.clip = _audioClip;
                 _audioSource.Play();
             }
+
+            StartCoroutine(EffectWaiter(callback));
+        }
+
+        private IEnumerator EffectWaiter(Action callback) {
+            WaitForSeconds wait = new WaitForSeconds(0.1f);
+            while(IsVfxPlaying || IsAudioPlaying) {
+                yield return wait;
+            }
+            callback?.Invoke();
         }
     }
 }

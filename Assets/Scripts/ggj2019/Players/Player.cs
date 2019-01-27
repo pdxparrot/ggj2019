@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
