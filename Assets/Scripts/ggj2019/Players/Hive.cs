@@ -152,7 +152,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 if(_health[n1] > 0
                 || (n2 != -1 && _health[n2] > 0)
                 || (n3 != -1 && _health[n3] > 0)) {
-                    bool result  = TakeDamage(n1);
+                    bool result  = TakeDamage(n1, false);
                          if(n2 != -1)
                              result |= TakeDamage(n2, false);
                          if(n3 != -1)
