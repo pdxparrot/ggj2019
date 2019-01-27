@@ -25,11 +25,6 @@ public class NPCEnemy : NPCBase
             return;
         }
 
-        if (player.IsDead)
-        {
-            return;
-        }
-
         player.Damage(_damage);
 
         Kill();

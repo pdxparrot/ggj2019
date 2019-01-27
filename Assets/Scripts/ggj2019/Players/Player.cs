@@ -1,15 +1,9 @@
-using System;
-using DG.Tweening;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
-
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
-
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Experimental.PlayerLoop;
-using UnityEngine.UI;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
@@ -24,13 +18,24 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [SerializeField]
         private Interactables _interactables;
+
         [SerializeField]
         private float _respawnTime = 3f;
 
-        public bool IsDead => _isDead;
+        [SerializeField]
+        [ReadOnly]
         private bool _isDead;
 
-        private Timer _deathTimer;
+        public bool IsDead => _isDead;
+
+        [SerializeField]
+        private EffectTrigger _respawnEffect;
+
+        [SerializeField]
+        private EffectTrigger _deathEffect;
+
+        private readonly Timer _deathTimer = new Timer();
+
         private Swarm _swarm;
 
 #region Unity Lifecycle
@@ -45,8 +50,9 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Update()
         {
-            if(IsDead)
-                _deathTimer.Update(Time.deltaTime);
+            float dt = Time.deltaTime;
+
+            _deathTimer.Update(dt);
         }
 
         #endregion
@@ -58,41 +64,37 @@ namespace pdxpartyparrot.ggj2019.Players
 
 #region Actions
 
-        public void AddBeeToSwarm(NPCBee npcBee)
-        {
-            _swarm.Add(npcBee);
-        }
-
-
         public void Damage(int amount)
         {
-            // TODO: off until we have more bees spawning
-            /*
-            if (!_swarm.HasSwarm())
-                PlayerDeath();
+            if(IsDead) {
+                return;
+            }
 
-            _swarm.kill(amount);
-            */
+            if(!_swarm.HasSwarm()) {
+                Kill();
+                return;
+            }
+
+            _swarm.Kill(amount);
         }
 
-
-        private void PlayerDeath()
+        private void Kill()
         {
             _isDead = true;
 
-            PlayDeathFX();
-
-            _deathTimer = new Timer();
-            _deathTimer.Start(_respawnTime, Respawn);
+            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
+            Model.gameObject.SetActive(false);
+            _deathEffect.Trigger(() => {    
+                _deathTimer.Start(_respawnTime, Respawn);
+            });
         }
-
-        // TODO remove when spawned bees attach to player
 
         public void DoGather()
         {
             NPCBee npcBee = _interactables.GetBee();
-            if (npcBee != null)
+            if (npcBee != null) {
                 _swarm.Add(npcBee);
+            }
         }
 
         public void DoContext()
@@ -106,25 +108,15 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Respawn()
         {
+            _isDead = false;
+
             PlayerManager.Instance.RespawnPlayer(this);
 
-            PlayReviveFX();
-
-            _isDead = false;
-        }
-
-        private void PlayDeathFX()
-        {
-            //TODO Play Death anim
-            Model.gameObject.SetActive(false);
-        }
-
-        private void PlayReviveFX()
-        {
-            //TODO Play revive anim
+            // TODO: maybe we only show the model after the effect ends?
+            _respawnEffect.Trigger();
             Model.gameObject.SetActive(true);
+            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(false);
         }
-
-        #endregion
+#endregion
     }
 }
