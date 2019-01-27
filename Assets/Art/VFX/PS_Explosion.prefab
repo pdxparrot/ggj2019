@@ -5095,6 +5095,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2737259853979102377, guid: 52d3aaf2a9b0cf147ab40197c914685a,
         type: 3}
+      propertyPath: m_SortingFudge
+      value: 9e+14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737259853979102377, guid: 52d3aaf2a9b0cf147ab40197c914685a,
+        type: 3}
       propertyPath: m_UseCustomVertexStreams
       value: 1
       objectReference: {fileID: 0}
