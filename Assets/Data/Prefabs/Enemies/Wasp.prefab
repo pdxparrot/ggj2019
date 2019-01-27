@@ -147,7 +147,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 1.5, y: 1.5}
   m_Direction: 1
 --- !u!82 &1219087108319792121
 AudioSource:
@@ -279,11 +279,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: -1
-  _model: {fileID: 0}
+  _model: {fileID: 4158159683825376886}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
-  height: 5
-  radius: 5
   MaxVel: 10
   Accel: 5
 --- !u!1001 &4717385043739543372
@@ -355,6 +353,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c37fa9abd285474cb7f83a0fad8c111, type: 3}
+--- !u!1 &4158159683825376886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+    type: 3}
+  m_PrefabInstance: {fileID: 4717385043739543372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2244687519796758007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6796283527104758459, guid: 0c37fa9abd285474cb7f83a0fad8c111,

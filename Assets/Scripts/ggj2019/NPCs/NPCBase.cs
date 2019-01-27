@@ -1,25 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using pdxpartyparrot.Core.Actors;
 
-using pdxpartyparrot.Core.Actors;
-
-
-public class NPCBase : Actor
+public class NPCBase : PhysicsActor2D
 {
-    void Start() {
-    }
+    public override float Height => Collider.bounds.size.y;
+    public override float Radius => Collider.bounds.size.x;
 
-    void Update() {
-    }
-
-    [SerializeField] private float height;
-    [SerializeField] private float radius;
-
-    public override float Height { get { return height; } }
-    public override float Radius { get { return radius; } }
-
-    public override bool IsLocalActor { get { return true; } }
+    public override bool IsLocalActor => true;
 
     public override void OnSpawn() { }
     public override void OnReSpawn() { }
