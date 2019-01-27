@@ -25,6 +25,11 @@ public class NPCEnemy : NPCBase
             return;
         }
 
+        if (player.IsDead)
+        {
+            return;
+        }
+
         player.Damage(_damage);
 
         // TODO: player score or something?

@@ -1,9 +1,13 @@
+using System;
 using DG.Tweening;
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.UI;
 
 namespace pdxpartyparrot.ggj2019.Players
@@ -17,8 +21,15 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public override float Radius => GamePlayerController.Collider.bounds.size.x;
 
-        [SerializeField] private Interactables _interactables;
+        [SerializeField]
+        private Interactables _interactables;
+        [SerializeField]
+        private float _respawnTime = 3f;
 
+        public bool IsDead => _isDead;
+        private bool _isDead;
+
+        private Timer _deathTimer;
         private Swarm _swarm;
 
 #region Unity Lifecycle
@@ -30,7 +41,14 @@ namespace pdxpartyparrot.ggj2019.Players
 
             Assert.IsTrue(PlayerController is PlayerController);
         }
-#endregion
+
+        private void Update()
+        {
+            if(IsDead)
+                _deathTimer.Update(Time.deltaTime);
+        }
+
+        #endregion
 
         protected override void InitializeViewer()
         {
@@ -47,18 +65,31 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void Damage(int amount)
         {
-            _swarm.kill(amount);
-
             if (!_swarm.HasSwarm())
                 PlayerDeath();
+
+            int damageLeft = _swarm.kill(amount);
+
+            if (damageLeft > 0)
+            {
+                PlayerDeath();
+            }
+
         }
 
+        // Hacky
         private void PlayerDeath()
         {
-            //PlayerManager.Instance.RespawnPlayer(this);
+            _isDead = true;
+
+            PlayDeathFX();
+
+            _deathTimer = new Timer();
+            _deathTimer.Start(_respawnTime, Respawn);
         }
 
         // TODO remove when spawned bees attach to player
+
         public void DoGather()
         {
             NPCBee npcBee = _interactables.GetBee();
@@ -77,6 +108,28 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // No swarm so the player does the thing
         }
-#endregion
+
+        private void Respawn()
+        {
+            PlayerManager.Instance.RespawnPlayer(this);
+
+            PlayReviveFX();
+
+            _isDead = false;
+        }
+
+        private void PlayDeathFX()
+        {
+            //TODO Play Death anim
+            Model.gameObject.SetActive(false);
+        }
+
+        private void PlayReviveFX()
+        {
+            //TODO Play revive anim
+            Model.gameObject.SetActive(true);
+        }
+
+        #endregion
     }
 }
