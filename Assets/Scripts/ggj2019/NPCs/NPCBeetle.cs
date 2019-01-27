@@ -14,8 +14,10 @@ public class NPCBeetle : NPCEnemy
         Pollen = 0;
     }
 
-    private void OnDestroy() {
+    protected override void OnDestroy() {
         Pool.Remove(this);
+
+        base.OnDestroy();
     }
 
     void Update() {

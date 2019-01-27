@@ -19,11 +19,17 @@ public class NPCBee : NPCBase, ISwarmable
     [SerializeField] private float _speed = 5f;
     private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
 
+    [SerializeField] private float _harvestDistance = 5.0f;
     [SerializeField] private float _attackDistance = 5.0f;
     [SerializeField] private float _repairCooldown = 10.0f;
     [SerializeField] private float _harvestTime = 10.0f;
 
+    [SerializeField]
+    [ReadOnly]
     private readonly Timer _repairCooldownTimer = new Timer();
+
+    [SerializeField]
+    [ReadOnly]
     private readonly Timer _harvestCooldownTimer = new Timer();
 
     private float _offsetRadius;
@@ -133,17 +139,19 @@ public class NPCBee : NPCBase, ISwarmable
         _targetHive = null;
         _targetFlower = null;
 
-        Hive hive = Hive.Nearest(transform.position);
-        //NPCFlower flower = NPCFlower.Nearest(transform.position);
+        Vector2 position = transform.position;
+
+        Hive hive = Hive.Nearest(position);
+        NPCFlower flower = NPCFlower.Nearest(position);
 
         if(hive != null && hive.Collides(transform.position)) {
             SetState(NPCBeeState.Repair);
             _targetHive = hive;
             _repairCooldownTimer.Start(_repairCooldown);
-        /*} else if(flower != null && flower.Collides(transform.position)) {
+        } else if(flower != null && flower.Collides(transform.position, _harvestDistance)) {
             SetState(NPCBeeState.Harvest);
             _targetFlower = flower;
-            _harvestTimer.Start(_harvestTime)*/
+            _harvestCooldownTimer.Start(_harvestTime);
         } else {
             SetState(NPCBeeState.Defend);
         }
@@ -178,7 +186,8 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void AcquireEnemy()
     {
-// TODO
+        NPCWasp wasp = NPCWasp.Nearest(transform.position);
+        NPCBeetle beetle = NPCBeetle.Nearest(transform.position);
     }
 
 #region the things they bee doing
@@ -186,8 +195,8 @@ public class NPCBee : NPCBase, ISwarmable
     private void Swarm(float dt)
     {
         if(null == _targetSwarm) {
-            // ok?
-            SetState(NPCBeeState.Defend);
+            Debug.LogWarning("lost my swarm!");
+            SetState(NPCBeeState.ReturnHome);
             return;
         }
 
@@ -197,9 +206,8 @@ public class NPCBee : NPCBase, ISwarmable
     private void Harvest(float dt)
     {
         if(null == _targetFlower) {
-            // someone took it?
-            _harvestCooldownTimer.Stop();
-            SetState(NPCBeeState.Defend);
+            Debug.LogWarning("target flower disappeared");
+            SetState(NPCBeeState.ReturnHome);
             return;
         }
 
@@ -210,15 +218,19 @@ public class NPCBee : NPCBase, ISwarmable
         _pollenCount = _targetFlower.Harvest();
         _targetFlower = null;
 
+        Debug.Log($"harvested {_pollenCount} pollen");
         SetState(NPCBeeState.ReturnHome);
     }
 
     private void ReturnHome(float dt)
     {
         if(null == _targetHive) {
-            // waaat?
-            SetState(NPCBeeState.Defend);
-            return;
+            _targetHive = Hive.Nearest(transform.position);
+            if(null == _targetHive) {
+                Debug.LogError("No hive to return to!");
+                SetState(NPCBeeState.Defend);
+                return;
+            }
         }
 
         if(_targetHive.Collides(transform.position)) {
@@ -244,21 +256,27 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         MoveToTarget(dt, _targetEnemy.transform);
-// TODO: this is going to crash when we kill it
+        if(_targetEnemy.IsDead) {
+            _targetEnemy = null;
+        }
     }
 
     private void Repair(float dt)
     {
         if(null == _targetHive) {
-            // whoops...
-            SetState(NPCBeeState.Defend);
-            return;
+            _targetHive = Hive.Nearest(transform.position);
+            if(null == _targetHive) {
+                Debug.LogError("No hive to repair!");
+                SetState(NPCBeeState.Defend);
+                return;
+            }
         }
 
         if(_repairCooldownTimer.IsRunning) {
             return;
         }
 
+        Debug.Log("Repairing...");
         _targetHive.Repair();
         _repairCooldownTimer.Start(_repairCooldown);
     }

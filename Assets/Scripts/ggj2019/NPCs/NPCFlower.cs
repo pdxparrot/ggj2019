@@ -34,8 +34,10 @@ public class NPCFlower : NPCBase
         Pool.Add(this);
     }
 
-    private void OnDestroy() {
+    protected override void OnDestroy() {
         Pool.Remove(this);
+
+        base.OnDestroy();
     }
 
     private void Update() {

@@ -1,4 +1,5 @@
-﻿using pdxpartyparrot.Game.Effects;
+﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
@@ -7,6 +8,12 @@ public class NPCEnemy : NPCBase
 {
     [SerializeField]
     private EffectTrigger _deathEffectTrigger;
+
+    [SerializeField]
+    [ReadOnly]
+    private bool _isDead;
+
+    public bool IsDead => _isDead;
 
 #region Unity Lifecycle
     private void OnCollisionEnter2D(Collision2D other)
@@ -24,6 +31,8 @@ public class NPCEnemy : NPCBase
 
     private void Kill()
     {
+        _isDead = true;
+
         Model.SetActive(false);
         _deathEffectTrigger.Trigger(() => {
             Destroy(gameObject);

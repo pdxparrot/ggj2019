@@ -19,8 +19,10 @@ public class NPCWasp : NPCEnemy
         _accel = new Vector3(1,0,0) * Accel * dir;
     }
 
-    private void OnDestroy() {
+    protected override void OnDestroy() {
         Pool.Remove(this);
+
+        base.OnDestroy();
     }
 
     void Update() {

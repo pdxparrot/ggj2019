@@ -43,11 +43,12 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
-        protected void OnDestroy() {
+        protected override void OnDestroy() {
             Pool.Remove(this);
+            base.OnDestroy();
         }
 
-        protected void Update() {
+        private void Update() {
         }
 #endregion
 
