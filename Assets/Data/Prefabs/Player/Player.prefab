@@ -279,7 +279,7 @@ MonoBehaviour:
   _id: -1
   _model: {fileID: 376216879495958436}
   _controller: {fileID: 4359218613803387002}
-  _animator: {fileID: 0}
+  _animator: {fileID: 5417508698543561820}
   _networkPlayer: {fileID: 7579413692694895314}
   _driver: {fileID: 6318285324892847177}
 --- !u!114 &5129411227740885415
@@ -539,16 +539,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
-    - target: {fileID: 8701874253786847546, guid: 0c47529b7b6329b478c567dcef05a8b0,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701874253786847546, guid: 0c47529b7b6329b478c567dcef05a8b0,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6796283527104758459, guid: 0c47529b7b6329b478c567dcef05a8b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -603,6 +593,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774828558569049840, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c47529b7b6329b478c567dcef05a8b0, type: 3}

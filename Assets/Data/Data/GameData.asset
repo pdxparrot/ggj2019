@@ -15,6 +15,7 @@ MonoBehaviour:
   _worldLayer:
     serializedVersion: 2
     m_Bits: 8192
+  _gameSize2D: 5
   _viewerLayer:
     serializedVersion: 2
     m_Bits: 2048
