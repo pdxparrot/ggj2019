@@ -313,7 +313,7 @@ MonoBehaviour:
   _spawnEffect: {fileID: 7498956286358863322}
   _deathEffect: {fileID: 6498468760859895621}
   _animation: {fileID: 0}
-  _initialPollen: 1
+  _initialPollen: 5
   _pollenRate: 1
   _pollenDelayMin: 1
   _pollenDelayMax: 5
