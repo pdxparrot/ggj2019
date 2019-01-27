@@ -9,7 +9,12 @@ namespace pdxpartyparrot.Game.World
         [SerializeField]
         private string _tag;
 
+        [SerializeField]
+        private Actor _overridePrefab;
+
         public string Tag => _tag;
+
+        public Actor OverridePrefab => _overridePrefab;
 
         private Actor _actor = null;
 
@@ -46,7 +51,10 @@ namespace pdxpartyparrot.Game.World
 
         public virtual Actor SpawnPrefab(Actor prefab)
         {
-            Actor actor = Instantiate(prefab);
+            // -- use the placed one if it's there, or the passed in one if not
+            Actor p = (OverridePrefab ? OverridePrefab : prefab);
+
+            Actor actor = Instantiate(p);
             //Debug.LogWarning("You probably meant to use NetworkManager.SpawnNetworkPrefab");
             Spawn(actor);
             return actor;

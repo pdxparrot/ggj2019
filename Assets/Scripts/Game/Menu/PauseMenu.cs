@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.State;

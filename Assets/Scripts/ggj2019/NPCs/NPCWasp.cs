@@ -73,7 +73,8 @@ public class NPCWasp : NPCEnemy
             return;
         }
 
-        SetAnimation("wasp_attack", true);
+        //SetAnimation("wasp_attack", true);
+        SetAnimation("wasp_hover", true);
         _isFlying = true;
     }
 

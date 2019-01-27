@@ -49,12 +49,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         protected override void OnDestroy()
         {
-            if(PartyParrotManager.HasInstance) {
-                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
-            }
-
-            _controls.Player.Disable();
             _controls.Player.SetCallbacks(null);
+            _controls.Player.Disable();
 
             Destroy(_gamepadListener);
             _gamepadListener = null;
@@ -73,12 +69,11 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            _gamepadListener = gameObject.AddComponent<GamepadListener>();
-
+            _controls.MakePrivateCopyOfActions();
             _controls.Player.SetCallbacks(this);
             _controls.Player.Enable();
 
-            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
+            _gamepadListener = gameObject.AddComponent<GamepadListener>();
 
             InitDebugMenu();
 
@@ -254,17 +249,5 @@ namespace pdxpartyparrot.ggj2019.Players
             }
             _debugMenuNode = null;
         }
-
-#region Event Handlers
-        private void PauseEventHandler(object sender, EventArgs args)
-        {
-            // have to disable player controls or the pause menu breaks
-            if(PartyParrotManager.Instance.IsPaused) {
-                _controls.Disable();
-            } else {
-                _controls.Enable();
-            }
-        }
-#endregion
     }
 }
