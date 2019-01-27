@@ -38,11 +38,11 @@ public class NPCWasp : NPCEnemy
             return;
         }
 
-        _velocity += _accel * Time.deltaTime;
-        _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
-        transform.position += _velocity * Time.deltaTime;
-
         if(!_isAttacking) {
+            _velocity += _accel * Time.deltaTime;
+            _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
+            transform.position += _velocity * Time.deltaTime;
+        //if(!_isAttacking) {
             SetFlightAnimation();
             _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
         }
@@ -50,15 +50,15 @@ public class NPCWasp : NPCEnemy
         var hive = Hive.Nearest(transform.position);
         if(hive.Collides(this)) {
             // option A
-            if(hive.TakeDamage(transform.position)) {
+            /*if(hive.TakeDamage(transform.position)) {
                 Kill();
             } else {
                 SetAttackAnimation();
                 PushBack();
-            }
+            }*/
 
             // option B
-            //Attack(hive);
+            Attack(hive);
         }
     }
 
@@ -92,13 +92,17 @@ public class NPCWasp : NPCEnemy
     {
         _isAttacking = true;
         TrackEntry track = SetAnimation(1, "wasp_attack", false);
-        track.End += x => {
+        track.Complete += x => {
             _isAttacking = false;
             callback?.Invoke();
         };
     }
 
     private void Attack(Hive hive) {
+        if(_isAttacking) {
+            return;
+        }
+
         _velocity = Vector3.zero;
         SetAttackAnimation(() => {
             if(hive.TakeDamage(transform.position)) {
@@ -110,8 +114,11 @@ public class NPCWasp : NPCEnemy
     }
 
     void PushBack() {
-        transform.position -= _velocity.normalized * pushback;
-        _velocity = _velocity.normalized * pushbackvel;
+        Vector3 pos = transform.position;
+        Vector3 dir = new Vector3(-pos.x, 0.0f, 0.0f).normalized;
+
+        transform.position -= dir * pushback;
+        _velocity = dir * pushbackvel;
     }
 
     public static ProxPool<NPCWasp> Pool = new ProxPool<NPCWasp>();
