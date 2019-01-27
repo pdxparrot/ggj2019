@@ -81,6 +81,12 @@ namespace pdxpartyparrot.ggj2019.Players
 
 #region Actions
 
+        public void AddBeeToSwarm(NPCBee npcBee)
+        {
+            _swarm.Add(npcBee);
+        }
+
+
         public bool Damage(int amount)
         {
             if(IsDead) {
