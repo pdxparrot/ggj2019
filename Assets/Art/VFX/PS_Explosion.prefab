@@ -5154,6 +5154,56 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
         type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: RotationModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: RotationModule.x.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: RotationModule.y.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: RotationModule.curve.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: RotationModule.curve.scalar
+      value: -0.7853981
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: RotationModule.curve.minScalar
+      value: 0.7853981
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.r
       value: 0.066037714
       objectReference: {fileID: 0}
@@ -5169,8 +5219,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
         type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
       propertyPath: ColorModule.gradient.maxGradient.ctime1
       value: 47224
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 47417
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 388561688863145179, guid: 7dd953214fe0618459375949499f35b2,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4291249763380628312, guid: 7dd953214fe0618459375949499f35b2,
         type: 3}
