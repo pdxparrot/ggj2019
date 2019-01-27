@@ -31,8 +31,12 @@ namespace pdxpartyparrot.ggj2019.Players
         public override void OnSpawn() { }
         public override void OnReSpawn() { }
 
+        [SerializeField] private int _maxBees = 5;
         [SerializeField] private float _beeSpawnCooldown = 10.0f;
         private readonly Timer _beeSpawnTimer = new Timer();
+
+        [SerializeField]
+        private NPCBee _beePrefab;
 
 #region Unity Lifecycle
         protected override void Awake() {
@@ -155,11 +159,16 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
         private void SpawnBee() {
-            if(_beeSpawnTimer.IsRunning) {
+            if(_beeSpawnTimer.IsRunning || NPCBee.Pool.Count >= _maxBees) {
                 return;
             }
 
+            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
+            if(spawnPoint != null) {
+                spawnPoint.SpawnPrefab(_beePrefab);
+            }
 
+            _beeSpawnTimer.Start(_beeSpawnCooldown);
         }
 
         public static ProxPool<Hive> Pool = new ProxPool<Hive>();

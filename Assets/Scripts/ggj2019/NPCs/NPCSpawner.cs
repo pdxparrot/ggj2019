@@ -116,8 +116,7 @@ public class NPCSpawner : MonoBehaviour
 
         var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
         if(spawnpt) {
-            var actor = Instantiate(npc.Prefab);
-            spawnpt.Spawn(actor);
+            spawnpt.SpawnPrefab(npc.Prefab);
 
             _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
         }
