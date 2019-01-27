@@ -168,14 +168,14 @@ public class NPCBee : NPCBase, ISwarmable
         Hive hive = Hive.Nearest(position);
         NPCFlower flower = NPCFlower.Nearest(position);
 
-        if(hive != null && hive.Collides(Collider.bounds, _repairDistance)) {
+        if(hive != null && hive.Collides(this, _repairDistance)) {
 // TODO: leave our swarm?
             _targetSwarm = null;
             _targetHive = hive;
 
             SetState(NPCBeeState.PathToRepair);
             return true;
-        } else if(flower != null && flower.Collides(Collider.bounds, _harvestDistance)) {
+        } else if(flower != null && flower.Collides(this, _harvestDistance)) {
 // TODO: leave our swarm?
             _targetSwarm = null;
             _targetFlower = flower;
@@ -238,7 +238,7 @@ public class NPCBee : NPCBase, ISwarmable
     private bool AcquireFlower()
     {
         _targetFlower = NPCFlower.Nearest(transform.position);
-        return null != _targetFlower && _targetFlower.Collides(Collider.bounds, _harvestDistance);
+        return null != _targetFlower && _targetFlower.Collides(this, _harvestDistance);
     }
 
     private bool AcquireHive()
@@ -268,7 +268,7 @@ public class NPCBee : NPCBase, ISwarmable
             return;
         }
 
-        if(_targetFlower.Collides(Collider.bounds)) {
+        if(_targetFlower.Collides(this)) {
             _harvestCooldownTimer.Start(_harvestTime);
             SetState(NPCBeeState.Harvest);
             return;
@@ -311,7 +311,7 @@ public class NPCBee : NPCBase, ISwarmable
             return;
         }
 
-        if(_targetHive.Collides(Collider.bounds)) {
+        if(_targetHive.Collides(this)) {
             _targetHive.UnloadPollen(null, _pollenCount);
             _pollenCount = 0;
 
@@ -332,7 +332,7 @@ public class NPCBee : NPCBase, ISwarmable
             return;
         }
 
-        if(_targetHive.Collides(Collider.bounds)) {
+        if(_targetHive.Collides(this)) {
             _repairCooldownTimer.Start(_repairCooldown);
             SetState(NPCBeeState.Repair);
             return;

@@ -13,9 +13,9 @@ namespace pdxpartyparrot.ggj2019.Players
     {
         public PlayerController GamePlayerController => (PlayerController)PlayerController;
 
-        public override float Height => GamePlayerController.Collider.bounds.size.y;
+        public override float Height => GamePlayerController.Collider.bounds.size.y / 2.0f;
 
-        public override float Radius => GamePlayerController.Collider.bounds.size.x;
+        public override float Radius => GamePlayerController.Collider.bounds.size.x / 2.0f;
 
         [SerializeField] private float _harvestRadius;
         [SerializeField]
@@ -62,7 +62,7 @@ namespace pdxpartyparrot.ggj2019.Players
             }
             else {
                 var hive = Hive.Nearest(transform.position);
-                if(hive && hive.Collides(Collider.bounds)) {
+                if(hive && hive.Collides(this)) {
                     hive.UnloadPollen(this, _pollen);
                     _pollen = 0;
                 }

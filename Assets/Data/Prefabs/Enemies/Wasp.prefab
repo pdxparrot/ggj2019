@@ -372,16 +372,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
-    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
-        type: 3}
-      propertyPath: m_Name
-      value: WaspSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
-        type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 6796283527104758459, guid: 0c37fa9abd285474cb7f83a0fad8c111,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -436,6 +426,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+        type: 3}
+      propertyPath: m_Name
+      value: WaspSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 266147904421654132, guid: 0c37fa9abd285474cb7f83a0fad8c111,
         type: 3}

@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class NPCBase : PhysicsActor2D
 {
-    public override float Height => Collider.bounds.size.y;
-    public override float Radius => Collider.bounds.size.x;
+    public override float Height => Collider.bounds.size.y / 2.0f;
+    public override float Radius => Collider.bounds.size.x / 2.0f;
 
     public override bool IsLocalActor => true;
 
     public override void OnSpawn() { }
     public override void OnReSpawn() { }
 
-    public bool Collides(Bounds other, float distance = float.Epsilon) {
-        Bounds bounds = Collider.bounds;
-        bounds.Expand(distance);
-        return bounds.Intersects(other);
+    public bool Collides(Actor other, float distance = 0.0f) {
+        Vector3 offset = other.transform.position - transform.position;
+        float r = other.Radius + Radius;
+        return Vector3.Magnitude(offset) < r + distance;
     }
 
 }

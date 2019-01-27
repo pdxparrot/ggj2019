@@ -47,7 +47,7 @@ public class NPCWasp : NPCEnemy
         transform.position += _velocity * Time.deltaTime;
 
         var hive = Hive.Nearest(transform.position);
-        if(hive.Collides(Collider.bounds)) {
+        if(hive.Collides(this)) {
             if(hive.TakeDamage(transform.position))
                 Kill();
             else

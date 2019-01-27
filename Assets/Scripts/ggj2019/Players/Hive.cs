@@ -24,8 +24,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private List<int> _health;
 
-        public override float Height => Collider.bounds.size.y;
-        public override float Radius => Collider.bounds.size.x;
+        public override float Height => Collider.bounds.size.y / 2.0f;
+        public override float Radius => Collider.bounds.size.x / 2.0f;
 
         public override bool IsLocalActor => true;
 
@@ -68,10 +68,10 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
-        public bool Collides(Bounds other, float distance = float.Epsilon) {
-            Bounds bounds = Collider.bounds;
-            bounds.Expand(distance);
-            return bounds.Intersects(other);
+        public bool Collides(Actor actor, float distance = 0.0f) {
+            Vector3 offset = actor.transform.position - transform.position;
+            float r = actor.Radius + Radius;
+            return Vector3.Magnitude(offset) < r + distance;
         }
 
         private int neighbor1(int pc) {
