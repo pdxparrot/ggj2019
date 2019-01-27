@@ -56,6 +56,7 @@ namespace pdxpartyparrot.Game.Actors
                 _viewer.Initialize(this);
             }
 
+            _controls.MakePrivateCopyOfActions();
             _controls.ServerSpectator.SetCallbacks(this);
         }
 
