@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 7566827058745012155}
   - component: {fileID: 3673602363583183421}
-  m_Layer: 12
+  m_Layer: 15
   m_Name: Wasp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,6 +350,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WaspSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c37fa9abd285474cb7f83a0fad8c111, type: 3}
