@@ -73,7 +73,7 @@ public class NPCFlower : NPCBase
     public int Harvest(bool beetle = false) {
         int result = 0;
 
-        if(_hasPollen) {
+        if(_hasPollen || beetle) {
             _hasPollen = false;
             result =  Mathf.Min(_pollen, _pollenRate);
             if(beetle)

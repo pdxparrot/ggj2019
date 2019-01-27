@@ -265,7 +265,7 @@ MonoBehaviour:
   _deathEffectTrigger: {fileID: 2225282234619250759}
   _damage: 1
   _isDead: 0
-  _harvestCooldown: 3
+  _harvestCooldown: 2
 --- !u!114 &2225282234619250759
 MonoBehaviour:
   m_ObjectHideFlags: 0
