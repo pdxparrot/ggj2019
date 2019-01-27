@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using pdxpartyparrot.ggj2019;
 using UnityEngine;
 
 using pdxpartyparrot.ggj2019.Players;
@@ -26,7 +27,7 @@ public class NPCWasp : NPCEnemy
     }
 
     void Update() {
-        if(IsDead) {
+        if(IsDead || GameManager.Instance.IsGameOver) {
             return;
         }
 

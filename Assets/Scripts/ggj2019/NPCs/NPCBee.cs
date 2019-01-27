@@ -2,7 +2,9 @@
 using pdxpartyparrot.Core;
 using UnityEngine;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.Game;
 
 public class NPCBee : NPCBase, ISwarmable
 {
@@ -112,6 +114,11 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void Think(float dt)
     {
+        // TODO: but still let them flock, that's cool looking
+        if(GameManager.Instance.IsGameOver) {
+            return;
+        }
+
         switch(_state)
         {
         case NPCBeeState.Defend:
