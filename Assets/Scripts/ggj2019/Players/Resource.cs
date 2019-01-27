@@ -11,20 +11,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public override bool IsLocalActor => true;
 
-#region Unity Lifecycle
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            Player player = other.gameObject.GetComponent<Player>();
-            if(null == player) {
-                return;
-            }
-
-            player.CollectResource();
-
-            Destroy(gameObject);
-        }
-#endregion
-
         public override void OnSpawn() { }
         public override void OnReSpawn() { }
     }
