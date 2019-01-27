@@ -97,6 +97,8 @@ namespace pdxpartyparrot.ggj2019.Players
                 // ignore keyboard/mouse while the debug menu is open
                 // TODO: this probably doesn't handle multiple keyboards/mice
                 (!DebugMenuManager.Instance.Enabled && PlayerManager.Instance.PlayerCount == 1 && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));
+        }
+
         [SerializeField]
         private SkeletonAnimation _animation;
 
