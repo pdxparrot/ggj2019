@@ -20,10 +20,14 @@ public class NPCBeetle : NPCEnemy
         Pollen = 0;
 
         _harvestCooldownTimer.Start(_harvestCooldown);
+
+        Flower.CanSpawnPollen = false;
     }
 
     protected override void OnDestroy() {
         Pool.Remove(this);
+
+        Flower.CanSpawnPollen = true;
 
         base.OnDestroy();
     }

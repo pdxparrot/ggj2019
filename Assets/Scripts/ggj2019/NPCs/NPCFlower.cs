@@ -22,6 +22,8 @@ public class NPCFlower : NPCBase
 
     public bool IsDead { get; private set; }
 
+    public bool CanSpawnPollen = true;
+
     private static int _pollenTimerFrame;
     private static Timer _pollenTimer;
 
@@ -42,6 +44,10 @@ public class NPCFlower : NPCBase
     }
 
     private void Update() {
+
+        if(!CanSpawnPollen)
+            return;
+
         if(_pollenTimerFrame != Time.frameCount) {
             _pollenTimerFrame = Time.frameCount;
             _pollenTimer.Update(Time.deltaTime);
@@ -58,7 +64,16 @@ public class NPCFlower : NPCBase
             }
         }
 
-        if(HasPollen) {
+        if(HasPollen)
+        {
+            if (_pollen > 1)
+            {
+                Instantiate(_pollenObj, transform.position,
+                    Quaternion.identity);
+
+                _pollen -= 1;
+            }
+
             _pollenObj.SetActive(true);
         }
     }

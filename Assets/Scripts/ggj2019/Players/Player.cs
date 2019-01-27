@@ -81,6 +81,11 @@ namespace pdxpartyparrot.ggj2019.Players
 
 #region Actions
 
+        public void AddPollen(int amt)
+        {
+            _pollen += amt;
+        }
+
         public void AddBeeToSwarm(NPCBee npcBee)
         {
             _swarm.Add(npcBee);
@@ -105,6 +110,8 @@ namespace pdxpartyparrot.ggj2019.Players
         private void Kill()
         {
             _isDead = true;
+
+            _pollen = 0;
 
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
             Model.gameObject.SetActive(false);
