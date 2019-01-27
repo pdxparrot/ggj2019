@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
+    [RequireComponent(typeof(Swarm))]
     public sealed class Player : Player2D
     {
         public PlayerController GamePlayerController => (PlayerController)PlayerController;
@@ -44,7 +45,6 @@ namespace pdxpartyparrot.ggj2019.Players
         public void DoGather()
         {
             NPCBee npcBee = _interactables.GetBee();
-            Debug.Log(npcBee);
             if (npcBee != null)
                 _swarm.Add(npcBee);
         }

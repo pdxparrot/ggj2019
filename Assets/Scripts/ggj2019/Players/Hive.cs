@@ -66,6 +66,10 @@ namespace pdxpartyparrot.ggj2019.Players
             _armor[armoridx].SetActive(false);
         }
 
+        public void Repair() {
+// TODO
+        }
+
         private static List<Hive> _hives;
 
         public static Hive Nearest(Vector3 pos) {

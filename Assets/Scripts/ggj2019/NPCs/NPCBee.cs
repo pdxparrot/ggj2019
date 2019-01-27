@@ -1,28 +1,72 @@
-﻿using pdxpartyparrot.Core;
+﻿using JetBrains.Annotations;
+using pdxpartyparrot.Core;
 using UnityEngine;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.ggj2019.Players;
 
 public class NPCBee : NPCBase, ISwarmable
 {
 
+    private enum NPCBeeState
+    {
+        Defend,
+        Follow,
+        Harvest,
+        ReturnHome,
+        Repair
+    }
+
     [SerializeField] private float _speed = 5f;
     private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
 
-    public bool InPlayerSwarm => _inplayerSwarm;
+    [SerializeField] private float _attackCooldown = 1.0f;
+    [SerializeField] private float _repairCooldown = 10.0f;
+    [SerializeField] private float _harvestTime = 10.0f;
 
-    private Vector3 _target = new Vector3(0,0,0);
-    private bool _inplayerSwarm = false;
+    private readonly Timer _attackCooldownTimer = new Timer();
+    private readonly Timer _repairCooldownTimer = new Timer();
+    private readonly Timer _harvestCooldownTimer = new Timer();
 
     private float _offsetRadius = 0f;
     private Vector3 _offsetPosition = new Vector3(0,0,0);
-    private Timer _offsetUpdateTimer;
+    private Timer _offsetUpdateTimer = new Timer();
+
+    [SerializeField]
+    [ReadOnly]
+    private NPCBeeState _state = NPCBeeState.Defend;
+
+    [SerializeField]
+    [ReadOnly]
+    [CanBeNull]
+    private Swarm _targetSwarm;
+
+    public bool IsInSwarm => null != _targetSwarm;
+
+    public bool CanJoinSwarm => !IsInSwarm && _state != NPCBeeState.ReturnHome;
+
+    [SerializeField]
+    [ReadOnly]
+    [CanBeNull]
+    private Hive _targetHive;
+
+    [SerializeField]
+    [ReadOnly]
+    [CanBeNull]
+    private NPCEnemy _targetEnemy;
+
+    [SerializeField]
+    [ReadOnly]
+    [CanBeNull]
+    private NPCFlower _targetFlower;
+
+    [SerializeField]
+    [ReadOnly]
+    private int _pollenCount;
+
     #region Unity Life Cycle
 
     private void Start()
     {
-        _target = transform.position;
-
-        _offsetUpdateTimer = new Timer();
         _offsetUpdateTimer.Start(
             PartyParrotManager.Instance.Random.NextSingle(
                 _offsetChangeTimer.x,
@@ -35,16 +79,15 @@ public class NPCBee : NPCBase, ISwarmable
         if(PartyParrotManager.Instance.IsPaused)
             return;
 
-        CheckTimers();
+        float dt = Time.deltaTime;
 
-        MoveToTarget();
-
-
+        CheckTimers(dt);
+        Think(dt);
     }
 
-    private void CheckTimers()
+    private void CheckTimers(float dt)
     {
-        _offsetUpdateTimer.Update(Time.deltaTime);
+        _offsetUpdateTimer.Update(dt);
 
         if (!_offsetUpdateTimer.IsRunning)
         {
@@ -56,30 +99,67 @@ public class NPCBee : NPCBase, ISwarmable
                     _offsetChangeTimer.y)
             );
         }
+
+        _attackCooldownTimer.Update(dt);
+        _repairCooldownTimer.Update(dt);
+        _harvestCooldownTimer.Update(dt);
     }
 
     #endregion
 
-    private void MoveToTarget()
+    private void Think(float dt)
     {
-        transform.position = Vector3.MoveTowards(transform.position, _target+_offsetPosition,
-            _speed * Time.deltaTime);
-    }
-
-    public void SetTargetLocation(Vector3 location)
-    {
-        _target = location;
+        switch(_state)
+        {
+        case NPCBeeState.Defend:
+            Defend(dt);
+            break;
+        case NPCBeeState.Follow:
+            Swarm(dt);
+            break;
+        case NPCBeeState.Harvest:
+            Harvest(dt);
+            break;
+        case NPCBeeState.ReturnHome:
+            ReturnHome(dt);
+            break;
+        case NPCBeeState.Repair:
+            Repair(dt);
+            break;
+        }
     }
 
     public void DoContext()
     {
-        _inplayerSwarm = false;
+        _targetSwarm = null;
+        _targetHive = null;
+        _targetFlower = null;
 
+        Hive hive = Hive.Nearest(transform.position);
+        //NPCFlower flower = NPCFlower.Nearest(transform.position);
 
-        _offsetRadius = 0;
+        if(hive != null && hive.Collides(transform.position)) {
+            SetState(NPCBeeState.Repair);
+            _targetHive = hive;
+        /*} else if(flower != null && flower.Collides(transform.position)) {
+            SetState(NPCBeeState.Harvest);
+            _targetFlower = flower;*/
+        } else {
+            SetState(NPCBeeState.Defend);
+        }
+    }
+
+    public void JoinSwarm(Swarm swarm, float radius)
+    {
+        if(!CanJoinSwarm) {
+            return;
+        }
+Debug.Log("joining swarm");
+        _targetSwarm = swarm;
+        SetState(NPCBeeState.Follow);
+
+        _offsetRadius = radius;
         UpdateOffset();
-
-        Defend();
     }
 
     private void UpdateOffset()
@@ -91,37 +171,82 @@ public class NPCBee : NPCBase, ISwarmable
             );
     }
 
-    public void SetSwarmRadius(float radius)
+    private void SetState(NPCBeeState state)
     {
-        _offsetRadius = radius;
-        UpdateOffset();
-    }
-
-    public void PlayerSwarm()
-    {
-        _inplayerSwarm = true;
+        Debug.Log($"setting state: {state}");
+        _state = state;
     }
 
 #region the things they bee doing
 
-    public void Swarm()
+    private void Swarm(float dt)
     {
+        if(null == _targetSwarm) {
+            // ok?
+            SetState(NPCBeeState.Defend);
+            return;
+        }
 
+        MoveToTarget(dt, _targetSwarm.transform);
+
+        // TODO: flock and stuff
     }
 
-    public void Harvest()
+    private void Harvest(float dt)
     {
+        if(null == _targetFlower) {
+            // someone took it?
+            _harvestCooldownTimer.Stop();
+            SetState(NPCBeeState.Defend);
+            return;
+        }
 
+        if(_harvestCooldownTimer.IsRunning) {
+            return;
+        }
+
+        _pollenCount = _targetFlower.Harvest();
+        SetState(NPCBeeState.ReturnHome);
     }
 
-    public void Defend()
+    private void ReturnHome(float dt)
     {
-        _target = transform.position;
+        if(null == _targetHive) {
+            // waaat?
+            SetState(NPCBeeState.Defend);
+            return;
+        }
+
+        MoveToTarget(dt, _targetHive.transform);
     }
 
-    public void Repair()
+    private void Defend(float dt)
     {
+// TODO: find a thing and attack that sumbitch
+    }
 
+    private void Repair(float dt)
+    {
+        if(null == _targetHive) {
+            // whoops...
+            SetState(NPCBeeState.Defend);
+            return;
+        }
+
+        if(_repairCooldownTimer.IsRunning) {
+            return;
+        }
+
+        _targetHive.Repair();
+    }
+
+    private void MoveToTarget(float dt, Transform target)
+    {
+        if(null == target) {
+            return;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, target.position + _offsetPosition, _speed * dt);
     }
 #endregion
 }

@@ -24,12 +24,12 @@ public class Interactables : MonoBehaviour
 
     public NPCBee GetBee()
     {
-        if (1 > _bees.Count)
+        if (_bees.Count < 1)
             return null;
 
         for (int i = 0; i < _bees.Count; i++)
         {
-            if (!_bees[i].InPlayerSwarm)
+            if (_bees[i].CanJoinSwarm)
                 return _bees[i];
         }
 
@@ -40,7 +40,7 @@ public class Interactables : MonoBehaviour
     {
         NPCBee npcBee = collider.GetComponent<NPCBee>();
 
-        if(npcBee != null && !npcBee.InPlayerSwarm)
+        if(npcBee != null && !npcBee.IsInSwarm)
             _bees.Add(npcBee);
     }
 

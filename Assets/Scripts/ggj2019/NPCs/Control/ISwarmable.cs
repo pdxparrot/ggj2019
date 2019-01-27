@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface ISwarmable
 {
-    void PlayerSwarm();
-    void SetTargetLocation(Vector3 location);
+    bool CanJoinSwarm { get; }
+
+    bool IsInSwarm { get; }
+
+    void JoinSwarm(Swarm swarm, float radius);
+
     void DoContext();
-    void SetSwarmRadius(float raidus);
 
 }
