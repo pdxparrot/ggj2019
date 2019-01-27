@@ -269,8 +269,8 @@ MonoBehaviour:
   _deathEffect: {fileID: 8597469290013358255}
   _animation: {fileID: 4811542803833317688}
   _damage: 1
-  MaxVel: 4
-  Accel: 2
+  MaxVel: 6
+  Accel: 4
   pushback: 0.5
   pushbackvel: -2
 --- !u!114 &4776182971955245096
@@ -391,6 +391,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
+    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+        type: 3}
+      propertyPath: m_Name
+      value: WaspSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6796283527104758459, guid: 0c37fa9abd285474cb7f83a0fad8c111,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -445,16 +455,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
-        type: 3}
-      propertyPath: m_Name
-      value: WaspSprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701874253786847546, guid: 0c37fa9abd285474cb7f83a0fad8c111,
-        type: 3}
-      propertyPath: m_Layer
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 266147904421654132, guid: 0c37fa9abd285474cb7f83a0fad8c111,
         type: 3}
@@ -504,11 +504,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
-    - target: {fileID: 4667930459531369643, guid: 887e9409c744a08418237b17b46cba5d,
-        type: 3}
-      propertyPath: m_Name
-      value: PS_Spawn
-      objectReference: {fileID: 0}
     - target: {fileID: 7654641961552398550, guid: 887e9409c744a08418237b17b46cba5d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -563,6 +558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4667930459531369643, guid: 887e9409c744a08418237b17b46cba5d,
+        type: 3}
+      propertyPath: m_Name
+      value: PS_Spawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 887e9409c744a08418237b17b46cba5d, type: 3}
