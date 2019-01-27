@@ -287,6 +287,7 @@ MonoBehaviour:
   _deathEffectTrigger: {fileID: 8597469290013358255}
   MaxVel: 4
   Accel: 2
+  pushback: 4
 --- !u!114 &8597469290013358255
 MonoBehaviour:
   m_ObjectHideFlags: 0

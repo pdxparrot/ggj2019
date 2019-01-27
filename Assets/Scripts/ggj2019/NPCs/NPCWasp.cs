@@ -8,6 +8,7 @@ public class NPCWasp : NPCEnemy
 {
     [SerializeField] private float MaxVel;
     [SerializeField] private float Accel;
+    [SerializeField] private float pushback;
    
     private Vector3 _accel;
     private Vector3 _velocity;
@@ -29,9 +30,16 @@ public class NPCWasp : NPCEnemy
 
         var hive = Hive.Nearest(transform.position);
         if(hive.Collides(transform.position)) {
-            hive.TakeDamage(transform.position);
-            Die();
+            if(hive.TakeDamage(transform.position))
+                Die();
+            else
+                PushBack();
         }
+    }
+
+    void PushBack() {
+        transform.position -= _velocity.normalized * pushback;
+        _velocity = new Vector3();
     }
 
     void Die() {
