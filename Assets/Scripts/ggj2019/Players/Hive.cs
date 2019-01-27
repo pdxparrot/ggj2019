@@ -35,6 +35,7 @@ namespace pdxpartyparrot.ggj2019.Players
 #region Unity Lifecycle
         protected override void Awake() {
             base.Awake();
+
             Pool.Add(this);
 
             _health = new List<int>();
@@ -46,9 +47,6 @@ namespace pdxpartyparrot.ggj2019.Players
         protected override void OnDestroy() {
             Pool.Remove(this);
             base.OnDestroy();
-        }
-
-        private void Update() {
         }
 #endregion
 
@@ -85,7 +83,20 @@ namespace pdxpartyparrot.ggj2019.Players
             int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
                            ((pos.y > _topRow) ? 0 :
                             (pos.y > _bottomRow) ? 1 : 2);
-            return TakeDamage(armoridx);
+            bool ret = TakeDamage(armoridx);
+
+            bool armorLeft = false;
+            for(int i=0; i<_health.Count; ++i) {
+                if(_health[i] > 0) {
+                    armorLeft = true;
+                }
+            }
+
+            if(!armorLeft) {
+                GameManager.Instance.EndGame();
+            }
+
+            return ret;
         }
 
         public void ShowDamage(int armoridx) {

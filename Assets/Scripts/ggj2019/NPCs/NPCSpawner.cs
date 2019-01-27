@@ -6,6 +6,7 @@ using UnityEngine;
 
 using pdxpartyparrot.Game.World;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.ggj2019;
 
 public class NPCSpawner : MonoBehaviour
 {
@@ -69,6 +70,10 @@ public class NPCSpawner : MonoBehaviour
     }
 
     void Update() {
+        if(GameManager.Instance.IsGameOver) {
+            return;
+        }
+
         _waveTimer.Update(Time.deltaTime);
         if(!_waveTimer.IsRunning) {
             NextWave();
