@@ -80,6 +80,8 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void Start()
     {
+        Pool.Add(this);
+
         _offsetUpdateTimer.Start(
             PartyParrotManager.Instance.Random.NextSingle(
                 _offsetChangeTimer.x,
@@ -97,6 +99,15 @@ public class NPCBee : NPCBase, ISwarmable
         CheckTimers(dt);
         Think(dt);
     }
+
+    protected override void OnDestroy()
+    {
+        Pool.Remove(this);
+
+        base.OnDestroy();
+    }
+
+    #endregion
 
     private void CheckTimers(float dt)
     {
@@ -117,7 +128,6 @@ public class NPCBee : NPCBase, ISwarmable
         _harvestCooldownTimer.Update(dt);
     }
 
-    #endregion
 
     private void Think(float dt)
     {
@@ -367,4 +377,6 @@ public class NPCBee : NPCBase, ISwarmable
         transform.position = Vector2.MoveTowards(transform.position,position, CurrentSpeed() * dt);
     }
 #endregion
+
+    public static ProxPool<NPCBee> Pool = new ProxPool<NPCBee>();
 }

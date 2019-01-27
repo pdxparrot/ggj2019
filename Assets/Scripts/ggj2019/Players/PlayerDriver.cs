@@ -34,6 +34,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private DebugMenuNode _debugMenuNode;
 
+        protected override bool CanDrive => base.CanDrive && !GamePlayer.IsDead;
+
 #region Unity Lifecycle
         protected override void Awake()
         {
