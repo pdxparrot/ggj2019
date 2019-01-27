@@ -13,6 +13,8 @@ namespace pdxpartyparrot.ggj2019.Players
 {
     public sealed class Hive : PhysicsActor2D
     {
+        public static Hive Instance { get; private set; }
+
         [SerializeField] private int armorhealth;
 
         // [0 3]
@@ -43,7 +45,9 @@ namespace pdxpartyparrot.ggj2019.Players
         protected override void Awake() {
             base.Awake();
 
-            Pool.Add(this);
+            Instance = this;
+
+            //Pool.Add(this);
 
             _health = new List<int>();
             for(int i = 0; i < _armor.Count; ++i) {
@@ -52,7 +56,7 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
         private void Update() {
-            if(GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
+            if(!_initialized || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
                 return;
             }
 
@@ -63,10 +67,19 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
         protected override void OnDestroy() {
-            Pool.Remove(this);
+            Instance = null;
+
+            //Pool.Remove(this);
+
             base.OnDestroy();
         }
 #endregion
+
+        private bool _initialized;
+
+        public void Initialize() {
+            _initialized = true;
+        }
 
         public bool Collides(Actor actor, float distance = 0.0f) {
             Vector3 offset = actor.transform.position - transform.position;
@@ -205,10 +218,10 @@ namespace pdxpartyparrot.ggj2019.Players
             _beeSpawnTimer.Start(_beeSpawnCooldown);
         }
 
-        public static ProxPool<Hive> Pool = new ProxPool<Hive>();
+        //public static ProxPool<Hive> Pool = new ProxPool<Hive>();
 
         public static Hive Nearest(Vector3 pos, float dist = 1000000.0f) {
-            return Pool.Nearest(pos, dist) as Hive;
+            return Instance;//Pool.Nearest(pos, dist) as Hive;
         }
     }
 }

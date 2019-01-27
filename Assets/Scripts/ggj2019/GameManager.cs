@@ -7,6 +7,7 @@ using pdxpartyparrot.Game.State;
 
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
+using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.World;
 
 using UnityEngine;
@@ -58,6 +59,9 @@ namespace pdxpartyparrot.ggj2019
 
             IsGameOver = false;
             _gameStartTime = _gameEndTime = TimeManager.Instance.CurrentUnixMs;
+
+            NPCSpawner.Instance.Initialize();
+            Hive.Instance.Initialize();
         }
 
         //[Server]

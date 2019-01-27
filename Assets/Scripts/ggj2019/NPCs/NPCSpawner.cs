@@ -10,6 +10,8 @@ using pdxpartyparrot.ggj2019;
 
 public class NPCSpawner : MonoBehaviour
 {
+    public static NPCSpawner Instance { get; private set; }
+
     // Tunable params
 
     public enum NPCType {
@@ -64,14 +66,26 @@ public class NPCSpawner : MonoBehaviour
         }
     }
 
-    void Start() {
+    private bool _initialized;
+
+    void Awake() {
+        Instance = this;
+    }
+
+    void OnDestroy() {
+        Instance = null;
+    }
+
+    public void Initialize() {
         _waveTimer = new Timer();
         _spawnTimers = new List<Timer>();
         FirstWave();
+
+        _initialized = true;
     }
 
     void Update() {
-        if(GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
+        if(!_initialized || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
             return;
         }
 
