@@ -4894,7 +4894,7 @@ PrefabInstance:
     - target: {fileID: 4876333252009887020, guid: 95e7fc33cfc12394bb564b239e423dcc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4876333252009887020, guid: 95e7fc33cfc12394bb564b239e423dcc,
         type: 3}
@@ -5004,7 +5004,12 @@ PrefabInstance:
     - target: {fileID: 1511786485225394819, guid: 95e7fc33cfc12394bb564b239e423dcc,
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
-      value: 10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511786485225394819, guid: 95e7fc33cfc12394bb564b239e423dcc,
+        type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1511786485225394819, guid: 95e7fc33cfc12394bb564b239e423dcc,
         type: 3}
