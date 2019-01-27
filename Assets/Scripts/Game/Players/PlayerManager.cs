@@ -20,6 +20,8 @@ namespace pdxpartyparrot.Game.Players
 
         PlayerData PlayerData { get; }
 
+        int PlayerCount { get; }
+
         void Register(Actor player);
 
         void Unregister(Actor player);
@@ -40,6 +42,8 @@ namespace pdxpartyparrot.Game.Players
         private Actor _playerPrefab;
 
         private IPlayer PlayerPrefab => (IPlayer)_playerPrefab;
+
+        public int PlayerCount => ActorCount;
 
         private GameObject _playerContainer;
 

@@ -89,7 +89,7 @@ namespace pdxpartyparrot.ggj2019.Players
             return _gamepadListener.IsOurGamepad(ctx) ||
                 // ignore keyboard/mouse while the debug menu is open
                 // TODO: this probably doesn't handle multiple keyboards/mice
-                (!DebugMenuManager.Instance.Enabled && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));
+                (!DebugMenuManager.Instance.Enabled && PlayerManager.Instance.PlayerCount == 1 && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));
         }
 
 #region IPlayerActions

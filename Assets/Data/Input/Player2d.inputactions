@@ -106,7 +106,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/w",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "move up",
@@ -118,7 +118,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/s",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "move down",
@@ -130,7 +130,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/a",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "move left",
@@ -142,7 +142,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/d",
-                    "interactions": "",
+                    "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",
                     "action": "move right",
@@ -165,7 +165,67 @@
                 },
                 {
                     "name": "",
+                    "path": "<Keyboard>/space",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "gather",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "gather",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "context",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "context",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "context",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "PressAndRelease",
                     "processors": "",
                     "groups": "",

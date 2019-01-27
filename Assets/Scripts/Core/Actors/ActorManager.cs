@@ -10,6 +10,8 @@ namespace pdxpartyparrot.Core.Actors
 
         public IReadOnlyCollection<T> Actors => _actors;
 
+        public int ActorCount => _actors.Count;
+
         public void Register(T actor)
         {
             _actors.Add(actor);
