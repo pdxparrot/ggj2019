@@ -20,12 +20,19 @@ public class NPCEnemy : NPCBase
 #region Unity Lifecycle
     private void OnTriggerEnter2D(Collider2D other)
     {
+
+        if (_isDead) {
+            return;
+        }
+
         Player player = other.gameObject.GetComponent<Player>();
         if(null == player) {
             return;
         }
 
-        if(player.Damage(_damage)) {
+        Debug.Log(gameObject.name);
+
+        if (player.Damage(_damage)) {
             Kill();
         }
     }

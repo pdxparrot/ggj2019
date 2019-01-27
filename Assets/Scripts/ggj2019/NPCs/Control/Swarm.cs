@@ -38,7 +38,7 @@ public class Swarm : MonoBehaviour
     public int Kill(int amount)
     {
         int killed = 0;
-        for(int i=0; i<_iSwarmables.Count && killed <= amount; ++i) {
+        for(int i=0; i<_iSwarmables.Count && killed < amount; ++i) {
             _iSwarmables[i].Kill();
             killed++;
         }
