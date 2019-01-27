@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using pdxpartyparrot.ggj2019.Players;
+
 public class NPCWasp : NPCEnemy
 {
     [SerializeField] private float MaxVel;
@@ -20,6 +22,15 @@ public class NPCWasp : NPCEnemy
         _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
         transform.position += _velocity * Time.deltaTime;
 
-        // TODO damage the hive
+        var hive = Hive.Nearest(transform.position);
+        if(hive.Collides(transform.position)) {
+            hive.TakeDamage(transform.position);
+            Die();
+        }
+    }
+
+    void Die() {
+        // TODO effects
+        Destroy(gameObject, 0.01f);
     }
 }

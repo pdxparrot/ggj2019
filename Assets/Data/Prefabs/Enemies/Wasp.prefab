@@ -282,8 +282,8 @@ MonoBehaviour:
   _model: {fileID: 4158159683825376886}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
-  MaxVel: 10
-  Accel: 5
+  MaxVel: 4
+  Accel: 2
 --- !u!1001 &4717385043739543372
 PrefabInstance:
   m_ObjectHideFlags: 0
