@@ -32,8 +32,6 @@ public class NPCEnemy : NPCBase
 
         player.Damage(_damage);
 
-        // TODO: player score or something?
-
         Kill();
     }
 #endregion

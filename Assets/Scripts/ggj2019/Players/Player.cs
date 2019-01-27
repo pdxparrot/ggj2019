@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
+
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
@@ -65,19 +66,16 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void Damage(int amount)
         {
+            // TODO: off until we have more bees spawning
+            /*
             if (!_swarm.HasSwarm())
                 PlayerDeath();
 
-            int damageLeft = _swarm.kill(amount);
-
-            if (damageLeft > 0)
-            {
-                PlayerDeath();
-            }
-
+            _swarm.kill(amount);
+            */
         }
 
-        // Hacky
+
         private void PlayerDeath()
         {
             _isDead = true;
@@ -99,14 +97,11 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void DoContext()
         {
-            if (_swarm.HasSwarm())
-            {
-                // No more context
-                //_swarm.DoContext();
+            if(!_swarm.HasSwarm()) {
                 return;
             }
 
-            // No swarm so the player does the thing
+            _swarm.DoContext();
         }
 
         private void Respawn()

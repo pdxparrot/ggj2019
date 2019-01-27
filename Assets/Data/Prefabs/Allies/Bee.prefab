@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 5995247377756831436}
+  - component: {fileID: 7729479717326751915}
   m_Layer: 12
   m_Name: Bee
   m_TagString: Untagged
@@ -263,16 +264,32 @@ MonoBehaviour:
   _swarmSpeedModifier: 2
   _fullSPeedModifier: 0.5
   _offsetChangeTimer: {x: 0.2, y: 0.5}
-  _harvestDistance: 5
-  _attackDistance: 5
-  _repairCooldown: 10
+  _harvestDistance: 2
   _harvestTime: 10
+  _repairDistance: 2
+  _repairCooldown: 10
   _state: 0
   _targetSwarm: {fileID: 0}
   _targetHive: {fileID: 0}
   _targetEnemy: {fileID: 0}
   _targetFlower: {fileID: 0}
   _pollenCount: 0
+  _deathEffect: {fileID: 7729479717326751915}
+--- !u!114 &7729479717326751915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _audioSource: {fileID: 0}
 --- !u!1001 &5500608303440458347
 PrefabInstance:
   m_ObjectHideFlags: 0

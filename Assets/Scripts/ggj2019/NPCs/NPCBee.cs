@@ -5,16 +5,20 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game;
+using pdxpartyparrot.Game.Effects;
+using UnityEngine.Assertions;
 
 public class NPCBee : NPCBase, ISwarmable
 {
 
     private enum NPCBeeState
     {
-        Defend,
+        Idle,
         Follow,
+        PathToHarvest,
         Harvest,
         ReturnHome,
+        PathToRepair,
         Repair
     }
 
@@ -25,10 +29,10 @@ public class NPCBee : NPCBase, ISwarmable
     [ReadOnly]
     private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
 
-    [SerializeField] private float _harvestDistance = 5.0f;
-    [SerializeField] private float _attackDistance = 5.0f;
-    [SerializeField] private float _repairCooldown = 10.0f;
+    [SerializeField] private float _harvestDistance = 1.0f;
     [SerializeField] private float _harvestTime = 10.0f;
+    [SerializeField] private float _repairDistance = 1.0f;
+    [SerializeField] private float _repairCooldown = 10.0f;
 
     private readonly Timer _repairCooldownTimer = new Timer();
     private readonly Timer _harvestCooldownTimer = new Timer();
@@ -39,7 +43,7 @@ public class NPCBee : NPCBase, ISwarmable
 
     [SerializeField]
     [ReadOnly]
-    private NPCBeeState _state = NPCBeeState.Defend;
+    private NPCBeeState _state = NPCBeeState.Idle;
 
     [SerializeField]
     [ReadOnly]
@@ -68,6 +72,9 @@ public class NPCBee : NPCBase, ISwarmable
     [SerializeField]
     [ReadOnly]
     private int _pollenCount;
+
+    [SerializeField]
+    private EffectTrigger _deathEffect;
 
     #region Unity Life Cycle
 
@@ -121,11 +128,13 @@ public class NPCBee : NPCBase, ISwarmable
 
         switch(_state)
         {
-        case NPCBeeState.Defend:
-            Defend(dt);
+        case NPCBeeState.Idle:
             break;
         case NPCBeeState.Follow:
             Swarm(dt);
+            break;
+        case NPCBeeState.PathToHarvest:
+            PathToHarvest(dt);
             break;
         case NPCBeeState.Harvest:
             Harvest(dt);
@@ -133,42 +142,48 @@ public class NPCBee : NPCBase, ISwarmable
         case NPCBeeState.ReturnHome:
             ReturnHome(dt);
             break;
+        case NPCBeeState.PathToRepair:
+            PathToRepair(dt);
+            break;
         case NPCBeeState.Repair:
             Repair(dt);
             break;
         }
     }
 
-    public void DoContext()
+    public bool DoContext()
     {
-        _targetSwarm = null;
-        _targetHive = null;
-        _targetFlower = null;
-
         Vector2 position = transform.position;
 
         Hive hive = Hive.Nearest(position);
         NPCFlower flower = NPCFlower.Nearest(position);
 
-        if(hive != null && hive.Collides(transform.position)) {
+        if(hive != null && hive.Collides(Collider.bounds, _repairDistance)) {
+// TODO: leave our swarm?
+            _targetSwarm = null;
             _targetHive = hive;
-            _repairCooldownTimer.Start(_repairCooldown);
-            SetState(NPCBeeState.Repair);
-        } else if(flower != null && flower.Collides(transform.position, _harvestDistance)) {
+
+            SetState(NPCBeeState.PathToRepair);
+            return true;
+        } else if(flower != null && flower.Collides(Collider.bounds, _harvestDistance)) {
+// TODO: leave our swarm?
+            _targetSwarm = null;
             _targetFlower = flower;
-            if(flower.Collides(transform.position)) {
-                _harvestCooldownTimer.Start(_harvestTime);
-            }
-            SetState(NPCBeeState.Harvest);
-        } else {
-            SetState(NPCBeeState.Defend);
+
+            SetState(NPCBeeState.PathToHarvest);
+            return true;
+        /*} else {
+            SetState(NPCBeeState.Idle);*/
         }
+
+        return false;
     }
 
     public void Kill()
     {
-        //TODO play kill anim
-        Destroy(gameObject);
+        _deathEffect.Trigger(() => {
+            Destroy(gameObject);
+        });
     }
 
     public void JoinSwarm(Swarm swarm, float radius)
@@ -198,12 +213,6 @@ public class NPCBee : NPCBase, ISwarmable
         _state = state;
     }
 
-    private void AcquireEnemy()
-    {
-        NPCWasp wasp = NPCWasp.Nearest(transform.position);
-        NPCBeetle beetle = NPCBeetle.Nearest(transform.position);
-    }
-
     private float CurrentSpeed()
     {
         float modifier = 1.0f;
@@ -214,6 +223,18 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         return PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * modifier;
+    }
+
+    private bool AcquireFlower()
+    {
+        _targetFlower = NPCFlower.Nearest(transform.position);
+        return null != _targetFlower && _targetFlower.Collides(Collider.bounds, _harvestDistance);
+    }
+
+    private bool AcquireHive()
+    {
+        _targetHive = Hive.Nearest(transform.position);
+        return null != _targetHive;
     }
 
 #region the things they bee doing
@@ -229,22 +250,33 @@ public class NPCBee : NPCBase, ISwarmable
         MoveToTarget(dt, _targetSwarm.transform);
     }
 
+    private void PathToHarvest(float dt)
+    {
+        if(null == _targetFlower && !AcquireFlower()) {
+            Debug.LogError("target flower disappeared");
+            SetState(NPCBeeState.ReturnHome);
+            return;
+        }
+
+        if(_targetFlower.Collides(Collider.bounds)) {
+            _harvestCooldownTimer.Start(_harvestTime);
+            SetState(NPCBeeState.Harvest);
+            return;
+        }
+
+        MoveToTarget(dt, _targetFlower.transform);
+    }
+
     private void Harvest(float dt)
     {
         if(null == _targetFlower) {
-            _targetFlower = NPCFlower.Nearest(transform.position);
-            if(null == _targetFlower || !_targetFlower.Collides(transform.position, _harvestDistance)) {
-                Debug.LogError("target flower disappeared");
-                SetState(NPCBeeState.ReturnHome);
+            if(AcquireFlower()) {
+                SetState(NPCBeeState.PathToHarvest);
                 return;
             }
-        }
 
-        if(!_targetFlower.Collides(transform.position)) {
-            MoveToTarget(dt, _targetFlower.transform);
-            if(_targetFlower.Collides(transform.position)) {
-                _harvestCooldownTimer.Start(_harvestTime);
-            }
+            Debug.LogError("target flower disappeared");
+            SetState(NPCBeeState.ReturnHome);
             return;
         }
 
@@ -253,9 +285,8 @@ public class NPCBee : NPCBase, ISwarmable
         }
 
         _pollenCount = _targetFlower.Harvest();
-        if(_pollenCount < 1) {
-            Debug.LogError($"wtf I got {_pollenCount} pollen");
-        }
+        Assert.IsTrue(_pollenCount > 0);
+
         _targetFlower = null;
 
         Debug.Log($"harvested {_pollenCount} pollen");
@@ -264,53 +295,52 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void ReturnHome(float dt)
     {
-        if(null == _targetHive) {
-            _targetHive = Hive.Nearest(transform.position);
-            if(null == _targetHive) {
-                Debug.LogError("No hive to return to!");
-                SetState(NPCBeeState.Defend);
-                return;
-            }
+        if(null == _targetHive && !AcquireHive()) {
+            Debug.LogError("No hive to return to!");
+            SetState(NPCBeeState.Idle);
+            return;
         }
 
-        if(_targetHive.Collides(transform.position)) {
+        if(_targetHive.Collides(Collider.bounds)) {
             _targetHive.UnloadPollen(_pollenCount);
             _pollenCount = 0;
 
             _targetHive = null;
 
-            SetState(NPCBeeState.Defend);
+            SetState(NPCBeeState.Idle);
             return;
         }
 
         MoveToTarget(dt, _targetHive.transform);
     }
 
-    private void Defend(float dt)
+    private void PathToRepair(float dt)
     {
-        if(null == _targetEnemy) {
-            AcquireEnemy();
-            if(null== _targetEnemy) {
-                return;
-            }
+        if(null == _targetHive && !AcquireHive()) {
+            Debug.LogError("No hive to repair!");
+            SetState(NPCBeeState.Idle);
+            return;
         }
 
-        MoveToTarget(dt, _targetEnemy.transform);
-        if(_targetEnemy.IsDead) {
-            _targetEnemy = null;
+        if(_targetHive.Collides(Collider.bounds)) {
+            _repairCooldownTimer.Start(_repairCooldown);
+            SetState(NPCBeeState.Repair);
+            return;
         }
+
+        MoveToTarget(dt, _targetHive.transform);
     }
 
     private void Repair(float dt)
     {
         if(null == _targetHive) {
-            _targetHive = Hive.Nearest(transform.position);
-            if(null == _targetHive) {
-                Debug.LogError("No hive to repair!");
-                SetState(NPCBeeState.Defend);
+            if(AcquireHive()) {
+                SetState(NPCBeeState.PathToRepair);
                 return;
             }
-            SetState(NPCBeeState.ReturnHome);
+
+            Debug.LogError("No hive to repair!");
+            SetState(NPCBeeState.Idle);
             return;
         }
 

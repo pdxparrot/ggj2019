@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using pdxpartyparrot.ggj2019;
+﻿using pdxpartyparrot.ggj2019;
 using UnityEngine;
 
 using pdxpartyparrot.ggj2019.Players;
@@ -13,6 +11,7 @@ public class NPCWasp : NPCEnemy
    
     private Vector3 _accel;
     private Vector3 _velocity;
+    private bool _cooldown;
 
     private void Start() {
         Pool.Add(this);
@@ -31,27 +30,36 @@ public class NPCWasp : NPCEnemy
             return;
         }
 
+        // wait for physics to catch up
+        if(_cooldown) {
+            return;
+        }
+
         _velocity += _accel * Time.deltaTime;
         _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
         transform.position += _velocity * Time.deltaTime;
 
         var hive = Hive.Nearest(transform.position);
-        if(hive.Collides(transform.position)) {
+        if(hive.Collides(Collider.bounds)) {
             if(hive.TakeDamage(transform.position))
-                Die();
+                Kill();
             else
                 PushBack();
+        }
+    }
+
+    private void FixedUpdate() {
+        // this is hacky because PushBack() is a teleport
+        if(_cooldown) {
+            _cooldown = false;
         }
     }
 
     void PushBack() {
         transform.position -= _velocity.normalized * pushback;
         _velocity = new Vector3();
-    }
 
-    void Die() {
-        // TODO effects
-        Destroy(gameObject, 0.01f);
+        _cooldown = true;
     }
 
     public static ProxPool<NPCWasp> Pool = new ProxPool<NPCWasp>();

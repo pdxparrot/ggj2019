@@ -8,7 +8,7 @@ public interface ISwarmable
 
     void JoinSwarm(Swarm swarm, float radius);
 
-    void DoContext();
+    bool DoContext();
 
     void Kill();
 
