@@ -20,8 +20,6 @@ public class NPCFlower : NPCBase
     public bool HasPollen => Pollen > 0 && _hasPollen;
     private bool _hasPollen = false;
 
-    public bool IsDead { get; private set; }
-
     private static int _pollenTimerFrame;
     private static Timer _pollenTimer;
 
@@ -81,16 +79,11 @@ public class NPCFlower : NPCBase
             _pollenObj.SetActive(false);
 
             if(_pollen <= 0) {
-                Wither();
+                Kill();
             }
         }
 
         return result;
-    }
-
-    private void Wither() {
-        IsDead = true;
-        Destroy(gameObject, 0.1f);
     }
 
     public static ProxPool<NPCFlower> Pool = new ProxPool<NPCFlower>();

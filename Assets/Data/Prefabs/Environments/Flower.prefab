@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: beetle
+  _overridePrefab: {fileID: 0}
 --- !u!1 &2228405151768162015
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,6 +61,8 @@ GameObject:
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 5512433957614832504}
+  - component: {fileID: 7498956286358863322}
+  - component: {fileID: 6498468760859895621}
   m_Layer: 12
   m_Name: Flower
   m_TagString: Untagged
@@ -306,12 +309,46 @@ MonoBehaviour:
   _model: {fileID: 3500989833709476057}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
+  _isDead: 0
+  _spawnEffect: {fileID: 7498956286358863322}
+  _deathEffect: {fileID: 6498468760859895621}
+  _animation: {fileID: 0}
   _initialPollen: 5
   _pollenRate: 1
-  _pollenFirstTime: 5
-  _pollenDelayTime: 5
+  _pollenDelayMin: 1
+  _pollenDelayMax: 5
   _pollenObj: {fileID: 3803678262119560155}
   _pollen: 0
+--- !u!114 &7498956286358863322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _audioSource: {fileID: 0}
+--- !u!114 &6498468760859895621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _audioSource: {fileID: 0}
 --- !u!1001 &5212150432038961635
 PrefabInstance:
   m_ObjectHideFlags: 0
