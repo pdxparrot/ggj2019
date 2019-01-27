@@ -10,4 +10,6 @@ public interface ISwarmable
 
     void DoContext();
 
+    void Kill();
+
 }

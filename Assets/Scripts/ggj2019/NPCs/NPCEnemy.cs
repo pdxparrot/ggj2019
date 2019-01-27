@@ -9,6 +9,8 @@ public class NPCEnemy : NPCBase
     [SerializeField]
     private EffectTrigger _deathEffectTrigger;
 
+    [SerializeField] private int _damage = 1;
+
     [SerializeField]
     [ReadOnly]
     private bool _isDead;
@@ -22,6 +24,8 @@ public class NPCEnemy : NPCBase
         if(null == player) {
             return;
         }
+
+        player.Damage(_damage);
 
         // TODO: player score or something?
 

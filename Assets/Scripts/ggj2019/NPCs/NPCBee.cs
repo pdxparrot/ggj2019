@@ -161,6 +161,12 @@ public class NPCBee : NPCBase, ISwarmable
         }
     }
 
+    public void Kill()
+    {
+        //TODO play kill anim
+        Destroy(gameObject);
+    }
+
     public void JoinSwarm(Swarm swarm, float radius)
     {
         if(!CanJoinSwarm) {

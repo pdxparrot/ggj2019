@@ -1,3 +1,4 @@
+using DG.Tweening;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 
@@ -37,6 +38,26 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
 #region Actions
+
+        public void AddBeeToSwarm(NPCBee npcBee)
+        {
+            _swarm.Add(npcBee);
+        }
+
+
+        public void Damage(int amount)
+        {
+            _swarm.kill(amount);
+
+            if (!_swarm.HasSwarm())
+                PlayerDeath();
+        }
+
+        private void PlayerDeath()
+        {
+            Debug.Log("kill and respawn player");
+        }
+
         public void DoGather()
         {
             NPCBee npcBee = _interactables.GetBee();
@@ -48,7 +69,8 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             if (_swarm.HasSwarm())
             {
-                _swarm.DoContext();
+                // No more context
+                //_swarm.DoContext();
                 return;
             }
 

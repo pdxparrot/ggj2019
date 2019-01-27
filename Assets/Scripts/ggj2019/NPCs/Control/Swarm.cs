@@ -31,4 +31,26 @@ public class Swarm : MonoBehaviour
     {
         return (_iSwarmables.Count > 0);
     }
+
+    public void kill(int amount)
+    {
+
+        if (amount >= _iSwarmables.Count)
+        {
+            for (int i = 0; i < _iSwarmables.Count; i++)
+            {
+                _iSwarmables[i].Kill();
+            }
+            _iSwarmables.Clear();
+
+            return;
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            _iSwarmables[i].Kill();
+        }
+
+        _iSwarmables.RemoveRange(0,amount);
+    }
 }
