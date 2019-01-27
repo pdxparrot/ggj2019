@@ -547,6 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcea18d54cf375428d1b0a7b7019705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _swarmRadius: 1
   isPlayerSwarm: 1
 --- !u!1 &2830612309196927125
 GameObject:

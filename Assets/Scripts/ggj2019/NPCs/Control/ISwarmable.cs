@@ -7,5 +7,6 @@ public interface ISwarmable
     void PlayerSwarm();
     void SetTargetLocation(Vector3 location);
     void DoContext();
+    void SetSwarmRadius(float raidus);
 
 }

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Swarm : MonoBehaviour
 {
-
+    [SerializeField] private float _swarmRadius = 0f;
     [SerializeField] private bool isPlayerSwarm = false;
     private List<ISwarmable> _iSwarmables = new List<ISwarmable>();
+    private List<Vector3> _swarmOffset = new List<Vector3>();
 
 
     #region Unity Life Cycle
@@ -23,6 +24,8 @@ public class Swarm : MonoBehaviour
     {
         int len = _iSwarmables.Count;
 
+        
+
         for (int i = 0; i < len; i++)
         {
             _iSwarmables[i].SetTargetLocation(transform.position);
@@ -32,6 +35,9 @@ public class Swarm : MonoBehaviour
     public void Add(ISwarmable iSwarmable)
     {
         _iSwarmables.Add(iSwarmable);
+
+        iSwarmable.SetSwarmRadius(_swarmRadius);
+
         if(isPlayerSwarm)
             iSwarmable.PlayerSwarm();
     }
