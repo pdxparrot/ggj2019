@@ -1,0 +1,111 @@
+
+pink_flower.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 1
+  rotate: true
+  xy: 209, 161
+  size: 93, 294
+  orig: 93, 294
+  offset: 0, 0
+  index: -1
+Layer 2
+  rotate: false
+  xy: 741, 172
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1
+Layer 2 copy
+  rotate: true
+  xy: 814, 66
+  size: 104, 81
+  orig: 104, 81
+  offset: 0, 0
+  index: -1
+Layer 2 copy 2
+  rotate: true
+  xy: 610, 49
+  size: 114, 97
+  orig: 114, 97
+  offset: 0, 0
+  index: -1
+Layer 2 copy 3
+  rotate: true
+  xy: 512, 46
+  size: 117, 96
+  orig: 117, 96
+  offset: 0, 0
+  index: -1
+Layer 2 copy 4
+  rotate: true
+  xy: 410, 45
+  size: 114, 100
+  orig: 114, 100
+  offset: 0, 0
+  index: -1
+Layer 2 copy 5
+  rotate: false
+  xy: 624, 168
+  size: 115, 86
+  orig: 115, 86
+  offset: 0, 0
+  index: -1
+Layer 2 copy 6
+  rotate: false
+  xy: 505, 165
+  size: 117, 89
+  orig: 117, 89
+  offset: 0, 0
+  index: -1
+Layer 5 copy
+  rotate: true
+  xy: 897, 167
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: -1
+Layer 5 copy 2
+  rotate: false
+  xy: 310, 39
+  size: 98, 120
+  orig: 98, 120
+  offset: 0, 0
+  index: -1
+Layer 5 copy 3
+  rotate: false
+  xy: 209, 28
+  size: 99, 131
+  orig: 99, 131
+  offset: 0, 0
+  index: -1
+Layer 5 copy 4
+  rotate: true
+  xy: 814, 2
+  size: 62, 126
+  orig: 62, 126
+  offset: 0, 0
+  index: -1
+Layer 5 copy 5
+  rotate: true
+  xy: 709, 2
+  size: 56, 94
+  orig: 56, 94
+  offset: 0, 0
+  index: -1
+Layer 5 copy 6
+  rotate: false
+  xy: 709, 60
+  size: 103, 106
+  orig: 103, 106
+  offset: 0, 0
+  index: -1
+glow
+  rotate: true
+  xy: 2, 9
+  size: 245, 205
+  orig: 245, 205
+  offset: 0, 0
+  index: -1

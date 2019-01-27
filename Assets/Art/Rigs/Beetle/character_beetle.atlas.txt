@@ -1,0 +1,76 @@
+
+character_beetle.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: false
+  xy: 368, 138
+  size: 287, 324
+  orig: 287, 324
+  offset: 0, 0
+  index: -1
+Layer 1
+  rotate: false
+  xy: 2, 116
+  size: 364, 346
+  orig: 364, 346
+  offset: 0, 0
+  index: -1
+Leg over
+  rotate: false
+  xy: 146, 21
+  size: 51, 93
+  orig: 51, 93
+  offset: 0, 0
+  index: -1
+Legs
+  rotate: false
+  xy: 727, 385
+  size: 78, 77
+  orig: 78, 77
+  offset: 0, 0
+  index: -1
+Legs copy
+  rotate: false
+  xy: 657, 362
+  size: 68, 100
+  orig: 68, 100
+  offset: 0, 0
+  index: -1
+Legs copy 2
+  rotate: false
+  xy: 657, 264
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: -1
+Legs copy 3
+  rotate: false
+  xy: 81, 18
+  size: 63, 96
+  orig: 63, 96
+  offset: 0, 0
+  index: -1
+Legs copy 4
+  rotate: false
+  xy: 2, 2
+  size: 77, 112
+  orig: 77, 112
+  offset: 0, 0
+  index: -1
+Mandibles
+  rotate: false
+  xy: 807, 403
+  size: 70, 59
+  orig: 70, 59
+  offset: 0, 0
+  index: -1
+Mandibles copy
+  rotate: false
+  xy: 199, 48
+  size: 55, 66
+  orig: 55, 66
+  offset: 0, 0
+  index: -1
