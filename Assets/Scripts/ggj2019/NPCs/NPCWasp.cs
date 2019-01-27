@@ -1,8 +1,10 @@
-﻿using pdxpartyparrot.Core;
+﻿using System;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.ggj2019;
 using UnityEngine;
 
 using pdxpartyparrot.ggj2019.Players;
+using Spine;
 using Spine.Unity;
 
 public class NPCWasp : NPCEnemy
@@ -40,22 +42,30 @@ public class NPCWasp : NPCEnemy
         _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
         transform.position += _velocity * Time.deltaTime;
 
-        SetFlightAnimation();
-        _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
+        if(!_isAttacking) {
+            SetFlightAnimation();
+            _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
+        }
 
         var hive = Hive.Nearest(transform.position);
         if(hive.Collides(this)) {
-            if(hive.TakeDamage(transform.position))
+            // option A
+            if(hive.TakeDamage(transform.position)) {
                 Kill();
-            else
+            } else {
+                SetAttackAnimation();
                 PushBack();
+            }
+
+            // option B
+            //Attack(hive);
         }
     }
 
 
-
     // start true to force the animation the first time
     private bool _isFlying = true;
+    private bool _isAttacking = false;
 
     private void SetHoverAnimation()
     {
@@ -76,6 +86,27 @@ public class NPCWasp : NPCEnemy
         //SetAnimation("wasp_attack", true);
         SetAnimation("wasp_hover", true);
         _isFlying = true;
+    }
+
+    private void SetAttackAnimation(Action callback=null)
+    {
+        _isAttacking = true;
+        TrackEntry track = SetAnimation(1, "wasp_attack", false);
+        track.End += x => {
+            _isAttacking = false;
+            callback?.Invoke();
+        };
+    }
+
+    private void Attack(Hive hive) {
+        _velocity = Vector3.zero;
+        SetAttackAnimation(() => {
+            if(hive.TakeDamage(transform.position)) {
+                Kill();
+            } else {
+                PushBack();
+            }
+        });
     }
 
     void PushBack() {

@@ -1,6 +1,7 @@
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 
@@ -65,9 +66,14 @@ public class NPCBase : PhysicsActor2D
         return Vector3.Magnitude(offset) < r + distance;
     }
 
-    protected void SetAnimation(string animationName, bool loop)
+    protected TrackEntry SetAnimation(string animationName, bool loop)
     {
-        _animation.AnimationState.SetAnimation(0, animationName, loop);
+        return SetAnimation(0, animationName, loop);
+    }
+
+    protected TrackEntry SetAnimation(int track, string animationName, bool loop)
+    {
+        return _animation.AnimationState.SetAnimation(track, animationName, loop);
     }
 
 }
