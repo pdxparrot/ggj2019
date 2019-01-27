@@ -1,4 +1,5 @@
 using pdxpartyparrot.Core.Actors;
+using Spine.Unity;
 using UnityEngine;
 
 public class NPCBase : PhysicsActor2D
@@ -15,6 +16,14 @@ public class NPCBase : PhysicsActor2D
         Vector3 offset = other.transform.position - transform.position;
         float r = other.Radius + Radius;
         return Vector3.Magnitude(offset) < r + distance;
+    }
+
+    [SerializeField]
+    protected SkeletonAnimation _animation;
+
+    protected void SetAnimation(string animationName, bool loop)
+    {
+        _animation.AnimationState.SetAnimation(0, animationName, loop);
     }
 
 }

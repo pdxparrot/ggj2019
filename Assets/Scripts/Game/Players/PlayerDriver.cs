@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.State;

@@ -1,6 +1,3 @@
-using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.ggj2019.Data;
-
 namespace pdxpartyparrot.ggj2019.Players
 {
     public sealed class PlayerController : Game.Players.PlayerController2D

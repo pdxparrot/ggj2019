@@ -18,6 +18,8 @@ public class NPCBeetle : NPCEnemy
         Pool.Add(this);
         Flower = NPCFlower.Nearest(transform.position);
         Pollen = 0;
+
+        _harvestCooldownTimer.Start(_harvestCooldown);
     }
 
     protected override void OnDestroy() {

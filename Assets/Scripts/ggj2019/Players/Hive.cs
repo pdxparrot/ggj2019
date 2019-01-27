@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.World;
+using Spine.Unity;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
@@ -79,6 +80,14 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void Initialize() {
             _initialized = true;
+        }
+
+        [SerializeField]
+        private SkeletonAnimation _animation;
+
+        private void SetAnimation(string animationName, bool loop)
+        {
+            _animation.AnimationState.SetAnimation(0, animationName, loop);
         }
 
         public bool Collides(Actor actor, float distance = 0.0f) {

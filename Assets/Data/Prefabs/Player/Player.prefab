@@ -506,6 +506,8 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  _animation: {fileID: 5692518975079882939}
+  _gamepadListener: {fileID: 0}
 --- !u!114 &3020218383355416943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,3 +739,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9078082320007288478}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5692518975079882939 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3676116098279241253, guid: 0c47529b7b6329b478c567dcef05a8b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 9078082320007288478}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
