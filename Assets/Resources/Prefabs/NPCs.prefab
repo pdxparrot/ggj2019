@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6638694403834172426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0012293123, y: 1.2187936, z: -0.0703125}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   - Prefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
       type: 3}
     Tag: beetle
-  - Prefab: {fileID: 3669868280244915196, guid: 85f0e295d0379524ba0ac462ca0cfefc,
+  - Prefab: {fileID: 1375792178672933023, guid: 85f0e295d0379524ba0ac462ca0cfefc,
       type: 3}
     Tag: flower
   Waves:

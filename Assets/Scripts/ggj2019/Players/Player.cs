@@ -3,6 +3,7 @@ using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
@@ -28,15 +29,9 @@ namespace pdxpartyparrot.ggj2019.Players
             PlayerViewer = GameManager.Instance.Viewer;
         }
 
-        protected override void InitializePlayerUI()
+        public void CollectResource()
         {
-Debug.LogWarning($"TODO: Initialize UI for player {Id}");
-/*
-            if(null != UIManager.Instance.PlayerUI) {
-                UIManager.Instance.PlayerUI.PlayerHUD.ShowInfoText();
-            }
-*/
-
+            Debug.LogWarning("got a resource!");
         }
 
 #region Actions

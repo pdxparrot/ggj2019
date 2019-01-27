@@ -117,6 +117,4 @@ public class NPCSpawner : MonoBehaviour
             _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
         }
     }
-
-
 }
