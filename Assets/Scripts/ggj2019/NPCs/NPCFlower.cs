@@ -1,33 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using pdxpartyparrot.Core.Util;
 using UnityEngine;
 
 public class NPCFlower : NPCBase
 {
-    private static int kRate = 1;
-    private static int kInitialPollen = 10;
+    [SerializeField]
+    private int _initialPollen = 10;
 
-    public int Pollen { get; private set; }
+    [SerializeField]
+    private int _pollenRate = 1;
 
-    public bool HasPollen() {
-        return Pollen > 0;
-    }
+    [SerializeField]
+    [ReadOnly]
+    private int _pollen;
 
-    public int Harvest() {
-        int result = 0;
-        if(Pollen > 0) {
-            result = Mathf.Min(Pollen, kRate);
-            Pollen -= result;
+    public int Pollen => _pollen;
 
-            if(Pollen == 0)
-                Wither();
-        }
+    public bool HasPollen => Pollen > 0;
 
-        return result;
-    }
+    public bool IsDead { get; private set; }
 
-    private void Wither() {
-        // TODO death anim
+#region Unity Lifecycle
+    protected override void Awake() {
+        base.Awake();
+
+        _pollen = _initialPollen;
     }
 
     private void Start() {
@@ -39,8 +35,21 @@ public class NPCFlower : NPCBase
 
         base.OnDestroy();
     }
+#endregion
 
-    private void Update() {
+    public int Harvest() {
+        int result =  Mathf.Min(_pollen, _pollenRate);
+        _pollen -= result;
+        if(_pollen <= 0) {
+            Wither();
+        }
+
+        return result;
+    }
+
+    private void Wither() {
+        IsDead = true;
+        Destroy(gameObject, 0.1f);
     }
 
     public static ProxPool<NPCFlower> Pool = new ProxPool<NPCFlower>();

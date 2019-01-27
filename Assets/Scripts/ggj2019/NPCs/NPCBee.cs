@@ -28,12 +28,7 @@ public class NPCBee : NPCBase, ISwarmable
     [SerializeField] private float _repairCooldown = 10.0f;
     [SerializeField] private float _harvestTime = 10.0f;
 
-    [SerializeField]
-    [ReadOnly]
     private readonly Timer _repairCooldownTimer = new Timer();
-
-    [SerializeField]
-    [ReadOnly]
     private readonly Timer _harvestCooldownTimer = new Timer();
 
     private float _offsetRadius;
@@ -149,13 +144,15 @@ public class NPCBee : NPCBase, ISwarmable
         NPCFlower flower = NPCFlower.Nearest(position);
 
         if(hive != null && hive.Collides(transform.position)) {
-            SetState(NPCBeeState.Repair);
             _targetHive = hive;
             _repairCooldownTimer.Start(_repairCooldown);
+            SetState(NPCBeeState.Repair);
         } else if(flower != null && flower.Collides(transform.position, _harvestDistance)) {
-            SetState(NPCBeeState.Harvest);
             _targetFlower = flower;
-            _harvestCooldownTimer.Start(_harvestTime);
+            if(flower.Collides(transform.position)) {
+                _harvestCooldownTimer.Start(_harvestTime);
+            }
+            SetState(NPCBeeState.Harvest);
         } else {
             SetState(NPCBeeState.Defend);
         }
@@ -222,8 +219,19 @@ public class NPCBee : NPCBase, ISwarmable
     private void Harvest(float dt)
     {
         if(null == _targetFlower) {
-            Debug.LogWarning("target flower disappeared");
-            SetState(NPCBeeState.ReturnHome);
+            _targetFlower = NPCFlower.Nearest(transform.position);
+            if(null == _targetFlower || !_targetFlower.Collides(transform.position, _harvestDistance)) {
+                Debug.LogError("target flower disappeared");
+                SetState(NPCBeeState.ReturnHome);
+                return;
+            }
+        }
+
+        if(!_targetFlower.Collides(transform.position)) {
+            MoveToTarget(dt, _targetFlower.transform);
+            if(_targetFlower.Collides(transform.position)) {
+                _harvestCooldownTimer.Start(_harvestTime);
+            }
             return;
         }
 
@@ -289,6 +297,8 @@ public class NPCBee : NPCBase, ISwarmable
                 SetState(NPCBeeState.Defend);
                 return;
             }
+            SetState(NPCBeeState.ReturnHome);
+            return;
         }
 
         if(_repairCooldownTimer.IsRunning) {

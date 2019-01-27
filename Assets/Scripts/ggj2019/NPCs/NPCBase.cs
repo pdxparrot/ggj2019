@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Actors;
 using UnityEngine;
 
 public class NPCBase : PhysicsActor2D
