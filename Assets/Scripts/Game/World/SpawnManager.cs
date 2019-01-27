@@ -12,10 +12,52 @@ namespace pdxpartyparrot.Game.World
 {
     public class SpawnManager : SingletonBehavior<SpawnManager>
     {
+        private sealed class SpawnPointSet
+        {
+            public List<SpawnPoint> SpawnPoints { get; } = new List<SpawnPoint>();
+
+            private int _nextRoundRobinIndex;
+
+            public void SeedRoundRobin()
+            {
+                _nextRoundRobinIndex = PartyParrotManager.Instance.Random.Next(SpawnPoints.Count);
+            }
+
+            public SpawnPoint GetSpawnPoint(SpawnData.SpawnMethod spawnMethod)
+            {
+                if(SpawnPoints.Count < 1) {
+                    return null;
+                }
+
+                // just in case
+                if(_nextRoundRobinIndex >= SpawnPoints.Count) {
+                    AdvanceRoundRobin();
+                }
+
+                switch(spawnMethod)
+                {
+                case SpawnData.SpawnMethod.RoundRobin:
+                    SpawnPoint spawnPoint = SpawnPoints[_nextRoundRobinIndex];
+                    AdvanceRoundRobin();
+                    return spawnPoint;
+                case SpawnData.SpawnMethod.Random:
+                    return PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
+                default:
+                    Debug.LogWarning($"Unsupported spawn method {spawnMethod}, using Random");
+                    return PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
+                }
+            }
+
+            private void AdvanceRoundRobin()
+            {
+                _nextRoundRobinIndex = (_nextRoundRobinIndex + 1) % SpawnPoints.Count;
+            }
+        }
+
         [SerializeField]
         private SpawnData _spawnData;
 
-        private readonly Dictionary<string, HashSet<SpawnPoint>> _spawnPoints = new Dictionary<string, HashSet<SpawnPoint>>();
+        private readonly Dictionary<string, SpawnPointSet> _spawnPoints = new Dictionary<string, SpawnPointSet>();
 
 #region Unity Lifecycle
         private void Awake()
@@ -29,7 +71,7 @@ namespace pdxpartyparrot.Game.World
         {
             Debug.Log($"Registering spawnpoint {spawnPoint.name} of type {spawnPoint.Tag}");
 
-            _spawnPoints.GetOrAdd(spawnPoint.Tag).Add(spawnPoint);
+            _spawnPoints.GetOrAdd(spawnPoint.Tag).SpawnPoints.Add(spawnPoint);
         }
 
         public virtual void UnregisterSpawnPoint(SpawnPoint spawnPoint)
@@ -37,10 +79,18 @@ namespace pdxpartyparrot.Game.World
             //Debug.Log($"Unregistering spawnpoint {spawnPoint.name}");
 
             if(_spawnPoints.TryGetValue(spawnPoint.Tag, out var spawnPoints)) {
-                spawnPoints.Remove(spawnPoint);
+                spawnPoints.SpawnPoints.Remove(spawnPoint);
             }
         }
 #endregion
+
+        public void Initialize()
+        {
+            Debug.Log("Seeding spawn points...");
+            foreach(var kvp in _spawnPoints) {
+                kvp.Value.SeedRoundRobin();
+            }
+        }
 
         [CanBeNull]
         public SpawnPoint GetSpawnPoint(string tag)
@@ -51,15 +101,7 @@ namespace pdxpartyparrot.Game.World
             }
 
             var spawnPointType = _spawnData.GetType(tag);
-            switch(spawnPointType.SpawnMethod)
-            {
-            case SpawnData.SpawnMethod.RoundRobin:
-                Debug.LogError("RoundRobin spawning should not be random");
-                return PartyParrotManager.Instance.Random.GetRandomEntry(spawnPoints);
-            case SpawnData.SpawnMethod.Random:
-            default:
-                return PartyParrotManager.Instance.Random.GetRandomEntry(spawnPoints);
-            }
+            return spawnPoints.GetSpawnPoint(spawnPointType.SpawnMethod);
         }
 
         [CanBeNull]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using pdxpartyparrot.Core;
 using UnityEngine;
 
 using pdxpartyparrot.Game.World;
@@ -54,8 +55,6 @@ public class NPCSpawner : MonoBehaviour
     private Timer _waveTimer;
     private List<Timer> _spawnTimers;
 
-    private readonly System.Random random = new System.Random();
-
     // The current wave
     public SpawnWave Wave {
         get {
@@ -99,7 +98,7 @@ public class NPCSpawner : MonoBehaviour
             var grp = Wave.SpawnGroups[i];
 
             _spawnTimers.Add(new Timer());
-            _spawnTimers[i].Start(random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+            _spawnTimers[i].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
         }
     }
 
@@ -108,14 +107,14 @@ public class NPCSpawner : MonoBehaviour
         var grp = Wave.SpawnGroups[grpidx];
         var npc = NPCTypes[(int)grp.Type];
 
-        int ct = random.Next(grp.Count.Min, grp.Count.Max);
+        int ct = PartyParrotManager.Instance.Random.Next(grp.Count.Min, grp.Count.Max);
 
         var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
         if(spawnpt) {
             var actor = Instantiate(npc.Prefab);
             spawnpt.Spawn(actor);
 
-            _spawnTimers[grpidx].Start(random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+            _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
         }
     }
 

@@ -7,6 +7,7 @@ using pdxpartyparrot.Game.State;
 
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
+using pdxpartyparrot.Game.World;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -48,6 +49,8 @@ namespace pdxpartyparrot.ggj2019
         public void StartGame()
         {
             Assert.IsTrue(NetworkServer.active);
+
+            SpawnManager.Instance.Initialize();
 
             IsGameOver = false;
         }
