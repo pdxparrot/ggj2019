@@ -31,6 +31,8 @@ public class PollenCollectable: MonoBehaviour
 
     private Vector3 _startPont = new Vector3();
 
+    private Hive _hive;
+
     void Start()
     {
         _startPont = transform.position;
@@ -41,6 +43,15 @@ public class PollenCollectable: MonoBehaviour
     {
         if (PartyParrotManager.Instance.IsPaused)
             return;
+
+        if (_isCollected)
+        {
+            if(!_particleSystem.isPlaying)
+                Destroy(gameObject);
+
+            GoToHive();
+            return;
+        }
 
         if (FollowPlayer())
         {
@@ -53,6 +64,11 @@ public class PollenCollectable: MonoBehaviour
         {
             Destroy(gameObject, 0.1f);
         }
+    }
+
+    private void GoToHive()
+    {
+        transform.position = Vector3.Lerp(transform.position, _hive.Position, 10f * Time.deltaTime);
     }
 
     private bool FollowPlayer()
@@ -114,6 +130,8 @@ public class PollenCollectable: MonoBehaviour
     private void Collect()
     {
         _isCollected = true;
-        Destroy(gameObject, 0.1f);
+        _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+        _hive = Hive.Nearest(transform.position);
     }
 }
