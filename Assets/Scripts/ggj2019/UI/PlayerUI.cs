@@ -8,6 +8,12 @@ namespace pdxpartyparrot.ggj2019.UI
     public sealed class PlayerUI : Game.UI.PlayerUI
     {
         [SerializeField]
+        private GameObject _introTextObject;
+
+        [SerializeField]
+        private float _introTextTime = 2.5f;
+
+        [SerializeField]
         private GameObject _deathText;
 
         [SerializeField]
@@ -26,6 +32,7 @@ namespace pdxpartyparrot.ggj2019.UI
         private float _waveTextTime = 2.5f;
 
         private readonly Timer _waveTextTimer = new Timer();
+        private readonly Timer _introTextTimer = new Timer();
 
 #region Unity Lifecycle
         private void Update()
@@ -33,6 +40,7 @@ namespace pdxpartyparrot.ggj2019.UI
             float dt = Time.deltaTime;
 
             _waveTextTimer.Update(dt);
+            _introTextTimer.Update(dt);
         }
 #endregion
 
@@ -43,6 +51,11 @@ namespace pdxpartyparrot.ggj2019.UI
             ShowDeathText(false);
             ShowGameOver(false);
             _waveTextObject.SetActive(false);
+
+            _introTextObject.SetActive(true);
+            _introTextTimer.Start(_introTextTime, () => {
+                _introTextObject.SetActive(false);
+            });
         }
 
         public void ShowDeathText(bool show)
