@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 1154953431259382900}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 715d198187a90c2419ea3b89c670a62b, type: 3}
   _audioSource: {fileID: 0}
 --- !u!114 &2225282234619250759
 MonoBehaviour:
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 5630198584293978313}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 5cbbab2d222b3d24ba2b31a3dbc71576, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1001 &4003636345367791783
 PrefabInstance:

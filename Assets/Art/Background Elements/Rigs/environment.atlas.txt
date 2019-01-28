@@ -4,11 +4,25 @@ size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Stage_BG_FlowerBack01
+Layer 137
+  rotate: false
+  xy: 2, 934
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+flowers
   rotate: false
   xy: 2, 2
-  size: 1920, 1080
-  orig: 1920, 1080
+  size: 1922, 447
+  orig: 1922, 447
+  offset: 0, 0
+  index: -1
+grass2
+  rotate: false
+  xy: 2, 451
+  size: 1922, 481
+  orig: 1922, 481
   offset: 0, 0
   index: -1
 
@@ -17,49 +31,31 @@ size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Stage_BG_FlowerBack02
+gras
   rotate: false
-  xy: 2, 2
-  size: 1920, 1080
-  orig: 1920, 1080
+  xy: 2, 1126
+  size: 1922, 436
+  orig: 1922, 436
   offset: 0, 0
   index: -1
-
-environment3.png
-size: 2048,2048
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-Stage_BG_FlowerBack03
+grass
   rotate: false
-  xy: 2, 2
-  size: 1920, 1080
-  orig: 1920, 1080
+  xy: 2, 127
+  size: 1922, 404
+  orig: 1922, 404
   offset: 0, 0
   index: -1
-
-environment4.png
-size: 2048,2048
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-Stage_BG_Light
+grass fg
   rotate: false
   xy: 2, 2
-  size: 1920, 1080
-  orig: 1920, 1080
+  size: 1922, 123
+  orig: 1922, 123
   offset: 0, 0
   index: -1
-
-environment5.png
-size: 2048,2048
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-Stage_Foreground
+leaves
   rotate: false
-  xy: 2, 2
-  size: 1920, 1080
-  orig: 1920, 1080
+  xy: 2, 533
+  size: 1755, 591
+  orig: 1755, 591
   offset: 0, 0
   index: -1
