@@ -33,9 +33,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public override bool IsLocalActor => true;
 
-        public override void OnSpawn() { }
-        public override void OnReSpawn() { }
-
         [SerializeField] private int _maxBees = 5;
         [SerializeField] private float _beeSpawnCooldown = 10.0f;
         private readonly Timer _beeSpawnTimer = new Timer();

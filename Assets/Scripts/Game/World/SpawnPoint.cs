@@ -65,14 +65,14 @@ namespace pdxpartyparrot.Game.World
             _actor = actor;
             InitActor(actor);
 
-            actor.OnSpawn();
+            actor.OnSpawn(gameObject);
         }
 
         public virtual void ReSpawn(Actor actor)
         {
             InitActor(actor);
 
-            actor.OnReSpawn();
+            actor.OnReSpawn(gameObject);
         }
 
         public bool Occupied {

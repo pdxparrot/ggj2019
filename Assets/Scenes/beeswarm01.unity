@@ -394,6 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
+  _overridePrefab: {fileID: 0}
 --- !u!1 &344495192
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 378401999}
   - component: {fileID: 378402000}
+  - component: {fileID: 378402001}
   m_Layer: 0
   m_Name: WaspSpawnL
   m_TagString: Untagged
@@ -474,6 +476,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
+  _overridePrefab: {fileID: 0}
+--- !u!114 &378402001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378401998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {x: -1.708158, y: 0.94838405, z: 0}
+  - {x: 0.42087078, y: -2.439836, z: 0}
+  - {x: 4.1507587, y: 2.4404037, z: 0}
+  - {x: 6.5594473, y: -0.7539463, z: 0}
+  modes: 0000000000000000
+  loop: 0
 --- !u!1 &451378638
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1 &463400814
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1 &521854128
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1 &623842579
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1 &713809708
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +878,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
+--- !u!1 &914239552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 914239554}
+  - component: {fileID: 914239553}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &914239553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914239552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de704adff2624950bd81cd63054f12a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {x: -1.115756, y: 6.6185207, z: 0}
+  - {x: 2, y: 4.9910154, z: 0}
+  - {x: 3, y: 8.752361, z: 0}
+  - {x: 6.1338444, y: 6.347269, z: 0}
+  - {x: 5, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
+  - {x: 7, y: 0, z: 0}
+--- !u!4 &914239554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914239552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2631649, y: 1.1506822, z: -0.5684606}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1022844022
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1001 &1052057259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1368,6 +1451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
+  _overridePrefab: {fileID: 0}
 --- !u!1 &1204699727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,6 +1496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
+  _overridePrefab: {fileID: 0}
 --- !u!1 &1221399879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1 &1337937342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
+  _overridePrefab: {fileID: 0}
 --- !u!1 &1916299261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,6 +1816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
 --- !u!1 &1928557266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,6 +1940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
+  _overridePrefab: {fileID: 0}
 --- !u!1 &2098474199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,3 +1985,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: flower
+  _overridePrefab: {fileID: 0}
