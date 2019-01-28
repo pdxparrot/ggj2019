@@ -27,6 +27,10 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField] private float _topRow;
         [SerializeField] private float _bottomRow;
 
+        [SerializeField] private EffectTrigger _endGameExplosion;
+        [SerializeField] private EffectTrigger _endGameExplosionBig;
+        [SerializeField] private GameObject _hiveBackground;
+
         private List<int> _health;
 
         public override float Height => Collider.bounds.size.y / 2.0f;
@@ -140,7 +144,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 }
             }
 
-            if(!armorLeft) {
+            if(!armorLeft)
+            {
+                EndAnimation();
                 GameManager.Instance.EndGame();
             }
 
@@ -166,6 +172,18 @@ namespace pdxpartyparrot.ggj2019.Players
             _armor[armoridx].GetComponent<EffectTrigger>().Trigger(
                 () => _armor[armoridx].SetActive(false)
             );
+        }
+
+        private void EndAnimation()
+        {
+            _endGameExplosion.Trigger(EndExplosion);
+            transform.DOShakePosition(5f, 0.3f, 20, 130f);
+        }
+
+        private void EndExplosion()
+        {
+            _hiveBackground.gameObject.SetActive(false);
+            _endGameExplosionBig.Trigger();
         }
 
         public bool TakeDamage(int armoridx, bool recurse = true) {
