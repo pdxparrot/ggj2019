@@ -19,6 +19,7 @@ public class ProxPool<T> where T : MonoBehaviour {
         _objects.Remove(obj);
     }
 
+    // TODO: make a collection extension
     public T Nearest(Vector3 pos, float maxdist = 100000000) {
         int best = -1;
         float bestT = maxdist;
@@ -34,6 +35,7 @@ public class ProxPool<T> where T : MonoBehaviour {
         return (best >= 0) ? _objects[best] : null;
     }
 
+    // TODO: make a collection extension
     public T Random() {
         int i = PartyParrotManager.Instance.Random.Next(_objects.Count);
         return _objects[i];
