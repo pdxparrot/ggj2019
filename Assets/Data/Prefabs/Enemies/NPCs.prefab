@@ -65,8 +65,8 @@ MonoBehaviour:
       Once: 0
     - Type: 1
       Delay:
-        Min: 6
-        Max: 10
+        Min: 3
+        Max: 5
       Count:
         Min: 1
         Max: 1

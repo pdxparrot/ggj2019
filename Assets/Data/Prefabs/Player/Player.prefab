@@ -574,7 +574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 6992623913396463535}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 2d39580d2db849f4a908741ff4667d7e, type: 3}
   _audioSource: {fileID: 0}
 --- !u!114 &1047306618912229679
 MonoBehaviour:
@@ -942,6 +942,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841291066489231948, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.547
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841291066489231948, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841291066489231948, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841291066489231948, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841291066489231948, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.004
       objectReference: {fileID: 0}
     - target: {fileID: 7239398792381993766, guid: 0c47529b7b6329b478c567dcef05a8b0,
         type: 3}
