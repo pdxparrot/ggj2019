@@ -8,6 +8,7 @@ using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.Game.World;
 
 using UnityEngine;
@@ -31,6 +32,12 @@ namespace pdxpartyparrot.ggj2019
         [SerializeField]
         [ReadOnly]
         private long _gameEndTime;
+
+        [SerializeField]
+        [ReadOnly]
+        private int _currentWave;
+
+        public int CurrentWave => _currentWave;
 
         public int Score => (int)(_gameEndTime - _gameStartTime) / 1000;
 
@@ -59,8 +66,11 @@ namespace pdxpartyparrot.ggj2019
 
             IsGameOver = false;
             _gameStartTime = _gameEndTime = TimeManager.Instance.CurrentUnixMs;
+            _currentWave = 0;
 
             NPCSpawner.Instance.Initialize();
+            NPCSpawner.Instance.WaveStartEvent += OnWaveStarted;
+
             Hive.Instance.Initialize();
         }
 
@@ -81,6 +91,12 @@ namespace pdxpartyparrot.ggj2019
                 Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
                 Viewer.transform.position = GameGameData.ViewerPosition;
             }
+        }
+
+        private void OnWaveStarted()
+        {
+            _currentWave++;
+            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowWaveText(_currentWave);
         }
     }
 }
