@@ -2,13 +2,14 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
-
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
     [RequireComponent(typeof(Swarm))]
+    [RequireComponent(typeof(SpineSkinSwapper))]
     public sealed class Player : Player2D
     {
         public PlayerController GamePlayerController => (PlayerController)PlayerController;
@@ -18,6 +19,7 @@ namespace pdxpartyparrot.ggj2019.Players
         public override float Radius => GamePlayerController.Collider.bounds.size.x / 2.0f;
 
         [SerializeField] private float _harvestRadius;
+
         [SerializeField]
         private Interactables _interactables;
 
@@ -40,6 +42,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private Swarm _swarm;
 
+        private SpineSkinSwapper _skinSwapper;
+
         private int _pollen;
         public bool HasPollen { get { return _pollen > 0; } }
 
@@ -49,11 +53,12 @@ namespace pdxpartyparrot.ggj2019.Players
             base.Awake();
 
             _swarm = GetComponent<Swarm>();
+            _skinSwapper = GetComponent<SpineSkinSwapper>();
 
             Assert.IsTrue(PlayerController is PlayerController);
         }
 
-        protected void Update()
+        private void Update()
         {
             if(!HasPollen) {
                 var flower = NPCFlower.Nearest(transform.position, _harvestRadius);
@@ -71,7 +76,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
             _deathTimer.Update(dt);
         }
-
         #endregion
 
         protected override void InitializeViewer()
@@ -79,8 +83,12 @@ namespace pdxpartyparrot.ggj2019.Players
             PlayerViewer = GameManager.Instance.Viewer;
         }
 
-#region Actions
+        protected override void InitializeModel()
+        {
+            _skinSwapper.SetSkin(NetworkPlayer.playerControllerId);
+        }
 
+#region Actions
         public void AddPollen(int amt)
         {
             _pollen += amt;
