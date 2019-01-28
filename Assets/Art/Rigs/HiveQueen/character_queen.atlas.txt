@@ -1,0 +1,97 @@
+
+character_queen.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 17 copy
+  rotate: false
+  xy: 274, 86
+  size: 182, 189
+  orig: 182, 189
+  offset: 0, 0
+  index: -1
+Group 17 copy 8
+  rotate: false
+  xy: 602, 329
+  size: 147, 98
+  orig: 147, 98
+  offset: 0, 0
+  index: -1
+Group 2 copy
+  rotate: false
+  xy: 2, 55
+  size: 270, 220
+  orig: 270, 220
+  offset: 0, 0
+  index: -1
+Layer 17 copy 2
+  rotate: true
+  xy: 1917, 874
+  size: 58, 40
+  orig: 58, 40
+  offset: 0, 0
+  index: -1
+Layer 17 copy 3
+  rotate: false
+  xy: 751, 386
+  size: 58, 41
+  orig: 58, 41
+  offset: 0, 0
+  index: -1
+Layer 17 copy 4
+  rotate: false
+  xy: 2, 2
+  size: 53, 51
+  orig: 53, 51
+  offset: 0, 0
+  index: -1
+Layer 17 copy 5
+  rotate: false
+  xy: 458, 219
+  size: 46, 56
+  orig: 46, 56
+  offset: 0, 0
+  index: -1
+Layer 17 copy 6
+  rotate: false
+  xy: 1917, 934
+  size: 54, 51
+  orig: 54, 51
+  offset: 0, 0
+  index: -1
+Layer 17 copy 7
+  rotate: true
+  xy: 602, 280
+  size: 47, 55
+  orig: 47, 55
+  offset: 0, 0
+  index: -1
+Layer 188
+  rotate: false
+  xy: 2, 277
+  size: 598, 708
+  orig: 598, 708
+  offset: 0, 0
+  index: -1
+glow
+  rotate: false
+  xy: 1063, 435
+  size: 435, 550
+  orig: 435, 550
+  offset: 0, 0
+  index: -1
+glow2
+  rotate: false
+  xy: 602, 429
+  size: 459, 556
+  orig: 459, 556
+  offset: 0, 0
+  index: -1
+queen
+  rotate: false
+  xy: 1500, 467
+  size: 415, 518
+  orig: 415, 518
+  offset: 0, 0
+  index: -1
