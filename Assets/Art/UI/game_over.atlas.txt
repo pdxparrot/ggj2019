@@ -1,0 +1,62 @@
+
+game_over.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a
+  rotate: true
+  xy: 626, 138
+  size: 116, 148
+  orig: 116, 148
+  offset: 0, 0
+  index: -1
+e
+  rotate: true
+  xy: 776, 151
+  size: 103, 147
+  orig: 103, 147
+  offset: 0, 0
+  index: -1
+e2
+  rotate: false
+  xy: 776, 2
+  size: 103, 147
+  orig: 103, 147
+  offset: 0, 0
+  index: -1
+g
+  rotate: true
+  xy: 178, 128
+  size: 126, 148
+  orig: 126, 148
+  offset: 0, 0
+  index: -1
+m
+  rotate: false
+  xy: 2, 108
+  size: 174, 146
+  orig: 174, 146
+  offset: 0, 0
+  index: -1
+o
+  rotate: true
+  xy: 328, 128
+  size: 126, 148
+  orig: 126, 148
+  offset: 0, 0
+  index: -1
+r
+  rotate: true
+  xy: 478, 131
+  size: 123, 146
+  orig: 123, 146
+  offset: 0, 0
+  index: -1
+v
+  rotate: true
+  xy: 2, 3
+  size: 103, 148
+  orig: 103, 148
+  offset: 0, 0
+  index: -1
