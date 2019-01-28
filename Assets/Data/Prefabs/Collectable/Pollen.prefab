@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1623889003402342926}
   - component: {fileID: 6957075860274087112}
   - component: {fileID: 6248351965066697453}
+  - component: {fileID: 6009020748860504964}
+  - component: {fileID: 8986564420569625324}
   m_Layer: 17
   m_Name: Pollen
   m_TagString: Untagged
@@ -65,7 +67,39 @@ MonoBehaviour:
   _sideSpeed: 3
   _upwardSpeed: 1.5
   _particleSystem: {fileID: 7202681780061667075}
+  _pickupEffect: {fileID: 6009020748860504964}
+  _collectEffect: {fileID: 8986564420569625324}
   _height: 4
+--- !u!114 &6009020748860504964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4478823037114562459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 9f5ddc2368b4bd6449daa006b7a5db27, type: 3}
+  _audioSource: {fileID: 0}
+--- !u!114 &8986564420569625324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4478823037114562459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 240539017358dc44996c17b065af2d44, type: 3}
+  _audioSource: {fileID: 0}
 --- !u!1001 &1802346918974191056
 PrefabInstance:
   m_ObjectHideFlags: 0

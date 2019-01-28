@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3673602363583183421}
   - component: {fileID: 4776182971955245096}
   - component: {fileID: 8597469290013358255}
+  - component: {fileID: 5796502178962319337}
   m_Layer: 15
   m_Name: Wasp
   m_TagString: Untagged
@@ -274,6 +275,7 @@ MonoBehaviour:
   Accel: 4
   pushback: 0.5
   pushbackvel: -2
+  _attackEffect: {fileID: 5796502178962319337}
 --- !u!114 &4776182971955245096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +305,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vfx: {fileID: 8332997807283128432}
   _audioClip: {fileID: 8300000, guid: 0f051caee005e124fbbc834e056dc611, type: 3}
+  _audioSource: {fileID: 0}
+--- !u!114 &5796502178962319337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vfx: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 77063d6866eb92949a08b54e793280c1, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1001 &2397445644286337174
 PrefabInstance:

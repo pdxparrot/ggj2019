@@ -4,6 +4,7 @@ using pdxpartyparrot.ggj2019;
 using UnityEngine;
 
 using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.Game.Effects;
 using Spine;
 using Spine.Unity;
 
@@ -21,6 +22,9 @@ public class NPCWasp : NPCEnemy
     private float _splineVel;
     private float _splinePos;
     private BezierSpline _spline;
+
+    [SerializeField]
+    private EffectTrigger _attackEffect;
 
     private void Start() {
         Pool.Add(this);
@@ -139,6 +143,7 @@ public class NPCWasp : NPCEnemy
                 PushBack();
             }
         });
+        _attackEffect.Trigger();
     }
 
     void PushBack() {

@@ -1,5 +1,6 @@
 using pdxpartyparrot.Core;
 using pdxpartyparrot.ggj2019.Players;
+using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 using UnityEngine;
 
@@ -18,6 +19,12 @@ public class PollenCollectable: MonoBehaviour
 
     [SerializeField]
     private ParticleSystem _particleSystem;
+
+    [SerializeField]
+    private EffectTrigger _pickupEffect;
+
+    [SerializeField]
+    private EffectTrigger _collectEffect;
 
     [SerializeField] public float _height = 4f;
 
@@ -125,6 +132,7 @@ public class PollenCollectable: MonoBehaviour
         followPlayer = player;
 
         player.AddPollen(_pollen);
+        _pickupEffect.Trigger();
     }
 
     private void Collect()
@@ -133,5 +141,9 @@ public class PollenCollectable: MonoBehaviour
         _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 
         _hive = Hive.Nearest(transform.position);
+
+        _collectEffect.Trigger(() => {
+            Destroy(gameObject);
+        });
     }
 }

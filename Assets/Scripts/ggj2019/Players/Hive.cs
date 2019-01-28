@@ -29,6 +29,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [SerializeField] private EffectTrigger _endGameExplosion;
         [SerializeField] private EffectTrigger _endGameExplosionBig;
+        [SerializeField] private EffectTrigger _damageEffect;
         [SerializeField] private GameObject _hiveBackground;
 
         private List<int> _health;
@@ -137,6 +138,8 @@ namespace pdxpartyparrot.ggj2019.Players
                             (pos.y > _bottomRow) ? 1 : 2);
             bool ret = TakeDamage(armoridx);
 
+            _damageEffect.Trigger();
+
             bool armorLeft = false;
             for(int i=0; i<_health.Count; ++i) {
                 if(_health[i] > 0) {
@@ -186,7 +189,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _endGameExplosionBig.Trigger();
         }
 
-        public bool TakeDamage(int armoridx, bool recurse = true) {
+        private bool TakeDamage(int armoridx, bool recurse = true) {
             if(_health[armoridx] > 0) {
                 --_health[armoridx];
 
