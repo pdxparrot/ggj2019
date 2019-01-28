@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 using System.Collections.Generic;
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.World;
 using Spine.Unity;
 
@@ -31,9 +32,6 @@ namespace pdxpartyparrot.ggj2019.Players
         public override float Radius => Collider.bounds.size.x / 2.0f;
 
         public override bool IsLocalActor => true;
-
-        public override void OnSpawn() { }
-        public override void OnReSpawn() { }
 
         [SerializeField] private int _maxBees = 5;
         [SerializeField] private float _beeSpawnCooldown = 10.0f;
@@ -152,6 +150,16 @@ namespace pdxpartyparrot.ggj2019.Players
             float f = (float)_health[armoridx] / (float)armorhealth;
             Color c = new Color(1, f, f);
             _armor[armoridx].GetComponent<SpriteRenderer>().color = c;
+
+            _armor[armoridx].GetComponent<EffectTrigger>().Trigger();
+        }
+
+        public void DestroyArmor(int armoridx)
+        {
+            _armor[armoridx].GetComponent<SpriteRenderer>().enabled = false;
+            _armor[armoridx].GetComponent<EffectTrigger>().Trigger(
+                () => _armor[armoridx].SetActive(false)
+            );
         }
 
         public bool TakeDamage(int armoridx, bool recurse = true) {
@@ -159,7 +167,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 --_health[armoridx];
 
                 if(_health[armoridx] == 0) {
-                    _armor[armoridx].SetActive(false);
+                    DestroyArmor(armoridx);
                     return true;
                 }
                 else {

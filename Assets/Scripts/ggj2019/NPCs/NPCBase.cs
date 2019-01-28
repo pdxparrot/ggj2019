@@ -31,7 +31,8 @@ public class NPCBase : PhysicsActor2D
     [SerializeField]
     protected SkeletonAnimation _animation;
 
-    public override void OnSpawn() {
+    public override void OnSpawn(GameObject spawnpoint) {
+        base.OnSpawn(spawnpoint);
         IsDead = false;
 
         if(null != _spawnEffect) {
@@ -39,7 +40,8 @@ public class NPCBase : PhysicsActor2D
         }
     }
 
-    public override void OnReSpawn() {
+    public override void OnReSpawn(GameObject spawnpoint) {
+        base.OnReSpawn(spawnpoint);
         IsDead = false;
 
         if(null != _spawnEffect) {
