@@ -80,7 +80,7 @@ namespace pdxpartyparrot.ggj2019.UI
 
         public void ShowWaveText(int wave)
         {
-            _waveText.text = $"Wave {wave} incoming! Get Ready!";
+            _waveText.text = $"Wave {wave} Incoming! Get Ready!";
             _waveTextObject.SetActive(true);
             _waveTextTimer.Start(_waveTextTime, () => {
                 _waveTextObject.SetActive(false);
