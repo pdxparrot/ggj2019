@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: pink_flower_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: b710e7890ac92464fb83ced1cbd872d3, type: 2}
+  - {fileID: 11400000, guid: 7dc106208c45efe4cb94f95f684324b9, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 3b7bd551f815abf48ac18367becc2b9c, type: 3}
   skeletonDataModifiers: []

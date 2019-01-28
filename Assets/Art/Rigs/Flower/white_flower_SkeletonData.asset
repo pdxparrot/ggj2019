@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: white_flower_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: b710e7890ac92464fb83ced1cbd872d3, type: 2}
+  - {fileID: 11400000, guid: ea81d56e90390324e9e117ba5e820b21, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: bbbd21b1690f4584e8bc0fb8fc91ddab, type: 3}
   skeletonDataModifiers: []

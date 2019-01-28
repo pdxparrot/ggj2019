@@ -42,23 +42,14 @@ public class NPCWasp : NPCEnemy
             _velocity += _accel * Time.deltaTime;
             _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
             transform.position += _velocity * Time.deltaTime;
-        //if(!_isAttacking) {
+
             SetFlightAnimation();
             _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
-        }
 
-        var hive = Hive.Nearest(transform.position);
-        if(hive.Collides(this)) {
-            // option A
-            /*if(hive.TakeDamage(transform.position)) {
-                Kill();
-            } else {
-                SetAttackAnimation();
-                PushBack();
-            }*/
-
-            // option B
-            Attack(hive);
+            var hive = Hive.Nearest(transform.position);
+            if(hive.Collides(this)) {
+                Attack(hive);
+            }
         }
     }
 
@@ -83,7 +74,6 @@ public class NPCWasp : NPCEnemy
             return;
         }
 
-        //SetAnimation("wasp_attack", true);
         SetAnimation("wasp_hover", true);
         _isFlying = true;
     }

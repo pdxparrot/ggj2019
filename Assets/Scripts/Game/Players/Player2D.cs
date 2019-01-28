@@ -101,12 +101,17 @@ namespace pdxpartyparrot.Game.Players
             NetworkPlayer.NetworkTransform.syncRotationAxis = NetworkTransform.AxisSyncMode.AxisZ;
 
             InitializeViewer();
+            InitializeModel();
             InitializePlayerUI();
 
             return true;
         }
 
         protected abstract void InitializeViewer();
+
+        protected virtual void InitializeModel()
+        {
+        }
 
         protected virtual void InitializePlayerUI()
         {
