@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.State;
 using UnityEngine;
@@ -42,6 +43,10 @@ public class PollenCollectable: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (PartyParrotManager.Instance.IsPaused)
+            return;
+
         if (_isCollected)
         {
 
