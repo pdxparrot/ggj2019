@@ -7,8 +7,8 @@ public class NPCFlower : NPCBase
 {
     [SerializeField] private int _initialPollen = 5;
     [SerializeField] private int _pollenRate = 1;
-    [SerializeField] private float _pollenDelayMin = 1;
-    [SerializeField] private float _pollenDelayMax = 5;
+    private static float _pollenDelayMin = 3;
+    private static float _pollenDelayMax = 6;
 
     [SerializeField] private GameObject _floatingPollenObj;
 
