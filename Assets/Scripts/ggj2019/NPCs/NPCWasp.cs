@@ -59,17 +59,22 @@ public class NPCWasp : NPCEnemy
 
 	            float t = _splinePos / _splineLen;
 
-	            transform.position = _spline.GetPoint(t);
-	        }
+	            Vector3 targetLocation = _spline.GetPoint(t);
+
+                SetFacingDirection(targetLocation.x - transform.position.x);
+
+                transform.position = targetLocation;
+            }
 	        else {
 	            _velocity += _accel * Time.deltaTime;
 	            _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
 
 	            transform.position += _velocity * Time.deltaTime;
+
+                SetFacingDirection(_velocity.x);
 	        }
 
             SetFlightAnimation();
-            _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
 
             var hive = Hive.Nearest(transform.position);
             if(hive.Collides(this)) {
@@ -78,6 +83,14 @@ public class NPCWasp : NPCEnemy
         }
     }
 
+    private void SetFacingDirection(float xDirection)
+    {
+
+        if(xDirection < 0.02f && xDirection > -0.02f)
+            return;
+
+        _animation.Skeleton.ScaleX = xDirection < 0 ? 1.0f : -1.0f;
+    }
 
     // start true to force the animation the first time
     private bool _isFlying = true;
