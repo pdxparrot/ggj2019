@@ -30,6 +30,9 @@ namespace pdxpartyparrot.Core.Loading
         [SerializeField]
         private LoadingScreen _loadingScreen;
 
+        [SerializeField]
+        private GameObject _background;
+
         [Space(10)]
 
 #region Manager Prefabs
@@ -144,6 +147,7 @@ namespace pdxpartyparrot.Core.Loading
         public void ShowLoadingScreen(bool show)
         {
             _loadingScreen.gameObject.SetActive(show);
+            _background.gameObject.SetActive(show);
             UpdateLoadingScreen(0.0f, "Loading...");
         }
 

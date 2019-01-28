@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loadingScreen: {fileID: 281384241}
+  _background: {fileID: 438709068}
   _engineManagerPrefab: {fileID: 404857996654783440, guid: a9911b81118be8c46b9f51589968258b,
     type: 3}
   _debugMenuManagerPrefab: {fileID: 7812979617479560367, guid: 01f244cfab2135044bcd17bba0ad8dbc,
