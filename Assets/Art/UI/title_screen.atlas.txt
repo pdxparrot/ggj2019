@@ -1,0 +1,152 @@
+
+title_screen.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BG
+  rotate: false
+  xy: 2, 964
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 1589, 375
+  size: 287, 324
+  orig: 287, 324
+  offset: 0, 0
+  index: -1
+HIVE
+  rotate: false
+  xy: 2, 141
+  size: 530, 821
+  orig: 530, 821
+  offset: 0, 0
+  index: -1
+Layer 2
+  rotate: true
+  xy: 1589, 182
+  size: 191, 242
+  orig: 191, 242
+  offset: 0, 0
+  index: -1
+Layer 3
+  rotate: true
+  xy: 534, 28
+  size: 197, 221
+  orig: 197, 221
+  offset: 0, 0
+  index: -1
+Layer 4
+  rotate: false
+  xy: 1808, 734
+  size: 177, 228
+  orig: 177, 228
+  offset: 0, 0
+  index: -1
+Layer 5
+  rotate: false
+  xy: 757, 44
+  size: 184, 181
+  orig: 184, 181
+  offset: 0, 0
+  index: -1
+Layer 6
+  rotate: false
+  xy: 943, 2
+  size: 184, 178
+  orig: 184, 178
+  offset: 0, 0
+  index: -1
+Layer 7
+  rotate: false
+  xy: 534, 227
+  size: 525, 735
+  orig: 525, 735
+  offset: 0, 0
+  index: -1
+Leg over
+  rotate: true
+  xy: 152, 88
+  size: 51, 93
+  orig: 51, 93
+  offset: 0, 0
+  index: -1
+Legs
+  rotate: false
+  xy: 72, 62
+  size: 78, 77
+  orig: 78, 77
+  offset: 0, 0
+  index: -1
+Legs copy
+  rotate: false
+  xy: 2, 39
+  size: 68, 100
+  orig: 68, 100
+  offset: 0, 0
+  index: -1
+Legs copy 2
+  rotate: false
+  xy: 1926, 1738
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: -1
+Legs copy 3
+  rotate: false
+  xy: 1926, 1836
+  size: 63, 96
+  orig: 63, 96
+  offset: 0, 0
+  index: -1
+Legs copy 4
+  rotate: false
+  xy: 1926, 1934
+  size: 77, 112
+  orig: 77, 112
+  offset: 0, 0
+  index: -1
+Mandibles
+  rotate: true
+  xy: 1926, 1666
+  size: 70, 59
+  orig: 70, 59
+  offset: 0, 0
+  index: -1
+Mandibles copy
+  rotate: false
+  xy: 1991, 1866
+  size: 55, 66
+  orig: 55, 66
+  offset: 0, 0
+  index: -1
+Titlescreen Wasp
+  rotate: true
+  xy: 1061, 226
+  size: 473, 526
+  orig: 473, 526
+  offset: 0, 0
+  index: -1
+Words
+  rotate: false
+  xy: 1061, 701
+  size: 745, 261
+  orig: 745, 261
+  offset: 0, 0
+  index: -1
+
+title_screen2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+CD
+  rotate: false
+  xy: 2, 2
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
