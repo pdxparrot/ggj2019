@@ -5,6 +5,7 @@ using pdxpartyparrot.Core.Actors;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
+using DG.Tweening;
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
@@ -150,13 +151,18 @@ namespace pdxpartyparrot.ggj2019.Players
             float f = (float)_health[armoridx] / (float)armorhealth;
             Color c = new Color(1, f, f);
             _armor[armoridx].GetComponent<SpriteRenderer>().color = c;
-
             _armor[armoridx].GetComponent<EffectTrigger>().Trigger();
+            _armor[armoridx].transform.DOShakePosition(.3f,  0.3f, 20, 130f);
         }
 
         public void DestroyArmor(int armoridx)
         {
-            _armor[armoridx].GetComponent<SpriteRenderer>().enabled = false;
+            _armor[armoridx].transform.DOShakePosition(
+                .1f,
+                0.3f,
+                20,
+                130f)
+                .OnComplete(() => _armor[armoridx].GetComponent<SpriteRenderer>().enabled = false);
             _armor[armoridx].GetComponent<EffectTrigger>().Trigger(
                 () => _armor[armoridx].SetActive(false)
             );
