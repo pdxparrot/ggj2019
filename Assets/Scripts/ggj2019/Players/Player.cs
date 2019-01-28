@@ -60,23 +60,24 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Update()
         {
-            if(!HasPollen) {
+            /*if(!HasPollen) {
                 var flower = NPCFlower.Nearest(transform.position, _harvestRadius);
                 if(flower && flower.HasPollen)
                     _pollen += flower.Harvest();
             }
-            else {
+            else {*/
+            if(HasPollen) {
                 var hive = Hive.Nearest(transform.position);
                 if(hive && hive.Collides(this)) {
-                    hive.UnloadPollen(this, _pollen);
-                    _pollen = 0;
+                    _pollen -= hive.UnloadPollen(this, _pollen);
                 }
             }
+
             float dt = Time.deltaTime;
 
             _deathTimer.Update(dt);
         }
-        #endregion
+#endregion
 
         protected override void InitializeViewer()
         {

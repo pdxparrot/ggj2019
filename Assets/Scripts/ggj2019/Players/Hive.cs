@@ -218,14 +218,16 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
-        public void UnloadPollen(Player player, int amount) {
+        public int UnloadPollen(Player player, int amount) {
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
             if(spawnPoint != null) {
                 var bee = spawnPoint.SpawnPrefab(_beePrefab) as NPCBee;
 
-                if(player)
+                if(null != player) {
                     player.AddBeeToSwarm(bee);
+                }
             }
+            return amount;
         }
 
         private void SpawnBee() {
