@@ -78,11 +78,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_Pollen
       objectReference: {fileID: 0}
-    - target: {fileID: 279243522998151631, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 17
-      objectReference: {fileID: 0}
     - target: {fileID: 7969813972310383032, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -137,11 +132,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4694761269766376195, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2fd1b7e3f66a234a99bef69a70c8c8c, type: 3}
