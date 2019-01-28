@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 837187201}
   - component: {fileID: 837187200}
   - component: {fileID: 837187199}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Spine GameObject (title_screen)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
