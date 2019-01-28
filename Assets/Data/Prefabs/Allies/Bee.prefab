@@ -268,7 +268,7 @@ MonoBehaviour:
   _isDead: 0
   _spawnEffect: {fileID: 8350075182339467353}
   _deathEffect: {fileID: 7729479717326751915}
-  _animation: {fileID: 9174437200403006542}
+  _animation: {fileID: 9804525864504541}
   _swarmSpeedModifier: 2
   _fullSPeedModifier: 0.5
   _offsetChangeTimer: {x: 0.2, y: 0.5}
@@ -409,6 +409,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7239398792381993766, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524890726371595192, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c47529b7b6329b478c567dcef05a8b0, type: 3}
 --- !u!1 &3789025492648389457 stripped
@@ -423,9 +433,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5500608303440458347}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9174437200403006542 stripped
+--- !u!114 &9804525864504541 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3676116098279241253, guid: 0c47529b7b6329b478c567dcef05a8b0,
+  m_CorrespondingSourceObject: {fileID: 5509242863000075958, guid: 0c47529b7b6329b478c567dcef05a8b0,
     type: 3}
   m_PrefabInstance: {fileID: 5500608303440458347}
   m_PrefabAsset: {fileID: 0}

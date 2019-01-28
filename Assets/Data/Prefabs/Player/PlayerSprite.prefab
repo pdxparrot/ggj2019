@@ -118,6 +118,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2298223938313805688, guid: 614b7f0eb133840419fbf1f622c17d15,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1429612297
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298223938313805688, guid: 614b7f0eb133840419fbf1f622c17d15,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298223938313805688, guid: 614b7f0eb133840419fbf1f622c17d15,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2250805412645139062, guid: 614b7f0eb133840419fbf1f622c17d15,
+        type: 3}
+      propertyPath: initialSkinName
+      value: bee_player1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 614b7f0eb133840419fbf1f622c17d15, type: 3}
 --- !u!4 &6841291066489231948 stripped
