@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 5571051148337363523}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 185fa5ad9f3d3b54bab8b7970c3ec84f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &632337977283312251
 GameObject:
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 3355809230056157093}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 185fa5ad9f3d3b54bab8b7970c3ec84f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &3467636367418968146
 GameObject:
@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 3818534332249740061}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: ee1d7a43d7a08114d9face7ceb112f2e, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &3489171878057554316
 GameObject:
@@ -787,7 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 3367721646265546694}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 185fa5ad9f3d3b54bab8b7970c3ec84f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &4159639176214855324
 GameObject:
@@ -879,7 +879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 6981376398154372617}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 29dc39de02f81d4469d19370a1ad38b6, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &4500317771182797438
 GameObject:
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 6578155080161124534}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 185fa5ad9f3d3b54bab8b7970c3ec84f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &6069241942767778305
 GameObject:
@@ -1375,7 +1375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 5778114360444995991}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 185fa5ad9f3d3b54bab8b7970c3ec84f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &7953955895417485326
 GameObject:
@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 5589728160016221350}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 185fa5ad9f3d3b54bab8b7970c3ec84f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &8407762271665810371
 GameObject:

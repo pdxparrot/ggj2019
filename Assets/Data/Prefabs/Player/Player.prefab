@@ -589,7 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vfx: {fileID: 2544777392152197799}
-  _audioClip: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 29dc39de02f81d4469d19370a1ad38b6, type: 3}
   _audioSource: {fileID: 0}
 --- !u!114 &4724521880141845474
 MonoBehaviour:
