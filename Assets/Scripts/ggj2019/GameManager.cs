@@ -32,7 +32,7 @@ namespace pdxpartyparrot.ggj2019
         [ReadOnly]
         private long _gameEndTime;
 
-        public long Score => _gameEndTime - _gameStartTime;
+        public int Score => (int)(_gameEndTime - _gameStartTime);
 
 #region Unity Lifecycle
         private void Awake()

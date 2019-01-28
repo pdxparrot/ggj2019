@@ -16,7 +16,7 @@ public class NPCBeetle : NPCEnemy
 
     private void Start() {
         Pool.Add(this);
-        Flower = NPCFlower.Nearest(transform.position);
+        Flower = NPCFlower.Nearest(transform.position); // TODO: we really should only pick ready flowers, oh well
         Pollen = 0;
 
         _harvestCooldownTimer.Start(_harvestCooldown);

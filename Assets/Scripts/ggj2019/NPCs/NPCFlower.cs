@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core;
+using Spine;
 using UnityEngine;
 
 public class NPCFlower : NPCBase
@@ -23,12 +24,12 @@ public class NPCFlower : NPCBase
     private bool _hasPollen = false;
 
 
-    public bool IsDead { get; private set; }
+    public bool IsReady { get; private set; }
 
     public bool CanSpawnPollen = true;
 
     private static int _pollenTimerFrame;
-    private static Timer _pollenTimer;
+    private static Timer _pollenTimer = new Timer();
 
 #region Unity Lifecycle
     protected override void Awake() {
@@ -40,15 +41,12 @@ public class NPCFlower : NPCBase
     private void Start() {
         Pool.Add(this);
 
-        if(_pollenTimer == null) {
-            _pollenTimer = new Timer();
-            _pollenTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_pollenDelayMin, _pollenDelayMax));
-        }
+        _pollenTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_pollenDelayMin, _pollenDelayMax));
     }
 
     private void Update() {
 
-        if(!CanSpawnPollen)
+        if(!CanSpawnPollen || !IsReady)
             return;
 
         if(_pollenTimerFrame != Time.frameCount) {
@@ -58,7 +56,7 @@ public class NPCFlower : NPCBase
                 for(int i = 0; i < 10; ++i) {
                     // -- give it to a random flower
                     var f = Pool.Random() as NPCFlower;
-                    if(f && !f._hasPollen) {
+                    if(f && f.IsReady && !f._hasPollen) {
                         f._hasPollen = true;
                         break;
                     }
@@ -81,12 +79,34 @@ public class NPCFlower : NPCBase
         }
     }
 
+
     protected override void OnDestroy() {
         Pool.Remove(this);
 
         base.OnDestroy();
     }
 #endregion
+
+    public override void OnSpawn(GameObject spawnpoint) {
+        base.OnSpawn(spawnpoint);
+
+        IsReady = false;
+
+        TrackEntry track = SetAnimation(0, "flower_grow", false);
+        track.Complete += x => {
+            IsReady = true;
+            SetAnimation(0, "flower_idle", true);
+        };
+    }
+
+    public override void Kill() {
+        IsDead = true;
+
+        TrackEntry track = SetAnimation(0, "flower_death", false);
+        track.Complete += x => {
+            base.Kill();
+        };
+    }
 
     public int Harvest(bool beetle = false) {
         int result = 0;

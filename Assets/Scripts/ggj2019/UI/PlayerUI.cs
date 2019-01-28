@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TMPro;
+
+using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.UI
 {
@@ -6,6 +8,9 @@ namespace pdxpartyparrot.ggj2019.UI
     {
         [SerializeField]
         private GameObject _deathText;
+
+        [SerializeField]
+        private TextMeshProUGUI _endGameScoreText;
 
         [SerializeField]
         private GameObject _gameOverText;
@@ -26,6 +31,11 @@ namespace pdxpartyparrot.ggj2019.UI
         public void ShowGameOver(bool show)
         {
             _gameOverText.SetActive(show);
+        }
+
+        public void SetScoreText(int score)
+        {
+            _endGameScoreText.text = $"Your Score: {score}";
         }
     }
 }

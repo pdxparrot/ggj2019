@@ -309,10 +309,11 @@ MonoBehaviour:
   _model: {fileID: 3500989833709476057}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
+  Spawnpoint: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 7498956286358863322}
   _deathEffect: {fileID: 6498468760859895621}
-  _animation: {fileID: 0}
+  _animation: {fileID: 1925811353281421835}
   _initialPollen: 5
   _pollenRate: 1
   _pollenDelayMin: 1
@@ -447,10 +448,22 @@ PrefabInstance:
     - target: {fileID: 2216995337453490066, guid: 0d12de39921965b4a9969e89e2da0197,
         type: 3}
       propertyPath: _animationName
-      value: flower_idle
+      value: flower_grow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d12de39921965b4a9969e89e2da0197, type: 3}
+--- !u!114 &1925811353281421835 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2216995337453490066, guid: 0d12de39921965b4a9969e89e2da0197,
+    type: 3}
+  m_PrefabInstance: {fileID: 323558490416885145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5212150432038961635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -552,6 +565,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353785323651305715, guid: d282384c03319654597a03e0b4cb0f6a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d282384c03319654597a03e0b4cb0f6a, type: 3}
