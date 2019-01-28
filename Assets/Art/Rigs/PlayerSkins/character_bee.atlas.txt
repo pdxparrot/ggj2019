@@ -1,0 +1,251 @@
+
+character_bee.png
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: false
+  xy: 785, 154
+  size: 95, 86
+  orig: 95, 86
+  offset: 0, 0
+  index: -1
+Body2
+  rotate: false
+  xy: 1076, 154
+  size: 95, 86
+  orig: 95, 86
+  offset: 0, 0
+  index: -1
+Body3
+  rotate: false
+  xy: 882, 154
+  size: 95, 86
+  orig: 95, 86
+  offset: 0, 0
+  index: -1
+Body4
+  rotate: false
+  xy: 979, 154
+  size: 95, 86
+  orig: 95, 86
+  offset: 0, 0
+  index: -1
+Butt
+  rotate: false
+  xy: 2, 125
+  size: 114, 115
+  orig: 114, 115
+  offset: 0, 0
+  index: -1
+Butt2
+  rotate: false
+  xy: 118, 125
+  size: 114, 115
+  orig: 114, 115
+  offset: 0, 0
+  index: -1
+Butt3
+  rotate: false
+  xy: 118, 8
+  size: 114, 115
+  orig: 114, 115
+  offset: 0, 0
+  index: -1
+Butt4
+  rotate: false
+  xy: 2, 8
+  size: 114, 115
+  orig: 114, 115
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 1173, 158
+  size: 82, 94
+  orig: 82, 94
+  offset: 0, 0
+  index: -1
+Head2
+  rotate: true
+  xy: 1461, 158
+  size: 82, 94
+  orig: 82, 94
+  offset: 0, 0
+  index: -1
+Head3
+  rotate: true
+  xy: 1365, 158
+  size: 82, 94
+  orig: 82, 94
+  offset: 0, 0
+  index: -1
+Head4
+  rotate: true
+  xy: 1269, 158
+  size: 82, 94
+  orig: 82, 94
+  offset: 0, 0
+  index: -1
+L arm
+  rotate: false
+  xy: 1987, 212
+  size: 31, 28
+  orig: 31, 28
+  offset: 0, 0
+  index: -1
+L hand
+  rotate: false
+  xy: 319, 54
+  size: 51, 71
+  orig: 51, 71
+  offset: 0, 0
+  index: -1
+L hand2
+  rotate: false
+  xy: 478, 54
+  size: 51, 71
+  orig: 51, 71
+  offset: 0, 0
+  index: -1
+L hand3
+  rotate: false
+  xy: 425, 54
+  size: 51, 71
+  orig: 51, 71
+  offset: 0, 0
+  index: -1
+L hand4
+  rotate: false
+  xy: 372, 54
+  size: 51, 71
+  orig: 51, 71
+  offset: 0, 0
+  index: -1
+L shoulder
+  rotate: true
+  xy: 1773, 199
+  size: 41, 105
+  orig: 41, 105
+  offset: 0, 0
+  index: -1
+L shoulder2
+  rotate: true
+  xy: 432, 127
+  size: 41, 105
+  orig: 41, 105
+  offset: 0, 0
+  index: -1
+L shoulder3
+  rotate: true
+  xy: 325, 127
+  size: 41, 105
+  orig: 41, 105
+  offset: 0, 0
+  index: -1
+L shoulder4
+  rotate: true
+  xy: 1880, 199
+  size: 41, 105
+  orig: 41, 105
+  offset: 0, 0
+  index: -1
+Mid
+  rotate: true
+  xy: 539, 128
+  size: 40, 67
+  orig: 40, 67
+  offset: 0, 0
+  index: -1
+R arm
+  rotate: false
+  xy: 738, 140
+  size: 27, 28
+  orig: 27, 28
+  offset: 0, 0
+  index: -1
+R hand
+  rotate: true
+  xy: 325, 170
+  size: 70, 113
+  orig: 70, 113
+  offset: 0, 0
+  index: -1
+R hand2
+  rotate: true
+  xy: 670, 170
+  size: 70, 113
+  orig: 70, 113
+  offset: 0, 0
+  index: -1
+R hand3
+  rotate: true
+  xy: 555, 170
+  size: 70, 113
+  orig: 70, 113
+  offset: 0, 0
+  index: -1
+R hand4
+  rotate: true
+  xy: 440, 170
+  size: 70, 113
+  orig: 70, 113
+  offset: 0, 0
+  index: -1
+R shoulder
+  rotate: true
+  xy: 608, 118
+  size: 50, 63
+  orig: 50, 63
+  offset: 0, 0
+  index: -1
+R shoulder2
+  rotate: true
+  xy: 384, 2
+  size: 50, 63
+  orig: 50, 63
+  offset: 0, 0
+  index: -1
+R shoulder3
+  rotate: true
+  xy: 673, 118
+  size: 50, 63
+  orig: 50, 63
+  offset: 0, 0
+  index: -1
+R shoulder4
+  rotate: true
+  xy: 319, 2
+  size: 50, 63
+  orig: 50, 63
+  offset: 0, 0
+  index: -1
+wing1
+  rotate: false
+  xy: 234, 20
+  size: 83, 109
+  orig: 83, 109
+  offset: 0, 0
+  index: -1
+wing2
+  rotate: false
+  xy: 234, 131
+  size: 89, 109
+  orig: 89, 109
+  offset: 0, 0
+  index: -1
+wing3
+  rotate: true
+  xy: 1557, 184
+  size: 56, 106
+  orig: 56, 106
+  offset: 0, 0
+  index: -1
+wing4
+  rotate: true
+  xy: 1665, 188
+  size: 52, 106
+  orig: 52, 106
+  offset: 0, 0
+  index: -1

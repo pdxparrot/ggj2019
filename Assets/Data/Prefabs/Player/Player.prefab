@@ -510,7 +510,7 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  _animation: {fileID: 5692518975079882939}
+  _animation: {fileID: 3571091671358662696}
 --- !u!114 &3020218383355416943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,12 +603,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7883bb70e36e3ae4e9308f7907a2bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonAnimation: {fileID: 5692518975079882939}
+  _skeletonAnimation: {fileID: 3571091671358662696}
   _skinNames:
-  - default
-  - default
-  - default
-  - default
+  - bee_player1
+  - bee_player1
+  - bee_player1
+  - bee_player1
 --- !u!1 &2830612309196927125
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,6 +948,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7239398792381993766, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c47529b7b6329b478c567dcef05a8b0, type: 3}
 --- !u!1 &376216879495958436 stripped
@@ -962,9 +967,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9078082320007288478}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5692518975079882939 stripped
+--- !u!114 &3571091671358662696 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3676116098279241253, guid: 0c47529b7b6329b478c567dcef05a8b0,
+  m_CorrespondingSourceObject: {fileID: 5509242863000075958, guid: 0c47529b7b6329b478c567dcef05a8b0,
     type: 3}
   m_PrefabInstance: {fileID: 9078082320007288478}
   m_PrefabAsset: {fileID: 0}
