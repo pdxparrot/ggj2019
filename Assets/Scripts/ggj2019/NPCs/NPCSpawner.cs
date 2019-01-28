@@ -12,6 +12,8 @@ public class NPCSpawner : MonoBehaviour
 {
     public static NPCSpawner Instance { get; private set; }
 
+    public event Action WaveStartEvent;
+
     // Tunable params
 
     public enum NPCType {
@@ -112,6 +114,7 @@ public class NPCSpawner : MonoBehaviour
             ++_waveIndex;
 
         _waveTimer.Start(Wave.Duration);
+        WaveStartEvent?.Invoke();
 
         _spawnTimers.Clear();
         for(int i = 0; i < Wave.SpawnGroups.Count; ++i) {
