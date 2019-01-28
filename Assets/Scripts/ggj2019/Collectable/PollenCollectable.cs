@@ -11,7 +11,6 @@ using Debug = UnityEngine.Debug;
 public class PollenCollectable: MonoBehaviour
 {
 
-    //TODO Use screen borrders
     [SerializeField]
     private float _sideDistance = 0.25f;
     [SerializeField]
