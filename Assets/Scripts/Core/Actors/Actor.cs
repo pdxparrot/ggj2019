@@ -77,9 +77,14 @@ namespace pdxpartyparrot.Core.Actors
         }
 
 #region Callbacks
-        public abstract void OnSpawn();
+        public GameObject Spawnpoint = null;
+        public virtual void OnSpawn(GameObject spawnpoint) {
+            Spawnpoint = spawnpoint;
+        }
 
-        public abstract void OnReSpawn();
+        public virtual void OnReSpawn(GameObject spawnpoint) {
+            Spawnpoint = spawnpoint;
+        }
 #endregion
 
 #region Event Handlers

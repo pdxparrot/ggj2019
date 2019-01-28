@@ -149,8 +149,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.25, y: 0.25}
+  m_Offset: {x: 0, y: 0.02}
+  m_Size: {x: 0.3, y: 0.3}
   m_Direction: 0
 --- !u!82 &1219087108319792121
 AudioSource:
@@ -264,6 +264,7 @@ MonoBehaviour:
   _model: {fileID: 3789025492648389457}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
+  Spawnpoint: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 8350075182339467353}
   _deathEffect: {fileID: 7729479717326751915}
@@ -530,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2745027, guid: d50d6d3a38797cb4a9e3f97cd893dce0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.927
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2745027, guid: d50d6d3a38797cb4a9e3f97cd893dce0, type: 3}
       propertyPath: m_LocalRotation.x

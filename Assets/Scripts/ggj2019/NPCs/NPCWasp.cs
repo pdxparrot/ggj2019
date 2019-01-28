@@ -17,12 +17,25 @@ public class NPCWasp : NPCEnemy
     private Vector3 _accel;
     private Vector3 _velocity;
 
+    private float _splineLen;
+    private float _splineVel;
+    private float _splinePos;
+    private BezierSpline _spline;
+
     private void Start() {
         Pool.Add(this);
 
         float dir = (transform.position.x > 0) ? -1 : 1;
         _accel = new Vector3(1,0,0) * Accel * dir;
         _animation.Skeleton.ScaleX = _accel.x < 0 ? 1.0f : -1.0f;
+
+        if(Spawnpoint != null) {
+            var spline = Spawnpoint.GetComponent<BezierSpline>();
+            if(spline != null) {
+                _spline = spline;
+                _splineLen = spline.EstLength();
+            }
+        }
 
         SetHoverAnimation();
     }
@@ -39,26 +52,29 @@ public class NPCWasp : NPCEnemy
         }
 
         if(!_isAttacking) {
-            _velocity += _accel * Time.deltaTime;
-            _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
-            transform.position += _velocity * Time.deltaTime;
-        //if(!_isAttacking) {
+	        if(_spline) {
+	            _splineVel += _accel.magnitude * Time.deltaTime;
+	            _splineVel = Mathf.Max(_splineVel, MaxVel);
+	            _splinePos += _splineVel * Time.deltaTime;
+
+	            float t = _splinePos / _splineLen;
+
+	            transform.position = _spline.GetPoint(t);
+	        }
+	        else {
+	            _velocity += _accel * Time.deltaTime;
+	            _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
+
+	            transform.position += _velocity * Time.deltaTime;
+	        }
+
             SetFlightAnimation();
             _animation.Skeleton.ScaleX = _velocity.x < 0 ? 1.0f : -1.0f;
-        }
 
-        var hive = Hive.Nearest(transform.position);
-        if(hive.Collides(this)) {
-            // option A
-            /*if(hive.TakeDamage(transform.position)) {
-                Kill();
-            } else {
-                SetAttackAnimation();
-                PushBack();
-            }*/
-
-            // option B
-            Attack(hive);
+            var hive = Hive.Nearest(transform.position);
+            if(hive.Collides(this)) {
+                Attack(hive);
+            }
         }
     }
 
@@ -83,7 +99,6 @@ public class NPCWasp : NPCEnemy
             return;
         }
 
-        //SetAnimation("wasp_attack", true);
         SetAnimation("wasp_hover", true);
         _isFlying = true;
     }

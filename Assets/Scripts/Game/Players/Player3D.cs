@@ -101,6 +101,7 @@ namespace pdxpartyparrot.Game.Players
             NetworkPlayer.NetworkTransform.syncRotationAxis = NetworkTransform.AxisSyncMode.AxisY;
 
             InitializeViewer();
+            InitializeModel();
             InitializePlayerUI();
 
             return true;
@@ -108,12 +109,17 @@ namespace pdxpartyparrot.Game.Players
 
         protected abstract void InitializeViewer();
 
+        protected virtual void InitializeModel()
+        {
+        }
+
         protected virtual void InitializePlayerUI()
         {
         }
 
-        public override void OnSpawn()
+        public override void OnSpawn(GameObject spawnpoint)
         {
+            base.OnSpawn(spawnpoint);
             Debug.Log($"Spawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
             if(NetworkServer.active) {
@@ -126,8 +132,9 @@ namespace pdxpartyparrot.Game.Players
             }
         }
 
-        public override void OnReSpawn()
+        public override void OnReSpawn(GameObject spawnpoint)
         {
+            base.OnReSpawn(spawnpoint);
             Debug.Log($"Respawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
             if(NetworkServer.active) {

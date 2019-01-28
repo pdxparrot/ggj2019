@@ -1,19 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.State;
 using UnityEngine;
-using UnityEngine.Assertions.Comparers;
-using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(Collider2D))]
 public class PollenCollectable: MonoBehaviour
 {
 
-    //TODO Use screen borrders
     [SerializeField]
     private float _sideDistance = 0.25f;
+
     [SerializeField]
     private float _sideSpeed = 0.5f;
 
@@ -28,7 +24,7 @@ public class PollenCollectable: MonoBehaviour
     private int _pollen = 1;
 
     private Player followPlayer;
-    private bool _hasFollowedPlayer = false;
+
     private bool _isCollected = false;
 
     private float _signTime = 0;
@@ -43,39 +39,44 @@ public class PollenCollectable: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isCollected)
-        {
+        if (PartyParrotManager.Instance.IsPaused)
+            return;
 
-            Destroy(gameObject);
+        if (FollowPlayer())
+        {
             return;
         }
-
-        if (followPlayer != null)
-        {
-            if (followPlayer.IsDead)
-            {
-                followPlayer = null;
-                return;
-            }
-
-            transform.position = Vector3.Lerp(transform.position, followPlayer.Position + new Vector3(0.25f,0f), 20f*Time.deltaTime);
-
-            // pollen was deposited
-            if (!followPlayer.HasPollen)
-            {
-                _isCollected = true;
-            }
-        }
-
-        if(_hasFollowedPlayer)
-            return;
 
         Move(Time.deltaTime);
 
-        if (transform.position.y + -_height > GameStateManager.Instance.GameManager.GameData.GameSize2D)
+        if (transform.position.y  - _height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.1f);
         }
+    }
+
+    private bool FollowPlayer()
+    {
+        if ( followPlayer == null)
+        {
+            return false;
+        }
+
+        if (followPlayer.IsDead)
+        {
+            followPlayer = null;
+            return false;
+        }
+
+        transform.position = Vector3.Lerp(transform.position, followPlayer.Position + new Vector3(0.25f,0f), 20f*Time.deltaTime);
+
+        // pollen was deposited
+        if (!followPlayer.HasPollen)
+        {
+            Collect();
+        }
+
+        return true;
     }
 
     private void Move(float dt)
@@ -105,9 +106,14 @@ public class PollenCollectable: MonoBehaviour
         if (player.HasPollen)
             return;
 
-        _hasFollowedPlayer = true;
         followPlayer = player;
+
         player.AddPollen(_pollen);
     }
 
+    private void Collect()
+    {
+        _isCollected = true;
+        Destroy(gameObject, 0.1f);
+    }
 }
