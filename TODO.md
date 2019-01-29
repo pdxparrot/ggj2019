@@ -1,10 +1,36 @@
+# General
+
 * Kill all UnityEngine.Input usage
     * Try setting to just Input System, does it work now? - no, UI is still broken
 * Fighter camera (ie, zoom in/out to keep N objects in view on a level
-* Player UI
-* Test running around a level
-* Test a 2D scene
+* Setting sprite layers and stuff from data / code might be useful
+* Move game data into scriptable objects
+* Use ObjectPool for the stuff that spawns (and spawn it using the network path)
+* Do a pass on our new Blah usage to reduce GC runs
+* The pollen follow code could be a component of its own
+
+# Actors
+
 * Split up actor components and reduce subclassing
     * The player junk in Game is probably just stuff that should merge into Actor components
-* Would be cool to do some SkeletonAnimation tools for Spine
-* Setting sprite layers and stuff from data / code might be useful
+* No more ActorManager subclassing, use Actor tags instead like we're doing with SpawnPoints
+* Have Actor stuff just be components that can be compounded
+* ActorID should be a GUID
+* Actors should have their own OnUpdate/OnFixedUpdate/OnLateUpdate stuff so that we can stop having if(IsPaused) everywhere
+    * ActorManager would be responsible for calling these when the game isn't paused
+
+# Spine
+
+* Move the Spine related stuff into core tools and #if USE_SPINE it
+
+
+
+
+* Do spawnpoint registration in enable/disable
+* Move wasp spawns to the start of the splines so they stop showing up and then teleporting
+* Need to move the GameOver end game thing out of the Canvas somehow
+* Score bonus / penaly for kills / deaths / pollen
+* Show score on PlayerHUD
+* Pick up pollen on trigger leave also
+* High score sorting is wrong
+* Would camera shake on game end work?

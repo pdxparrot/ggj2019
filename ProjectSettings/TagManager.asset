@@ -56,3 +56,6 @@ TagManager:
   - name: VFX
     uniqueID: 1196388667
     locked: 0
+  - name: UI
+    uniqueID: 1001257659
+    locked: 0

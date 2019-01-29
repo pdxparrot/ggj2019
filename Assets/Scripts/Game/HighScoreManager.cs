@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
@@ -40,6 +42,21 @@ namespace pdxpartyparrot.Game
                 playerName = playerName,
                 score = score
             });
+        }
+
+        public string HighScoresText()
+        {
+            if(_highScores.Count < 1) {
+                return "No High Scores!";
+            }
+
+            StringBuilder builder = new StringBuilder();
+            int i=1;
+            foreach(HighScore highScore in _highScores) {
+                builder.AppendLine($"{i}. {highScore.score}");
+                i++;
+            }
+            return builder.ToString();
         }
 
         private void InitDebugMenu()

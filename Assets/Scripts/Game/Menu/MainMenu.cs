@@ -17,6 +17,9 @@ namespace pdxpartyparrot.Game.Menu
         private MultiplayerMenu _multiplayerPanel;
 
         [SerializeField]
+        private HighScoresMenu _highScoresPanel;
+
+        [SerializeField]
         private CreditsMenu _creditsPanel;
 
         protected abstract bool UseMultiplayer { get; }
@@ -26,12 +29,16 @@ namespace pdxpartyparrot.Game.Menu
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            if(UseMultiplayer && null!= _multiplayerButton && Application.isEditor) {
+            if(UseMultiplayer && null != _multiplayerButton && Application.isEditor) {
                 _multiplayerButton.gameObject.SetActive(true);
             }
 
             if(null != _multiplayerPanel) {
                 _multiplayerPanel.gameObject.SetActive(false);
+            }
+
+            if(null != _highScoresPanel) {
+                _highScoresPanel.gameObject.SetActive(false);
             }
 
             if(null != _creditsPanel) {
@@ -58,6 +65,11 @@ namespace pdxpartyparrot.Game.Menu
         public void OnMultiplayer()
         {
             Owner.PushPanel(_multiplayerPanel);
+        }
+
+        public void OnHighScores()
+        {
+            Owner.PushPanel(_highScoresPanel);
         }
 
         public void OnCredits()

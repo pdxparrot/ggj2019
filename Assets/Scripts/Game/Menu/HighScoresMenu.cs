@@ -1,5 +1,4 @@
 ﻿using pdxpartyparrot.Core.Input;
-using pdxpartyparrot.Game.Data;
 
 using TMPro;
 
@@ -8,19 +7,16 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Game.Menu
 {
-    public sealed class CreditsMenu : MenuPanel, ICancelActionHandler
+    public sealed class HighScoresMenu : MenuPanel, ICancelActionHandler
     {
         [SerializeField]
-        private CreditsData _creditsData;
-
-        [SerializeField]
-        private TextMeshProUGUI _creditsText;
+        private TextMeshProUGUI _highScoresText;
 
 #region Unity Lifecycle
         private void Awake()
         {
-            _creditsText.richText = true;
-            _creditsText.text = _creditsData.ToString();
+            _highScoresText.richText = true;
+            _highScoresText.text = HighScoreManager.Instance.HighScoresText();
         }
 
         private void OnEnable()

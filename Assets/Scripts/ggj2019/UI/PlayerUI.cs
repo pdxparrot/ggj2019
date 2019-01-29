@@ -17,6 +17,9 @@ namespace pdxpartyparrot.ggj2019.UI
         private GameObject _deathText;
 
         [SerializeField]
+        private TextMeshProUGUI _endGameWaveText;
+
+        [SerializeField]
         private TextMeshProUGUI _endGameScoreText;
 
         [SerializeField]
@@ -73,8 +76,9 @@ namespace pdxpartyparrot.ggj2019.UI
             }
         }
 
-        public void SetScoreText(int score)
+        public void SetScoreText(int score, int wave)
         {
+            _endGameWaveText.text = $"You Made It To Wave {wave}!";
             _endGameScoreText.text = $"Your Score: {score}";
         }
 

@@ -23,7 +23,7 @@ namespace pdxpartyparrot.ggj2019.State
 
             if(null != UIManager.Instance.PlayerUI) {
                 UI.PlayerUI playerUI = (UI.PlayerUI)UIManager.Instance.PlayerUI;
-                playerUI.SetScoreText(GameManager.Instance.Score);
+                playerUI.SetScoreText(GameManager.Instance.Score, GameManager.Instance.CurrentWave);
                 playerUI.ShowGameOver(true);
             }
         }
