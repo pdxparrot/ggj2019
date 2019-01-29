@@ -27,11 +27,7 @@ namespace pdxpartyparrot.ggj2019
 
         [SerializeField]
         [ReadOnly]
-        private long _gameStartTime;
-
-        [SerializeField]
-        [ReadOnly]
-        private long _gameEndTime;
+        private Stopwatch _gameTimer;
 
         [SerializeField]
         [ReadOnly]
@@ -39,12 +35,19 @@ namespace pdxpartyparrot.ggj2019
 
         public int CurrentWave => _currentWave;
 
-        public int Score => (int)(_gameEndTime - _gameStartTime) / 1000;
+        public int Score => (int)_gameTimer.StopwatchSeconds;
 
 #region Unity Lifecycle
         private void Awake()
         {
             GameStateManager.Instance.RegisterGameManager(this);
+        }
+
+        private void Update()
+        {
+            float dt = Time.deltaTime;
+
+            _gameTimer.Update(dt);
         }
 
         protected override void OnDestroy()
@@ -65,7 +68,10 @@ namespace pdxpartyparrot.ggj2019
             SpawnManager.Instance.Initialize();
 
             IsGameOver = false;
-            _gameStartTime = _gameEndTime = TimeManager.Instance.CurrentUnixMs;
+
+            _gameTimer.Reset();
+            _gameTimer.Start();
+
             _currentWave = 0;
 
             NPCSpawner.Instance.Initialize();
@@ -79,7 +85,7 @@ namespace pdxpartyparrot.ggj2019
         {
             IsGameOver = true;
 
-            _gameEndTime = TimeManager.Instance.CurrentUnixMs;
+            _gameTimer.Stop();
         }
 
         //[Client]
