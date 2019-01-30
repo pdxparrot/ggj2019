@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Util;
+
 using Spine;
 using Spine.Unity;
 using TMPro;
@@ -9,6 +10,9 @@ namespace pdxpartyparrot.ggj2019.UI
 {
     public sealed class PlayerUI : Game.UI.PlayerUI
     {
+        [SerializeField]
+        private PlayerHUD _playerHUD;
+
         [SerializeField]
         private GameObject _introTextObject;
 
@@ -64,6 +68,11 @@ namespace pdxpartyparrot.ggj2019.UI
             _introTextTimer.Start(_introTextTime, () => {
                 _introTextObject.SetActive(false);
             });
+        }
+
+        public void ShowPlayerHUD(bool show)
+        {
+            _playerHUD.gameObject.SetActive(show);
         }
 
         public void ShowDeathText(bool show)

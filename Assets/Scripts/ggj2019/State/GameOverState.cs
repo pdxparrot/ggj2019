@@ -21,11 +21,10 @@ namespace pdxpartyparrot.ggj2019.State
         {
             base.OnEnter();
 
-            if(null != UIManager.Instance.PlayerUI) {
-                UI.PlayerUI playerUI = (UI.PlayerUI)UIManager.Instance.PlayerUI;
-                playerUI.SetScoreText(GameManager.Instance.Score, GameManager.Instance.CurrentWave);
-                playerUI.ShowGameOver(true);
-            }
+            UI.PlayerUI playerUI = (UI.PlayerUI)UIManager.Instance.PlayerUI;
+            playerUI.ShowPlayerHUD(false);
+            playerUI.SetScoreText(GameManager.Instance.Score, GameManager.Instance.CurrentWave);
+            playerUI.ShowGameOver(true);
         }
     }
 }

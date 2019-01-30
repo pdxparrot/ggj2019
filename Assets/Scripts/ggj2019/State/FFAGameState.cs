@@ -31,6 +31,7 @@ namespace pdxpartyparrot.ggj2019.State
 
             GameManager.Instance.InitViewer();
             UIManager.Instance.InitializePlayerUI(GameManager.Instance.Viewer.UICamera);
+            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowPlayerHUD(true);
 
             return true;
         }
