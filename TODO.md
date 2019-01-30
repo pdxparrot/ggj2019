@@ -25,12 +25,11 @@
 
 
 
-
 * Do spawnpoint registration in enable/disable
 * Move wasp spawns to the start of the splines so they stop showing up and then teleporting
-* Need to move the GameOver end game thing out of the Canvas somehow
 * Score bonus / penaly for kills / deaths / pollen
 * Show score on PlayerHUD
 * Pick up pollen on trigger leave also
 * High score sorting is wrong
 * Would camera shake on game end work?
+* Player moves after they die?

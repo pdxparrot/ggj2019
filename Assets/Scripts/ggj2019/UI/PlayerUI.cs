@@ -1,4 +1,6 @@
 ﻿using pdxpartyparrot.Core.Util;
+using Spine;
+using Spine.Unity;
 using TMPro;
 
 using UnityEngine;
@@ -21,6 +23,9 @@ namespace pdxpartyparrot.ggj2019.UI
 
         [SerializeField]
         private TextMeshProUGUI _endGameScoreText;
+
+        [SerializeField]
+        private SkeletonAnimation _animatedGameOverObject;
 
         [SerializeField]
         private GameObject _gameOverText;
@@ -68,8 +73,14 @@ namespace pdxpartyparrot.ggj2019.UI
 
         public void ShowGameOver(bool show)
         {
+            _animatedGameOverObject.gameObject.SetActive(show);
             _gameOverText.SetActive(show);
             if(show) {
+                TrackEntry track = _animatedGameOverObject.AnimationState.SetAnimation(0, "game_over_entrance", false);
+                track.Complete += t => {
+                    _animatedGameOverObject.AnimationState.SetAnimation(0, "game_over_entrance2", true);
+                };
+
                 ShowDeathText(false);
                 _waveTextObject.SetActive(false);
                 _waveTextTimer.Stop();

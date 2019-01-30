@@ -28,10 +28,10 @@ namespace pdxpartyparrot.Core.Loading
     public abstract class LoadingManager<T> : SingletonBehavior<T>, ILoadingManager where T: LoadingManager<T>
     {
         [SerializeField]
-        private LoadingScreen _loadingScreen;
+        private UnityEngine.Camera _mainCamera;
 
         [SerializeField]
-        private GameObject _background;
+        private LoadingScreen _loadingScreen;
 
         [Space(10)]
 
@@ -71,6 +71,12 @@ namespace pdxpartyparrot.Core.Loading
 #region Unity Lifecycle
         protected virtual void Awake()
         {
+            _mainCamera.clearFlags = CameraClearFlags.SolidColor;
+            _mainCamera.backgroundColor = Color.black;
+            _mainCamera.orthographic = true;
+            _mainCamera.useOcclusionCulling = false;
+            ShowLoadingScreen(true);
+
             ManagersContainer = new GameObject("Managers");
         }
 
@@ -146,8 +152,8 @@ namespace pdxpartyparrot.Core.Loading
 #region Loading Screen
         public void ShowLoadingScreen(bool show)
         {
+            _mainCamera.cullingMask = show ? -1 : 0;
             _loadingScreen.gameObject.SetActive(show);
-            _background.gameObject.SetActive(show);
             UpdateLoadingScreen(0.0f, "Loading...");
         }
 

@@ -7,9 +7,11 @@ using UnityEngine;
 namespace pdxpartyparrot.Core.Loading
 {
 // TODO: move to UI
-    [RequireComponent(typeof(Canvas))]
     public sealed class LoadingScreen : MonoBehaviour
     {
+        [SerializeField]
+        private Canvas _canvas;
+
         [SerializeField]
         private ProgressBar _progressBar;
 
@@ -27,7 +29,7 @@ namespace pdxpartyparrot.Core.Loading
 #region Unity Lifecycle
         private void Awake()
         {
-            GetComponent<Canvas>().sortingOrder = 9999;
+            _canvas.sortingOrder = 9999;
         }
 #endregion
     }

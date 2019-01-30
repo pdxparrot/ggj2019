@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d719b3039ac9d4d891326c793cd86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkConnectUIPrefab: {fileID: 2993015090704269570, guid: 5e3bd3e83438c8740acce4f3829f29ea,
+  _networkConnectUIPrefab: {fileID: 7445548717377196570, guid: 5e3bd3e83438c8740acce4f3829f29ea,
     type: 3}
   _connectType: 0

@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 namespace pdxpartyparrot.Game.Menu
 {
-    [RequireComponent(typeof(Canvas))]
-    [RequireComponent(typeof(GraphicRaycaster))]
-    [RequireComponent(typeof(CanvasScaler))]
     public sealed class Menu : MonoBehaviour
     {
+        [SerializeField]
+        private Canvas _canvas;
+
         [SerializeField]
         private MenuPanel _mainPanel;
 
@@ -24,7 +24,7 @@ namespace pdxpartyparrot.Game.Menu
 #region Unity Lifecycle
         private void Awake()
         {
-            GetComponent<Canvas>().sortingOrder = 100;
+            _canvas.sortingOrder = 100;
 
             PushPanel(_mainPanel);
         }

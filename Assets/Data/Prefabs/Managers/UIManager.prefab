@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ea0d09e644493fbabf681ac4ad8174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerUIPrefab: {fileID: 5085037976786433054, guid: 4570ada7dd74d7f4cacd31d713ac6f35,
+  _playerUIPrefab: {fileID: 7719837326964737951, guid: 4570ada7dd74d7f4cacd31d713ac6f35,
     type: 3}
-  _pauseMenuPrefab: {fileID: 8912950028800563810, guid: 18d587ac9018ca54890aa156d49308ee,
+  _pauseMenuPrefab: {fileID: 2048374829278761307, guid: 18d587ac9018ca54890aa156d49308ee,
     type: 3}

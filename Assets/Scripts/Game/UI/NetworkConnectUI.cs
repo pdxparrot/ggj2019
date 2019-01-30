@@ -6,9 +6,11 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.UI
 {
-    [RequireComponent(typeof(Canvas))]
     public sealed class NetworkConnectUI : MonoBehaviour
     {
+        [SerializeField]
+        private Canvas _canvas;
+
         [SerializeField]
         private TextMeshProUGUI _connectionStatusText;
 
@@ -17,7 +19,7 @@ namespace pdxpartyparrot.Game.UI
 #region Unity Lifecycle
         private void Awake()
         {
-            GetComponent<Canvas>().sortingOrder = 500;
+            _canvas.sortingOrder = 500;
         }
 #endregion
 
