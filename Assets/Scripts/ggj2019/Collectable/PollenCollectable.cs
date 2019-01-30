@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class PollenCollectable: MonoBehaviour
 {
-
     [SerializeField]
     private float _sideDistance = 0.25f;
 
@@ -40,13 +39,14 @@ public class PollenCollectable: MonoBehaviour
 
     private Hive _hive;
 
-    void Start()
+#region Unity Lifecycle
+    private void Start()
     {
         _startPont = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (PartyParrotManager.Instance.IsPaused)
             return;
@@ -71,6 +71,39 @@ public class PollenCollectable: MonoBehaviour
         {
             Destroy(gameObject, 0.1f);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(_isCollected)
+            return;
+
+        Gather(other.gameObject.GetComponent<Player>());
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(_isCollected)
+            return;
+
+        Gather(other.gameObject.GetComponent<Player>());
+    }
+#endregion
+
+    private void Gather(Player player)
+    {
+        if (null == player)
+        {
+            return;
+        }
+
+        if (player.HasPollen)
+            return;
+
+        followPlayer = player;
+
+        player.AddPollen(_pollen);
+        _pickupEffect.Trigger();
     }
 
     private void GoToHive()
@@ -113,26 +146,6 @@ public class PollenCollectable: MonoBehaviour
     public void SetPollenAmt(int amt)
     {
         _pollen = amt;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(_isCollected)
-            return;
-
-        Player player = other.gameObject.GetComponent<Player>();
-        if (null == player)
-        {
-            return;
-        }
-
-        if (player.HasPollen)
-            return;
-
-        followPlayer = player;
-
-        player.AddPollen(_pollen);
-        _pickupEffect.Trigger();
     }
 
     private void Collect()

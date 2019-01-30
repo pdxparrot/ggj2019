@@ -127,6 +127,8 @@ namespace pdxpartyparrot.ggj2019.Players
             _deathEffect.Trigger(() => {    
                 _deathTimer.Start(_respawnTime, Respawn);
             });
+
+            GameManager.Instance.PlayerDeath();
         }
 
         public void DoGather()

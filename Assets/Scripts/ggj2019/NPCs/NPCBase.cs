@@ -1,13 +1,16 @@
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
+
 using Spine;
 using Spine.Unity;
+
 using UnityEngine;
 
 public class NPCBase : PhysicsActor2D
 {
     public override float Height => Collider.bounds.size.y / 2.0f;
+
     public override float Radius => Collider.bounds.size.x / 2.0f;
 
     public override bool IsLocalActor => true;
@@ -31,8 +34,10 @@ public class NPCBase : PhysicsActor2D
     [SerializeField]
     protected SkeletonAnimation _animation;
 
-    public override void OnSpawn(GameObject spawnpoint) {
+    public override void OnSpawn(GameObject spawnpoint)
+    {
         base.OnSpawn(spawnpoint);
+
         IsDead = false;
 
         if(null != _spawnEffect) {
@@ -40,8 +45,10 @@ public class NPCBase : PhysicsActor2D
         }
     }
 
-    public override void OnReSpawn(GameObject spawnpoint) {
+    public override void OnReSpawn(GameObject spawnpoint)
+    {
         base.OnReSpawn(spawnpoint);
+
         IsDead = false;
 
         if(null != _spawnEffect) {
@@ -49,7 +56,8 @@ public class NPCBase : PhysicsActor2D
         }
     }
 
-    public virtual void Kill() {
+    public virtual void Kill()
+    {
         IsDead = true;
 
         Model.SetActive(false);
@@ -62,7 +70,8 @@ public class NPCBase : PhysicsActor2D
         }
     }
 
-    public bool Collides(Actor other, float distance = 0.0f) {
+    public bool Collides(Actor other, float distance = 0.0f)
+    {
         Vector3 offset = other.transform.position - transform.position;
         float r = other.Radius + Radius;
         return Vector3.Magnitude(offset) < r + distance;
@@ -77,5 +86,4 @@ public class NPCBase : PhysicsActor2D
     {
         return _animation.AnimationState.SetAnimation(track, animationName, loop);
     }
-
 }

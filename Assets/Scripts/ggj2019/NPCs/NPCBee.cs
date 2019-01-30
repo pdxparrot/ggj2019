@@ -1,14 +1,14 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
+
 using pdxpartyparrot.Core;
-using UnityEngine;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
-using UnityEngine.Assertions;
+
+using UnityEngine;
 
 public class NPCBee : NPCBase, ISwarmable
 {
-
     private enum NPCBeeState
     {
         Idle,
@@ -71,17 +71,14 @@ public class NPCBee : NPCBase, ISwarmable
     [ReadOnly]
     private int _pollenCount;
 
-    #region Unity Life Cycle
-
-    private void Start()
+#region Unity Life Cycle
+    protected override void Awake()
     {
+        base.Awake();
+
         Pool.Add(this);
 
-        _offsetUpdateTimer.Start(
-            PartyParrotManager.Instance.Random.NextSingle(
-                _offsetChangeTimer.x,
-                _offsetChangeTimer.y)
-            );
+        _offsetUpdateTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_offsetChangeTimer.x,_offsetChangeTimer.y), UpdateOffset);
 
         _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
 
@@ -90,12 +87,12 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void Update()
     {
-        if(PartyParrotManager.Instance.IsPaused)
-            return;
-
         float dt = Time.deltaTime;
 
-        CheckTimers(dt);
+        _offsetUpdateTimer.Update(dt);
+        _repairCooldownTimer.Update(dt);
+        _harvestCooldownTimer.Update(dt);
+
         Think(dt);
     }
 
@@ -105,8 +102,7 @@ public class NPCBee : NPCBase, ISwarmable
 
         base.OnDestroy();
     }
-
-    #endregion
+#endregion
 
     // start true to force the animation the first time
     private bool _isFlying = true;
@@ -131,30 +127,20 @@ public class NPCBee : NPCBase, ISwarmable
         _isFlying = true;
     }
 
-    private void CheckTimers(float dt)
+    private void UpdateOffset()
     {
-        _offsetUpdateTimer.Update(dt);
+        _offsetPosition = new Vector2(
+            Random.Range(-_offsetRadius, _offsetRadius),
+            Random.Range(-_offsetRadius, _offsetRadius)
+        );
 
-        if (!_offsetUpdateTimer.IsRunning)
-        {
-            UpdateOffset();
-
-            _offsetUpdateTimer.Start(
-                PartyParrotManager.Instance.Random.NextSingle(
-                    _offsetChangeTimer.x,
-                    _offsetChangeTimer.y)
-            );
-        }
-
-        _repairCooldownTimer.Update(dt);
-        _harvestCooldownTimer.Update(dt);
+        _offsetUpdateTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_offsetChangeTimer.x,_offsetChangeTimer.y), UpdateOffset);
     }
-
 
     private void Think(float dt)
     {
         // TODO: but still let them flock, that's cool looking
-        if(GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
+        if(IsDead || GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
             return;
         }
 
@@ -221,15 +207,6 @@ public class NPCBee : NPCBase, ISwarmable
         SetState(NPCBeeState.Follow);
 
         _offsetRadius = radius;
-        UpdateOffset();
-    }
-
-    private void UpdateOffset()
-    {
-        _offsetPosition = new Vector2(
-            Random.Range(-_offsetRadius, _offsetRadius),
-            Random.Range(-_offsetRadius, _offsetRadius)
-        );
     }
 
     private void SetState(NPCBeeState state)
@@ -276,7 +253,6 @@ public class NPCBee : NPCBase, ISwarmable
     }
 
 #region the things they bee doing
-
     private void Swarm(float dt)
     {
         if(null == _targetSwarm) {
@@ -307,7 +283,7 @@ public class NPCBee : NPCBase, ISwarmable
 
     private void Harvest(float dt)
     {
-        if(null == _targetFlower) {
+        /*if(null == _targetFlower) {
             if(AcquireFlower()) {
                 SetState(NPCBeeState.PathToHarvest);
                 return;
@@ -328,7 +304,7 @@ public class NPCBee : NPCBase, ISwarmable
         _targetFlower = null;
 
         Debug.Log($"harvested {_pollenCount} pollen");
-        SetState(NPCBeeState.ReturnHome);
+        SetState(NPCBeeState.ReturnHome);*/
     }
 
     private void ReturnHome(float dt)

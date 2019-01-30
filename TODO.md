@@ -25,11 +25,14 @@
 
 
 
+* OBJECT POOLING AND NETWORKED SPAWNING
 * Do spawnpoint registration in enable/disable
 * Move wasp spawns to the start of the splines so they stop showing up and then teleporting
 * Score bonus / penaly for kills / deaths / pollen
-* Show score on PlayerHUD
-* Pick up pollen on trigger leave also
+    * This is in but not used
 * High score sorting is wrong
 * Would camera shake on game end work?
 * Player moves after they die?
+* Beetle "wait to die" is causing them to stick around too long before dying
+    * This will be fixed by using the Object pooling
+* Losing a flower shoul dhave a score modifier

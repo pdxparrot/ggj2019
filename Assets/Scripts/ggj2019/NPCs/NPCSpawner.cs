@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using pdxpartyparrot.Core;
-using UnityEngine;
 
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Game.World;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.ggj2019;
+
+using UnityEngine;
 
 public class NPCSpawner : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class NPCSpawner : MonoBehaviour
     // Each wave of npc spawning
     [Serializable]
     public struct SpawnWave {
-        [SerializeField] public List<SpawnGroup> SpawnGroups;
+        [SerializeField] public SpawnGroup[] SpawnGroups;
         [SerializeField] public float Duration;
     };
 
@@ -54,94 +54,102 @@ public class NPCSpawner : MonoBehaviour
     public NPCData[] NPCTypes = new NPCData[3 /*NPCType.Count*/];
 
     [SerializeField]
-    public List<SpawnWave> Waves;
+    public SpawnWave[] Waves;
 
     // Runtime state
     private int _waveIndex;
-    private Timer _waveTimer;
-    private List<Timer> _spawnTimers;
+    private readonly Timer _waveTimer = new Timer();
+    private readonly List<Timer> _spawnTimers = new List<Timer>();
 
     // The current wave
-    public SpawnWave Wave {
-        get {
-            return Waves[_waveIndex];
-        }
-    }
+    public SpawnWave Wave => Waves[_waveIndex];
 
     private bool _initialized;
 
-    void Awake() {
+#region Unity Lifecycle
+    private void Awake()
+    {
         Instance = this;
     }
 
-    void OnDestroy() {
-        Instance = null;
+    private void Update()
+    {
+        if(!_initialized) {
+            return;
+        }
+
+        float dt = Time.deltaTime;
+
+        _waveTimer.Update(dt);
+        foreach(Timer timer in _spawnTimers) {
+            timer.Update(dt);
+        }
     }
 
-    public void Initialize() {
-        _waveTimer = new Timer();
-        _spawnTimers = new List<Timer>();
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+#endregion
+
+    public void Initialize()
+    {
         FirstWave();
 
         _initialized = true;
     }
 
-    void Update() {
-        if(!_initialized || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
-            return;
-        }
-
-        _waveTimer.Update(Time.deltaTime);
-        if(!_waveTimer.IsRunning) {
-            NextWave();
-        }
-
-        for(int i = 0; i < _spawnTimers.Count; ++i) {
-            _spawnTimers[i].Update(Time.deltaTime);
-            if(!_spawnTimers[i].IsRunning) {
-                Spawn(i);
-            }
-        }
-    }
-
     // Advance Waves
-    public void FirstWave() {
+    public void FirstWave()
+    {
         _waveIndex = -1;
+
         NextWave();
     }
-    public void NextWave() {
-        if(_waveIndex + 1 < Waves.Count)
+
+    public void NextWave()
+    {
+        if(_waveIndex + 1 < Waves.Length)
             ++_waveIndex;
 
-        _waveTimer.Start(Wave.Duration);
+        _waveTimer.Start(Wave.Duration, NextWave);
         WaveStartEvent?.Invoke();
 
         _spawnTimers.Clear();
-        for(int i = 0; i < Wave.SpawnGroups.Count; ++i) {
+        for(int i = 0; i < Wave.SpawnGroups.Length; ++i) {
             var grp = Wave.SpawnGroups[i];
 
             _spawnTimers.Add(new Timer());
-            _spawnTimers[i].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+
+            int idx = i;
+            _spawnTimers[i].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max), () => {
+                Spawn(idx);
+            });
         }
     }
 
     // Spawning
-    private void Spawn(int grpidx) {
+    private void Spawn(int grpidx)
+    {
+        if(GameManager.Instance.IsGameOver) {
+            return;
+        }
+
         var grp = Wave.SpawnGroups[grpidx];
         var npc = NPCTypes[(int)grp.Type];
 
         int ct = PartyParrotManager.Instance.Random.Next(grp.Count.Min, grp.Count.Max);
-
         for(int i = 0; i < ct; ++i) {
             var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
             if(spawnpt) {
                 spawnpt.SpawnPrefab(npc.Prefab);
             }
 
-            if(grp.Once)
-                _spawnTimers[grpidx].Start(1000000);
-            else
-                _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max));
+            if(!grp.Once) {
+                _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max), () => {
+                    Spawn(grpidx);
+                });
+            }
         }
     }
 }

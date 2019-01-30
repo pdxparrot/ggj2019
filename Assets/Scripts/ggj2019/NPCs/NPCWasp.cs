@@ -1,12 +1,14 @@
 ﻿using System;
-using pdxpartyparrot.Core;
-using pdxpartyparrot.ggj2019;
-using UnityEngine;
 
+using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.Effects;
+
 using Spine;
-using Spine.Unity;
+
+using UnityEngine;
 
 public class NPCWasp : NPCEnemy
 {
@@ -21,25 +23,24 @@ public class NPCWasp : NPCEnemy
     private float _splineLen;
     private float _splineVel;
     private float _splinePos;
+
+    [SerializeField]
+    [ReadOnly]
     private BezierSpline _spline;
 
     [SerializeField]
     private EffectTrigger _attackEffect;
 
-    private void Start() {
+#region Unity Lifecycle
+    protected override void Awake()
+    {
+        base.Awake();
+
         Pool.Add(this);
 
         float dir = (transform.position.x > 0) ? -1 : 1;
         _accel = new Vector3(1,0,0) * Accel * dir;
         _animation.Skeleton.ScaleX = _accel.x < 0 ? 1.0f : -1.0f;
-
-        if(Spawnpoint != null) {
-            var spline = Spawnpoint.GetComponent<BezierSpline>();
-            if(spline != null) {
-                _spline = spline;
-                _splineLen = spline.EstLength();
-            }
-        }
 
         SetHoverAnimation();
     }
@@ -50,46 +51,67 @@ public class NPCWasp : NPCEnemy
         base.OnDestroy();
     }
 
-    void Update() {
+    private void Update()
+    {
+        float dt = Time.deltaTime;
+
+        Think(dt);
+    }
+#endregion
+
+    public override void OnSpawn(GameObject spawnpoint)
+    {
+        base.OnSpawn(spawnpoint);
+
+        var spline = spawnpoint.GetComponent<BezierSpline>();
+        if(spline != null) {
+            _spline = spline;
+            _splineLen = spline.EstLength();
+        }
+    }
+
+    private void Think(float dt)
+    {
         if(IsDead || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
             return;
         }
 
-        if(!_isAttacking) {
-	        if(_spline) {
-	            _splineVel += _accel.magnitude * Time.deltaTime;
-	            _splineVel = Mathf.Max(_splineVel, MaxVel);
-	            _splinePos += _splineVel * Time.deltaTime;
+        if(_isAttacking) {
+            return;
+        }
 
-	            float t = _splinePos / _splineLen;
+	    if(_spline) {
+	        _splineVel += _accel.magnitude * dt;
+	        _splineVel = Mathf.Max(_splineVel, MaxVel);
+	        _splinePos += _splineVel * dt;
 
-	            Vector3 targetLocation = _spline.GetPoint(t);
+	        float t = _splinePos / _splineLen;
 
-                SetFacingDirection(targetLocation.x - transform.position.x);
+	        Vector3 targetLocation = _spline.GetPoint(t);
 
-                transform.position = targetLocation;
-            }
-	        else {
-	            _velocity += _accel * Time.deltaTime;
-	            _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
+            SetFacingDirection(targetLocation.x - transform.position.x);
 
-	            transform.position += _velocity * Time.deltaTime;
+            transform.position = targetLocation;
+        }
+	    else {
+	        _velocity += _accel * Time.deltaTime;
+	        _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
 
-                SetFacingDirection(_velocity.x);
-	        }
+	        transform.position += _velocity * Time.deltaTime;
 
-            SetFlightAnimation();
+            SetFacingDirection(_velocity.x);
+	    }
 
-            var hive = Hive.Nearest(transform.position);
-            if(hive.Collides(this)) {
-                Attack(hive);
-            }
+        SetFlightAnimation();
+
+        var hive = Hive.Nearest(transform.position);
+        if(hive.Collides(this)) {
+            Attack(hive);
         }
     }
 
     private void SetFacingDirection(float xDirection)
     {
-
         if(xDirection < 0.02f && xDirection > -0.02f)
             return;
 
@@ -146,7 +168,8 @@ public class NPCWasp : NPCEnemy
         _attackEffect.Trigger();
     }
 
-    void PushBack() {
+    private void PushBack()
+    {
         Vector3 pos = transform.position;
         Vector3 dir = new Vector3(-pos.x, 0.0f, 0.0f).normalized;
 
@@ -154,9 +177,16 @@ public class NPCWasp : NPCEnemy
         _velocity = dir * pushbackvel;
     }
 
+    public override void Kill()
+    {
+        base.Kill();
+
+        GameManager.Instance.WaspKilled();
+    }
+
     public static ProxPool<NPCWasp> Pool = new ProxPool<NPCWasp>();
 
     public static NPCWasp Nearest(Vector3 pos, float dist = 1000000.0f) {
-        return Pool.Nearest(pos, dist) as NPCWasp;
+        return Pool.Nearest(pos, dist);
     }
 }

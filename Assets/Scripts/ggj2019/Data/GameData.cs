@@ -48,5 +48,31 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public Vector3 ViewerPosition => _viewerPosition;
 #endregion
+
+        [Space(10)]
+
+#region Score
+        [Header("Score")]
+
+        [SerializeField]
+        private int _deathPenalty;
+
+        public int DeathPenalty => _deathPenalty;
+
+        [SerializeField]
+        private int _pollenScore;
+
+        public int PollenScore => _pollenScore;
+
+        [SerializeField]
+        private int _beetleScore;
+
+        public int BeetleScore => _beetleScore;
+
+        [SerializeField]
+        private int _waspScore;
+
+        public int WaspScore => _waspScore;
+#endregion
     }
 }
