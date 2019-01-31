@@ -18,6 +18,7 @@ using UnityEngine.Networking;
 
 namespace pdxpartyparrot.ggj2019
 {
+// TODO: move pollen spawning into a manager
     public sealed class GameManager : GameManager<GameManager>
     {
         public GameData GameGameData => (GameData)GameData;
@@ -99,6 +100,7 @@ namespace pdxpartyparrot.ggj2019
 
             IsGameOver = true;
 
+            _pollenTimer.Stop();
             _gameTimer.Stop();
         }
 
