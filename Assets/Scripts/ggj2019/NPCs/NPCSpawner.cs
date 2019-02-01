@@ -1,155 +1,71 @@
 ﻿using System;
-using System.Collections.Generic;
 
-using pdxpartyparrot.Core;
-using pdxpartyparrot.Game.World;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.ggj2019;
+using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
 
-public class NPCSpawner : MonoBehaviour
+// TODO: this is a duration spawner, we could also have a spawner that always spawns a full wave before the next one (no duration)
+public class NPCSpawner : SingletonBehavior<NPCSpawner>
 {
-    public static NPCSpawner Instance { get; private set; }
-
     public event Action WaveStartEvent;
 
-    // Tunable params
-
-    public enum NPCType {
-        Wasp,
-        Beetle,
-        Flower,
-    };
-
-    [Serializable]
-    public struct NPCData {
-        [SerializeField] public NPCBase Prefab;
-        [SerializeField] public string Tag;
-    }
-
-    [Serializable]
-    public struct Range {
-        [SerializeField] public int Min;
-        [SerializeField] public int Max;
-    };
-
-    // Rules for spawning one type of npcs
-    [Serializable]
-    public struct SpawnGroup {
-        [SerializeField] public NPCType Type;
-        [SerializeField] public Range Delay;
-        [SerializeField] public Range Count;
-        [SerializeField] public bool Once;
-    };
-
-    // Each wave of npc spawning
-    [Serializable]
-    public struct SpawnWave {
-        [SerializeField] public SpawnGroup[] SpawnGroups;
-        [SerializeField] public float Duration;
-    };
+    [SerializeField]
+    private WaveSpawnData _waveSpawnData;
 
     [SerializeField]
-    public NPCData[] NPCTypes = new NPCData[3 /*NPCType.Count*/];
-
-    [SerializeField]
-    public SpawnWave[] Waves;
-
-    // Runtime state
+    [ReadOnly]
     private int _waveIndex;
+
     private readonly Timer _waveTimer = new Timer();
-    private readonly List<Timer> _spawnTimers = new List<Timer>();
-
-    // The current wave
-    public SpawnWave Wave => Waves[_waveIndex];
-
-    private bool _initialized;
 
 #region Unity Lifecycle
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     private void Update()
     {
-        if(!_initialized) {
-            return;
-        }
-
         float dt = Time.deltaTime;
 
         _waveTimer.Update(dt);
-        foreach(Timer timer in _spawnTimers) {
-            timer.Update(dt);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
+        _waveSpawnData.UpdateWave(_waveIndex, dt);
     }
 #endregion
 
     public void Initialize()
     {
-        FirstWave();
+        _waveSpawnData.Initialize();
 
-        _initialized = true;
-    }
-
-    // Advance Waves
-    public void FirstWave()
-    {
         _waveIndex = -1;
 
-        NextWave();
+        Run();
     }
 
-    public void NextWave()
+    public void Shutdown()
     {
-        if(_waveIndex + 1 < Waves.Length)
-            ++_waveIndex;
+        _waveSpawnData.StopWave(_waveIndex);
 
-        _waveTimer.Start(Wave.Duration, NextWave);
-        WaveStartEvent?.Invoke();
+        _waveTimer.Stop();
 
-        _spawnTimers.Clear();
-        for(int i = 0; i < Wave.SpawnGroups.Length; ++i) {
-            var grp = Wave.SpawnGroups[i];
+        _waveSpawnData.Shutdown();
+    }
 
-            _spawnTimers.Add(new Timer());
-
-            int idx = i;
-            _spawnTimers[i].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max), () => {
-                Spawn(idx);
-            });
+    private void Run()
+    {
+        // stop the current wave timers
+        if(_waveIndex >= 0) {
+            _waveSpawnData.StopWave(_waveIndex);
         }
-    }
 
-    // Spawning
-    private void Spawn(int grpidx)
-    {
-        if(GameManager.Instance.IsGameOver) {
+        // advance the wave (end game if we hit the end)
+        _waveIndex++;
+        if(_waveIndex >= _waveSpawnData.WaveCount) {
+            GameManager.Instance.EndGame();
             return;
         }
 
-        var grp = Wave.SpawnGroups[grpidx];
-        var npc = NPCTypes[(int)grp.Type];
+        // start the next wave of timers
+        _waveSpawnData.StartWave(_waveIndex);
+        _waveTimer.Start(_waveSpawnData.WaveDuration(_waveIndex), Run);
 
-        int ct = PartyParrotManager.Instance.Random.Next(grp.Count.Min, grp.Count.Max);
-        for(int i = 0; i < ct; ++i) {
-            var spawnpt = SpawnManager.Instance.GetSpawnPoint(npc.Tag);
-            if(spawnpt) {
-                spawnpt.SpawnPrefab(npc.Prefab);
-            }
-
-            if(!grp.Once) {
-                _spawnTimers[grpidx].Start(PartyParrotManager.Instance.Random.NextSingle(grp.Delay.Min, grp.Delay.Max), () => {
-                    Spawn(grpidx);
-                });
-            }
-        }
+        WaveStartEvent?.Invoke();
     }
 }

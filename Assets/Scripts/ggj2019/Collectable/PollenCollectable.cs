@@ -1,10 +1,12 @@
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(PooledObject))]
 public class PollenCollectable: MonoBehaviour
 {
     [SerializeField]

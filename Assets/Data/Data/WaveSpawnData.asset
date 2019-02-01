@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82c6e24d3f04c3385715eecfc4eccd1, type: 3}
+  m_Name: WaveSpawnData
+  m_EditorClassIdentifier: 
+  _actors:
+  - _prefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+      type: 3}
+    _tag: wasp
+  - _prefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+      type: 3}
+    _tag: beetle
+  - _prefab: {fileID: 5512433957614832504, guid: aa9785111cf10bf43a0f46a04c309938,
+      type: 3}
+    _tag: flower
+  _waves:
+  - _duration: 5
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: beetle
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: wasp
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: wasp
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+    - _tag: beetle
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: beetle
+      _delay:
+        _min: 2
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: wasp
+      _delay:
+        _min: 2
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: wasp
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+    - _tag: beetle
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: beetle
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: wasp
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+  - _duration: 30
+    _spawnGroups:
+    - _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _once: 1
+    - _tag: wasp
+      _delay:
+        _min: 1
+        _max: 2
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0
+    - _tag: beetle
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 1
+      _once: 0

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1960101934004626580}
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
+  - component: {fileID: 7773629788050860981}
   - component: {fileID: 3673602363583183421}
   - component: {fileID: 4776182971955245096}
   - component: {fileID: 8597469290013358255}
@@ -86,7 +87,7 @@ Animator:
   m_GameObject: {fileID: 2228405151768162015}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fb6eefdd84d84ef4bacc4196d38252b5, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -249,6 +250,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7773629788050860981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9542f830339cece458515f5a9fdef588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3673602363583183421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +278,6 @@ MonoBehaviour:
   _model: {fileID: 4158159683825376886}
   _controller: {fileID: 0}
   _animator: {fileID: 5417508698543561820}
-  Spawnpoint: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 4776182971955245096}
   _deathEffect: {fileID: 8597469290013358255}
@@ -275,6 +287,7 @@ MonoBehaviour:
   Accel: 4
   pushback: 0.5
   pushbackvel: -2
+  _spline: {fileID: 0}
   _attackEffect: {fileID: 5796502178962319337}
 --- !u!114 &4776182971955245096
 MonoBehaviour:
@@ -419,11 +432,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 266147904421654132, guid: 0c37fa9abd285474cb7f83a0fad8c111,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6796283527104758459, guid: 0c37fa9abd285474cb7f83a0fad8c111,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -478,6 +486,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 266147904421654132, guid: 0c37fa9abd285474cb7f83a0fad8c111,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 612842712036021877, guid: 0c37fa9abd285474cb7f83a0fad8c111,
         type: 3}

@@ -43,40 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c566ef54860474179860463904f97f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPCTypes:
-  - Prefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
-      type: 3}
-    Tag: wasp
-  - Prefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
-      type: 3}
-    Tag: beetle
-  - Prefab: {fileID: 5512433957614832504, guid: aa9785111cf10bf43a0f46a04c309938,
-      type: 3}
-    Tag: flower
-  Waves:
-  - SpawnGroups:
-    - Type: 2
-      Delay:
-        Min: 5
-        Max: 8
-      Count:
-        Min: 1
-        Max: 1
-      Once: 0
-    - Type: 1
-      Delay:
-        Min: 3
-        Max: 5
-      Count:
-        Min: 1
-        Max: 1
-      Once: 0
-    - Type: 0
-      Delay:
-        Min: 1
-        Max: 5
-      Count:
-        Min: 1
-        Max: 1
-      Once: 0
-    Duration: 300
+  _waveSpawnData: {fileID: 11400000, guid: 3be582fceaeb5794d8faef93c26d3dda, type: 2}
+  _waveIndex: 0

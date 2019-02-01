@@ -17,6 +17,7 @@ namespace pdxpartyparrot.Game.Data
             RoundRobin
         }
 
+// TODO private stuff
         [Serializable]
         public struct SpawnPointType
         {

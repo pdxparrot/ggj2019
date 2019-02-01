@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1960101934004626580}
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
+  - component: {fileID: 3465486619210211549}
   - component: {fileID: 5995247377756831436}
   - component: {fileID: 8350075182339467353}
   - component: {fileID: 7729479717326751915}
@@ -248,6 +249,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3465486619210211549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9542f830339cece458515f5a9fdef588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5995247377756831436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +277,6 @@ MonoBehaviour:
   _model: {fileID: 3789025492648389457}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
-  Spawnpoint: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 8350075182339467353}
   _deathEffect: {fileID: 7729479717326751915}
@@ -399,16 +411,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2936567967795126403, guid: 0c47529b7b6329b478c567dcef05a8b0,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6774828558569049840, guid: 0c47529b7b6329b478c567dcef05a8b0,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6841291066489231948, guid: 0c47529b7b6329b478c567dcef05a8b0,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -438,6 +440,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2936567967795126403, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774828558569049840, guid: 0c47529b7b6329b478c567dcef05a8b0,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c47529b7b6329b478c567dcef05a8b0, type: 3}

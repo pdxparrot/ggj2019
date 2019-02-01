@@ -97,6 +97,7 @@ namespace pdxpartyparrot.ggj2019
         public void EndGame()
         {
             NPCSpawner.Instance.WaveStartEvent -= OnWaveStarted;
+            NPCSpawner.Instance.Shutdown();
 
             IsGameOver = true;
 

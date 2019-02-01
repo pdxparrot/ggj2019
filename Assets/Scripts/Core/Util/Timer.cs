@@ -38,6 +38,14 @@ namespace pdxpartyparrot.Core.Util
             _isRunning = true;
         }
 
+        public void Start(Range timerSeconds, Action onTimesUp=null)
+        {
+            _onTimesUp = onTimesUp;
+            _timerSeconds = timerSeconds.GetValue();
+            _secondsRemaining = _timerSeconds;
+            _isRunning = true;
+        }
+
         public void Stop()
         {
             _isRunning = false;

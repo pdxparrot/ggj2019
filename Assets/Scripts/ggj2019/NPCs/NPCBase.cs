@@ -1,5 +1,6 @@
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Game.Effects;
 
 using Spine;
@@ -7,6 +8,7 @@ using Spine.Unity;
 
 using UnityEngine;
 
+[RequireComponent(typeof(PooledObject))]
 public class NPCBase : PhysicsActor2D
 {
     public override float Height => Collider.bounds.size.y / 2.0f;
