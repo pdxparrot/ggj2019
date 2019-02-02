@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Editor
 {
-    public sealed class ScriptEditorWindow : Window.EditorWindow
+    public sealed class BuildWindow : Window.EditorWindow
     {
-        [MenuItem("PDX Party Parrot/Core/Script Editor")]
+        [MenuItem("PDX Party Parrot/Build")]
         static void Init()
         {
-            ScriptEditorWindow window = GetWindow<ScriptEditorWindow>();
+            BuildWindow window = GetWindow<BuildWindow>();
             window.Show();
         }
 
-        public override string Title => "Script Editor";
+        public override string Title => "Build";
 
         private Vector2 _xScrollPosition, _yScrollPosition;
 

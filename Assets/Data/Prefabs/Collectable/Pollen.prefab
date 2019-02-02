@@ -51,7 +51,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.5
 --- !u!114 &100115127484628488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +82,11 @@ MonoBehaviour:
   _particleSystem: {fileID: 7202681780061667075}
   _pickupEffect: {fileID: 6009020748860504964}
   _collectEffect: {fileID: 8986564420569625324}
-  _height: 4
+  _pollen: 1
+  followPlayer: {fileID: 0}
+  _isCollected: 0
+  _signTime: 0
+  _startPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &6009020748860504964
 MonoBehaviour:
   m_ObjectHideFlags: 0

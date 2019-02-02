@@ -9,6 +9,7 @@ using pdxpartyparrot.Game.State;
 
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
+using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.Game.World;
@@ -50,7 +51,7 @@ namespace pdxpartyparrot.ggj2019
         {
             GameStateManager.Instance.RegisterGameManager(this);
 
-            _waveSpawner = Instantiate(GameGameData.WaveSpawnerPrefab, transform);
+            _waveSpawner = Instantiate(GameGameData.WaveSpawnerPrefab);
         }
 
         private void Update()
@@ -114,11 +115,11 @@ namespace pdxpartyparrot.ggj2019
         //[Server]
         private void SpawnPollen()
         {
-            // -- give it to a random flower
+            // give it to a random flower
             for(int i=0; i<10; ++i) {
-                var f = NPCFlower.Pool.Random();
-                if(null != f && f.IsReady && !f.IsDead && f.CanSpawnPollen) {
-                    f.SpawnPollen();
+                NPCFlower flower = NPCFlower.Flowers.GetRandomEntry();
+                if(null != flower && flower.IsReady && !flower.IsDead && flower.CanSpawnPollen) {
+                    flower.SpawnPollen();
                     break;
                 }
             }

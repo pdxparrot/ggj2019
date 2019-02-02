@@ -1,112 +1,115 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using System.Collections.Generic;
+
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.ggj2019;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class NPCBeetle : NPCEnemy
+namespace pdxpartyparrot.ggj2019.NPCs
 {
-    [SerializeField]
-    private float _harvestCooldown = 1.0f;
+    public sealed class NPCBeetle : NPCEnemy
+    {
+        // TODO: NPCManager.Beetles
+        private static readonly List<NPCBeetle> _beetles = new List<NPCBeetle>();
 
-    [SerializeField]
-    private NPCFlower _flower;
+        public static IReadOnlyCollection<NPCBeetle> Beetles => _beetles;
 
-    public int Pollen { get; private set; }
+        [SerializeField]
+        private float _harvestCooldown = 1.0f;
 
-    private readonly Timer _harvestCooldownTimer = new Timer();
+        [SerializeField]
+        [ReadOnly]
+        private NPCFlower _flower;
 
-    private SpawnPoint _spawnpoint;
+        public int Pollen { get; private set; }
+
+        private readonly Timer _harvestCooldownTimer = new Timer();
+
+        private SpawnPoint _spawnpoint;
 
 #region Unity Lifecycle
-    protected override void Awake()
-    {
-        base.Awake();
+        protected override void Awake()
+        {
+            base.Awake();
 
-        Pool.Add(this);
-    }
-
-    protected override void OnDestroy()
-    {
-        Pool.Remove(this);
-
-        if(_flower != null) {
-            _flower.CanSpawnPollen = true;
+            _beetles.Add(this);
         }
 
-        base.OnDestroy();
-    }
+        protected override void OnDestroy()
+        {
+            _beetles.Remove(this);
 
-    private void Update()
-    {
-        if(IsDead) {
-            return;
+            if(_flower != null) {
+                _flower.CanSpawnPollen = true;
+            }
+
+            base.OnDestroy();
         }
 
-        float dt = Time.deltaTime;
+        private void Update()
+        {
+            if(IsDead) {
+                return;
+            }
 
-        _harvestCooldownTimer.Update(dt);
-    }
+            float dt = Time.deltaTime;
+
+            _harvestCooldownTimer.Update(dt);
+        }
 #endregion
 
-    public override void OnSpawn(SpawnPoint spawnpoint)
-    {
-        base.OnSpawn(spawnpoint);
+        public override void OnSpawn(SpawnPoint spawnpoint)
+        {
+            base.OnSpawn(spawnpoint);
 
-        if(!spawnpoint.Acquire(this)) {
-            Debug.LogError("Unable to acquire spawnpoint!");
-            Destroy(gameObject);
-            return;
-        }
-        _spawnpoint = spawnpoint;
-        
+            if(!spawnpoint.Acquire(this)) {
+                Debug.LogError("Unable to acquire spawnpoint!");
+                Destroy(gameObject);
+                return;
+            }
+            _spawnpoint = spawnpoint;
 
-        _flower = NPCFlower.Nearest(transform.position);
-        if(null == _flower || !_flower.Collides(this) || _flower.IsDead) {
-            Debug.LogWarning("Spawned on a dead / missing flower!");
-            Destroy(gameObject);
-            return;
-        }
+            _flower = NPCFlower.Flowers.Nearest(transform.position);
+            if(!_flower.Collides(this) || _flower.IsDead) {
+                Debug.LogWarning($"Spawned on a dead / missing flower: {_flower.IsDead}");
+                Destroy(gameObject);
+                return;
+            }
 
-        _flower.CanSpawnPollen = false;
+            _flower.CanSpawnPollen = false;
 
-        //Assert.IsTrue(_flower.IsReady && _flower.CanSpawnPollen && _flower.HasPollen);
+            //Assert.IsTrue(_flower.IsReady && _flower.CanSpawnPollen && _flower.HasPollen);
 
-        _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
-    }
-
-    private void HarvestFlower()
-    {
-        if(GameManager.Instance.IsGameOver) {
-            return;
+            _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
         }
 
-        Pollen += _flower.BeetleHarvest();
-        if(_flower.IsDead) {
-            _flower = null;
+        private void HarvestFlower()
+        {
+            if(GameManager.Instance.IsGameOver) {
+                return;
+            }
 
-            Kill();
-            return;
+            Pollen += _flower.BeetleHarvest();
+            if(_flower.IsDead) {
+                _flower = null;
+
+                Kill();
+                return;
+            }
+
+            _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
         }
 
-        _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
-    }
+        public override void Kill()
+        {
+            _spawnpoint.Release();
+            _spawnpoint = null;
 
-    public override void Kill()
-    {
-        _spawnpoint.Release();
-        _spawnpoint = null;
+            base.Kill();
 
-        base.Kill();
-
-        _harvestCooldownTimer.Stop();
-        GameManager.Instance.BeetleKilled();
-    }
-
-    public static ProxPool<NPCBeetle> Pool = new ProxPool<NPCBeetle>();
-
-    public static NPCBeetle Nearest(Vector3 pos, float dist = 1000000.0f) {
-        return Pool.Nearest(pos, dist);
+            _harvestCooldownTimer.Stop();
+            GameManager.Instance.BeetleKilled();
+        }
     }
 }

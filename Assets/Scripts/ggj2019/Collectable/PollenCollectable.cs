@@ -1,164 +1,177 @@
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
-using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
+using pdxpartyparrot.ggj2019.Players;
+
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(PooledObject))]
-public class PollenCollectable: MonoBehaviour
+namespace pdxpartyparrot.ggj2019.Collectable
 {
-    [SerializeField]
-    private float _sideDistance = 0.25f;
+    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(PooledObject))]
+    public class PollenCollectable: MonoBehaviour
+    {
+        [SerializeField]
+        private float _sideDistance = 0.25f;
 
-    [SerializeField]
-    private float _sideSpeed = 0.5f;
+        [SerializeField]
+        private float _sideSpeed = 0.5f;
 
-    [SerializeField]
-    private float _upwardSpeed = 0.001f;
+        [SerializeField]
+        private float _upwardSpeed = 0.001f;
 
-    [SerializeField]
-    private ParticleSystem _particleSystem;
+        [SerializeField]
+        private ParticleSystem _particleSystem;
 
-    [SerializeField]
-    private EffectTrigger _pickupEffect;
+        [SerializeField]
+        private EffectTrigger _pickupEffect;
 
-    [SerializeField]
-    private EffectTrigger _collectEffect;
+        [SerializeField]
+        private EffectTrigger _collectEffect;
 
-    [SerializeField] public float _height = 4f;
+        [SerializeField]
+        [ReadOnly]
+        private int _pollen = 1;
 
-    private int _pollen = 1;
+        [SerializeField]
+        [ReadOnly]
+        private Players.Player followPlayer;
 
-    private Player followPlayer;
+        [SerializeField]
+        [ReadOnly]
+        private bool _isCollected ;
 
-    private bool _isCollected = false;
+        [SerializeField]
+        [ReadOnly]
+        private float _signTime;
 
-    private float _signTime = 0;
+        [SerializeField]
+        [ReadOnly]
+        private Vector3 _startPoint;
 
-    private Vector3 _startPont = new Vector3();
+        private Hive _hive;
 
-    private Hive _hive;
+        private Collider2D _collider;
 
 #region Unity Lifecycle
-    private void Start()
-    {
-        _startPont = transform.position;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        if (PartyParrotManager.Instance.IsPaused)
-            return;
-
-        if (_isCollected)
+        private void Awake()
         {
-            if(!_particleSystem.isPlaying)
+            _startPoint = transform.position;
+            _collider = GetComponent<Collider2D>();
+        }
+
+        private void Update()
+        {
+            if(PartyParrotManager.Instance.IsPaused) {
+                return;
+            }
+
+            if(_isCollected) {
+                if(!_particleSystem.isPlaying) {
+                    Destroy(gameObject);
+                }
+
+                GoToHive();
+                return;
+            }
+
+            if(FollowPlayer()) {
+                return;
+            }
+
+            Move(Time.deltaTime);
+
+            if(transform.position.y  - _collider.bounds.size.y / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D) {
                 Destroy(gameObject);
-
-            GoToHive();
-            return;
+            }
         }
 
-        if (FollowPlayer())
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            return;
+            if(_isCollected) {
+                return;
+            }
+
+            Gather(other.gameObject.GetComponent<Players.Player>());
         }
 
-        Move(Time.deltaTime);
-
-        if (transform.position.y  - _height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D)
+        private void OnTriggerExit2D(Collider2D other)
         {
-            Destroy(gameObject);
+            if(_isCollected) {
+                return;
+            }
+
+            Gather(other.gameObject.GetComponent<Players.Player>());
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(_isCollected)
-            return;
-
-        Gather(other.gameObject.GetComponent<Player>());
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if(_isCollected)
-            return;
-
-        Gather(other.gameObject.GetComponent<Player>());
-    }
 #endregion
 
-    private void Gather(Player player)
-    {
-        if (null == player)
+        private void Gather(Players.Player player)
         {
-            return;
+            if(null == player) {
+                return;
+            }
+
+            if(player.HasPollen) {
+                return;
+            }
+
+            followPlayer = player;
+
+            player.AddPollen(_pollen);
+            _pickupEffect.Trigger();
         }
 
-        if (player.HasPollen)
-            return;
-
-        followPlayer = player;
-
-        player.AddPollen(_pollen);
-        _pickupEffect.Trigger();
-    }
-
-    private void GoToHive()
-    {
-        transform.position = Vector3.Lerp(transform.position, _hive.Position, 10f * Time.deltaTime);
-    }
-
-    private bool FollowPlayer()
-    {
-        if ( followPlayer == null)
+        private void GoToHive()
         {
-            return false;
+            transform.position = Vector3.Lerp(transform.position, _hive.Position, 10f * Time.deltaTime);
         }
 
-        if (followPlayer.IsDead)
+        private bool FollowPlayer()
         {
-            followPlayer = null;
-            return false;
+            if(followPlayer == null) {
+                return false;
+            }
+
+            if(followPlayer.IsDead) {
+                followPlayer = null;
+                return false;
+            }
+
+            transform.position = Vector3.Lerp(transform.position, followPlayer.Position + new Vector3(0.25f,0f), 20f*Time.deltaTime);
+
+            // pollen was deposited
+            if(!followPlayer.HasPollen) {
+                Collect();
+            }
+
+            return true;
         }
 
-        transform.position = Vector3.Lerp(transform.position, followPlayer.Position + new Vector3(0.25f,0f), 20f*Time.deltaTime);
-
-        // pollen was deposited
-        if (!followPlayer.HasPollen)
+        private void Move(float dt)
         {
-            Collect();
+            _signTime += dt * _sideSpeed;
+
+            transform.position = new Vector3((Mathf.Sin(_signTime) * _sideDistance) + _startPoint.x,
+                transform.position.y + (_upwardSpeed * dt));
         }
 
-        return true;
-    }
+        public void SetPollenAmt(int amt)
+        {
+            _pollen = amt;
+        }
 
-    private void Move(float dt)
-    {
-        _signTime += dt * _sideSpeed;
+        private void Collect()
+        {
+            _isCollected = true;
+            _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 
-        transform.position = new Vector3((Mathf.Sin(_signTime) * _sideDistance) + _startPont.x,
-            transform.position.y + (_upwardSpeed * dt));
-    }
+            _hive = Hive.Nearest(transform.position);
 
-    public void SetPollenAmt(int amt)
-    {
-        _pollen = amt;
-    }
-
-    private void Collect()
-    {
-        _isCollected = true;
-        _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-
-        _hive = Hive.Nearest(transform.position);
-
-        _collectEffect.Trigger(() => {
-            Destroy(gameObject);
-        });
+            _collectEffect.Trigger(() => {
+                Destroy(gameObject);
+            });
+        }
     }
 }

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: player
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &442210468265235097
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &586423956843921338
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &1144374759180389027
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +312,6 @@ MonoBehaviour:
   _model: {fileID: 2010652574697721345}
   _controller: {fileID: 0}
   _animator: {fileID: 0}
-  Spawnpoint: {fileID: 0}
   armorhealth: 2
   _armor:
   - {fileID: 3647004047578513709}
@@ -391,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &2010652574697721345
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &2870009159769385170
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: player
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &2963483834823916901
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &3647004047578513709
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: player
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &4496942075377442879
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &4830398774795512281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,7 +1082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &7295531712815618503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: player
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &7359619447378552003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &7518767846853830618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &7772616670779647220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,7 +1437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: player
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &8225554324597598380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,7 +1578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: bee
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1001 &417307870366530417
 PrefabInstance:
   m_ObjectHideFlags: 0

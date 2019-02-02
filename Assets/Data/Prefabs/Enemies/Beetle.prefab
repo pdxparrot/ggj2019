@@ -75,7 +75,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!95 &5417508698543561820
 Animator:
   serializedVersion: 3
@@ -280,7 +280,7 @@ MonoBehaviour:
   _isDead: 0
   _spawnEffect: {fileID: 497739556831282585}
   _deathEffect: {fileID: 2225282234619250759}
-  _animation: {fileID: 0}
+  _animation: {fileID: 8551462401960752783}
   _damage: 1
   _harvestCooldown: 2
   _flower: {fileID: 0}
@@ -410,17 +410,17 @@ PrefabInstance:
     - target: {fileID: 6421718349660438559, guid: df96be1adf19f9e4a89e7fa06cde557d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6421718349660438559, guid: df96be1adf19f9e4a89e7fa06cde557d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6421718349660438559, guid: df96be1adf19f9e4a89e7fa06cde557d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6421718349660438559, guid: df96be1adf19f9e4a89e7fa06cde557d,
         type: 3}
@@ -475,7 +475,7 @@ PrefabInstance:
     - target: {fileID: 6421718349660438559, guid: df96be1adf19f9e4a89e7fa06cde557d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.35
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5480410541846606236, guid: df96be1adf19f9e4a89e7fa06cde557d,
         type: 3}
@@ -496,6 +496,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5977115076583055880}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8551462401960752783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2620566948100428935, guid: df96be1adf19f9e4a89e7fa06cde557d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5977115076583055880}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2689620062516509698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6425259953555949184
 PrefabInstance:
   m_ObjectHideFlags: 0

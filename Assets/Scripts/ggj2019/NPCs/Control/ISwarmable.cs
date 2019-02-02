@@ -1,15 +1,17 @@
-﻿using UnityEngine;
-
-public interface ISwarmable
+﻿namespace pdxpartyparrot.ggj2019.NPCs.Control
 {
-    bool CanJoinSwarm { get; }
+    // TODO: make this core
+    public interface ISwarmable
+    {
+        bool CanJoinSwarm { get; }
 
-    bool IsInSwarm { get; }
+        bool IsInSwarm { get; }
 
-    void JoinSwarm(Swarm swarm, float radius);
+        void JoinSwarm(Swarm swarm, float radius);
 
-    bool DoContext();
+        bool DoContext();
 
-    void Kill();
+        void Kill();
 
+    }
 }

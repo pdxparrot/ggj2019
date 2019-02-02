@@ -2,7 +2,9 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
-using Spine.Unity;
+using pdxpartyparrot.ggj2019.NPCs;
+using pdxpartyparrot.ggj2019.NPCs.Control;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -107,7 +109,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return false;
             }
 
-            if(!_swarm.HasSwarm()) {
+            if(!_swarm.HasSwarm) {
                 Kill();
                 return true;
             }
@@ -141,7 +143,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void DoContext()
         {
-            if(!_swarm.HasSwarm()) {
+            if(!_swarm.HasSwarm) {
                 return;
             }
 

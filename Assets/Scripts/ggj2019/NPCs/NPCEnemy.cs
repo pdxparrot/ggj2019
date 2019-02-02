@@ -2,35 +2,38 @@ using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 
-public class NPCEnemy : NPCBase
+namespace pdxpartyparrot.ggj2019.NPCs
 {
-    [SerializeField]
-    private int _damage = 1;
+    public abstract class NPCEnemy : NPCBase
+    {
+        [SerializeField]
+        private int _damage = 1;
 
 #region Unity Lifecycle
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        DamagePlayer(other.gameObject.GetComponent<Player>());
-    }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            DamagePlayer(other.gameObject.GetComponent<Players.Player>());
+        }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        DamagePlayer(other.gameObject.GetComponent<Player>());
-    }
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            DamagePlayer(other.gameObject.GetComponent<Players.Player>());
+        }
 #endregion
 
-    private void DamagePlayer(Player player)
-    {
-        if(IsDead) {
-            return;
-        }
+        private void DamagePlayer(Players.Player player)
+        {
+            if(IsDead) {
+                return;
+            }
 
-        if(null == player) {
-            return;
-        }
+            if(null == player) {
+                return;
+            }
 
-        if(player.Damage(_damage)) {
-            Kill();
+            if(player.Damage(_damage)) {
+                Kill();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ using pdxpartyparrot.Game.Effects;
 using Spine.Unity;
 
 using DG.Tweening;
-
+using pdxpartyparrot.ggj2019.NPCs;
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Players
@@ -92,12 +92,6 @@ namespace pdxpartyparrot.ggj2019.Players
         private void SetAnimation(string animationName, bool loop)
         {
             _animation.AnimationState.SetAnimation(0, animationName, loop);
-        }
-
-        public bool Collides(Actor actor, float distance = 0.0f) {
-            Vector3 offset = actor.transform.position - transform.position;
-            float r = actor.Radius + Radius;
-            return Vector3.Magnitude(offset) < r + distance;
         }
 
         private int neighbor1(int pc) {
@@ -251,8 +245,9 @@ namespace pdxpartyparrot.ggj2019.Players
             return amount;
         }
 
-        private void SpawnBee() {
-            if(GameManager.Instance.IsGameOver || _beeSpawnTimer.IsRunning || NPCBee.Pool.Count >= _maxBees) {
+        private void SpawnBee()
+        {
+            if(GameManager.Instance.IsGameOver || _beeSpawnTimer.IsRunning || NPCBee.Bees.Count >= _maxBees) {
                 return;
             }
 

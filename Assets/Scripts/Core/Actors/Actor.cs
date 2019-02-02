@@ -35,7 +35,11 @@ namespace pdxpartyparrot.Core.Actors
         private GameObject _model;
 
         [CanBeNull]
-        public GameObject Model => _model;
+        public GameObject Model
+        {
+            get => _model;
+            protected  set => _model = value;
+        }
 #endregion
 
 #region Controller
@@ -75,6 +79,13 @@ namespace pdxpartyparrot.Core.Actors
         public virtual void Initialize(int id)
         {
             _id = id;
+        }
+
+        public bool Collides(Actor other, float distance=0.0f)
+        {
+            Vector3 offset = other.transform.position - transform.position;
+            float r = other.Radius + Radius;
+            return Vector3.Magnitude(offset) < r + distance;
         }
 
 #region Callbacks

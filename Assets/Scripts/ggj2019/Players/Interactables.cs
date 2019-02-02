@@ -1,55 +1,58 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using pdxpartyparrot.ggj2019.NPCs;
+
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class Interactables : MonoBehaviour
+namespace pdxpartyparrot.ggj2019.Players
 {
-
-    private Collider2D _trigger;
-
-    private List<NPCBee> _bees = new List<NPCBee>();
-
-
-    #region Unity Life Cycle
-
-    private void Start()
+    // TODO: make this core
+    [RequireComponent(typeof(Collider2D))]
+    public class Interactables : MonoBehaviour
     {
-        _trigger = GetComponent<Collider2D>();
+        private Collider2D _trigger;
 
-        _trigger.isTrigger = true;
-    }
+        private readonly List<NPCBee> _bees = new List<NPCBee>();
 
-    #endregion
 
-    public NPCBee GetBee()
-    {
-        if (_bees.Count < 1)
-            return null;
-
-        for (int i = 0; i < _bees.Count; i++)
+#region Unity Life Cycle
+        private void Start()
         {
-            if (_bees[i].CanJoinSwarm)
-                return _bees[i];
+            _trigger = GetComponent<Collider2D>();
+
+            _trigger.isTrigger = true;
         }
 
-        return null;
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            NPCBee npcBee = other.GetComponent<NPCBee>();
+            if(npcBee != null && !npcBee.IsInSwarm) {
+                _bees.Add(npcBee);
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            NPCBee npcBee = other.GetComponent<NPCBee>();
+            if (npcBee != null) {
+                _bees.Remove(npcBee);
+            }
+        }
+#endregion
+
+        public NPCBee GetBee()
+        {
+            if(_bees.Count < 1) {
+                return null;
+            }
+
+            foreach(NPCBee bee in _bees) {
+                if(bee.CanJoinSwarm) {
+                    return bee;
+                }
+            }
+
+            return null;
+        }
     }
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        NPCBee npcBee = collider.GetComponent<NPCBee>();
-
-        if(npcBee != null && !npcBee.IsInSwarm)
-            _bees.Add(npcBee);
-    }
-
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        NPCBee npcBee = collider.GetComponent<NPCBee>();
-
-        if (npcBee != null)
-            _bees.Remove(npcBee);
-    }
-
 }

@@ -13,9 +13,6 @@ namespace pdxpartyparrot.Core.World
         public string Tag => _tag;
 
         [SerializeField]
-        private Actor _overridePrefab;
-
-        [SerializeField]
         [ReadOnly]
         private Actor _owner;
 
@@ -67,11 +64,7 @@ namespace pdxpartyparrot.Core.World
         {
             //Debug.LogWarning("You probably meant to use NetworkManager.SpawnNetworkPrefab");
 
-            // TODO: no... we don't want to do this
-            // the actor should be responsible for doing what it needs to do
-            Actor p = (null == _overridePrefab ? prefab : _overridePrefab);
-            Actor actor = Instantiate(p);
-
+            Actor actor = Instantiate(prefab);
             Spawn(actor);
             return actor;
         }
