@@ -76,14 +76,14 @@ namespace pdxpartyparrot.Core.World
 #region Registration
         public virtual void RegisterSpawnPoint(SpawnPoint spawnPoint)
         {
-            Debug.Log($"Registering spawnpoint {spawnPoint.name} of type {spawnPoint.Tag}");
+            //Debug.Log($"Registering spawnpoint {spawnPoint.name} of type {spawnPoint.Tag}");
 
             _spawnPoints.GetOrAdd(spawnPoint.Tag).SpawnPoints.Add(spawnPoint);
         }
 
         public virtual void UnregisterSpawnPoint(SpawnPoint spawnPoint)
         {
-            Debug.Log($"Unregistering spawnpoint {spawnPoint.name}");
+            //Debug.Log($"Unregistering spawnpoint {spawnPoint.name}");
 
             if(_spawnPoints.TryGetValue(spawnPoint.Tag, out var spawnPoints)) {
                 spawnPoints.SpawnPoints.Remove(spawnPoint);

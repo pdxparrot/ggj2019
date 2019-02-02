@@ -14,9 +14,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private readonly List<NPCBee> _bees = new List<NPCBee>();
 
-
 #region Unity Life Cycle
-        private void Start()
+        private void Awake()
         {
             _trigger = GetComponent<Collider2D>();
 
@@ -34,7 +33,7 @@ namespace pdxpartyparrot.ggj2019.Players
         private void OnTriggerExit2D(Collider2D other)
         {
             NPCBee npcBee = other.GetComponent<NPCBee>();
-            if (npcBee != null) {
+            if(npcBee != null) {
                 _bees.Remove(npcBee);
             }
         }

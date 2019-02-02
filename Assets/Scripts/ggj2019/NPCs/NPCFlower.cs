@@ -44,30 +44,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private SpawnPoint _spawnpoint;
 
-#region Unity Lifecycle
-        protected override void Awake()
-        {
-            base.Awake();
-
-            _flowers.Add(this);
-
-            _pollen = _initialPollen;
-        }
-
-        protected override void OnDestroy()
-        {
-            _flowers.Remove(this);
-
-            _animation = null;
-            if(null != Model) {
-                Destroy(Model);
-                Model = null;
-            }
-
-            base.OnDestroy();
-        }
-#endregion
-
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
@@ -77,10 +53,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             if(!spawnpoint.Acquire(this)) {
                 Debug.LogError("Unable to acquire spawnpoint!");
-                Destroy(gameObject);
+                _pooledObject.Recycle();
                 return;
             }
             _spawnpoint = spawnpoint;
+
+            _flowers.Add(this);
+
+            _pollen = _initialPollen;
 
             IsReady = false;
 
@@ -91,8 +71,22 @@ namespace pdxpartyparrot.ggj2019.NPCs
             };
         }
 
+        protected override void OnDeSpawn()
+        {
+            _flowers.Remove(this);
+
+            _animation = null;
+            if(null != Model) {
+                Destroy(Model);
+                Model = null;
+            }
+
+            base.OnDeSpawn();
+        }
+
         public void SpawnPollen()
         {
+// TODO: pool
             Instantiate(GameManager.Instance.GameGameData.PollenPrefab, transform.position, Quaternion.identity);
         }
 

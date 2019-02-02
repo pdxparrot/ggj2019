@@ -9,8 +9,6 @@
 
         void JoinSwarm(Swarm swarm, float radius);
 
-        bool DoContext();
-
         void Kill();
 
     }

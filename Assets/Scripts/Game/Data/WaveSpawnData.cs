@@ -22,21 +22,25 @@ namespace pdxpartyparrot.Game.Data
             public Actor ActorPrefab => _actorPrefab;
 
             [SerializeField]
+            [Tooltip("The spawnpoint tag")]
             private string _tag;
    
             public string Tag => _tag;
 
             [SerializeField]
+            [Tooltip("Time between spawns, in seconds")]
             private Range _delay;
 
             public Range Delay => _delay;
 
             [SerializeField]
+            [Tooltip("How many actors to spawn each time we spawn")]
             private Range _count;
 
             public Range Count => _count;
 
             [SerializeField]
+            [Tooltip("Should we only spawn the wave once?")]
             private bool _once;
 
             public bool Once => _once;
@@ -47,6 +51,7 @@ namespace pdxpartyparrot.Game.Data
         public class SpawnWave
         {
             [SerializeField]
+            [Tooltip("The duration of the wave")]
             private float _duration;
 
             public float Duration => _duration;

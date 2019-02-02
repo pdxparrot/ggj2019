@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
@@ -29,29 +30,40 @@ namespace pdxpartyparrot.Game.World
 
                 private string PoolTag => $"spawnGroup_{_spawnGroupData.Tag}";
 
+                private bool _isPooled;
+
                 public SpawnGroup(WaveSpawnData.SpawnGroup spawnGroupData)
                 {
                     _spawnGroupData = spawnGroupData;
                 }
 
-                public void Initialize()
+                public void Initialize(float waveDuration)
                 {
+                    _isPooled = false;
+
                     PooledObject pooledObject = _spawnGroupData.ActorPrefab.GetComponent<PooledObject>();
                     if(null != pooledObject) {
+                        _isPooled = true;
+
+                        int count = _spawnGroupData.Count.Max;
+                        if(0 != _spawnGroupData.Delay.Min) {
+                            count = Mathf.CeilToInt(count * (waveDuration / _spawnGroupData.Delay.Max));
+                        }
+
                         if(ObjectPoolManager.Instance.HasPool(PoolTag)) {
-                            ObjectPoolManager.Instance.EnsurePoolSize(PoolTag, _spawnGroupData.Count.Max);
+                            ObjectPoolManager.Instance.EnsurePoolSize(PoolTag, count);
                         } else {
-                            ObjectPoolManager.Instance.InitializePool(PoolTag, pooledObject, _spawnGroupData.Count.Max);
+                            ObjectPoolManager.Instance.InitializePool(PoolTag, pooledObject, count);
                         }
                     }
                 }
 
                 public void Shutdown()
                 {
-                    PooledObject pooledObject = _spawnGroupData.ActorPrefab.GetComponent<PooledObject>();
-                    if(null != pooledObject) {
+                    if(_isPooled && ObjectPoolManager.HasInstance) {
                         ObjectPoolManager.Instance.DestroyPool(PoolTag);
                     }
+                    _isPooled = false;
                 }
 
                 public void Start()
@@ -78,10 +90,12 @@ namespace pdxpartyparrot.Game.World
                             continue;
                         }
 
-                        // TODO
-                        /*Actor actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
-                        spawnPoint.Spawn(actor);*/
-                        spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab);
+                        if(_isPooled) {
+                            Actor actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
+                            spawnPoint.Spawn(actor);
+                        } else {
+                            spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab);
+                        }
 
                         if(!_spawnGroupData.Once) {
                             _spawnTimer.Start(_spawnGroupData.Delay, Spawn);
@@ -108,7 +122,7 @@ namespace pdxpartyparrot.Game.World
             public void Initialize()
             {
                 foreach(SpawnGroup spawnGroup in _spawnGroups) {
-                    spawnGroup.Initialize();
+                    spawnGroup.Initialize(Duration);
                 }
             }
 

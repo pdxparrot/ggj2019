@@ -17,7 +17,7 @@ namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
                 return false;
             }
 
-            GamePlayer.DoContext();
+            //GamePlayer.DoContext();
 
             return true;
         }

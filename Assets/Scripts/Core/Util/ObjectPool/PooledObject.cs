@@ -10,7 +10,15 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
         public event EventHandler<EventArgs> RecycleEvent;
 #endregion
 
-        public string Tag { get; set; }
+        [SerializeField]
+        [ReadOnly]
+        private string _tag;
+
+        public string Tag
+        {
+            get => _tag;
+            set => _tag = value;
+        }
 
         public void Recycle()
         {

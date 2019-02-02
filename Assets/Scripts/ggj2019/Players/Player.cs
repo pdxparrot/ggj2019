@@ -20,8 +20,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public override float Radius => GamePlayerController.Collider.bounds.size.x / 2.0f;
 
-        [SerializeField] private float _harvestRadius;
-
         [SerializeField]
         private Interactables _interactables;
 
@@ -40,16 +38,19 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         private EffectTrigger _deathEffect;
 
+        [SerializeField]
+        [ReadOnly]
+        private int _pollen;
+
+        public bool HasPollen => _pollen > 0;
+
         private readonly Timer _deathTimer = new Timer();
 
         private Swarm _swarm;
 
         private SpineSkinSwapper _skinSwapper;
 
-        private int _pollen;
-        public bool HasPollen { get { return _pollen > 0; } }
-
-#region Unity Lifecycle
+        #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
@@ -62,16 +63,9 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Update()
         {
-            /*if(!HasPollen) {
-                var flower = NPCFlower.Nearest(transform.position, _harvestRadius);
-                if(flower && flower.HasPollen)
-                    _pollen += flower.Harvest();
-            }
-            else {*/
             if(HasPollen) {
-                var hive = Hive.Nearest(transform.position);
-                if(hive && hive.Collides(this)) {
-                    _pollen -= hive.UnloadPollen(this, _pollen);
+                if(Hive.Instance.Collides(this)) {
+                    _pollen -= Hive.Instance.UnloadPollen(this, _pollen);
                 }
             }
 
@@ -101,7 +95,6 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             _swarm.Add(npcBee);
         }
-
 
         public bool Damage(int amount)
         {
@@ -136,18 +129,9 @@ namespace pdxpartyparrot.ggj2019.Players
         public void DoGather()
         {
             NPCBee npcBee = _interactables.GetBee();
-            if (npcBee != null) {
+            if(npcBee != null) {
                 _swarm.Add(npcBee);
             }
-        }
-
-        public void DoContext()
-        {
-            if(!_swarm.HasSwarm) {
-                return;
-            }
-
-            _swarm.DoContext();
         }
 
         private void Respawn()

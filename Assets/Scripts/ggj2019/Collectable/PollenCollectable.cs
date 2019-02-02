@@ -51,8 +51,6 @@ namespace pdxpartyparrot.ggj2019.Collectable
         [ReadOnly]
         private Vector3 _startPoint;
 
-        private Hive _hive;
-
         private Collider2D _collider;
 
 #region Unity Lifecycle
@@ -125,7 +123,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         private void GoToHive()
         {
-            transform.position = Vector3.Lerp(transform.position, _hive.Position, 10f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, Hive.Instance.Position, 10f * Time.deltaTime);
         }
 
         private bool FollowPlayer()
@@ -166,8 +164,6 @@ namespace pdxpartyparrot.ggj2019.Collectable
         {
             _isCollected = true;
             _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-
-            _hive = Hive.Nearest(transform.position);
 
             _collectEffect.Trigger(() => {
                 Destroy(gameObject);

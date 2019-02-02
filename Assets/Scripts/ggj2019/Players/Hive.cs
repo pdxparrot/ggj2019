@@ -1,21 +1,25 @@
 ﻿using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Effects;
-
-using Spine.Unity;
+using pdxpartyparrot.ggj2019.NPCs;
 
 using DG.Tweening;
-using pdxpartyparrot.ggj2019.NPCs;
+using Spine.Unity;
+
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
     public sealed class Hive : PhysicsActor2D
     {
+        // TODO: do this better
         public static Hive Instance { get; private set; }
 
         [SerializeField] private int armorhealth;
@@ -32,7 +36,7 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField] private EffectTrigger _damageEffect;
         [SerializeField] private GameObject _hiveBackground;
 
-        private List<int> _health;
+        private readonly List<int> _health = new List<int>();
 
         public override float Height => Collider.bounds.size.y / 2.0f;
         public override float Radius => Collider.bounds.size.x / 2.0f;
@@ -46,21 +50,23 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         private NPCBee _beePrefab;
 
+        [SerializeField]
+        private SkeletonAnimation _animation;
+
 #region Unity Lifecycle
-        protected override void Awake() {
+        protected override void Awake()
+        {
             base.Awake();
 
             Instance = this;
 
-            //Pool.Add(this);
-
-            _health = new List<int>();
             for(int i = 0; i < _armor.Count; ++i) {
                 _health.Add(armorhealth);
             }
         }
 
-        private void Update() {
+        private void Update()
+        {
             if(!_initialized || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
                 return;
             }
@@ -71,10 +77,9 @@ namespace pdxpartyparrot.ggj2019.Players
             SpawnBee();
         }
 
-        protected override void OnDestroy() {
+        protected override void OnDestroy()
+        {
             Instance = null;
-
-            //Pool.Remove(this);
 
             base.OnDestroy();
         }
@@ -82,12 +87,20 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private bool _initialized;
 
-        public void Initialize() {
+        public void Initialize()
+        {
             _initialized = true;
+
+            PooledObject pooledObject = _beePrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, _maxBees * 4);
         }
 
-        [SerializeField]
-        private SkeletonAnimation _animation;
+        public void Shutdown()
+        {
+            ObjectPoolManager.Instance.DestroyPool("bees");
+
+            _initialized = false;
+        }
 
         private void SetAnimation(string animationName, bool loop)
         {
@@ -124,7 +137,6 @@ namespace pdxpartyparrot.ggj2019.Players
             case 4: return 3;
             case 5: return 4;
         }}
-
 
         public bool TakeDamage(Vector3 pos) {
             int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
@@ -233,14 +245,11 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
-        public int UnloadPollen(Player player, int amount) {
-            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
-            if(spawnPoint != null) {
-                var bee = spawnPoint.SpawnPrefab(_beePrefab) as NPCBee;
-
-                if(null != player) {
-                    player.AddBeeToSwarm(bee);
-                }
+        public int UnloadPollen(Player player, int amount)
+        {
+            NPCBee bee = DoSpawnBee();
+            if(null != bee && null != player) {
+                player.AddBeeToSwarm(bee);
             }
             return amount;
         }
@@ -251,18 +260,22 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
-            if(spawnPoint != null) {
-                spawnPoint.SpawnPrefab(_beePrefab);
-            }
+            DoSpawnBee();
 
             _beeSpawnTimer.Start(_beeSpawnCooldown);
         }
 
-        //public static ProxPool<Hive> Pool = new ProxPool<Hive>();
+        [CanBeNull]
+        private NPCBee DoSpawnBee()
+        {
+            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
+            if(spawnPoint == null) {
+                return null;
+            }
 
-        public static Hive Nearest(Vector3 pos, float dist = 1000000.0f) {
-            return Instance;//Pool.Nearest(pos, dist) as Hive;
+            NPCBee bee = ObjectPoolManager.Instance.GetPooledObject<NPCBee>("bees");
+            spawnPoint.Spawn(bee);
+            return bee;
         }
     }
 }

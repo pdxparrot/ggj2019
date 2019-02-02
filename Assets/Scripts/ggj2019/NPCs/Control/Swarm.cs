@@ -28,19 +28,6 @@ namespace pdxpartyparrot.ggj2019.NPCs.Control
             }
         }
 
-        public bool DoContext()
-        {
-            if(!HasSwarm) {
-                return false;
-            }
-
-            if(_swarmables[0].DoContext()) {
-                _swarmables.RemoveAt(0);
-                return true;
-            }
-            return false;
-        }
-
         public int Kill(int amount)
         {
             int killed = 0;

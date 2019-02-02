@@ -129,7 +129,7 @@ Animator:
   m_GameObject: {fileID: 2228405151768162015}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b1ba918be9e28743b65d01bd21aa5c1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -326,8 +326,6 @@ MonoBehaviour:
   _animation: {fileID: 0}
   _initialPollen: 5
   _pollenRate: 1
-  _floatingPollenObj: {fileID: 4478823037114562459, guid: 7c1c873417b7ce844968e893ebb54512,
-    type: 3}
   _pollen: 0
   _canSpawnPollen: 1
 --- !u!114 &7498956286358863322

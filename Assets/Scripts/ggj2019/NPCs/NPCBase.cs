@@ -1,3 +1,5 @@
+using System;
+
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
@@ -39,9 +41,33 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         protected SkeletonAnimation _animation;
 
+        protected PooledObject _pooledObject;
+
+#region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _pooledObject = GetComponent<PooledObject>();
+            _pooledObject.RecycleEvent += RecycleEventHandler;
+        }
+
+        protected override void OnDestroy()
+        {
+            _pooledObject.RecycleEvent -= RecycleEventHandler;
+            _pooledObject = null;
+
+            base.OnDestroy();
+        }
+#endregion
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
+
+            if(null != Model) {
+                Model.SetActive(true);
+            }
 
             IsDead = false;
 
@@ -50,15 +76,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        public override void OnReSpawn(SpawnPoint spawnpoint)
+        protected virtual void OnDeSpawn()
         {
-            base.OnReSpawn(spawnpoint);
-
-            IsDead = false;
-
-            if(null != _spawnEffect) {
-                _spawnEffect.Trigger();
-            }
         }
 
         public virtual void Kill()
@@ -68,10 +87,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
             Model.SetActive(false);
             if(null != _deathEffect) {
                 _deathEffect.Trigger(() => {
-                    Destroy(gameObject);
+                    _pooledObject.Recycle();
                 });
             } else {
-                Destroy(gameObject);
+                _pooledObject.Recycle();
             }
         }
 
@@ -84,5 +103,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             return _animation.AnimationState.SetAnimation(track, animationName, loop);
         }
+
+#region Event Handlers
+        private void RecycleEventHandler(object sender, EventArgs args)
+        {
+            OnDeSpawn();
+        }
+#endregion
     }
 }

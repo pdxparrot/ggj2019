@@ -40,28 +40,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
         private EffectTrigger _attackEffect;
 
 #region Unity Lifecycle
-        protected override void Awake()
-        {
-            base.Awake();
-
-            _wasps.Add(this);
-
-            float dir = (transform.position.x > 0) ? -1 : 1;
-            _accel = new Vector3(1,0,0) * Accel * dir;
-            _animation.Skeleton.ScaleX = _accel.x < 0 ? 1.0f : -1.0f;
-
-            SetHoverAnimation();
-        }
-
-        protected override void OnDestroy()
-        {
-            _wasps.Remove(this);
-
-            base.OnDestroy();
-        }
-
         private void Update()
         {
+            if(IsDead) {
+                return;
+            }
+
             float dt = Time.deltaTime;
 
             Think(dt);
@@ -72,11 +56,32 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             base.OnSpawn(spawnpoint);
 
+            _wasps.Add(this);
+
+            float dir = (transform.position.x > 0) ? -1 : 1;
+            _accel = new Vector3(1,0,0) * Accel * dir;
+            _animation.Skeleton.ScaleX = _accel.x < 0 ? 1.0f : -1.0f;
+
+            SetHoverAnimation();
+
+            _splineLen = 0.0f;
+            _splinePos = 0.0f;
+            _splineVel = 0.0f;
+
             var spline = spawnpoint.GetComponent<BezierSpline>();
             if(spline != null) {
                 _spline = spline;
                 _splineLen = spline.EstLength();
             }
+        }
+
+        protected override void OnDeSpawn()
+        {
+            _wasps.Remove(this);
+
+            _spline = null;
+
+            base.OnDeSpawn();
         }
 
         private void Think(float dt)
@@ -113,9 +118,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             SetFlightAnimation();
 
-            var hive = Hive.Nearest(transform.position);
-            if(hive.Collides(this)) {
-                Attack(hive);
+            if(Hive.Instance.Collides(this)) {
+                Attack(Hive.Instance);
             }
         }
 

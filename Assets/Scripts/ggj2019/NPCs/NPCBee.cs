@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.NPCs.Control;
 using pdxpartyparrot.ggj2019.Players;
 
@@ -22,37 +23,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             Idle,
             Follow,
-            PathToHarvest,
-            Harvest,
-            ReturnHome,
-            PathToRepair,
-            Repair
         }
 
         [SerializeField]
         private float _swarmSpeedModifier = 2.0f;
 
         [SerializeField]
-        private float _fullSPeedModifier = 0.5f;
-
-        [SerializeField]
         [ReadOnly]
         private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
-
-        [SerializeField]
-        private float _harvestDistance = 1.0f;
-
-        [SerializeField]
-        private float _harvestTime = 10.0f;
-
-        [SerializeField]
-        private float _repairDistance = 1.0f;
-
-        [SerializeField]
-        private float _repairCooldown = 10.0f;
-
-        private readonly Timer _repairCooldownTimer = new Timer();
-        private readonly Timer _harvestCooldownTimer = new Timer();
 
         private float _offsetRadius;
         private Vector2 _offsetPosition = new Vector3(0, 0);
@@ -69,31 +47,26 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public bool IsInSwarm => null != _targetSwarm;
 
-        public bool CanJoinSwarm => !IsInSwarm && _state != NPCBeeState.ReturnHome;
-
-        [SerializeField]
-        [ReadOnly]
-        [CanBeNull]
-        private Hive _targetHive;
-
-        [SerializeField]
-        [ReadOnly]
-        [CanBeNull]
-        private NPCEnemy _targetEnemy;
-
-        [SerializeField]
-        [ReadOnly]
-        [CanBeNull]
-        private NPCFlower _targetFlower;
-
-        [SerializeField]
-        [ReadOnly]
-        private int _pollenCount;
+        public bool CanJoinSwarm => !IsInSwarm && _state == NPCBeeState.Idle;
 
 #region Unity Life Cycle
-        protected override void Awake()
+        private void Update()
         {
-            base.Awake();
+            if(IsDead) {
+                return;
+            }
+
+            float dt = Time.deltaTime;
+
+            _offsetUpdateTimer.Update(dt);
+
+            Think(dt);
+        }
+#endregion
+
+        public override void OnSpawn(SpawnPoint spawnpoint)
+        {
+            base.OnSpawn(spawnpoint);
 
             _bees.Add(this);
 
@@ -104,24 +77,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetHoverAnimation();
         }
 
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            _offsetUpdateTimer.Update(dt);
-            _repairCooldownTimer.Update(dt);
-            _harvestCooldownTimer.Update(dt);
-
-            Think(dt);
-        }
-
-        protected override void OnDestroy()
+        protected override void OnDeSpawn()
         {
             _bees.Remove(this);
 
-            base.OnDestroy();
+            base.OnDeSpawn();
         }
-#endregion
 
         // start true to force the animation the first time
         private bool _isFlying = true;
@@ -170,50 +131,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             case NPCBeeState.Follow:
                 Swarm(dt);
                 break;
-            case NPCBeeState.PathToHarvest:
-                PathToHarvest(dt);
-                break;
-            case NPCBeeState.Harvest:
-                Harvest(dt);
-                break;
-            case NPCBeeState.ReturnHome:
-                ReturnHome(dt);
-                break;
-            case NPCBeeState.PathToRepair:
-                PathToRepair(dt);
-                break;
-            case NPCBeeState.Repair:
-                Repair(dt);
-                break;
             }
-        }
-
-        public bool DoContext()
-        {
-            Vector2 position = transform.position;
-
-            Hive hive = Hive.Nearest(position);
-            NPCFlower flower = NPCFlower.Flowers.Nearest(position);
-
-            if(hive != null && hive.Collides(this, _repairDistance)) {
-// TODO: leave our swarm?
-                _targetSwarm = null;
-                _targetHive = hive;
-
-                SetState(NPCBeeState.PathToRepair);
-                return true;
-            } else if(flower != null && flower.Collides(this, _harvestDistance)) {
-// TODO: leave our swarm?
-                _targetSwarm = null;
-                _targetFlower = flower;
-
-                SetState(NPCBeeState.PathToHarvest);
-                return true;
-            /*} else {
-                SetState(NPCBeeState.Idle);*/
-            }
-
-            return false;
         }
 
         public void JoinSwarm(Swarm swarm, float radius)
@@ -238,11 +156,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             case NPCBeeState.Idle:
                 SetHoverAnimation();
                 break;
-            case NPCBeeState.Harvest:
-                SetHoverAnimation();
-                break;
-            case NPCBeeState.Repair:
-                SetHoverAnimation();
+            case NPCBeeState.Follow:
+                SetFlightAnimation();
                 break;
             }
         }
@@ -252,23 +167,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
             float modifier = 1.0f;
             if(IsInSwarm) {
                 modifier = _swarmSpeedModifier;
-            } else if(_pollenCount > 0) {
-                modifier = _fullSPeedModifier;
             }
 
             return PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * modifier;
-        }
-
-        private bool AcquireFlower()
-        {
-            _targetFlower = NPCFlower.Flowers.Nearest(transform.position);
-            return null != _targetFlower && _targetFlower.Collides(this, _harvestDistance);
-        }
-
-        private bool AcquireHive()
-        {
-            _targetHive = Hive.Nearest(transform.position);
-            return null != _targetHive;
         }
 
 #region the things they bee doing
@@ -276,114 +177,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             if(null == _targetSwarm) {
                 Debug.LogWarning("lost my swarm!");
-                SetState(NPCBeeState.ReturnHome);
+                SetState(NPCBeeState.Idle);
                 return;
             }
 
             MoveToTarget(dt, _targetSwarm.transform);
-        }
-
-        private void PathToHarvest(float dt)
-        {
-            if(null == _targetFlower && !AcquireFlower()) {
-                Debug.LogError("target flower disappeared");
-                SetState(NPCBeeState.ReturnHome);
-                return;
-            }
-
-            if(_targetFlower.Collides(this)) {
-                _harvestCooldownTimer.Start(_harvestTime);
-                SetState(NPCBeeState.Harvest);
-                return;
-            }
-
-            MoveToTarget(dt, _targetFlower.transform);
-        }
-
-        private void Harvest(float dt)
-        {
-            /*if(null == _targetFlower) {
-                if(AcquireFlower()) {
-                    SetState(NPCBeeState.PathToHarvest);
-                    return;
-                }
-
-                Debug.LogError("target flower disappeared");
-                SetState(NPCBeeState.ReturnHome);
-                return;
-            }
-
-            if(_harvestCooldownTimer.IsRunning) {
-                return;
-            }
-
-            _pollenCount = _targetFlower.Harvest();
-            Assert.IsTrue(_pollenCount > 0);
-
-            _targetFlower = null;
-
-            Debug.Log($"harvested {_pollenCount} pollen");
-            SetState(NPCBeeState.ReturnHome);*/
-        }
-
-        private void ReturnHome(float dt)
-        {
-            if(null == _targetHive && !AcquireHive()) {
-                Debug.LogError("No hive to return to!");
-                SetState(NPCBeeState.Idle);
-                return;
-            }
-
-            if(_targetHive.Collides(this)) {
-                _targetHive.UnloadPollen(null, _pollenCount);
-                _pollenCount = 0;
-
-                _targetHive = null;
-
-                SetState(NPCBeeState.Idle);
-                return;
-            }
-
-            MoveToTarget(dt, _targetHive.transform);
-        }
-
-        private void PathToRepair(float dt)
-        {
-            if(null == _targetHive && !AcquireHive()) {
-                Debug.LogError("No hive to repair!");
-                SetState(NPCBeeState.Idle);
-                return;
-            }
-
-            if(_targetHive.Collides(this)) {
-                _repairCooldownTimer.Start(_repairCooldown);
-                SetState(NPCBeeState.Repair);
-                return;
-            }
-
-            MoveToTarget(dt, _targetHive.transform);
-        }
-
-        private void Repair(float dt)
-        {
-            if(null == _targetHive) {
-                if(AcquireHive()) {
-                    SetState(NPCBeeState.PathToRepair);
-                    return;
-                }
-
-                Debug.LogError("No hive to repair!");
-                SetState(NPCBeeState.Idle);
-                return;
-            }
-
-            if(_repairCooldownTimer.IsRunning) {
-                return;
-            }
-
-            Debug.Log("Repairing...");
-            _targetHive.Repair();
-            _repairCooldownTimer.Start(_repairCooldown);
         }
 
         private void MoveToTarget(float dt, Transform target)

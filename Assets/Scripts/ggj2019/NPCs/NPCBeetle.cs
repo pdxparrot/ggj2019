@@ -29,24 +29,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         private SpawnPoint _spawnpoint;
 
 #region Unity Lifecycle
-        protected override void Awake()
-        {
-            base.Awake();
-
-            _beetles.Add(this);
-        }
-
-        protected override void OnDestroy()
-        {
-            _beetles.Remove(this);
-
-            if(_flower != null) {
-                _flower.CanSpawnPollen = true;
-            }
-
-            base.OnDestroy();
-        }
-
         private void Update()
         {
             if(IsDead) {
@@ -65,7 +47,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             if(!spawnpoint.Acquire(this)) {
                 Debug.LogError("Unable to acquire spawnpoint!");
-                Destroy(gameObject);
+                _pooledObject.Recycle();
                 return;
             }
             _spawnpoint = spawnpoint;
@@ -73,15 +55,29 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _flower = NPCFlower.Flowers.Nearest(transform.position);
             if(!_flower.Collides(this) || _flower.IsDead) {
                 Debug.LogWarning($"Spawned on a dead / missing flower: {_flower.IsDead}");
-                Destroy(gameObject);
+                _pooledObject.Recycle();
                 return;
             }
 
+            _beetles.Add(this);
+
+// TODO: replace with Acquire/Release
             _flower.CanSpawnPollen = false;
 
             //Assert.IsTrue(_flower.IsReady && _flower.CanSpawnPollen && _flower.HasPollen);
 
             _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
+        }
+
+        protected override void OnDeSpawn()
+        {
+            _beetles.Remove(this);
+
+            if(_flower != null) {
+                _flower.CanSpawnPollen = true;
+            }
+
+            base.OnDeSpawn();
         }
 
         private void HarvestFlower()

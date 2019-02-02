@@ -106,6 +106,8 @@ namespace pdxpartyparrot.ggj2019
             _waveSpawner.WaveStartEvent += WaveStartEventHandler;
             _waveSpawner.Shutdown();
 
+            Hive.Instance.Shutdown();
+
             IsGameOver = true;
 
             _pollenTimer.Stop();
