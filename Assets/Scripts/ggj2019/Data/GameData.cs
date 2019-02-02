@@ -2,6 +2,7 @@
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.State;
 
 using UnityEngine;
@@ -48,6 +49,13 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public Vector3 ViewerPosition => _viewerPosition;
 #endregion
+
+        [Space(10)]
+
+        [SerializeField]
+        private WaveSpawner _waveSpawnerPrefab;
+
+        public WaveSpawner WaveSpawnerPrefab => _waveSpawnerPrefab;
 
         [Space(10)]
 

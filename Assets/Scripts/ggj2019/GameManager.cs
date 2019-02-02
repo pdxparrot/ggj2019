@@ -36,11 +36,9 @@ namespace pdxpartyparrot.ggj2019
         [ReadOnly]
         private Stopwatch _gameTimer;
 
-        [SerializeField]
-        [ReadOnly]
-        private int _currentWave;
+        private WaveSpawner _waveSpawner;
 
-        public int CurrentWave => _currentWave;
+        public WaveSpawner WaveSpawner => _waveSpawner;
 
         private int _score;
 
@@ -50,6 +48,8 @@ namespace pdxpartyparrot.ggj2019
         private void Awake()
         {
             GameStateManager.Instance.RegisterGameManager(this);
+
+            _waveSpawner = Instantiate(GameGameData.WaveSpawnerPrefab, transform);
         }
 
         private void Update()
@@ -62,6 +62,8 @@ namespace pdxpartyparrot.ggj2019
 
         protected override void OnDestroy()
         {
+            Destroy(_waveSpawner);
+
             if(GameStateManager.HasInstance) {
                 GameStateManager.Instance.UnregisterGameManager();
             }
@@ -82,22 +84,25 @@ namespace pdxpartyparrot.ggj2019
             _gameTimer.Reset();
             _gameTimer.Start();
 
-            _currentWave = 0;
             _score = 0;
-
-            NPCSpawner.Instance.Initialize();
-            NPCSpawner.Instance.WaveStartEvent += OnWaveStarted;
 
             Hive.Instance.Initialize();
 
             _pollenTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_pollenDelayMin, _pollenDelayMax), SpawnPollen);
+
+            _waveSpawner.Initialize();
+            _waveSpawner.WaveStartEvent += WaveStartEventHandler;
+            _waveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
+            _waveSpawner.StartSpawner();
         }
 
         //[Server]
         public void EndGame()
         {
-            NPCSpawner.Instance.WaveStartEvent -= OnWaveStarted;
-            NPCSpawner.Instance.Shutdown();
+            _waveSpawner.StopSpawner();
+            _waveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
+            _waveSpawner.WaveStartEvent += WaveStartEventHandler;
+            _waveSpawner.Shutdown();
 
             IsGameOver = true;
 
@@ -151,10 +156,24 @@ namespace pdxpartyparrot.ggj2019
             }
         }
 
-        private void OnWaveStarted()
+#region Event Handlers
+        // TODO: this should come from a server command
+        //[Client]
+        private void WaveStartEventHandler(object sender, SpawnWaveEventArgs args)
         {
-            _currentWave++;
-            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowWaveText(_currentWave);
+            if(null != UIManager.Instance.PlayerUI) {
+                ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowWaveText(args.WaveIndex);
+            }
         }
+
+        // TODO: this should come from a server command
+        //[Client]
+        private void WaveCompleteEventHandler(object sender, SpawnWaveEventArgs args)
+        {
+            if(args.IsFinalWave) {
+                EndGame();
+            }
+        }
+#endregion
     }
 }

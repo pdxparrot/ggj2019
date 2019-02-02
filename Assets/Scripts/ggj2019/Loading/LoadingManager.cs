@@ -17,9 +17,6 @@ namespace pdxpartyparrot.ggj2019.Loading
 
         [SerializeField]
         private PlayerManager _playerManagerPrefab;
-
-        [SerializeField]
-        private NPCSpawner _npcSpawnerPrefab;
 #endregion
 
         protected override void CreateManagers()
@@ -28,7 +25,6 @@ namespace pdxpartyparrot.ggj2019.Loading
 
             GameManager.CreateFromPrefab(_gameManagerPrefab, ManagersContainer);
             PlayerManager.CreateFromPrefab(_playerManagerPrefab, ManagersContainer);
-            NPCSpawner.CreateFromPrefab(_npcSpawnerPrefab, ManagersContainer);
         }
     }
 }

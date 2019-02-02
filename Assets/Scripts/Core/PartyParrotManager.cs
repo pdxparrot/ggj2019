@@ -15,7 +15,7 @@ namespace pdxpartyparrot.Core
 
 #region Events
         public event EventHandler<EventArgs> PauseEvent;
-        #endregion
+#endregion
 
 #region Data
         [SerializeField]

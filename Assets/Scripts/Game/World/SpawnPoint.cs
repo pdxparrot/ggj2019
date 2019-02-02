@@ -19,12 +19,12 @@ namespace pdxpartyparrot.Game.World
         private Actor _actor = null;
 
 #region Unity Lifecycle
-        protected virtual void Awake()
+        protected virtual void OnEnable()
         {
             SpawnManager.Instance.RegisterSpawnPoint(this);
         }
 
-        protected virtual void OnDestroy()
+        protected virtual void OnDisable()
         {
             if(SpawnManager.HasInstance) {
                 SpawnManager.Instance.UnregisterSpawnPoint(this);

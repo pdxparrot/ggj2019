@@ -41,7 +41,7 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
 
                 _pooledObjects = new Queue<PooledObject>(Size);
 
-                PopulatePool();
+                Expand(Size);
             }
 
             public void Destroy()
@@ -58,8 +58,8 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                         return null;
                     }
 
-                    Debug.LogWarning($"Expanding object pool {Tag}!");
-                    PopulatePool();
+                    Debug.LogWarning($"Expanding object pool {Tag} by {Size}!");
+                    Expand(Size);
                 }
 
                 // NOTE: reparent then activate to avoid hierarchy rebuild
@@ -74,6 +74,26 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                 return pooledObject;
             }
 
+            public void Expand(int amount)
+            {
+                Assert.IsTrue(!IsNetwork || NetworkServer.active);
+
+                if(amount <= 0) {
+                    return;
+                }
+
+                for(int i=0; i<amount; ++i) {
+                    PooledObject pooledObject = Instantiate(Prefab);
+                    pooledObject.Tag = Tag;
+                    Recycle(pooledObject);
+                }
+            }
+
+            public void EnsureSize(int size)
+            {
+                Expand(size - Size);
+            }
+
             public void Recycle(PooledObject pooledObject)
             {
                 if(IsNetwork) {
@@ -85,17 +105,6 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                 pooledObject.transform.SetParent(_container.transform);
 
                 _pooledObjects.Enqueue(pooledObject);
-            }
-
-            private void PopulatePool()
-            {
-                Assert.IsTrue(!IsNetwork || NetworkServer.active);
-
-                for(int i=0; i<Size; ++i) {
-                    PooledObject pooledObject = Instantiate(Prefab);
-                    pooledObject.Tag = Tag;
-                    Recycle(pooledObject);
-                }
             }
         }
 
@@ -122,6 +131,11 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             base.OnDestroy();
         }
 #endregion
+
+        public bool HasPool(string poolTag)
+        {
+            return _objectPools.ContainsKey(poolTag);
+        }
 
         public void InitializePool(string poolTag, PooledObject prefab, int size, bool allowExpand=true)
         {
@@ -169,12 +183,33 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             objectPool.Destroy();
         }
 
+        public void ExpandPool(string poolTag, int amount)
+        {
+            ObjectPool pool = _objectPools.GetOrDefault(poolTag);
+            if(null == pool) {
+                Debug.LogWarning($"No pool for tag {poolTag}!");
+                return;
+            }
+            pool.Expand(amount);
+        }
+
+        public void EnsurePoolSize(string poolTag, int size)
+        {
+            ObjectPool pool = _objectPools.GetOrDefault(poolTag);
+            if(null == pool) {
+                Debug.LogWarning($"No pool for tag {poolTag}!");
+                return;
+            }
+            pool.EnsureSize(size);
+        }
+
+
         [CanBeNull]
         public PooledObject GetPooledObject(string poolTag, Transform parent=null, bool activate=true)
         {
             ObjectPool pool = _objectPools.GetOrDefault(poolTag);
             if(null == pool) {
-                Debug.Log($"No pool for tag {poolTag}!");
+                Debug.LogWarning($"No pool for tag {poolTag}!");
                 return null;
             }
             return pool.GetPooledObject(parent, activate);

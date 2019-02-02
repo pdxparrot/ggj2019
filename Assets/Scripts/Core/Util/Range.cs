@@ -5,26 +5,20 @@ using UnityEngine;
 namespace pdxpartyparrot.Core.Util
 {
 // TODO: split this into float and int
+// TODO: this can't have setters because we use it in data
+// so we probably need a separate RangeData class for that
     [Serializable]
     public struct Range
     {
         [SerializeField]
         private int _min;
 
-        public int Min
-        {
-            get => _min;
-            set => _min = value;
-        }
+        public int Min => _min;
 
         [SerializeField]
         private int _max;
 
-        public int Max
-        {
-            get => _max;
-            set => _max = value;
-        }
+        public int Max => _max;
 
 // TODO: GetRandomValue
         public int GetValue()
