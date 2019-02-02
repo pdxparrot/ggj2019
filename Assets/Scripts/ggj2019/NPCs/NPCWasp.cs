@@ -2,6 +2,7 @@
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019;
 using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.Game.Effects;
@@ -59,7 +60,7 @@ public class NPCWasp : NPCEnemy
     }
 #endregion
 
-    public override void OnSpawn(GameObject spawnpoint)
+    public override void OnSpawn(SpawnPoint spawnpoint)
     {
         base.OnSpawn(spawnpoint);
 

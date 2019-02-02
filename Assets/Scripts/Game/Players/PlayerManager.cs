@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Network;
-using pdxpartyparrot.Game.World;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;

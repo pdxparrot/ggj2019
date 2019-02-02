@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 
 using Spine;
 
@@ -35,6 +36,8 @@ public class NPCFlower : NPCBase
         set => _canSpawnPollen = value;
     }
 
+    private SpawnPoint _spawnpoint;
+
 #region Unity Lifecycle
     protected override void Awake()
     {
@@ -52,9 +55,16 @@ public class NPCFlower : NPCBase
     }
 #endregion
 
-    public override void OnSpawn(GameObject spawnpoint)
+    public override void OnSpawn(SpawnPoint spawnpoint)
     {
         base.OnSpawn(spawnpoint);
+
+        if(!spawnpoint.Acquire(this)) {
+            Debug.LogError("Unable to acquire spawnpoint!");
+            Destroy(gameObject);
+            return;
+        }
+        _spawnpoint = spawnpoint;
 
         IsReady = false;
 
@@ -76,6 +86,9 @@ public class NPCFlower : NPCBase
 
         TrackEntry track = SetAnimation(0, "flower_death", false);
         track.Complete += x => {
+            _spawnpoint.Release();
+            _spawnpoint = null;
+
             base.Kill();
         };
     }

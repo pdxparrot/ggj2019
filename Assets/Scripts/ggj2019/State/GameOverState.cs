@@ -1,10 +1,8 @@
-﻿using pdxpartyparrot.ggj2019.Players;
-using pdxpartyparrot.ggj2019.UI;
-using pdxpartyparrot.Game;
+﻿using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
+using pdxpartyparrot.ggj2019.Players;
 
-using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.State
 {

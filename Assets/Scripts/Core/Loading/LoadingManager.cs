@@ -13,6 +13,7 @@ using pdxpartyparrot.Core.Terrain;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
+using pdxpartyparrot.Core.World;
 
 using UnityEngine;
 
@@ -64,6 +65,9 @@ namespace pdxpartyparrot.Core.Loading
 
         [SerializeField]
         private ObjectPoolManager _objectPoolManagerPrefab;
+
+        [SerializeField]
+        private SpawnManager _spawnManagerPrefab;
 #endregion
 
         protected GameObject ManagersContainer { get; private set; }
@@ -139,6 +143,7 @@ namespace pdxpartyparrot.Core.Loading
             SceneManager.CreateFromPrefab(_sceneManagerPrefab, ManagersContainer);
             TerrainManager.Create(ManagersContainer);
             ScriptingManager.Create(ManagersContainer);
+            SpawnManager.CreateFromPrefab(_spawnManagerPrefab, ManagersContainer);
         }
 
         protected virtual void InitializeManagers()

@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019;
 
 using UnityEngine;
@@ -15,6 +16,8 @@ public class NPCBeetle : NPCEnemy
     public int Pollen { get; private set; }
 
     private readonly Timer _harvestCooldownTimer = new Timer();
+
+    private SpawnPoint _spawnpoint;
 
 #region Unity Lifecycle
     protected override void Awake()
@@ -47,11 +50,25 @@ public class NPCBeetle : NPCEnemy
     }
 #endregion
 
-    public override void OnSpawn(GameObject spawnpoint)
+    public override void OnSpawn(SpawnPoint spawnpoint)
     {
         base.OnSpawn(spawnpoint);
 
+        if(!spawnpoint.Acquire(this)) {
+            Debug.LogError("Unable to acquire spawnpoint!");
+            Destroy(gameObject);
+            return;
+        }
+        _spawnpoint = spawnpoint;
+        
+
         _flower = NPCFlower.Nearest(transform.position);
+        if(null == _flower || !_flower.Collides(this) || _flower.IsDead) {
+            Debug.LogWarning("Spawned on a dead / missing flower!");
+            Destroy(gameObject);
+            return;
+        }
+
         _flower.CanSpawnPollen = false;
 
         //Assert.IsTrue(_flower.IsReady && _flower.CanSpawnPollen && _flower.HasPollen);
@@ -78,6 +95,9 @@ public class NPCBeetle : NPCEnemy
 
     public override void Kill()
     {
+        _spawnpoint.Release();
+        _spawnpoint = null;
+
         base.Kill();
 
         _harvestCooldownTimer.Stop();

@@ -2,13 +2,12 @@
 
 using JetBrains.Annotations;
 
-using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.Game.World
+namespace pdxpartyparrot.Core.World
 {
     public class SpawnManager : SingletonBehavior<SpawnManager>
     {
@@ -34,37 +33,18 @@ namespace pdxpartyparrot.Game.World
                     AdvanceRoundRobin();
                 }
 
-                // TODO hack for CheckOccupied
-                int maxiters = SpawnPoints.Count * 2;
-                int i = 0;
-
-                SpawnPoint result = null;
-
-                do {
-                    switch(spawnType.SpawnMethod)
-                    {
-                    case SpawnData.SpawnMethod.RoundRobin:
-                        SpawnPoint spawnPoint = SpawnPoints[_nextRoundRobinIndex];
-                        AdvanceRoundRobin();
-                        result = spawnPoint;
-                        break;
-                    case SpawnData.SpawnMethod.Random:
-                        result = PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
-                        break;
-                    default:
-                        Debug.LogWarning($"Unsupported spawn method {spawnType.SpawnMethod}, using Random");
-                        result = PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
-                        break;
-                    }
-
-                    if(spawnType.CheckOccupied && result.Occupied) {
-                        result = null;
-                    }
-
-                    ++i;
-                } while(result == null && i < maxiters);
-
-                return result;
+                switch(spawnType.SpawnMethod)
+                {
+                case SpawnData.SpawnMethod.RoundRobin:
+                    SpawnPoint spawnPoint = SpawnPoints[_nextRoundRobinIndex];
+                    AdvanceRoundRobin();
+                    return spawnPoint;
+                case SpawnData.SpawnMethod.Random:
+                    return PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
+                default:
+                    Debug.LogWarning($"Unsupported spawn method {spawnType.SpawnMethod}, using Random");
+                    return PartyParrotManager.Instance.Random.GetRandomEntry(SpawnPoints);
+                }
             }
 
             private void AdvanceRoundRobin()
@@ -76,12 +56,20 @@ namespace pdxpartyparrot.Game.World
         [SerializeField]
         private SpawnData _spawnData;
 
+        private readonly Dictionary<string, SpawnData.SpawnPointType> _spawnTypes = new Dictionary<string, SpawnData.SpawnPointType>();
+
         private readonly Dictionary<string, SpawnPointSet> _spawnPoints = new Dictionary<string, SpawnPointSet>();
 
 #region Unity Lifecycle
         private void Awake()
         {
-            _spawnData.Initialize();
+            foreach(var spawnPointType in _spawnData.Types) {
+                if(_spawnTypes.ContainsKey(spawnPointType.Tag)) {
+                    Debug.LogError($"Duplicate spawn point tag {spawnPointType.Tag}, ignoring");
+                    continue;
+                }
+                _spawnTypes.Add(spawnPointType.Tag, spawnPointType);
+            }
         }
 #endregion
 
@@ -95,7 +83,7 @@ namespace pdxpartyparrot.Game.World
 
         public virtual void UnregisterSpawnPoint(SpawnPoint spawnPoint)
         {
-            //Debug.Log($"Unregistering spawnpoint {spawnPoint.name}");
+            Debug.Log($"Unregistering spawnpoint {spawnPoint.name}");
 
             if(_spawnPoints.TryGetValue(spawnPoint.Tag, out var spawnPoints)) {
                 spawnPoints.SpawnPoints.Remove(spawnPoint);
@@ -119,7 +107,7 @@ namespace pdxpartyparrot.Game.World
                 return null;
             }
 
-            var spawnPointType = _spawnData.GetType(tag);
+            var spawnPointType = _spawnTypes.GetOrDefault(tag);
             return spawnPoints.GetSpawnPoint(spawnPointType);
         }
 

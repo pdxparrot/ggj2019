@@ -1,6 +1,7 @@
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Effects;
 
 using Spine;
@@ -36,7 +37,7 @@ public class NPCBase : PhysicsActor2D
     [SerializeField]
     protected SkeletonAnimation _animation;
 
-    public override void OnSpawn(GameObject spawnpoint)
+    public override void OnSpawn(SpawnPoint spawnpoint)
     {
         base.OnSpawn(spawnpoint);
 
@@ -47,7 +48,7 @@ public class NPCBase : PhysicsActor2D
         }
     }
 
-    public override void OnReSpawn(GameObject spawnpoint)
+    public override void OnReSpawn(SpawnPoint spawnpoint)
     {
         base.OnReSpawn(spawnpoint);
 
@@ -68,7 +69,7 @@ public class NPCBase : PhysicsActor2D
                 Destroy(gameObject);
             });
         } else {
-            Destroy(gameObject, 0.1f);
+            Destroy(gameObject);
         }
     }
 

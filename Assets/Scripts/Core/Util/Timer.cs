@@ -41,7 +41,7 @@ namespace pdxpartyparrot.Core.Util
         public void Start(Range timerSeconds, Action onTimesUp=null)
         {
             _onTimesUp = onTimesUp;
-            _timerSeconds = timerSeconds.GetValue();
+            _timerSeconds = timerSeconds.GetRandomValue();
             _secondsRemaining = _timerSeconds;
             _isRunning = true;
         }

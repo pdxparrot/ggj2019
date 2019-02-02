@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 
 using UnityEngine;
 
@@ -77,12 +78,11 @@ namespace pdxpartyparrot.Core.Actors
         }
 
 #region Callbacks
-        // TODO: these should be Spawnpoint objects :(
-        public virtual void OnSpawn(GameObject spawnpoint)
+        public virtual void OnSpawn(SpawnPoint spawnpoint)
         {
         }
 
-        public virtual void OnReSpawn(GameObject spawnpoint)
+        public virtual void OnReSpawn(SpawnPoint spawnpoint)
         {
         }
 #endregion

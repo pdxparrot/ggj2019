@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Camera;
 using pdxpartyparrot.Game.State;
-using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -117,9 +117,10 @@ namespace pdxpartyparrot.Game.Players
         {
         }
 
-        public override void OnSpawn(GameObject spawnpoint)
+        public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
+
             Debug.Log($"Spawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
             if(NetworkServer.active) {
@@ -132,9 +133,10 @@ namespace pdxpartyparrot.Game.Players
             }
         }
 
-        public override void OnReSpawn(GameObject spawnpoint)
+        public override void OnReSpawn(SpawnPoint spawnpoint)
         {
             base.OnReSpawn(spawnpoint);
+
             Debug.Log($"Respawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
             if(NetworkServer.active) {

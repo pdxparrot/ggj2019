@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
@@ -70,7 +71,7 @@ namespace pdxpartyparrot.Game.World
 
                 private void Spawn()
                 {
-                    int amount = _spawnGroupData.Count.GetValue();
+                    int amount = _spawnGroupData.Count.GetRandomValue();
                     for(int i=0; i<amount; ++i) {
                         var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_spawnGroupData.Tag);
                         if(null == spawnPoint) {

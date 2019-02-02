@@ -71,7 +71,7 @@ public class PollenCollectable: MonoBehaviour
 
         if (transform.position.y  - _height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D)
         {
-            Destroy(gameObject, 0.1f);
+            Destroy(gameObject);
         }
     }
 

@@ -1,16 +1,16 @@
-﻿using pdxpartyparrot.Game.Players;
-using pdxpartyparrot.Game.UI;
+﻿using System.Collections.Generic;
+
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.Effects;
+
+using Spine.Unity;
+
+using DG.Tweening;
 
 using UnityEngine;
-using UnityEngine.Assertions;
-using System.Collections.Generic;
-using DG.Tweening;
-using pdxpartyparrot.Core;
-using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Game.Effects;
-using pdxpartyparrot.Game.World;
-using Spine.Unity;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
@@ -252,7 +252,7 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
         private void SpawnBee() {
-            if(_beeSpawnTimer.IsRunning || NPCBee.Pool.Count >= _maxBees) {
+            if(GameManager.Instance.IsGameOver || _beeSpawnTimer.IsRunning || NPCBee.Pool.Count >= _maxBees) {
                 return;
             }
 

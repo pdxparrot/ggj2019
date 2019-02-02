@@ -150,6 +150,12 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Respawn()
         {
+            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(false);
+
+            if(GameManager.Instance.IsGameOver) {
+                return;
+            }
+
             _isDead = false;
 
             PlayerManager.Instance.RespawnPlayer(this);
@@ -157,7 +163,6 @@ namespace pdxpartyparrot.ggj2019.Players
             // TODO: maybe we only show the model after the effect ends?
             _respawnEffect.Trigger();
             Model.gameObject.SetActive(true);
-            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(false);
         }
 #endregion
     }

@@ -1,6 +1,5 @@
 ﻿using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
-using pdxpartyparrot.Game.World;
 
 using UnityEngine;
 
@@ -9,9 +8,6 @@ namespace pdxpartyparrot.Game.Loading
     public abstract class LoadingManager<T> : Core.Loading.LoadingManager<LoadingManager<T>> where T: LoadingManager<T>
     {
 #region Manager Prefabs
-        [SerializeField]
-        private SpawnManager _spawnManagerPrefab;
-
         [SerializeField]
         private GameStateManager _gameStateManagerPrefab;
 
@@ -25,7 +21,6 @@ namespace pdxpartyparrot.Game.Loading
 
             GameStateManager.CreateFromPrefab(_gameStateManagerPrefab, ManagersContainer);
             UIManager.CreateFromPrefab(_uiManagerPrefab, ManagersContainer);
-            SpawnManager.CreateFromPrefab(_spawnManagerPrefab, ManagersContainer);
             HighScoreManager.Create(ManagersContainer);
         }
 

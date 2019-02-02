@@ -20,12 +20,16 @@ namespace pdxpartyparrot.Core.Util
 
         public int Max => _max;
 
-// TODO: GetRandomValue
-        public int GetValue()
+        public int GetRandomValue()
         {
             return PartyParrotManager.Instance.Random.Next(_min, _max);
         }
 
-// TODO: GetPercentValue (or something)
+        // rounds down
+        public int GetPercentValue(float pct)
+        {
+            pct = Mathf.Clamp01(pct);
+            return (int)(_min + (pct * (_max - _min)));
+        }
     }
 }
