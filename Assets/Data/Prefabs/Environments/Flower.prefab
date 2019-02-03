@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 7204223779919184192}
+  - component: {fileID: 7129460347712440065}
   - component: {fileID: 5512433957614832504}
   - component: {fileID: 7498956286358863322}
   - component: {fileID: 6498468760859895621}
@@ -306,6 +307,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: 
+--- !u!114 &7129460347712440065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7883bb70e36e3ae4e9308f7907a2bb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skeletonAnimation: {fileID: 0}
+  _skinNames:
+  - default
 --- !u!114 &5512433957614832504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +346,7 @@ MonoBehaviour:
   _beetleSpawn: {fileID: 4261586379689094825}
   _pollenSpawn: {fileID: 2927692061490181078}
   _pollen: 0
-  _canSpawnPollen: 1
+  _spawnpoint: {fileID: 0}
 --- !u!114 &7498956286358863322
 MonoBehaviour:
   m_ObjectHideFlags: 0

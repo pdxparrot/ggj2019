@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732379929763720301}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.98, y: 2.1100001, z: 0}
+  m_LocalPosition: {x: -10, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1732379930864418894}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!114 &503758724177762310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +61,8 @@ MonoBehaviour:
   points:
   - {x: -2, y: 1, z: 0}
   - {x: 1, y: -7, z: 0}
-  - {x: 1, y: 2, z: 0}
-  - {x: 7, y: -1, z: 0}
+  - {x: 2, y: 2, z: 0}
+  - {x: 8, y: -1, z: 0}
   modes: 0000000000000000
   loop: 0
 --- !u!1 &1732379929867678515
@@ -91,7 +91,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732379929867678515}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.98, y: 3.8300002, z: 0}
+  m_LocalPosition: {x: -10, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1732379930864418894}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!114 &1732379929867678508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,8 +126,8 @@ MonoBehaviour:
   points:
   - {x: -2, y: 1, z: 0}
   - {x: 0, y: -3, z: 0}
-  - {x: 4, y: 3, z: 0}
-  - {x: 7, y: -1, z: 0}
+  - {x: 5, y: 3, z: 0}
+  - {x: 8, y: -1, z: 0}
   modes: 0000000000000000
   loop: 0
 --- !u!1 &1732379930651837874
@@ -156,7 +156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732379930651837874}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.98, y: 0.46, z: 0}
+  m_LocalPosition: {x: 10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1732379930864418894}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!114 &3483784896107952571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +191,8 @@ MonoBehaviour:
   points:
   - {x: -1, y: 9, z: 0}
   - {x: -1, y: 2, z: 0}
-  - {x: -6, y: -2, z: 0}
-  - {x: -8, y: 0, z: 0}
+  - {x: -7, y: -2, z: 0}
+  - {x: -9, y: 0, z: 0}
   modes: 0000000000000000
   loop: 0
 --- !u!1 &1732379930673991556
@@ -221,7 +221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732379930673991556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.98, y: 3.8300002, z: 0}
+  m_LocalPosition: {x: 10, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1732379930864418894}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!114 &3833262854536508089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,8 +256,8 @@ MonoBehaviour:
   points:
   - {x: 2, y: 1, z: 0}
   - {x: 0, y: -3, z: 0}
-  - {x: -4, y: 3, z: 0}
-  - {x: -7, y: -1, z: 0}
+  - {x: -5, y: 3, z: 0}
+  - {x: -8, y: -1, z: 0}
   modes: 0000000000000000
   loop: 0
 --- !u!1 &1732379930864418895
@@ -322,7 +322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732379931008445955}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.98, y: 0.46, z: 0}
+  m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1732379930864418894}
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!114 &489973640994431168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,8 +357,8 @@ MonoBehaviour:
   points:
   - {x: 1, y: 9, z: 0}
   - {x: 1, y: 2, z: 0}
-  - {x: 6, y: -2, z: 0}
-  - {x: 8, y: 0, z: 0}
+  - {x: 7, y: -2, z: 0}
+  - {x: 9, y: 0, z: 0}
   modes: 0000000000000000
   loop: 0
 --- !u!1 &1732379931267184627
@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732379931267184627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.98, y: 2.1100001, z: 0}
+  m_LocalPosition: {x: 10, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1732379930864418894}
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: wasp
-  _overridePrefab: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!114 &2976726806149800825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
   points:
   - {x: 2, y: 1, z: 0}
   - {x: -1, y: -7, z: 0}
-  - {x: -1, y: 2, z: 0}
-  - {x: -7, y: -1, z: 0}
+  - {x: -2, y: 2, z: 0}
+  - {x: -8, y: -1, z: 0}
   modes: 0000000000000000
   loop: 0

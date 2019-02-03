@@ -1,5 +1,7 @@
 #pragma warning disable 0618    // disable obsolete warning for now
 
+using System;
+
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
@@ -20,6 +22,11 @@ namespace pdxpartyparrot.ggj2019
 {
     public sealed class GameManager : GameManager<GameManager>
     {
+#region Events
+        public event EventHandler<EventArgs> GameStartEvent;
+        public event EventHandler<EventArgs> GameEndEvent;
+#endregion
+
         public GameData GameGameData => (GameData)GameData;
 
         public GameViewer Viewer { get; private set; }
@@ -82,15 +89,23 @@ namespace pdxpartyparrot.ggj2019
             WaveSpawner.Initialize();
             WaveSpawner.WaveStartEvent += WaveStartEventHandler;
             WaveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
+
+            GameStartEvent?.Invoke(this, EventArgs.Empty);
+
+            // TODO: hook into the GameStartEvent for this
             WaveSpawner.StartSpawner();
         }
 
         //[Server]
         public void EndGame()
         {
+            // TODO: hook into the GameEndEvent for this
             WaveSpawner.StopSpawner();
-            WaveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
-            WaveSpawner.WaveStartEvent += WaveStartEventHandler;
+
+            GameEndEvent?.Invoke(this, EventArgs.Empty);
+
+            WaveSpawner.WaveCompleteEvent -= WaveCompleteEventHandler;
+            WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
             WaveSpawner.Shutdown();
 
             Hive.Instance.Shutdown();
