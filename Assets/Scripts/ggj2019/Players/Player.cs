@@ -63,10 +63,12 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Update()
         {
-            if(HasPollen) {
-                if(Hive.Instance.Collides(this)) {
-                    _pollen -= Hive.Instance.UnloadPollen(this, _pollen);
-                }
+            if(GameManager.Instance.IsGameOver) {
+                return;
+            }
+
+            if(HasPollen && Hive.Instance.Collides(this)) {
+                _pollen -= Hive.Instance.UnloadPollen(this, _pollen);
             }
 
             float dt = Time.deltaTime;
