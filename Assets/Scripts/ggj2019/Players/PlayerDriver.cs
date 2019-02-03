@@ -36,7 +36,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private DebugMenuNode _debugMenuNode;
 
-        protected override bool CanDrive => base.CanDrive && !GamePlayer.IsDead;
+        protected override bool CanDrive => base.CanDrive && !GamePlayer.IsDead && !GameManager.Instance.IsGameOver;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -77,6 +77,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             InitDebugMenu();
 
+            _animation.ClearState();
             _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
             SetHoverAnimation();
         }
