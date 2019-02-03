@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9542f830339cece458515f5a9fdef588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tag: 
 --- !u!114 &6248351965066697453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,14 +77,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233f78f4d5d4d5448b4c52f31c4ed8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: -1
+  _model: {fileID: 0}
+  _controller: {fileID: 0}
+  _animator: {fileID: 0}
   _sideDistance: 0.25
   _sideSpeed: 3
   _upwardSpeed: 1.5
-  _particleSystem: {fileID: 7202681780061667075}
   _pickupEffect: {fileID: 6009020748860504964}
   _collectEffect: {fileID: 8986564420569625324}
-  _pollen: 1
-  followPlayer: {fileID: 0}
+  _followPlayer: {fileID: 0}
   _isCollected: 0
   _signTime: 0
   _startPoint: {x: 0, y: 0, z: 0}
@@ -184,17 +187,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7215576563408779522, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2fd1b7e3f66a234a99bef69a70c8c8c, type: 3}
 --- !u!4 &8618006694791261288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7969813972310383032, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1802346918974191056}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7202681780061667075 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8860313382620302035, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
     type: 3}
   m_PrefabInstance: {fileID: 1802346918974191056}
   m_PrefabAsset: {fileID: 0}
