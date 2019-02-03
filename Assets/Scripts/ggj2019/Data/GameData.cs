@@ -28,11 +28,6 @@ namespace pdxpartyparrot.ggj2019.Data
         private FFAGameState _ffaGameStatePrefab;
 
         public FFAGameState FFAGameStatePrefab => _ffaGameStatePrefab;
-
-        [SerializeField]
-        private TeamsGameState _teamsGameStatePrefab;
-
-        public TeamsGameState TeamsGameStatePrefab => _teamsGameStatePrefab;
 #endregion
 
         [Space(10)]
