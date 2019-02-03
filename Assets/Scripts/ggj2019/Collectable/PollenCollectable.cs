@@ -5,11 +5,13 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Collectable
 {
@@ -110,6 +112,10 @@ namespace pdxpartyparrot.ggj2019.Collectable
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
+
+            NPCFlower flower = spawnpoint.GetComponentInParent<NPCFlower>();
+            Assert.IsFalse(flower.IsDead);
+            flower.SpawnPollen();
 
             _startPoint = transform.position;
             _isCollected = false;

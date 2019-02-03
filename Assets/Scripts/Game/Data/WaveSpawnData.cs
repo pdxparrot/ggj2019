@@ -12,6 +12,9 @@ namespace pdxpartyparrot.Game.Data
     [Serializable]
     public class WaveSpawnData : ScriptableObject
     {
+// TODO: this is really hard to work with when duplicating data
+// might be easier to split the SpawnGroupData into its own data file
+
 // TODO: SpawnGroupData
         [Serializable]
         public class SpawnGroup
@@ -27,6 +30,8 @@ namespace pdxpartyparrot.Game.Data
    
             public string Tag => _tag;
 
+            [Space(10)]
+
             [SerializeField]
             [Tooltip("Time between spawns, in seconds")]
             private Range _delay;
@@ -38,6 +43,16 @@ namespace pdxpartyparrot.Game.Data
             private Range _count;
 
             public Range Count => _count;
+
+            [Space(10)]
+
+            [SerializeField]
+            [Tooltip("How many objects to pre-allocate in the object pool (for pooled objects)")]
+            private int _poolSize = 1;
+
+            public int PoolSize => _poolSize;
+
+            [Space(10)]
 
             [SerializeField]
             [Tooltip("Should we only spawn the wave once?")]

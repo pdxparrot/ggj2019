@@ -106,10 +106,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public void SpawnPollen()
         {
-            // TODO: the wave spawner should do this
-            PollenCollectable pollen = ObjectPoolManager.Instance.GetPooledObject<PollenCollectable>("pollen");
-            _pollenSpawn.Spawn(pollen);
-
             _pollen--;
             if(_pollen <= 0) {
                 Kill();

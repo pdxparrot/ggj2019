@@ -45,7 +45,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         private EffectTrigger _attackEffect;
 
-        // start true to force the animation the first time
+        // TODO: make this a state enum
         private bool _isFlying = true;
         private bool _isAttacking;
 

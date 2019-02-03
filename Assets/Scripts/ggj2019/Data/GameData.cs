@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.World;
-using pdxpartyparrot.ggj2019.Collectable;
 using pdxpartyparrot.ggj2019.State;
 
 using UnityEngine;
@@ -55,15 +54,11 @@ namespace pdxpartyparrot.ggj2019.Data
         [Space(10)]
 
         [SerializeField]
-        private PollenCollectable _pollenPrefab;
-
-        public PollenCollectable PollenPrefab => _pollenPrefab;
-
-        [SerializeField]
         private WaveSpawner _waveSpawnerPrefab;
 
         public WaveSpawner WaveSpawnerPrefab => _waveSpawnerPrefab;
 
+        // TODO: this goes away when skins are in
         [SerializeField]
         private GameObject[] _flowerPrefabs;
 

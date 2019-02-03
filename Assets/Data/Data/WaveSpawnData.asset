@@ -24,7 +24,19 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -36,6 +48,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -46,6 +59,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -58,6 +83,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
@@ -68,6 +94,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -80,6 +118,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
@@ -90,6 +129,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 5
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -100,6 +140,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -112,6 +164,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -122,6 +175,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -134,6 +199,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
@@ -144,6 +210,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -156,6 +234,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
@@ -166,6 +245,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 5
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -176,6 +256,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -188,6 +280,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -198,6 +291,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -210,6 +315,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
@@ -220,6 +326,18 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0
   - _duration: 30
     _spawnGroups:
@@ -232,6 +350,7 @@ MonoBehaviour:
       _count:
         _min: 9
         _max: 9
+      _poolSize: 10
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
@@ -242,6 +361,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -252,4 +372,16 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
       _once: 0

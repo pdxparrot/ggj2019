@@ -20,8 +20,10 @@ namespace pdxpartyparrot.Game.World
         public event EventHandler<SpawnWaveEventArgs> WaveCompleteEvent;
 #endregion
 
+        [Serializable]
         protected class SpawnWave
         {
+            [Serializable]
             protected class SpawnGroup
             {
                 private readonly WaveSpawnData.SpawnGroup _spawnGroupData;
@@ -49,11 +51,7 @@ namespace pdxpartyparrot.Game.World
                         _poolContainer = new GameObject(PoolTag);
                         _poolContainer.transform.SetParent(_owner.transform);
 
-                        int count = _spawnGroupData.Count.Max;
-                        if(0 != _spawnGroupData.Delay.Min) {
-                            count = Mathf.CeilToInt(count * (waveDuration / _spawnGroupData.Delay.Max));
-                        }
-
+                        int count = Mathf.Max(_spawnGroupData.PoolSize, 1);
                         if(ObjectPoolManager.Instance.HasPool(PoolTag)) {
                             ObjectPoolManager.Instance.EnsurePoolSize(PoolTag, count);
                         } else {
