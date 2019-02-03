@@ -9,6 +9,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         private int _damage = 1;
 
+        public int Damage => _damage;
+
 #region Unity Lifecycle
         private void OnTriggerEnter2D(Collider2D other)
         {
