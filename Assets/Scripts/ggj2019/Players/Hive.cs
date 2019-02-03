@@ -39,6 +39,7 @@ namespace pdxpartyparrot.ggj2019.Players
         private readonly List<int> _health = new List<int>();
 
         public override float Height => Collider.bounds.size.y / 2.0f;
+
         public override float Radius => Collider.bounds.size.x / 2.0f;
 
         public override bool IsLocalActor => true;
@@ -49,9 +50,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [SerializeField]
         private NPCBee _beePrefab;
-
-        [SerializeField]
-        private SkeletonAnimation _animation;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -100,11 +98,6 @@ namespace pdxpartyparrot.ggj2019.Players
             ObjectPoolManager.Instance.DestroyPool("bees");
 
             _initialized = false;
-        }
-
-        private void SetAnimation(string animationName, bool loop)
-        {
-            _animation.AnimationState.SetAnimation(0, animationName, loop);
         }
 
         private int neighbor1(int pc) {
