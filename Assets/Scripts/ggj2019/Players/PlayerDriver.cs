@@ -1,13 +1,9 @@
-using System;
-
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Input;
-using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.ggj2019.Input;
 using pdxpartyparrot.ggj2019.Players.ControllerComponents;
-using Spine.Unity;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -76,10 +72,6 @@ namespace pdxpartyparrot.ggj2019.Players
             _gamepadListener = gameObject.AddComponent<GamepadListener>();
 
             InitDebugMenu();
-
-            _animation.ClearState();
-            _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
-            SetHoverAnimation();
         }
 
         private bool IsOurDevice(InputAction.CallbackContext ctx)
@@ -93,37 +85,6 @@ namespace pdxpartyparrot.ggj2019.Players
                 // ignore keyboard/mouse while the debug menu is open
                 // TODO: this probably doesn't handle multiple keyboards/mice
                 (!DebugMenuManager.Instance.Enabled && PlayerManager.Instance.PlayerCount == 1 && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));
-        }
-
-        [SerializeField]
-        private SkeletonAnimation _animation;
-
-        // start true to force the animation the first time
-        private bool _isFlying = true;
-
-        private void SetHoverAnimation()
-        {
-            if(!_isFlying) {
-                return;
-            }
-
-            SetAnimation("bee_hover", true);
-            _isFlying = false;
-        }
-
-        private void SetFlightAnimation()
-        {
-            if(_isFlying) {
-                return;
-            }
-
-            SetAnimation("bee-flight", true);
-            _isFlying = true;
-        }
-
-        private void SetAnimation(string animationName, bool loop)
-        {
-            _animation.AnimationState.SetAnimation(0, animationName, loop);
         }
 
 #region IPlayerActions
@@ -145,20 +106,11 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             if(context.cancelled) {
-                SetHoverAnimation();
-
                 LastControllerMove = Vector3.zero;
                 Controller.LastMoveAxes = Vector3.zero;
             } else {
-                SetFlightAnimation();
-
                 Vector2 axes = context.ReadValue<Vector2>();
                 LastControllerMove = new Vector3(axes.x, axes.y, 0.0f);
-                if(LastControllerMove.sqrMagnitude < float.Epsilon) {
-                    SetHoverAnimation();
-                } else {
-                    _animation.Skeleton.ScaleX = LastControllerMove.x < 0 ? -1.0f : 1.0f;
-                }
             }
         }
 

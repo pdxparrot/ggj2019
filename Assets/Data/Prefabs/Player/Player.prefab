@@ -289,12 +289,12 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _networkPlayer: {fileID: 7579413692694895314}
   _driver: {fileID: 6318285324892847177}
-  _harvestRadius: 1
   _interactables: {fileID: 5023084697306132187}
   _respawnTime: 3
   _isDead: 0
   _respawnEffect: {fileID: 3462375353545001922}
   _deathEffect: {fileID: 1047306618912229679}
+  _hasPollen: 0
 --- !u!114 &5129411227740885415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +371,7 @@ MonoBehaviour:
   _useGravity: 0
   _playerControllerData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,
     type: 2}
+  _animation: {fileID: 4740970275388704261}
 --- !u!114 &6318285324892847177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +510,6 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  _animation: {fileID: 4740970275388704261}
 --- !u!114 &3020218383355416943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,7 +559,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _swarmRadius: 1
-  isPlayerSwarm: 1
 --- !u!114 &3462375353545001922
 MonoBehaviour:
   m_ObjectHideFlags: 0

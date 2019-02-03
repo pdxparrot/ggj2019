@@ -8,6 +8,8 @@ namespace pdxpartyparrot.Core.Actors
 {
     public abstract class ActorController : MonoBehaviour
     {
+        public static float AxesDeadZone = 0.001f;
+
 #region Movement
         [Header("Movement")]
 
@@ -61,7 +63,7 @@ namespace pdxpartyparrot.Core.Actors
 
         protected virtual void Update()
         {
-            _isMoving = LastMoveAxes.sqrMagnitude > float.Epsilon;
+            _isMoving = LastMoveAxes.sqrMagnitude > AxesDeadZone;
 
             float dt = Time.deltaTime;
 
@@ -84,6 +86,10 @@ namespace pdxpartyparrot.Core.Actors
             }
         }
 #endregion
+
+        public virtual void Initialize()
+        {
+        }
 
 #region Movement
         public virtual void MoveTo(Vector3 position)

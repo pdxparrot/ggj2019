@@ -257,21 +257,21 @@ namespace pdxpartyparrot.Core.DebugMenu
         private void OnLogMessageReceived(string logString, string stackTrace, LogType type)
         {
 #if USE_LOG_MESSAGE_BUFFER
-            Color color;
+            string color;
             switch(type)
             {
             case LogType.Assert:
-                color = Color.green;
+                color = "green";
                 break;
             case LogType.Warning:
-                color = Color.yellow;
+                color = "yellow";
                 break;
             case LogType.Error:
             case LogType.Exception:
-                color = Color.red;
+                color = "red";
                 break;
             default:
-                color = Color.white;
+                color = "white";
                 break;
             }
             _logMessageBuffer.AppendLine($"<color={color}>[{type}]: {logString}</color>");

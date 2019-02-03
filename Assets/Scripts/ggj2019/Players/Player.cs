@@ -116,6 +116,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Kill()
         {
+            Controller.Velocity = Vector3.zero;
+
             _isDead = true;
 
             _hasPollen = false;

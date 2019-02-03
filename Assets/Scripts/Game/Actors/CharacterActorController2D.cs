@@ -116,7 +116,7 @@ namespace pdxpartyparrot.Game.Actors
             DefaultAnimationMove(axes, dt);
         }
 
-        public void DefaultAnimationMove(Vector3 axes, float dt)
+        public virtual void DefaultAnimationMove(Vector3 axes, float dt)
         {
             if(!CanMove) {
                 return;
@@ -149,7 +149,7 @@ namespace pdxpartyparrot.Game.Actors
             DefaultPhysicsMove(axes, speed, dt);
         }
 
-        public void DefaultPhysicsMove(Vector3 axes, float speed, float dt)
+        public virtual void DefaultPhysicsMove(Vector3 axes, float speed, float dt)
         {
             if(!CanMove) {
                 return;
@@ -169,7 +169,7 @@ namespace pdxpartyparrot.Game.Actors
             }
         }
 
-        public void Jump(float height, string animationParam)
+        public virtual void Jump(float height, string animationParam)
         {
             if(!CanMove) {
                 return;

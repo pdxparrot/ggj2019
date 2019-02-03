@@ -84,6 +84,7 @@ namespace pdxpartyparrot.Game.Players
         {
             base.Initialize(id);
 
+            PlayerController.Initialize();
             InitializeLocalPlayer(id);
         }
 

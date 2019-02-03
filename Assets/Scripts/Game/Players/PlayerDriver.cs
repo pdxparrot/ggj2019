@@ -57,6 +57,15 @@ namespace pdxpartyparrot.Game.Players
                 return;
             }
 
+            if(!CanDrive) {
+                // TODO: on pause tho we should maybe store this stuff out
+                // in order to reset it (otherwise we might not get new inputs)
+                LastControllerMove = Vector3.zero;
+                Controller.LastMoveAxes = Vector3.zero;
+                return;
+            }
+
+
             float dt = Time.deltaTime;
 
             Controller.LastMoveAxes = Vector3.Lerp(Controller.LastMoveAxes, _lastControllerMove, dt * GameStateManager.Instance.PlayerManager.PlayerData.MovementLerpSpeed);

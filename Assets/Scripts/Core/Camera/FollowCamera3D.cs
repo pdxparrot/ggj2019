@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Math;
 using pdxpartyparrot.Core.Util;
 
@@ -121,7 +122,7 @@ namespace pdxpartyparrot.Core.Camera
 
             Profiler.BeginSample("FollowCamera3D.HandleInput");
             try {
-                _isLooking = Target.LastLookAxes.sqrMagnitude > float.Epsilon;
+                _isLooking = Target.LastLookAxes.sqrMagnitude > ActorController.AxesDeadZone;
 
                 Orbit(Target.LastLookAxes, dt);
                 Zoom(Target.LastLookAxes, dt);

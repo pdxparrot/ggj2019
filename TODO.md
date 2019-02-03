@@ -20,13 +20,7 @@
 # Spine
 
 * Move the Spine related stuff into core tools and #if USE_SPINE it
-
-
-
-* Move wasp spawns to the start of the splines so they stop showing up and then teleporting
 * Score bonus / penaly for kills / deaths / pollen
     * This is in but not used
-* High score sorting is wrong
 * Would camera shake on game end work?
-* Player moves after they die?
 * Losing a flower shoul dhave a score modifier
