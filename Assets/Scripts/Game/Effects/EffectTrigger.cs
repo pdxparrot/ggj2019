@@ -27,6 +27,8 @@ namespace pdxpartyparrot.Game.Effects
 
         private bool IsAudioPlaying => null != _audioSource && _audioSource.isPlaying;
 
+        private Coroutine _effectWaiter;
+
 // TODO: add animations to this
 
 #region Unity Lifecycle
@@ -40,7 +42,7 @@ namespace pdxpartyparrot.Game.Effects
         private void Start()
         {
             if(null != _vfx) {
-                _vfx.Stop();
+                _vfx.Stop(true);
             }
         }
 #endregion
@@ -58,14 +60,44 @@ namespace pdxpartyparrot.Game.Effects
                 _audioSource.Play();
             }
 
-            StartCoroutine(EffectWaiter(callback));
+            _effectWaiter = StartCoroutine(EffectWaiter(callback));
         }
 
-        private IEnumerator EffectWaiter(Action callback) {
-            WaitForSeconds wait = new WaitForSeconds(0.1f);
+        // forcefully stops the trigger early
+        public void StopTrigger()
+        {
+            if(null != _effectWaiter) {
+                StopCoroutine(_effectWaiter);
+                _effectWaiter = null;
+            }
+
+            if(null != _audioSource) {
+                _audioSource.Stop();
+            }
+
+            if(null != _vfx) {
+                _vfx.Stop(true);
+                _vfx.time = 0.0f;
+            }
+        }
+
+        // resets the effects
+        public void Reset()
+        {
+            if(null != _vfx) {
+                _vfx.Clear(true);
+                _vfx.Simulate(0.0f, true, true);
+            }
+        }
+
+        private IEnumerator EffectWaiter(Action callback)
+        {
+            WaitForSeconds wait = new WaitForSeconds(0.05f);
             while(IsVfxPlaying || IsAudioPlaying) {
                 yield return wait;
             }
+
+            _effectWaiter = null;
             callback?.Invoke();
         }
     }

@@ -82,6 +82,7 @@ namespace pdxpartyparrot.ggj2019.UI
 
         public void ShowGameOver(bool show)
         {
+            _animatedGameOverObject.ClearState();
             _animatedGameOverObject.gameObject.SetActive(show);
             _gameOverText.SetActive(show);
             if(show) {

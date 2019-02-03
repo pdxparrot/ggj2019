@@ -1,6 +1,10 @@
+using System;
+
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Players;
@@ -9,9 +13,8 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Collectable
 {
-    [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(PooledObject))]
-    public class PollenCollectable: MonoBehaviour
+    public class PollenCollectable: PhysicsActor2D
     {
         [SerializeField]
         private float _sideDistance = 0.25f;
@@ -23,9 +26,6 @@ namespace pdxpartyparrot.ggj2019.Collectable
         private float _upwardSpeed = 0.001f;
 
         [SerializeField]
-        private ParticleSystem _particleSystem;
-
-        [SerializeField]
         private EffectTrigger _pickupEffect;
 
         [SerializeField]
@@ -33,11 +33,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         [SerializeField]
         [ReadOnly]
-        private int _pollen = 1;
-
-        [SerializeField]
-        [ReadOnly]
-        private Players.Player followPlayer;
+        private Players.Player _followPlayer;
 
         [SerializeField]
         [ReadOnly]
@@ -51,13 +47,21 @@ namespace pdxpartyparrot.ggj2019.Collectable
         [ReadOnly]
         private Vector3 _startPoint;
 
-        private Collider2D _collider;
+        public override float Height => Collider.bounds.size.y;
+
+        public override float Radius => Collider.bounds.size.x / 2.0f;
+
+        public override bool IsLocalActor => true;
+
+        private PooledObject _pooledObject;
 
 #region Unity Lifecycle
-        private void Awake()
+        protected override void Awake()
         {
-            _startPoint = transform.position;
-            _collider = GetComponent<Collider2D>();
+            base.Awake();
+
+            _pooledObject = GetComponent<PooledObject>();
+            _pooledObject.RecycleEvent += RecycleEventHandler;
         }
 
         private void Update()
@@ -66,23 +70,21 @@ namespace pdxpartyparrot.ggj2019.Collectable
                 return;
             }
 
+            float dt = Time.deltaTime;
+
             if(_isCollected) {
-                if(!_particleSystem.isPlaying) {
-                    Destroy(gameObject);
-                }
-
-                GoToHive();
+                GoToHive(dt);
                 return;
             }
 
-            if(FollowPlayer()) {
+            if(FollowPlayer(dt)) {
                 return;
             }
 
-            Move(Time.deltaTime);
+            Move(dt);
 
-            if(transform.position.y  - _collider.bounds.size.y / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D) {
-                Destroy(gameObject);
+            if(transform.position.y  - Height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D) {
+                _pooledObject.Recycle();
             }
         }
 
@@ -105,6 +107,14 @@ namespace pdxpartyparrot.ggj2019.Collectable
         }
 #endregion
 
+        public override void OnSpawn(SpawnPoint spawnpoint)
+        {
+            base.OnSpawn(spawnpoint);
+
+            _startPoint = transform.position;
+            _isCollected = false;
+        }
+
         private void Gather(Players.Player player)
         {
             if(null == player) {
@@ -115,32 +125,32 @@ namespace pdxpartyparrot.ggj2019.Collectable
                 return;
             }
 
-            followPlayer = player;
+            _followPlayer = player;
 
-            player.AddPollen(_pollen);
+            player.AddPollen();
             _pickupEffect.Trigger();
         }
 
-        private void GoToHive()
+        private void GoToHive(float dt)
         {
-            transform.position = Vector3.Lerp(transform.position, Hive.Instance.Position, 10f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, Hive.Instance.Position, 10f * dt);
         }
 
-        private bool FollowPlayer()
+        private bool FollowPlayer(float dt)
         {
-            if(followPlayer == null) {
+            if(_followPlayer == null) {
                 return false;
             }
 
-            if(followPlayer.IsDead) {
-                followPlayer = null;
+            if(_followPlayer.IsDead) {
+                _followPlayer = null;
                 return false;
             }
 
-            transform.position = Vector3.Lerp(transform.position, followPlayer.Position + new Vector3(0.25f,0f), 20f*Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _followPlayer.Position + new Vector3(0.25f,0.0f), 20.0f * dt);
 
             // pollen was deposited
-            if(!followPlayer.HasPollen) {
+            if(!_followPlayer.HasPollen) {
                 Collect();
             }
 
@@ -151,23 +161,23 @@ namespace pdxpartyparrot.ggj2019.Collectable
         {
             _signTime += dt * _sideSpeed;
 
-            transform.position = new Vector3((Mathf.Sin(_signTime) * _sideDistance) + _startPoint.x,
-                transform.position.y + (_upwardSpeed * dt));
-        }
-
-        public void SetPollenAmt(int amt)
-        {
-            _pollen = amt;
+            transform.position = new Vector3((Mathf.Sin(_signTime) * _sideDistance) + _startPoint.x, transform.position.y + (_upwardSpeed * dt));
         }
 
         private void Collect()
         {
             _isCollected = true;
-            _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 
             _collectEffect.Trigger(() => {
-                Destroy(gameObject);
+                _pooledObject.Recycle();
             });
         }
+
+#region Event Handlers
+        private void RecycleEventHandler(object sender, EventArgs args)
+        {
+            _followPlayer = null;
+        }
+#endregion
     }
 }

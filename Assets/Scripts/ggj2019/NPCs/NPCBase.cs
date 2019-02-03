@@ -16,7 +16,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
     [RequireComponent(typeof(PooledObject))]
     public abstract class NPCBase : PhysicsActor2D
     {
-        public override float Height => Collider.bounds.size.y / 2.0f;
+        public override float Height => Collider.bounds.size.y;
 
         public override float Radius => Collider.bounds.size.x / 2.0f;
 
@@ -71,6 +71,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             IsDead = false;
 
+            if(null != _deathEffect) {
+                _deathEffect.Reset();
+            }
+
             if(null != _spawnEffect) {
                 _spawnEffect.Trigger();
             }
@@ -78,6 +82,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         protected virtual void OnDeSpawn()
         {
+            _deathEffect.StopTrigger();
         }
 
         public virtual void Kill()

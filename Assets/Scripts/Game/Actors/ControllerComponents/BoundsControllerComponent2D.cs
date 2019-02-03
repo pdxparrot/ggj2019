@@ -14,9 +14,10 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             Vector2 gameSize = new Vector2(GameStateManager.Instance.GameManager.GameData.GameSize2D * aspectRatio,
                                            GameStateManager.Instance.GameManager.GameData.GameSize2D);
 
-            Vector2 halfSize = new Vector2(Controller2D.Owner.Radius / 2.0f, Controller2D.Owner.Height / 2.0f);
+            Vector2 halfSize = new Vector2(Controller2D.Owner.Radius, Controller2D.Owner.Height / 2.0f);
 
             // TODO: this was originally copied from DefaultPhysicsMove() and probably should be smarter than that
+            // TODO: this should have acceleration and momentum
 
             Vector2 velocity = axes * speed;
             if(!Controller2D.Rigidbody.isKinematic) {

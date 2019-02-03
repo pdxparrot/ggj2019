@@ -53,7 +53,7 @@ namespace pdxpartyparrot.Core.Util
             }
 
             // clear result/exception
-            _result = default(T);
+            _result = default;
             _exception = null;
 
             // start the coroutine
@@ -67,7 +67,7 @@ namespace pdxpartyparrot.Core.Util
             }
 
             // result is now an exception
-            _result = default(T);
+            _result = default;
             _exception = new CoroutineStoppedException();
 
             // stop the coroutine itself

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using pdxpartyparrot.Core.DebugMenu;
@@ -12,6 +11,12 @@ namespace pdxpartyparrot.Game
 {
     public sealed class HighScoreManager : SingletonBehavior<HighScoreManager>
     {
+        public enum HighScoreSortOrder
+        {
+            Ascending,
+            Descending
+        }
+
         public struct HighScore : IComparable<HighScore>
         {
             public string playerName;
@@ -20,13 +25,29 @@ namespace pdxpartyparrot.Game
 
             public int CompareTo(HighScore other)
             {
-                return score.CompareTo(other.score);
+                // sort descending by default
+                return other.score.CompareTo(score);
             }
         }
 
+        public HighScoreSortOrder SortOrder { get; set; } = HighScoreSortOrder.Descending;
+
         private readonly SortedSet<HighScore> _highScores = new SortedSet<HighScore>();
 
-        public IReadOnlyCollection<HighScore> HighScores => _highScores;
+        public IEnumerable<HighScore> HighScores
+        {
+            get
+            {
+                switch(SortOrder)
+                {
+                case HighScoreSortOrder.Ascending:
+                    return _highScores.Reverse();
+                case HighScoreSortOrder.Descending:
+                default:
+                    return _highScores;
+                }
+            }
+        }
 
 #region Unity Lifecycle
         private void Awake()
