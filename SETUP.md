@@ -2,6 +2,7 @@
 
 # Pre-Asset Setup
 
+* Create Assets/csc.rsp
 * Copy Art/Core/pdxparrot.png
 * Copy Art/Core/progress.png
   * Texture Type: Sprite (2D and UI)
