@@ -1,0 +1,2 @@
+# squelch useless warnings
+-nowarn:0649    # field is never assigned to, and will always have its default value ([SerializeField] causes this to spam)
