@@ -1,9 +1,12 @@
-﻿using Spine.Unity;
+﻿using pdxpartyparrot.Core;
+
+using Spine.Unity;
 
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
+// TODO: make core (if USE_SPINE)
     public sealed class SpineSkinSwapper : MonoBehaviour
     {
         [SerializeField]
@@ -23,6 +26,14 @@ namespace pdxpartyparrot.ggj2019.Players
             _skeletonAnimation.Skeleton.SetSkin(skinName);
             _skeletonAnimation.Skeleton.SetSlotsToSetupPose();
             _skeletonAnimation.AnimationState.Apply(_skeletonAnimation.Skeleton);
+        }
+
+        public void SetRandomSkin()
+        {
+            if(_skinNames.Length < 1) {
+                return;
+            }
+            SetSkin(PartyParrotManager.Instance.Random.Next(_skinNames.Length));
         }
     }
 }

@@ -2,7 +2,6 @@
 
 using JetBrains.Annotations;
 
-using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
@@ -11,7 +10,6 @@ using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.ggj2019.NPCs;
 
 using DG.Tweening;
-using Spine.Unity;
 
 using UnityEngine;
 
@@ -38,7 +36,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private readonly List<int> _health = new List<int>();
 
-        public override float Height => Collider.bounds.size.y / 2.0f;
+        public override float Height => Collider.bounds.size.y;
 
         public override float Radius => Collider.bounds.size.x / 2.0f;
 
@@ -46,10 +44,15 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [SerializeField] private int _maxBees = 5;
         [SerializeField] private float _beeSpawnCooldown = 10.0f;
-        private readonly Timer _beeSpawnTimer = new Timer();
+
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _beeSpawnTimer = new Timer();
 
         [SerializeField]
         private NPCBee _beePrefab;
+
+        private GameObject _beeContainer;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -58,46 +61,45 @@ namespace pdxpartyparrot.ggj2019.Players
 
             Instance = this;
 
-            for(int i = 0; i < _armor.Count; ++i) {
+            for(int i=0; i<_armor.Count; ++i) {
                 _health.Add(armorhealth);
             }
+
+            _beeContainer = new GameObject("bees");
+            _beeContainer.transform.SetParent(transform);
         }
 
         private void Update()
         {
-            if(!_initialized || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
-                return;
-            }
-
             float dt = Time.deltaTime;
-            _beeSpawnTimer.Update(dt);
 
-            SpawnBee();
+            _beeSpawnTimer.Update(dt);
         }
 
         protected override void OnDestroy()
         {
+            Destroy(_beeContainer);
+
             Instance = null;
 
             base.OnDestroy();
         }
 #endregion
 
-        private bool _initialized;
-
         public void Initialize()
         {
-            _initialized = true;
-
             PooledObject pooledObject = _beePrefab.GetComponent<PooledObject>();
             ObjectPoolManager.Instance.InitializePool("bees", pooledObject, _maxBees * 4);
+
+            DoSpawnBee();
+            _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);
         }
 
         public void Shutdown()
         {
-            ObjectPoolManager.Instance.DestroyPool("bees");
+            _beeSpawnTimer.Stop();
 
-            _initialized = false;
+            ObjectPoolManager.Instance.DestroyPool("bees");
         }
 
         private int neighbor1(int pc) {
@@ -229,15 +231,6 @@ namespace pdxpartyparrot.ggj2019.Players
             return false;
         }
 
-        public void Repair() {
-            for(int i = 0; i < _armor.Count; ++i) {
-                if(_health[i] > 0 && _health[i] < armorhealth) {
-                    ShowDamage(i);
-                    ++_health[i];
-                }
-            }
-        }
-
         public int UnloadPollen(Player player, int amount)
         {
             NPCBee bee = DoSpawnBee();
@@ -249,13 +242,15 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void SpawnBee()
         {
-            if(GameManager.Instance.IsGameOver || _beeSpawnTimer.IsRunning || NPCBee.Bees.Count >= _maxBees) {
+            if(GameManager.Instance.IsGameOver) {
                 return;
             }
 
-            DoSpawnBee();
+            if(NPCBee.Bees.Count < _maxBees) {
+                DoSpawnBee();
+            }
 
-            _beeSpawnTimer.Start(_beeSpawnCooldown);
+            _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);
         }
 
         [CanBeNull]
@@ -268,6 +263,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             NPCBee bee = ObjectPoolManager.Instance.GetPooledObject<NPCBee>("bees");
             spawnPoint.Spawn(bee);
+            bee.transform.SetParent(_beeContainer.transform);
             return bee;
         }
     }

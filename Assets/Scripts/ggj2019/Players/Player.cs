@@ -16,7 +16,7 @@ namespace pdxpartyparrot.ggj2019.Players
     {
         public PlayerController GamePlayerController => (PlayerController)PlayerController;
 
-        public override float Height => GamePlayerController.Collider.bounds.size.y / 2.0f;
+        public override float Height => GamePlayerController.Collider.bounds.size.y;
 
         public override float Radius => GamePlayerController.Collider.bounds.size.x / 2.0f;
 
@@ -40,9 +40,9 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [SerializeField]
         [ReadOnly]
-        private int _pollen;
+        private bool _hasPollen;
 
-        public bool HasPollen => _pollen > 0;
+        public bool HasPollen => _hasPollen;
 
         private readonly Timer _deathTimer = new Timer();
 
@@ -50,7 +50,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private SpineSkinSwapper _skinSwapper;
 
-        #region Unity Lifecycle
+#region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
@@ -68,7 +68,8 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             if(HasPollen && Hive.Instance.Collides(this)) {
-                _pollen -= Hive.Instance.UnloadPollen(this, _pollen);
+                Hive.Instance.UnloadPollen(this, 1);
+                _hasPollen = false;
             }
 
             float dt = Time.deltaTime;
@@ -88,9 +89,9 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
 #region Actions
-        public void AddPollen(int amt)
+        public void AddPollen()
         {
-            _pollen += amt;
+            _hasPollen = true;
         }
 
         public void AddBeeToSwarm(NPCBee npcBee)
@@ -109,7 +110,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return true;
             }
 
-            _swarm.Kill(amount);
+            _swarm.Remove(amount);
             return true;
         }
 
@@ -117,7 +118,9 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             _isDead = true;
 
-            _pollen = 0;
+            _hasPollen = false;
+
+            _swarm.RemoveAll();
 
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
             Model.gameObject.SetActive(false);
@@ -132,7 +135,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             NPCBee npcBee = _interactables.GetBee();
             if(npcBee != null) {
-                _swarm.Add(npcBee);
+                AddBeeToSwarm(npcBee);
             }
         }
 

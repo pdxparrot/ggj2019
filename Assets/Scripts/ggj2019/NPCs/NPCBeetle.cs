@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using pdxpartyparrot.Core.Util;
+﻿using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 
 using UnityEngine;
@@ -10,11 +8,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 {
     public sealed class NPCBeetle : NPCEnemy
     {
-        // TODO: NPCManager.Beetles
-        private static readonly List<NPCBeetle> _beetles = new List<NPCBeetle>();
-
-        public static IReadOnlyCollection<NPCBeetle> Beetles => _beetles;
-
         [SerializeField]
         private float _harvestCooldown = 1.0f;
 
@@ -22,11 +15,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private NPCFlower _flower;
 
-        public int Pollen { get; private set; }
+        [SerializeField]
+        [ReadOnly]
+        private SpawnPoint _spawnpoint;
 
         private readonly Timer _harvestCooldownTimer = new Timer();
-
-        private SpawnPoint _spawnpoint;
 
 #region Unity Lifecycle
         private void Update()
@@ -45,39 +38,42 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             base.OnSpawn(spawnpoint);
 
-            if(!spawnpoint.Acquire(this)) {
+            if(!spawnpoint.Acquire(this, () => _spawnpoint = null)) {
                 Debug.LogError("Unable to acquire spawnpoint!");
                 _pooledObject.Recycle();
                 return;
             }
             _spawnpoint = spawnpoint;
 
-            _flower = NPCFlower.Flowers.Nearest(transform.position);
-            if(!_flower.Collides(this) || _flower.IsDead) {
-                Debug.LogWarning($"Spawned on a dead / missing flower: {_flower.IsDead}");
-                _pooledObject.Recycle();
-                return;
-            }
-
-            _beetles.Add(this);
-
-// TODO: replace with Acquire/Release
-            _flower.CanSpawnPollen = false;
-
-            //Assert.IsTrue(_flower.IsReady && _flower.CanSpawnPollen && _flower.HasPollen);
+            _flower = _spawnpoint.GetComponentInParent<NPCFlower>();
+            Assert.IsFalse(_flower.IsDead);
+            _flower.AcquirePollenSpawnpoint(this);
 
             _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
+
+            SetIdleAnimation();
         }
 
         protected override void OnDeSpawn()
         {
-            _beetles.Remove(this);
+            _harvestCooldownTimer.Stop();
 
             if(_flower != null) {
-                _flower.CanSpawnPollen = true;
+                _flower.ReleasePollenSpawnpoint();
+                _flower = null;
+            }
+
+            if(null != _spawnpoint) {
+                _spawnpoint.Release();
+                _spawnpoint = null;
             }
 
             base.OnDeSpawn();
+        }
+
+        private void SetIdleAnimation()
+        {
+            SetAnimation("beetle_idle", true);
         }
 
         private void HarvestFlower()
@@ -86,7 +82,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            Pollen += _flower.BeetleHarvest();
+            _flower.BeetleHarvest(Damage);
             if(_flower.IsDead) {
                 _flower = null;
 
@@ -99,12 +95,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void Kill()
         {
-            _spawnpoint.Release();
-            _spawnpoint = null;
-
             base.Kill();
 
-            _harvestCooldownTimer.Stop();
             GameManager.Instance.BeetleKilled();
         }
     }

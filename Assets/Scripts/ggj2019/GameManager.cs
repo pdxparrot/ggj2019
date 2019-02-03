@@ -3,6 +3,7 @@
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.State;
@@ -96,11 +97,18 @@ namespace pdxpartyparrot.ggj2019
             _waveSpawner.WaveStartEvent += WaveStartEventHandler;
             _waveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
             _waveSpawner.StartSpawner();
+
+            // TODO: wave spawner should handle this
+            PooledObject pollenPooledObject = GameGameData.PollenPrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("pollen", pollenPooledObject, 5);
         }
 
         //[Server]
         public void EndGame()
         {
+            // TODO: wave spawner should handle this
+            ObjectPoolManager.Instance.DestroyPool("pollen");
+
             _waveSpawner.StopSpawner();
             _waveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
             _waveSpawner.WaveStartEvent += WaveStartEventHandler;
@@ -117,13 +125,13 @@ namespace pdxpartyparrot.ggj2019
         //[Server]
         private void SpawnPollen()
         {
-            // give it to a random flower
-            for(int i=0; i<10; ++i) {
-                NPCFlower flower = NPCFlower.Flowers.GetRandomEntry();
-                if(null != flower && flower.IsReady && !flower.IsDead && flower.CanSpawnPollen) {
-                    flower.SpawnPollen();
-                    break;
-                }
+// TODO: wave spawner should handle this
+
+            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("pollen");
+            if(null != spawnPoint) {
+                NPCFlower flower = spawnPoint.GetComponentInParent<NPCFlower>();
+                Assert.IsFalse(flower.IsDead);
+                flower.SpawnPollen();
             }
             _pollenTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_pollenDelayMin, _pollenDelayMax), SpawnPollen);
         }

@@ -26,24 +26,28 @@ namespace pdxpartyparrot.Game.World
             {
                 private readonly WaveSpawnData.SpawnGroup _spawnGroupData;
 
-                private readonly Timer _spawnTimer = new Timer();
+                [SerializeField]
+                [ReadOnly]
+                private /*readonly*/ Timer _spawnTimer = new Timer();
 
                 private string PoolTag => $"spawnGroup_{_spawnGroupData.Tag}";
 
-                private bool _isPooled;
+                private GameObject _poolContainer;
 
-                public SpawnGroup(WaveSpawnData.SpawnGroup spawnGroupData)
+                private readonly  WaveSpawner _owner;
+
+                public SpawnGroup(WaveSpawnData.SpawnGroup spawnGroupData, WaveSpawner owner)
                 {
                     _spawnGroupData = spawnGroupData;
+                    _owner = owner;
                 }
 
                 public void Initialize(float waveDuration)
                 {
-                    _isPooled = false;
-
                     PooledObject pooledObject = _spawnGroupData.ActorPrefab.GetComponent<PooledObject>();
                     if(null != pooledObject) {
-                        _isPooled = true;
+                        _poolContainer = new GameObject(PoolTag);
+                        _poolContainer.transform.SetParent(_owner.transform);
 
                         int count = _spawnGroupData.Count.Max;
                         if(0 != _spawnGroupData.Delay.Min) {
@@ -60,10 +64,14 @@ namespace pdxpartyparrot.Game.World
 
                 public void Shutdown()
                 {
-                    if(_isPooled && ObjectPoolManager.HasInstance) {
-                        ObjectPoolManager.Instance.DestroyPool(PoolTag);
+                    if(null != _poolContainer) {
+                        if(ObjectPoolManager.HasInstance) {
+                            ObjectPoolManager.Instance.DestroyPool(PoolTag);
+                        }
+
+                        Destroy(_poolContainer);
+                        _poolContainer = null;
                     }
-                    _isPooled = false;
                 }
 
                 public void Start()
@@ -90,12 +98,14 @@ namespace pdxpartyparrot.Game.World
                             continue;
                         }
 
-                        if(_isPooled) {
-                            Actor actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
+                        Actor actor = null;
+                        if(null != _poolContainer) {
+                            actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
                             spawnPoint.Spawn(actor);
                         } else {
                             spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab);
                         }
+                        actor.transform.SetParent(_poolContainer.transform);
 
                         if(!_spawnGroupData.Once) {
                             _spawnTimer.Start(_spawnGroupData.Delay, Spawn);
@@ -108,14 +118,19 @@ namespace pdxpartyparrot.Game.World
 
             public float Duration => _spawnWaveData.Duration;
 
-            private readonly List<SpawnGroup> _spawnGroups = new List<SpawnGroup>();
+            [SerializeField]
+            [ReadOnly]
+            private /*readonly*/ List<SpawnGroup> _spawnGroups = new List<SpawnGroup>();
 
-            public SpawnWave(WaveSpawnData.SpawnWave spawnWaveData)
+            private readonly WaveSpawner _owner;
+
+            public SpawnWave(WaveSpawnData.SpawnWave spawnWaveData, WaveSpawner owner)
             {
                 _spawnWaveData = spawnWaveData;
+                _owner = owner;
 
                 foreach(WaveSpawnData.SpawnGroup spawnGroup in _spawnWaveData.SpawnGroups) {
-                    _spawnGroups.Add(new SpawnGroup(spawnGroup));
+                    _spawnGroups.Add(new SpawnGroup(spawnGroup, _owner));
                 }
             }
 
@@ -131,7 +146,6 @@ namespace pdxpartyparrot.Game.World
                 foreach(SpawnGroup spawnGroup in _spawnGroups) {
                     spawnGroup.Shutdown();
                 }
-                _spawnGroups.Clear();
             }
 
             public void Start()
@@ -167,18 +181,22 @@ namespace pdxpartyparrot.Game.World
 
         private bool HasCurrentWave => _currentWaveIndex >= 0 && _currentWaveIndex < _spawnWaves.Count;
 
-        private readonly List<SpawnWave> _spawnWaves = new List<SpawnWave>();
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ List<SpawnWave> _spawnWaves = new List<SpawnWave>();
 
         [CanBeNull]
         private SpawnWave CurrentWave => HasCurrentWave ? _spawnWaves[_currentWaveIndex] : null;
 
-        private readonly Timer _waveTimer = new Timer();
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _waveTimer = new Timer();
 
 #region Unity Lifecycle
         private void Awake()
         {
             foreach(WaveSpawnData.SpawnWave spawnWave in _waveSpawnData.Waves) {
-                _spawnWaves.Add(new SpawnWave(spawnWave));
+                _spawnWaves.Add(new SpawnWave(spawnWave, this));
             }
         }
 

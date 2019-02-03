@@ -10,34 +10,59 @@ namespace pdxpartyparrot.ggj2019.NPCs.Control
         [SerializeField]
         private float _swarmRadius;
 
-        [SerializeField]
-        private bool isPlayerSwarm;
-
         private readonly List<ISwarmable> _swarmables = new List<ISwarmable>();
 
-        private readonly List<Vector3> _swarmOffset = new List<Vector3>();
+        private GameObject _swarmContainer;
 
         public bool HasSwarm => _swarmables.Count > 0;
 
-        public void Add(ISwarmable swarmable)
+#region Unity Lifecycle
+        private void Awake()
         {
-            _swarmables.Add(swarmable);
-
-            if(isPlayerSwarm && swarmable.CanJoinSwarm) {
-                swarmable.JoinSwarm(this, _swarmRadius);
-            }
+            _swarmContainer = new GameObject("swarm");
+            _swarmContainer.transform.SetParent(transform);
         }
 
-        public int Kill(int amount)
+        private void Destroy()
         {
-            int killed = 0;
-            for(int i=0; i<_swarmables.Count && killed < amount; ++i) {
-                _swarmables[i].Kill();
-                killed++;
-            }
-            _swarmables.RemoveRange(0, killed);
+            Destroy(_swarmContainer);
+        }
+#endregion
 
-            return killed;
+        public void Add(ISwarmable swarmable)
+        {
+            if(!swarmable.CanJoinSwarm) {
+                return;
+            }
+
+            _swarmables.Add(swarmable);
+            swarmable.JoinSwarm(this, _swarmRadius);
+            swarmable.Transform.SetParent(_swarmContainer.transform);
+        }
+
+        public int Remove(int amount)
+        {
+            int removed = 0;
+            for(int i=0; i<_swarmables.Count && removed < amount; ++i) {
+                ISwarmable swarmable = _swarmables[i];
+
+                swarmable.Transform.SetParent(null);
+                swarmable.RemoveFromSwarm();
+
+                removed++;
+            }
+            _swarmables.RemoveRange(0, removed);
+
+            return removed;
+        }
+
+        public void RemoveAll()
+        {
+            foreach(ISwarmable swarmable in _swarmables) {
+                swarmable.Transform.SetParent(null);
+                swarmable.RemoveFromSwarm();
+            }
+            _swarmables.Clear();
         }
     }
 }

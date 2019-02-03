@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Actors;
+﻿using System;
+
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -16,6 +18,8 @@ namespace pdxpartyparrot.Core.World
         [ReadOnly]
         private Actor _owner;
 
+        private Action _onRelease;
+
 #region Unity Lifecycle
         protected virtual void OnEnable()
         {
@@ -24,6 +28,7 @@ namespace pdxpartyparrot.Core.World
 
         protected virtual void OnDisable()
         {
+            Release();
             Unregister();
         }
 
@@ -36,14 +41,14 @@ namespace pdxpartyparrot.Core.World
 
         private void Register()
         {
-            if(SpawnManager.HasInstance) {
+            if(enabled && SpawnManager.HasInstance) {
                 SpawnManager.Instance.RegisterSpawnPoint(this);
             }
         }
 
         private void Unregister()
         {
-            if(SpawnManager.HasInstance) {
+            if(enabled && SpawnManager.HasInstance) {
                 SpawnManager.Instance.UnregisterSpawnPoint(this);
             }
         }
@@ -82,13 +87,17 @@ namespace pdxpartyparrot.Core.World
             actor.OnReSpawn(this);
         }
 
-        public bool Acquire(Actor owner)
+        public bool Acquire(Actor owner, Action onRelease, bool force=false)
         {
-            if(null != _owner) {
+            if(!force && null != _owner) {
                 return false;
             }
 
+            Release();
+
             _owner = owner;
+            _onRelease = onRelease;
+
             Unregister();
 
             return true;
@@ -100,7 +109,9 @@ namespace pdxpartyparrot.Core.World
                 return;
             }
 
+            _onRelease?.Invoke();
             _owner = null;
+
             Register();
         }
     }

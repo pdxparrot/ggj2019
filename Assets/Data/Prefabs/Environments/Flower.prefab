@@ -327,7 +327,8 @@ MonoBehaviour:
   _deathEffect: {fileID: 6498468760859895621}
   _animation: {fileID: 0}
   _initialPollen: 5
-  _pollenRate: 1
+  _beetleSpawn: {fileID: 4261586379689094825}
+  _pollenSpawn: {fileID: 2927692061490181078}
   _pollen: 0
   _canSpawnPollen: 1
 --- !u!114 &7498956286358863322
