@@ -21,20 +21,16 @@ MonoBehaviour:
     m_Bits: 2048
   _ffaGameStatePrefab: {fileID: 29742012200218022, guid: 0df0709c42ad34140ac759786c4c2832,
     type: 3}
-  _teamsGameStatePrefab: {fileID: 1643600861973749352, guid: ef04082b978cb0d4fb73e45acecbf67f,
-    type: 3}
   _viewerPrefab: {fileID: 1920754528598710306, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}
-  _pollenPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-    type: 3}
   _waveSpawnerPrefab: {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8,
     type: 3}
   _flowerPrefabs:
   - {fileID: 6016942616617328738, guid: 0d12de39921965b4a9969e89e2da0197, type: 3}
   - {fileID: 4150398772208102598, guid: fb8d8033ef0039447b1d4992dfa225a4, type: 3}
   - {fileID: 1988465991101499580, guid: c02c00683aef0bf469e8ded3f5ef022e, type: 3}
-  _deathPenalty: 0
-  _pollenScore: 0
-  _beetleScore: 0
-  _waspScore: 0
+  _deathPenalty: 250
+  _pollenScore: 25
+  _beetleScore: 50
+  _waspScore: 100
