@@ -85,7 +85,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        protected override void OnDeSpawn()
+        public override void OnDeSpawn()
         {
             if(null != _attackAnimation) {
                 _attackAnimation.Complete -= OnAttackComplete;

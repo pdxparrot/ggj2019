@@ -35,9 +35,9 @@ namespace pdxpartyparrot.Game.Players
             set => _lastControllerLook = value;
         }
 
-        protected IPlayerController PlayerController => (IPlayerController)Controller;
+        protected IPlayerController PlayerBehavior => (IPlayerController)Behavior;
 
-        protected IPlayer Player => PlayerController.Player;
+        protected IPlayer Player => PlayerBehavior.Player;
 
         protected override bool CanDrive => base.CanDrive && Player.IsLocalActor;
 
@@ -48,7 +48,7 @@ namespace pdxpartyparrot.Game.Players
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            Assert.IsTrue(Controller is IPlayerController);
+            Assert.IsTrue(Behavior is IPlayerController);
         }
 
         protected virtual void Update()
@@ -61,14 +61,14 @@ namespace pdxpartyparrot.Game.Players
                 // TODO: on pause tho we should maybe store this stuff out
                 // in order to reset it (otherwise we might not get new inputs)
                 LastControllerMove = Vector3.zero;
-                Controller.LastMoveAxes = Vector3.zero;
+                Behavior.LastMoveAxes = Vector3.zero;
                 return;
             }
 
 
             float dt = Time.deltaTime;
 
-            Controller.LastMoveAxes = Vector3.Lerp(Controller.LastMoveAxes, _lastControllerMove, dt * GameStateManager.Instance.PlayerManager.PlayerData.MovementLerpSpeed);
+            Behavior.LastMoveAxes = Vector3.Lerp(Behavior.LastMoveAxes, _lastControllerMove, dt * GameStateManager.Instance.PlayerManager.PlayerData.MovementLerpSpeed);
         }
 
         protected virtual void OnDestroy()
@@ -88,7 +88,7 @@ namespace pdxpartyparrot.Game.Players
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Player.Name} Driver");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Player.Id} Driver");
             _debugMenuNode.RenderContentsAction = () => {
                 /*GUILayout.BeginHorizontal();
                     GUILayout.Label("Mouse Sensitivity:");

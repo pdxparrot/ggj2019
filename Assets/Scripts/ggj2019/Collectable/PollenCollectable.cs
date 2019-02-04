@@ -139,7 +139,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         private void GoToHive(float dt)
         {
-            transform.position = Vector3.Lerp(transform.position, Hive.Instance.Position, 10f * dt);
+            transform.position = Vector3.Lerp(transform.position, Hive.Instance.transform.position, 10f * dt);
         }
 
         private bool FollowPlayer(float dt)
@@ -153,7 +153,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
                 return false;
             }
 
-            transform.position = Vector3.Lerp(transform.position, _followPlayer.Position + new Vector3(0.25f,0.0f), 20.0f * dt);
+            transform.position = Vector3.Lerp(transform.position, _followPlayer.transform.position + new Vector3(0.25f,0.0f), 20.0f * dt);
 
             // pollen was deposited
             if(!_followPlayer.HasPollen) {

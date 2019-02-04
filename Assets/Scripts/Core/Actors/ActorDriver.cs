@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Core.Actors
 {
     public abstract class ActorDriver : MonoBehaviour
     {
         [SerializeField]
-        private ActorController _controller;
+        [FormerlySerializedAs("_controller")]
+        private ActorController _behavior;
 
-        protected ActorController Controller => _controller;
+        protected ActorController Behavior => _behavior;
 
         protected virtual bool CanDrive => !PartyParrotManager.Instance.IsPaused;
     }

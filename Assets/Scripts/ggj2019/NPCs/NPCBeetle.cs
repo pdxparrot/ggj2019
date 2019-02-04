@@ -54,7 +54,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetIdleAnimation();
         }
 
-        protected override void OnDeSpawn()
+        public override void OnDeSpawn()
         {
             _harvestCooldownTimer.Stop();
 

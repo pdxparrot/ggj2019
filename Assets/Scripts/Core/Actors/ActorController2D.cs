@@ -9,6 +9,8 @@ using UnityEngine.Profiling;
 namespace pdxpartyparrot.Core.Actors
 {
     // TODO: reduce the copy paste in this
+    // TODO: rename ActorBehavior2D
+    // TODO: move the manual animation stuff to its own script
     [RequireComponent(typeof(Rigidbody2D))]
     public class ActorController2D : ActorController
     {
@@ -70,15 +72,24 @@ namespace pdxpartyparrot.Core.Actors
         [ReadOnly]
         private float _lastAngularVelocity;
 
-        public PhysicsActor2D PhysicsOwner => (PhysicsActor2D)Owner;
+        public PhysicsActor2D Owner2D => (PhysicsActor2D)Owner;
 
+        // TODO: move this to the actor
         public Rigidbody2D Rigidbody { get; private set; }
 
-        public override Vector3 Position => Rigidbody.position;
+        public override Vector3 Position
+        {
+            get => Rigidbody.position;
+            set
+            {
+                Debug.Log($"Teleporting actor {Owner.Id} to {value}");
+                Rigidbody.position = value;
+            }
+        }
 
         public override Quaternion Rotation3D
         {
-            get => new Quaternion();
+            get => Quaternion.identity;
             set {}
         }
 
@@ -155,13 +166,6 @@ namespace pdxpartyparrot.Core.Actors
             _lastAngularVelocity = Rigidbody.angularVelocity;
         }
 #endregion
-
-        public override void MoveTo(Vector3 position)
-        {
-            Debug.Log($"Teleporting actor {Owner.Id} to {position}");
-
-            Rigidbody.position = position;
-        }
 
         public void MovePosition(Vector3 position)
         {

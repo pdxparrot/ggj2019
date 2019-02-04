@@ -14,11 +14,11 @@ namespace pdxpartyparrot.ggj2019.Players
     [RequireComponent(typeof(SpineSkinSwapper))]
     public sealed class Player : Player2D
     {
-        public PlayerController GamePlayerController => (PlayerController)PlayerController;
+        public PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
 
-        public override float Height => GamePlayerController.Collider.bounds.size.y;
+        public override float Height => GamePlayerBehavior.Collider.bounds.size.y;
 
-        public override float Radius => GamePlayerController.Collider.bounds.size.x / 2.0f;
+        public override float Radius => GamePlayerBehavior.Collider.bounds.size.x / 2.0f;
 
         [SerializeField]
         private Interactables _interactables;
@@ -58,7 +58,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _swarm = GetComponent<Swarm>();
             _skinSwapper = GetComponent<SpineSkinSwapper>();
 
-            Assert.IsTrue(PlayerController is PlayerController);
+            Assert.IsTrue(PlayerBehavior is PlayerController);
         }
 
         private void Update()
@@ -116,7 +116,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Kill()
         {
-            Controller.Velocity = Vector3.zero;
+            Behavior.Velocity = Vector3.zero;
 
             _isDead = true;
 

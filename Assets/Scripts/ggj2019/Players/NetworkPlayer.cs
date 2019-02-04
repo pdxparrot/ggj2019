@@ -1,5 +1,7 @@
 ﻿#pragma warning disable 0618    // disable obsolete warning for now
 
+using System;
+
 using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
@@ -12,10 +14,10 @@ namespace pdxpartyparrot.ggj2019.Players
     {
 #region Callbacks
         [ClientRpc]
-        public override void RpcSpawn(int id)
+        public override void RpcSpawn(string id)
         {
             if(null != Player) {
-                Player.Initialize(id);
+                Player.Initialize(new Guid(id));
             }
         }
 #endregion

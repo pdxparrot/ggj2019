@@ -52,12 +52,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pooledObject.RecycleEvent += RecycleEventHandler;
         }
 
-        protected override void OnDestroy()
+        protected virtual void OnDestroy()
         {
             _pooledObject.RecycleEvent -= RecycleEventHandler;
             _pooledObject = null;
-
-            base.OnDestroy();
         }
 #endregion
 
@@ -80,7 +78,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        protected virtual void OnDeSpawn()
+        public override void OnDeSpawn()
         {
             _deathEffect.StopTrigger();
         }

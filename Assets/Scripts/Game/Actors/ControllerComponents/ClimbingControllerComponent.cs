@@ -258,9 +258,9 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 break;
             }
 
-            if(null != Controller.Owner.Animator) {
-                Controller.Owner.Animator.SetFloat(Controller.ControllerData.MoveXAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.x) : 0.0f);
-                Controller.Owner.Animator.SetFloat(Controller.ControllerData.MoveZAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.y) : 0.0f);
+            if(null != Controller.Animator) {
+                Controller.Animator.SetFloat(Controller.ControllerData.MoveXAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.x) : 0.0f);
+                Controller.Animator.SetFloat(Controller.ControllerData.MoveZAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.y) : 0.0f);
             }
             return true;
         }
@@ -334,9 +334,9 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _climbMode = ClimbMode.Climbing;
             Controller.UseGravity = false;
 
-            if(null != Controller.Owner.Animator) {
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.ClimbingParam, true);
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.HangingParam, false);
+            if(null != Controller.Animator) {
+                Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, true);
+                Controller.Animator.SetBool(Controller.ControllerData.HangingParam, false);
             }
         }
 
@@ -345,9 +345,9 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _climbMode = ClimbMode.Hanging;
             Controller.UseGravity = false;
 
-            if(null != Controller.Owner.Animator) {
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.HangingParam, true);
+            if(null != Controller.Animator) {
+                Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
+                Controller.Animator.SetBool(Controller.ControllerData.HangingParam, true);
             }
         }
 
@@ -357,9 +357,9 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _climbMode = ClimbMode.None;
             Controller.UseGravity = true;
 
-            if(null != Controller.Owner.Animator) {
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.HangingParam, false);
+            if(null != Controller.Animator) {
+                Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
+                Controller.Animator.SetBool(Controller.ControllerData.HangingParam, false);
             }
 
             // fix our orientation, just in case
@@ -780,10 +780,10 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             // TODO: we can probably infer this using the dot product
             if(isHang) {
-                Controller.MoveTo(Controller.Position + GetSurfaceAttachmentPosition(hit, -_hangTransform.localPosition));
+                Controller.Position = Controller.Position + GetSurfaceAttachmentPosition(hit, -_hangTransform.localPosition);
             } else {
                 transform.forward = -hit.normal;
-                Controller.MoveTo(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal));
+                Controller.Position = Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal);
             }
         }
 

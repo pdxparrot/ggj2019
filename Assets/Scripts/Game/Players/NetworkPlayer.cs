@@ -1,5 +1,7 @@
 ﻿#pragma warning disable 0618    // disable obsolete warning for now
 
+using System;
+
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Network;
@@ -29,10 +31,10 @@ namespace pdxpartyparrot.Game.Players
         [Server]
         public virtual void ResetPlayer(PlayerData playerData)
         {
-            if(null != Player && null != Player.Controller) {
-                Player.Controller.Mass = playerData.Mass;
-                Player.Controller.LinearDrag = playerData.Drag;
-                Player.Controller.AngularDrag = playerData.AngularDrag;
+            if(null != Player && null != Player.Behavior) {
+                Player.Behavior.Mass = playerData.Mass;
+                Player.Behavior.LinearDrag = playerData.Drag;
+                Player.Behavior.AngularDrag = playerData.AngularDrag;
             }
         }
 
@@ -40,10 +42,10 @@ namespace pdxpartyparrot.Game.Players
 
 #region Callbacks
         [ClientRpc]
-        public virtual void RpcSpawn(int id)
+        public virtual void RpcSpawn(string id)
         {
             if(null != Player) {
-                Player.Initialize(id);
+                Player.Initialize(new Guid(id));
             }
         }
 #endregion

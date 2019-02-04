@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+
+using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Util;
 
@@ -6,6 +8,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Actors
 {
+    // TODO: rename: ActorBehavior
     public abstract class ActorController : MonoBehaviour
     {
         public static float AxesDeadZone = 0.001f;
@@ -25,14 +28,24 @@ namespace pdxpartyparrot.Core.Actors
 
         [SerializeField]
         [ReadOnly]
-        private bool _isMoving;
+        protected bool _isMoving;
 
         public bool IsMoving => _isMoving;
 
         public virtual bool CanMove => true;
 #endregion
 
+#region Animation
+        [CanBeNull]
+        [SerializeField]
+        private Animator _animator;
+
+        [CanBeNull]
+        public Animator Animator => _animator;
+
+        // manual animation flag
         public virtual bool IsAnimating => false;
+#endregion
 
         [SerializeField]
         private Actor _owner;
@@ -40,19 +53,51 @@ namespace pdxpartyparrot.Core.Actors
         public Actor Owner => _owner;
 
 #region Physics
-        public abstract Vector3 Position { get; }
+        public virtual Vector3 Position
+        {
+            get => transform.position;
+            set
+            {
+                Debug.Log($"Teleporting actor {Owner.Id} to {value}");
+                transform.position = value;
+            }
+        }
 
-        public abstract Quaternion Rotation3D { get; set; }
+        public virtual Quaternion Rotation3D
+        {
+            get => transform.rotation;
+            set => transform.rotation = value;
+        }
 
-        public abstract float Rotation2D { get; set; }
+        public virtual float Rotation2D
+        {
+            get => 0.0f;
+            set {}
+        }
 
-        public abstract Vector3 Velocity { get; set; }
+        public virtual Vector3 Velocity
+        {
+            get => Vector3.zero;
+            set {}
+        }
 
-        public abstract float Mass { get; set; }
+        public virtual float Mass
+        {
+            get => 1.0f;
+            set {}
+        }
 
-        public abstract float LinearDrag { get; set; }
+        public virtual float LinearDrag
+        {
+            get => 0.0f;
+            set {}
+        }
 
-        public abstract float AngularDrag { get; set; }
+        public virtual float AngularDrag
+        {
+            get => 0.0f;
+            set {}
+        }
 #endregion
 
 #region Unity Lifecycle
@@ -92,13 +137,6 @@ namespace pdxpartyparrot.Core.Actors
         }
 
 #region Movement
-        public virtual void MoveTo(Vector3 position)
-        {
-            Debug.Log($"Teleporting actor {Owner.Id} to {position}");
-
-            transform.position = position;
-        }
-
         // NOTE: axes are (x, y, 0)
         public virtual void AnimationMove(Vector3 axes, float dt)
         {
@@ -119,6 +157,9 @@ namespace pdxpartyparrot.Core.Actors
 #region Event Handlers
         protected virtual void PauseEventHandler(object sender, EventArgs args)
         {
+            if(Animator != null) {
+                Animator.enabled = !PartyParrotManager.Instance.IsPaused;
+            }
         }
 #endregion
     }

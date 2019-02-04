@@ -10,10 +10,8 @@ namespace pdxpartyparrot.Core.Actors
 #endregion
 
 #region Unity Lifecycle
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
-
             Collider = GetComponent<Collider>();
         }
 #endregion

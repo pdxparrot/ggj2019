@@ -20,12 +20,14 @@ namespace pdxpartyparrot.Game.Actors
     {
         CharacterActorControllerData ControllerData { get; }
 
+        Animator Animator { get; }
+
         // TODO: this could move to the data
         float RaycastRoutineRate { get; }
 
         Actor Owner { get; }
 
-        Vector3 Position { get; }
+        Vector3 Position { get; set; }
 
         Quaternion Rotation3D { get; set; }
 
@@ -52,8 +54,6 @@ namespace pdxpartyparrot.Game.Actors
         void StartAnimation3D(Vector3 targetPosition, Quaternion targetRotation, float timeSeconds, Action onComplete=null);
 
         void StartAnimation2D(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete=null);
-
-        void MoveTo(Vector3 position);
 
         void MovePosition(Vector3 position);
 
@@ -307,8 +307,8 @@ namespace pdxpartyparrot.Game.Actors
                 _isSliding = _groundSlope >= ControllerData.SlopeLimit;
 
                 if(!wasGrounded && IsGrounded) {
-                    if(null != _owner.Animator) {
-                        _owner.Animator.SetTrigger(ControllerData.GroundedParam);
+                    if(null != _owner.Behavior.Animator) {
+                        _owner.Behavior.Animator.SetTrigger(ControllerData.GroundedParam);
                     }
 
                     if(null != _groundedEffect) {

@@ -14,7 +14,7 @@ namespace pdxpartyparrot.Game.Actors
     {
         public CharacterActorControllerData ControllerData => _characterController.ControllerData;
 
-        public Collider2D Collider => PhysicsOwner.Collider;
+        public Collider2D Collider => Owner2D.Collider;
 
         private CharacterActorController _characterController;
 
@@ -64,8 +64,8 @@ namespace pdxpartyparrot.Game.Actors
         {
             base.Update();
 
-            if(null != Owner.Animator) {
-                Owner.Animator.SetBool(ControllerData.FallingParam, IsFalling);
+            if(null != Animator) {
+                Animator.SetBool(ControllerData.FallingParam, IsFalling);
             }
         }
 
@@ -123,10 +123,11 @@ namespace pdxpartyparrot.Game.Actors
             }
 
             // TODO: do we need to rotate to face the direction of movement?
+            // (use scaleX)
 
-            if(null != Owner.Animator) {
-                Owner.Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
-                Owner.Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
+            if(null != Animator) {
+                Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
+                Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
             }
         }
 
@@ -185,8 +186,8 @@ namespace pdxpartyparrot.Game.Actors
             // v = sqrt(2gh)
             Rigidbody.velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
-            if(null != Owner.Animator) {
-                Owner.Animator.SetTrigger(animationParam);
+            if(null != Animator) {
+                Animator.SetTrigger(animationParam);
             }
         }
 

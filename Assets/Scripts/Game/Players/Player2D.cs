@@ -1,5 +1,7 @@
 #pragma warning disable 0618    // disable obsolete warning for now
 
+using System;
+
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
@@ -20,6 +22,8 @@ namespace pdxpartyparrot.Game.Players
     [RequireComponent(typeof(AudioSource))]
     public abstract class Player2D : PhysicsActor2D, IPlayer
     {
+        public GameObject GameObject => gameObject;
+
 #region Network
         public override bool IsLocalActor => NetworkPlayer.isLocalPlayer;
 
@@ -34,7 +38,7 @@ namespace pdxpartyparrot.Game.Players
         [SerializeField]
         private PlayerDriver _driver;
 
-        public virtual PlayerController2D PlayerController => (PlayerController2D)Controller;
+        public virtual PlayerController2D PlayerBehavior => (PlayerController2D)Behavior;
 #endregion
 
 #region Viewer
@@ -57,7 +61,7 @@ namespace pdxpartyparrot.Game.Players
         {
             base.Awake();
 
-            Assert.IsTrue(Controller is PlayerController2D);
+            Assert.IsTrue(Behavior is PlayerController2D);
 
             _audioSource = GetComponent<AudioSource>();
             AudioManager.Instance.InitSFXAudioMixerGroup(_audioSource);
@@ -65,7 +69,7 @@ namespace pdxpartyparrot.Game.Players
             GameStateManager.Instance.PlayerManager.Register(this);
         }
 
-        protected override void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if(ViewerManager.HasInstance) {
                 ViewerManager.Instance.ReleaseViewer(Viewer);
@@ -75,26 +79,24 @@ namespace pdxpartyparrot.Game.Players
             if(GameStateManager.HasInstance && GameStateManager.Instance.HasPlayerManager) {
                 GameStateManager.Instance.PlayerManager.Unregister(this);
             }
-
-            base.OnDestroy();
         }
 #endregion
 
-        public override void Initialize(int id)
+        public override void Initialize(Guid id)
         {
             base.Initialize(id);
 
-            PlayerController.Initialize();
+            PlayerBehavior.Initialize();
             InitializeLocalPlayer(id);
         }
 
-        protected virtual bool InitializeLocalPlayer(int id)
+        protected virtual bool InitializeLocalPlayer(Guid id)
         {
             if(!IsLocalActor) {
                 return false;
             }
 
-            Debug.Log("Initializing local player");
+            Debug.Log($"Initializing local player {id}");
 
             _driver.Initialize();
 
@@ -128,9 +130,9 @@ namespace pdxpartyparrot.Game.Players
                 NetworkPlayer.ResetPlayer(GameStateManager.Instance.PlayerManager.PlayerData);
             }
 
-            Initialize(NetworkPlayer.playerControllerId);
+            Initialize(Guid.NewGuid());
             if(!NetworkClient.active) {
-                NetworkPlayer.RpcSpawn(NetworkPlayer.playerControllerId);
+                NetworkPlayer.RpcSpawn(Id.ToString());
             }
         }
 

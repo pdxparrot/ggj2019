@@ -14,7 +14,7 @@ namespace pdxpartyparrot.Game.Actors
     {
         public CharacterActorControllerData ControllerData => _characterController.ControllerData;
 
-        public CapsuleCollider Capsule => (CapsuleCollider)PhysicsOwner.Collider;
+        public CapsuleCollider Capsule => (CapsuleCollider)Owner3D.Collider;
 
         private CharacterActorController _characterController;
 
@@ -66,8 +66,8 @@ namespace pdxpartyparrot.Game.Actors
         {
             base.Update();
 
-            if(null != Owner.Animator) {
-                Owner.Animator.SetBool(ControllerData.FallingParam, IsFalling);
+            if(null != Animator) {
+                Animator.SetBool(ControllerData.FallingParam, IsFalling);
             }
         }
 
@@ -142,9 +142,9 @@ namespace pdxpartyparrot.Game.Actors
                 transform.forward = forward;
             }
 
-            if(null != Owner.Animator) {
-                Owner.Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
-                Owner.Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
+            if(null != Animator) {
+                Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
+                Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
             }
         }
 
@@ -211,8 +211,8 @@ namespace pdxpartyparrot.Game.Actors
             // v = sqrt(2gh)
             Rigidbody.velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
-            if(null != Owner.Animator) {
-                Owner.Animator.SetTrigger(animationParam);
+            if(null != Animator) {
+                Animator.SetTrigger(animationParam);
             }
         }
 

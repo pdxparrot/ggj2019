@@ -76,13 +76,11 @@ namespace pdxpartyparrot.ggj2019.Players
             _beeSpawnTimer.Update(dt);
         }
 
-        protected override void OnDestroy()
+        private void OnDestroy()
         {
             Destroy(_beeContainer);
 
             Instance = null;
-
-            base.OnDestroy();
         }
 #endregion
 

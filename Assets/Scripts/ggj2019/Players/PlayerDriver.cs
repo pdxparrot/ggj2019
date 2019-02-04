@@ -24,9 +24,9 @@ namespace pdxpartyparrot.ggj2019.Players
             set => PartyParrotManager.Instance.SetBool(InvertLookYKey, value);
         }
 
-        private PlayerController GamePlayerController => (PlayerController)PlayerController;
+        private PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
 
-        private Player GamePlayer => GamePlayerController.GamePlayer;
+        private Player GamePlayer => GamePlayerBehavior.GamePlayer;
 
         private GamepadListener _gamepadListener;
 
@@ -39,7 +39,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Awake();
 
-            Assert.IsTrue(PlayerController is PlayerController);
+            Assert.IsTrue(PlayerBehavior is PlayerController);
             Assert.IsNull(GetComponent<GamepadListener>());
         }
 
@@ -107,14 +107,14 @@ namespace pdxpartyparrot.ggj2019.Players
 
             if(context.cancelled) {
                 LastControllerMove = Vector3.zero;
-                Controller.LastMoveAxes = Vector3.zero;
+                Behavior.LastMoveAxes = Vector3.zero;
             } else {
                 Vector2 axes = context.ReadValue<Vector2>();
                 LastControllerMove = new Vector3(axes.x, axes.y, 0.0f);
             }
         }
 
-#region TODO: keyboard animation shit
+#region Keyboard controls
         public void OnMoveup(InputAction.CallbackContext context)
         {
             if(!IsOurDevice(context) || !CanDrive) {
@@ -123,7 +123,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(LastControllerMove.x, context.started ? 1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
-                Controller.LastMoveAxes = LastControllerMove;
+                Behavior.LastMoveAxes = LastControllerMove;
             }
         }
 
@@ -135,7 +135,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(LastControllerMove.x, context.started ? -1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
-                Controller.LastMoveAxes = LastControllerMove;
+                Behavior.LastMoveAxes = LastControllerMove;
             }
         }
 
@@ -147,7 +147,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(context.started ? -1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
-                Controller.LastMoveAxes = LastControllerMove;
+                Behavior.LastMoveAxes = LastControllerMove;
             }
         }
 
@@ -159,7 +159,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(context.started ? 1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
-                Controller.LastMoveAxes = LastControllerMove;
+                Behavior.LastMoveAxes = LastControllerMove;
             }
         }
 #endregion
@@ -171,7 +171,7 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             if(context.started) {
-                GamePlayerController.CharacterController.ActionStarted(GatherControllerComponent.GatherAction.Default);
+                GamePlayerBehavior.CharacterController.ActionStarted(GatherControllerComponent.GatherAction.Default);
             }
         }
 
@@ -182,14 +182,14 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             if(context.started) {
-                GamePlayerController.CharacterController.ActionStarted(ContextControllerComponent.ContextAction.Default);
+                GamePlayerBehavior.CharacterController.ActionStarted(ContextControllerComponent.ContextAction.Default);
             }
         }
 #endregion
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"ggj2019.Player {Player.Name} Driver");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"ggj2019.Player {Player.Id} Driver");
             _debugMenuNode.RenderContentsAction = () => {
                 InvertLookY = GUILayout.Toggle(InvertLookY, "Invert Look Y");
             };

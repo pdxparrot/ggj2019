@@ -146,8 +146,8 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             _isHovering = true;
 
-            if(null != Controller.Owner.Animator) {
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.HoverParam, true);
+            if(null != Controller.Animator) {
+                Controller.Animator.SetBool(Controller.ControllerData.HoverParam, true);
             }
 
             // stop all vertical movement immediately
@@ -159,8 +159,8 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             bool wasHovering = IsHovering;
             _isHovering = false;
 
-            if(null != Controller.Owner.Animator) {
-                Controller.Owner.Animator.SetBool(Controller.ControllerData.HoverParam, false);
+            if(null != Controller.Animator) {
+                Controller.Animator.SetBool(Controller.ControllerData.HoverParam, false);
             }
 
             if(wasHovering) {

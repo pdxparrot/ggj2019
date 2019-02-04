@@ -7,6 +7,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Core.Actors
 {
@@ -14,13 +15,9 @@ namespace pdxpartyparrot.Core.Actors
     {
         [SerializeField]
         [ReadOnly]
-        private int _id = -1;
+        private Guid _id;
 
-        public int Id => _id;
-
-        public string Name => name;
-
-        public Vector3 Position => transform.position;
+        public Guid Id => _id;
 
         public abstract float Height { get; }
 
@@ -38,54 +35,34 @@ namespace pdxpartyparrot.Core.Actors
         public GameObject Model
         {
             get => _model;
-            protected  set => _model = value;
+            protected set => _model = value;
         }
 #endregion
 
-#region Controller
-        [CanBeNull]
+#region Behavior
         [SerializeField]
-        private ActorController _controller;
+        [FormerlySerializedAs("_controller")]
+        [CanBeNull]
+        private ActorController _behavior;
 
         [CanBeNull]
-        public ActorController Controller => _controller;
-#endregion
-
-#region Animation
-        [CanBeNull]
-        [SerializeField]
-        private Animator _animator;
-
-        [CanBeNull]
-        public Animator Animator => _animator;
+        public ActorController Behavior => _behavior;
 #endregion
 
         public abstract bool IsLocalActor { get; }
 
-#region Unity Lifecycle
-        protected virtual void Awake()
-        {
-            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
-        }
-
-        protected virtual void OnDestroy()
-        {
-            if(PartyParrotManager.HasInstance) {
-                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
-            }
-        }
-#endregion
-
-        public virtual void Initialize(int id)
+        public virtual void Initialize(Guid id)
         {
             _id = id;
         }
 
-        public bool Collides(Actor other, float distance=0.0f)
+        // TODO: would be better if we id radius (x) and height (y) separately
+        public bool Collides(Actor other, float distance=float.Epsilon)
         {
             Vector3 offset = other.transform.position - transform.position;
             float r = other.Radius + Radius;
-            return Vector3.Magnitude(offset) < r + distance;
+            float d = r * r;
+            return offset.sqrMagnitude < d;
         }
 
 #region Callbacks
@@ -96,14 +73,9 @@ namespace pdxpartyparrot.Core.Actors
         public virtual void OnReSpawn(SpawnPoint spawnpoint)
         {
         }
-#endregion
 
-#region Event Handlers
-        private void PauseEventHandler(object sender, EventArgs args)
+        public virtual void OnDeSpawn()
         {
-            if(Animator != null) {
-                Animator.enabled = !PartyParrotManager.Instance.IsPaused;
-            }
         }
 #endregion
     }

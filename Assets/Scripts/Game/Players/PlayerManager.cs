@@ -105,7 +105,7 @@ namespace pdxpartyparrot.Game.Players
         {
             Assert.IsTrue(NetworkServer.active);
 
-            Debug.Log($"Respawning player {player.Name}");
+            Debug.Log($"Respawning player {player.Id}");
 
             SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(player.NetworkPlayer.playerControllerId);
             if(null == spawnPoint) {
@@ -129,7 +129,7 @@ namespace pdxpartyparrot.Game.Players
             _debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Players", GUI.skin.box);
                     foreach(IPlayer player in Actors) {
-                        GUILayout.Label($"{player.Name} {player.Position}");
+                        GUILayout.Label($"{player.Id} {player.GameObject.transform.position}");
                     }
                 GUILayout.EndVertical();
             };

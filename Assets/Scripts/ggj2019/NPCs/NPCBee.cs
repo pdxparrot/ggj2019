@@ -85,7 +85,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetHoverAnimation();
         }
 
-        protected override void OnDeSpawn()
+        public override void OnDeSpawn()
         {
             _offsetUpdateTimer.Stop();
 
