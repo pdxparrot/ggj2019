@@ -106,6 +106,10 @@ namespace pdxpartyparrot.ggj2019
             WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
             WaveSpawner.Shutdown();
 
+            // save high scores and then kick everyone
+            foreach(Players.Player player in PlayerManager.Instance.Players) {
+                HighScoreManager.Instance.AddHighScore($"{player.Id}", Score);
+            }
             PlayerManager.Instance.DespawnPlayers();
 
             IsGameOver = true;

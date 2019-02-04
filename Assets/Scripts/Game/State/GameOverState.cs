@@ -37,6 +37,8 @@ namespace pdxpartyparrot.Game.State
             _completeTimer.Update(dt);
         }
 
-        public abstract void Initialize();
+        public virtual void Initialize()
+        {
+        }
     }
 }
