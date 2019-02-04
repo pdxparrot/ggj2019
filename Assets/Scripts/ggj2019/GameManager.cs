@@ -75,16 +75,11 @@ namespace pdxpartyparrot.ggj2019
         {
             Assert.IsTrue(NetworkServer.active);
 
-            SpawnManager.Instance.Initialize();
-
             IsGameOver = false;
 
-            _gameTimer.Reset();
-            _gameTimer.Start();
+            SpawnManager.Instance.Initialize();
 
             _score = 0;
-
-            Hive.Instance.Initialize();
 
             WaveSpawner.Initialize();
             WaveSpawner.WaveStartEvent += WaveStartEventHandler;
@@ -92,14 +87,17 @@ namespace pdxpartyparrot.ggj2019
 
             GameStartEvent?.Invoke(this, EventArgs.Empty);
 
-            // TODO: hook into the GameStartEvent for this
             WaveSpawner.StartSpawner();
+
+            _gameTimer.Reset();
+            _gameTimer.Start();
         }
 
         //[Server]
         public void EndGame()
         {
-            // TODO: hook into the GameEndEvent for this
+            _gameTimer.Stop();
+
             WaveSpawner.StopSpawner();
 
             GameEndEvent?.Invoke(this, EventArgs.Empty);
@@ -108,11 +106,9 @@ namespace pdxpartyparrot.ggj2019
             WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
             WaveSpawner.Shutdown();
 
-            Hive.Instance.Shutdown();
+            PlayerManager.Instance.DespawnPlayers();
 
             IsGameOver = true;
-
-            _gameTimer.Stop();
         }
 
         //[Server]

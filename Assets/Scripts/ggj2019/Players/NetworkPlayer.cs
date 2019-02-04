@@ -17,7 +17,7 @@ namespace pdxpartyparrot.ggj2019.Players
         public override void RpcSpawn(string id)
         {
             if(null != Player) {
-                Player.Initialize(new Guid(id));
+                Player.Initialize(Guid.Parse(id));
             }
         }
 #endregion

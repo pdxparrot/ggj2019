@@ -183,6 +183,8 @@ namespace pdxpartyparrot.ggj2019.Collectable
         private void RecycleEventHandler(object sender, EventArgs args)
         {
             _followPlayer = null;
+
+            OnDeSpawn();
         }
 #endregion
     }

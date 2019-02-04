@@ -1,25 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Util;
 
+using UnityEngine;
+
 namespace pdxpartyparrot.Core.Actors
 {
-    public abstract class ActorManager<T, TV> : SingletonBehavior<TV> where T: Actor where TV: ActorManager<T, TV>
+    // TODO: the way this works (using a dictionary of types)
+    // could be applied to the ViewerManager
+    public sealed class ActorManager : SingletonBehavior<ActorManager>
     {
-        private readonly List<T> _actors = new List<T>();
+        private readonly Dictionary<Type, HashSet<Actor>> _actors = new Dictionary<Type, HashSet<Actor>>();
 
-        public IReadOnlyCollection<T> Actors => _actors;
-
-        public int ActorCount => _actors.Count;
-
-        public void Register(T actor)
+        public void Register<T>(T actor) where T: Actor
         {
-            _actors.Add(actor);
+            Type actorType = actor.GetType();
+            //Debug.Log($"Registering actor {actor.Id} of type {actorType}");
+
+            HashSet<Actor> actors = _actors.GetOrAdd(actorType);
+            actors.Add(actor);
         }
 
-        public void Unregister(T actor)
+        public void Unregister<T>(T actor) where T: Actor
         {
-            _actors.Remove(actor);
+            Type actorType = actor.GetType();
+            //Debug.Log($"Unregistering actor {actor.Id} of type {actorType}");
+
+            if(_actors.TryGetValue(actorType, out var actors)) {
+                actors.Remove(actor);
+            }
+        }
+
+        public int ActorCount<TV>() where TV: Actor
+        {
+            return _actors.TryGetValue(typeof(TV), out var actors) ? actors.Count : 0;
+        }
+
+        public IReadOnlyCollection<Actor> GetActors<T>() where T: Actor
+        {
+            return _actors.GetOrDefault(typeof(T));
         }
     }
 }

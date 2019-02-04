@@ -45,7 +45,7 @@ namespace pdxpartyparrot.Game.Players
         public virtual void RpcSpawn(string id)
         {
             if(null != Player) {
-                Player.Initialize(new Guid(id));
+                Player.Initialize(Guid.Parse(id));
             }
         }
 #endregion

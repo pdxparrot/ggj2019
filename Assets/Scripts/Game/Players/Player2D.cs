@@ -65,8 +65,6 @@ namespace pdxpartyparrot.Game.Players
 
             _audioSource = GetComponent<AudioSource>();
             AudioManager.Instance.InitSFXAudioMixerGroup(_audioSource);
-
-            GameStateManager.Instance.PlayerManager.Register(this);
         }
 
         protected virtual void OnDestroy()
@@ -75,10 +73,6 @@ namespace pdxpartyparrot.Game.Players
                 ViewerManager.Instance.ReleaseViewer(Viewer);
             }
             PlayerViewer = null;
-
-            if(GameStateManager.HasInstance && GameStateManager.Instance.HasPlayerManager) {
-                GameStateManager.Instance.PlayerManager.Unregister(this);
-            }
         }
 #endregion
 

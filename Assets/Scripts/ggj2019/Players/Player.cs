@@ -130,6 +130,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 _deathTimer.Start(_respawnTime, Respawn);
             });
 
+            // despawn the actor (not the player)
+            OnDeSpawn();
+
             GameManager.Instance.PlayerDeath();
         }
 

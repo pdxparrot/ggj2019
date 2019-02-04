@@ -1,10 +1,11 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
+#pragma warning disable 0618    // disable obsolete warning for now
 
 using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Network;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 
@@ -14,20 +15,17 @@ using UnityEngine.Networking;
 
 namespace pdxpartyparrot.Game.Players
 {
+    // TODO: find a way to kill this
     public interface IPlayerManager
     {
-        IReadOnlyCollection<Actor> Actors { get; }
-
         PlayerData PlayerData { get; }
 
+        IReadOnlyCollection<IPlayer> Players { get; }
+
         int PlayerCount { get; }
-
-        void Register(Actor player);
-
-        void Unregister(Actor player);
     }
 
-    public abstract class PlayerManager<T> : ActorManager<Actor, T>, IPlayerManager where T: PlayerManager<T>
+    public abstract class PlayerManager<T, TV> : SingletonBehavior<T>, IPlayerManager where T: PlayerManager<T, TV> where TV: Actor, IPlayer
     {
 #region Data
         [SerializeField]
@@ -39,11 +37,15 @@ namespace pdxpartyparrot.Game.Players
         [Space(10)]
 
         [SerializeField]
-        private Actor _playerPrefab;
+        private TV _playerPrefab;
 
-        private IPlayer PlayerPrefab => (IPlayer)_playerPrefab;
+        private TV PlayerPrefab => _playerPrefab;
 
-        public int PlayerCount => ActorCount;
+        private readonly HashSet<IPlayer> _players = new HashSet<IPlayer>();
+
+        public IReadOnlyCollection<IPlayer> Players => _players;
+
+        public int PlayerCount => Players.Count;
 
         private GameObject _playerContainer;
 
@@ -52,8 +54,6 @@ namespace pdxpartyparrot.Game.Players
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            Assert.IsTrue(_playerPrefab is IPlayer);
-
             _playerContainer = new GameObject("Players");
 
             Core.Network.NetworkManager.Instance.RegisterPlayerPrefab(PlayerPrefab.NetworkPlayer);
@@ -98,7 +98,9 @@ namespace pdxpartyparrot.Game.Players
                 return;
             }
 
-            spawnPoint.Spawn((Actor)player.Player);
+            spawnPoint.SpawnPlayer((Actor)player.Player);
+
+            _players.Add(player.Player);
         }
 
         public void RespawnPlayer(IPlayer player)
@@ -116,6 +118,28 @@ namespace pdxpartyparrot.Game.Players
             spawnPoint.ReSpawn((Actor)player);
         }
 
+        // TODO: figure out how to work this in when players disconnect
+        public void DespawnPlayer(IPlayer player)
+        {
+            Assert.IsTrue(NetworkServer.active);
+
+            Debug.Log($"Despawning player {player.Id}");
+
+            _players.Remove(player);
+        }
+
+        // TODO: figure out how to even do thid
+        public void DespawnPlayers()
+        {
+            Assert.IsTrue(NetworkServer.active);
+
+            Debug.Log($"Despawning {Players.Count} players...");
+
+            // TODO: how?
+
+            _players.Clear();
+        }
+
 #region Event Handlers
         private void ServerAddPlayerEventHandler(object sender, ServerAddPlayerEventArgs args)
         {
@@ -128,7 +152,7 @@ namespace pdxpartyparrot.Game.Players
             _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.PlayerManager");
             _debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Players", GUI.skin.box);
-                    foreach(IPlayer player in Actors) {
+                    foreach(IPlayer player in _players) {
                         GUILayout.Label($"{player.Id} {player.GameObject.transform.position}");
                     }
                 GUILayout.EndVertical();

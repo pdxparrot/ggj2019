@@ -64,16 +64,30 @@ namespace pdxpartyparrot.Core.World
             actor.gameObject.SetActive(true);
         }
 
-        public virtual Actor SpawnPrefab(Actor prefab)
+        private void InitActor(Actor actor, Guid id)
+        {
+            InitActor(actor);
+
+            actor.Initialize(id);
+        }
+
+        public virtual Actor SpawnPrefab(Actor prefab, Guid id)
         {
             Debug.LogWarning("You probably meant to use NetworkManager.SpawnNetworkPrefab");
 
             Actor actor = Instantiate(prefab);
-            Spawn(actor);
+            Spawn(actor, id);
             return actor;
         }
 
-        public virtual void Spawn(Actor actor)
+        public virtual void Spawn(Actor actor, Guid id)
+        {
+            InitActor(actor, id);
+
+            actor.OnSpawn(this);
+        }
+
+        public virtual void SpawnPlayer(Actor actor)
         {
             InitActor(actor);
 

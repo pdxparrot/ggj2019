@@ -51,12 +51,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pooledObject = GetComponent<PooledObject>();
             _pooledObject.RecycleEvent += RecycleEventHandler;
         }
-
-        protected virtual void OnDestroy()
-        {
-            _pooledObject.RecycleEvent -= RecycleEventHandler;
-            _pooledObject = null;
-        }
 #endregion
 
         public override void OnSpawn(SpawnPoint spawnpoint)
@@ -81,6 +75,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         public override void OnDeSpawn()
         {
             _deathEffect.StopTrigger();
+
+            base.OnDeSpawn();
         }
 
         public virtual void Kill()

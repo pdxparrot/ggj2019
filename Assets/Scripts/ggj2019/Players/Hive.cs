@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
@@ -67,6 +68,12 @@ namespace pdxpartyparrot.ggj2019.Players
 
             _beeContainer = new GameObject("bees");
             _beeContainer.transform.SetParent(transform);
+
+            PooledObject pooledObject = _beePrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, _maxBees * 4);
+
+            GameManager.Instance.GameStartEvent += GameStartEventHandler;
+            GameManager.Instance.GameEndEvent += GameEndEventHandler;
         }
 
         private void Update()
@@ -78,27 +85,19 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void OnDestroy()
         {
+            if(GameManager.HasInstance) {
+                GameManager.Instance.GameEndEvent -= GameEndEventHandler;
+                GameManager.Instance.GameStartEvent -= GameStartEventHandler;
+            }
+
+            if(ObjectPoolManager.HasInstance) {
+                ObjectPoolManager.Instance.DestroyPool("bees");
+            }
             Destroy(_beeContainer);
 
             Instance = null;
         }
 #endregion
-
-        public void Initialize()
-        {
-            PooledObject pooledObject = _beePrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, _maxBees * 4);
-
-            DoSpawnBee();
-            _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);
-        }
-
-        public void Shutdown()
-        {
-            _beeSpawnTimer.Stop();
-
-            ObjectPoolManager.Instance.DestroyPool("bees");
-        }
 
         private int neighbor1(int pc) {
             switch(pc) {
@@ -260,9 +259,24 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             NPCBee bee = ObjectPoolManager.Instance.GetPooledObject<NPCBee>("bees");
-            spawnPoint.Spawn(bee);
+            spawnPoint.Spawn(bee, Guid.NewGuid());
             bee.transform.SetParent(_beeContainer.transform);
+
             return bee;
         }
+
+#region Event Handlers
+        private void GameStartEventHandler(object sender, EventArgs args)
+        {
+            DoSpawnBee();
+
+            _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);
+        }
+
+        private void GameEndEventHandler(object sender, EventArgs args)
+        {
+            _beeSpawnTimer.Stop();
+        }
+#endregion
     }
 }

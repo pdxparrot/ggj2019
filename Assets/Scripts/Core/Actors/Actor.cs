@@ -68,14 +68,19 @@ namespace pdxpartyparrot.Core.Actors
 #region Callbacks
         public virtual void OnSpawn(SpawnPoint spawnpoint)
         {
+            ActorManager.Instance.Register(this);
         }
 
         public virtual void OnReSpawn(SpawnPoint spawnpoint)
         {
+            ActorManager.Instance.Register(this);
         }
 
         public virtual void OnDeSpawn()
         {
+            if(ActorManager.HasInstance) {
+                ActorManager.Instance.Unregister(this);
+            }
         }
 #endregion
     }

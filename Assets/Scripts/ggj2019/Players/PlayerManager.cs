@@ -3,7 +3,8 @@ using pdxpartyparrot.ggj2019.Data;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class PlayerManager : Game.Players.PlayerManager<PlayerManager>
+    // TODO: find a way to make this unnecessary (all it's for is casting the GamePlayerData)
+    public sealed class PlayerManager : Game.Players.PlayerManager<PlayerManager, Player>
     {
         public PlayerData GamePlayerData => (PlayerData)PlayerData;
 

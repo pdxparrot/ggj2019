@@ -3,14 +3,13 @@ using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.ggj2019.Players;
 
-
 namespace pdxpartyparrot.ggj2019.State
 {
     public sealed class GameOverState : Game.State.GameOverState
     {
         public override void Initialize()
         {
-            foreach(Players.Player player in PlayerManager.Instance.Actors) {
+            foreach(Players.Player player in PlayerManager.Instance.Players) {
                 HighScoreManager.Instance.AddHighScore($"{player.Id}", GameManager.Instance.Score);
             }
         }

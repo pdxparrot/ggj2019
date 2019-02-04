@@ -2,6 +2,7 @@
 
 using DG.Tweening;
 
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.DebugMenu;
@@ -138,6 +139,7 @@ namespace pdxpartyparrot.Core.Loading
             TimeManager.Create(ManagersContainer);
             AudioManager.CreateFromPrefab(_audioManagerPrefab, ManagersContainer);
             ObjectPoolManager.CreateFromPrefab(_objectPoolManagerPrefab, ManagersContainer);
+            ActorManager.Create(ManagersContainer);
             ViewerManager.CreateFromPrefab(_viewerManagerPrefab, ManagersContainer);
             InputManager.CreateFromPrefab(_inputManagerPrefab, ManagersContainer);
             SceneManager.CreateFromPrefab(_sceneManagerPrefab, ManagersContainer);

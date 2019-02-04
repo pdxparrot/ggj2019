@@ -1,4 +1,5 @@
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Game.Actors;
@@ -84,7 +85,7 @@ namespace pdxpartyparrot.ggj2019.Players
             return _gamepadListener.IsOurGamepad(ctx) ||
                 // ignore keyboard/mouse while the debug menu is open
                 // TODO: this probably doesn't handle multiple keyboards/mice
-                (!DebugMenuManager.Instance.Enabled && PlayerManager.Instance.PlayerCount == 1 && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));
+                (!DebugMenuManager.Instance.Enabled && ActorManager.Instance.ActorCount<Player>() == 1 && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));
         }
 
 #region IPlayerActions
