@@ -72,7 +72,7 @@ namespace pdxpartyparrot.Core.Actors
         [ReadOnly]
         private Vector3 _lastAngularVelocity;
 
-        public PhysicsActor3D Owner3D => (PhysicsActor3D)Owner;
+        public Actor3D Owner3D => (Actor3D)Owner;
 
         // TODO: move this to the actor
         public Rigidbody Rigidbody { get; private set; }
@@ -155,7 +155,7 @@ namespace pdxpartyparrot.Core.Actors
         {
             base.Awake();
 
-            Assert.IsTrue(Owner is PhysicsActor3D);
+            Assert.IsTrue(Owner is Actor3D);
 
             Rigidbody = GetComponent<Rigidbody>();
         }

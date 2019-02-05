@@ -14,7 +14,7 @@ using UnityEngine;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
-    public abstract class NPCBase : PhysicsActor2D
+    public abstract class NPCBase : Actor2D
     {
         public override float Height => Collider.bounds.size.y;
 

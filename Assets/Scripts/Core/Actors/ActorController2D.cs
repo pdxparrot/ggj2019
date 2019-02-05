@@ -72,7 +72,7 @@ namespace pdxpartyparrot.Core.Actors
         [ReadOnly]
         private float _lastAngularVelocity;
 
-        public PhysicsActor2D Owner2D => (PhysicsActor2D)Owner;
+        public Actor2D Owner2D => (Actor2D)Owner;
 
         // TODO: move this to the actor
         public Rigidbody2D Rigidbody { get; private set; }
@@ -155,7 +155,7 @@ namespace pdxpartyparrot.Core.Actors
         {
             base.Awake();
 
-            Assert.IsTrue(Owner is PhysicsActor2D);
+            Assert.IsTrue(Owner is Actor2D);
 
             Rigidbody = GetComponent<Rigidbody2D>();
         }

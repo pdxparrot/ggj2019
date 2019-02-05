@@ -16,7 +16,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.Collectable
 {
     [RequireComponent(typeof(PooledObject))]
-    public class PollenCollectable: PhysicsActor2D
+    public class PollenCollectable : Actor2D
     {
         [SerializeField]
         private float _sideDistance = 0.25f;

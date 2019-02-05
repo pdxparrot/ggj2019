@@ -20,7 +20,7 @@ namespace pdxpartyparrot.Game.Players
     // TODO: reduce the copy paste in this
     [RequireComponent(typeof(NetworkPlayer))]
     [RequireComponent(typeof(AudioSource))]
-    public abstract class Player3D : PhysicsActor3D, IPlayer
+    public abstract class Player3D : Actor3D, IPlayer
     {
         public GameObject GameObject => gameObject;
 

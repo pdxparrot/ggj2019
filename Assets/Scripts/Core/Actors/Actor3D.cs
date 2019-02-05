@@ -3,7 +3,7 @@
 namespace pdxpartyparrot.Core.Actors
 {
     [RequireComponent(typeof(Collider))]
-    public abstract class PhysicsActor3D : Actor
+    public abstract class Actor3D : Actor
     {
 #region Collider
         public Collider Collider { get; private set; }

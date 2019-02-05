@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class Hive : PhysicsActor2D
+    public sealed class Hive : Actor2D
     {
         // TODO: do this better
         public static Hive Instance { get; private set; }
