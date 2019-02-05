@@ -7,8 +7,6 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Actors
 {
-    // TODO: the way this works (using a dictionary of types)
-    // could be applied to the ViewerManager
     public sealed class ActorManager : SingletonBehavior<ActorManager>
     {
         private readonly Dictionary<Type, HashSet<Actor>> _actors = new Dictionary<Type, HashSet<Actor>>();

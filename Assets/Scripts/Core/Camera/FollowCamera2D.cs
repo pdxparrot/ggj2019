@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 
-using UnityEngine;
 using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Core.Camera

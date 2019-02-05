@@ -53,6 +53,16 @@ namespace pdxpartyparrot.Core.Camera
 
         [SerializeField]
         [ReadOnly]
+        private GameObject _owner;
+
+        public GameObject Owner
+        {
+            get => _owner;
+            set => _owner = value;
+        }
+
+        [SerializeField]
+        [ReadOnly]
         private Vector3 _defaultCameraPosition;
 
 #region Unity Lifecycle

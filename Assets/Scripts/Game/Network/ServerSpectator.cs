@@ -51,7 +51,7 @@ namespace pdxpartyparrot.Game.Actors
         {
             FollowTarget = GetComponent<FollowTarget3D>();
 
-            _viewer = ViewerManager.Instance.AcquireViewer<ServerSpectatorViewer>();
+            _viewer = ViewerManager.Instance.AcquireViewer<ServerSpectatorViewer>(gameObject);
             if(null != _viewer) {
                 _viewer.Initialize(this);
             }

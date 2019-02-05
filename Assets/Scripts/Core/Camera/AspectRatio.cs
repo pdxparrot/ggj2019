@@ -31,6 +31,8 @@ namespace pdxpartyparrot.Core.Camera
 
         private void Start()
         {
+            // TODO: should we assert that it's an orthographic camera?
+
             UpdateAspectRatio();
         }
 #endregion

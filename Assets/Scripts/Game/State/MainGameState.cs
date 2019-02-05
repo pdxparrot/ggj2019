@@ -58,7 +58,7 @@ namespace pdxpartyparrot.Game.State
         public override void OnExit()
         {
             AudioManager.Instance.StopMusic();
-            ViewerManager.Instance.FreeViewers();
+            ViewerManager.Instance.FreeAllViewers();
 
             if(null != _serverSpectator) {
                 Destroy(_serverSpectator);

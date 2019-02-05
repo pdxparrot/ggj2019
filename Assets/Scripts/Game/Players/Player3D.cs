@@ -69,7 +69,7 @@ namespace pdxpartyparrot.Game.Players
 
         protected virtual void OnDestroy()
         {
-            if(ViewerManager.HasInstance) {
+            if(null != Viewer && ViewerManager.HasInstance) {
                 ViewerManager.Instance.ReleaseViewer(Viewer);
             }
             PlayerViewer = null;

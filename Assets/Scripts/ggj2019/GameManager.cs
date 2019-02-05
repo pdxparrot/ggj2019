@@ -139,7 +139,7 @@ namespace pdxpartyparrot.ggj2019
         //[Client]
         public void InitViewer()
         {
-            Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>();
+            Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>(gameObject);
             if(null != Viewer) {
                 Viewer.Set2D();
                 Viewer.Camera.orthographicSize = GameGameData.GameSize2D;

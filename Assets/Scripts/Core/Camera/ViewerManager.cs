@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,18 +13,105 @@ namespace pdxpartyparrot.Core.Camera
 {
     public sealed class ViewerManager : SingletonBehavior<ViewerManager>
     {
+        private class ViewerSet
+        {
+            public readonly HashSet<Viewer> Viewers = new HashSet<Viewer>();
+
+            public readonly HashSet<Viewer> AssignedViewers = new HashSet<Viewer>();
+
+            public readonly Queue<Viewer> UnassignedViewers = new Queue<Viewer>();
+
+            public void AllocateViewers<T>(int count, T viewerPrefab, GameObject container) where T: Viewer
+            {
+                int actualCount = count - Viewers.Count;
+                if(actualCount <= 0) {
+                    return;
+                }
+
+                Debug.Log($"Allocating {actualCount} viewers of type {typeof(T)}...");
+
+                for(int i=0; i<actualCount; ++i) {
+                    Viewer viewer = Instantiate(viewerPrefab, container.transform);
+                    viewer.Initialize(i);
+                    viewer.gameObject.SetActive(false);
+
+                    Viewers.Add(viewer);
+                    UnassignedViewers.Enqueue(viewer);
+                }
+            }
+
+            public void FreeViewers()
+            {
+                //Debug.Log($"Freeing {Viewers.Count} viewers of type {typeof(T)}...");
+                Debug.Log($"Freeing {Viewers.Count} viewers...");
+
+                AssignedViewers.Clear();
+                UnassignedViewers.Clear();
+
+                foreach(Viewer viewer in Viewers) {
+                    Destroy(viewer.gameObject);
+                }
+
+                Viewers.Clear();
+            }
+
+            public T AcquireViewer<T>(GameObject owner) where T: Viewer
+            {
+                if(UnassignedViewers.Count < 1) {
+                    Debug.LogWarning($"Attempt to acquire a viewer of type {typeof(T)} when there are none!");
+                    return null;
+                }
+
+                Viewer viewer = UnassignedViewers.Dequeue();
+                viewer.Owner = owner;
+                viewer.gameObject.SetActive(true);
+
+                AssignedViewers.Add(viewer);
+
+                //Debug.Log($"Acquired viewer {viewer.name} (type: {typeof(T)}, assigned: {AssignedViewers.Count}, unassigned: {UnassignedViewers.Count})");
+                return viewer as T;
+            }
+
+            public void ReleaseViewer<T>(T viewer) where T: Viewer
+            {
+                if(!AssignedViewers.Contains(viewer)) {
+                    // TODO: log a warning?
+                    return;
+                }
+
+                //Debug.Log($"Releasing viewer {viewer.name} (type: {typeof(T)}, assigned: {AssignedViewers.Count}, unassigned: {UnassignedViewers.Count})");
+
+                viewer.Reset();
+
+                viewer.gameObject.SetActive(false);
+                viewer.Owner = null;
+
+                AssignedViewers.Remove(viewer);
+                UnassignedViewers.Enqueue(viewer);
+            }
+
+            public void ResetViewers<T>() where T: Viewer
+            {
+                Debug.Log($"Releasing all ({UnassignedViewers.Count}) {typeof(T)} viewers");
+
+                // we loop through all of the viewers
+                // because we can't loop over the assigned viewers
+                foreach(Viewer viewer in Viewers) {
+                    ReleaseViewer(viewer);
+
+                    Transform viewerTransform = viewer.transform;
+                    viewerTransform.position = Vector3.zero;
+                    viewerTransform.rotation = Quaternion.identity;
+                }
+            }
+        }
+
         [SerializeField]
         private float _viewportEpsilon = 0.005f;
 
         public float ViewportEpsilon => _viewportEpsilon;
 
-#region Viewers
-        private readonly List<Viewer> _viewers = new List<Viewer>();
-
-        private readonly List<Viewer> _assignedViewers = new List<Viewer>();
-
-        private readonly Queue<Viewer> _unassignedViewers = new Queue<Viewer>();
-#endregion
+        private readonly Dictionary<Type, ViewerSet> _viewers = new Dictionary<Type,ViewerSet>();
 
         private GameObject _viewerContainer;
 
@@ -47,95 +135,79 @@ namespace pdxpartyparrot.Core.Camera
 #region Allocate
         public void AllocateViewers<T>(int count, T viewerPrefab) where T: Viewer
         {
-            int actualCount = count - _viewers.Count;
-            if(actualCount <= 0) {
-                return;
-            }
-
-            Debug.Log($"Allocating {actualCount} viewers...");
-
-            for(int i=0; i<actualCount; ++i) {
-                Viewer viewer = Instantiate(viewerPrefab, _viewerContainer.transform);
-                viewer.Initialize(i);
-                viewer.gameObject.SetActive(false);
-
-                _viewers.Add(viewer);
-                _unassignedViewers.Enqueue(viewer);
-            }
+            Type viewerType = viewerPrefab.GetType();
+            ViewerSet viewerSet = _viewers.GetOrAdd(viewerType);
+            viewerSet.AllocateViewers(count, viewerPrefab, _viewerContainer);
 
             ResizeViewports();
         }
 
-        public void FreeViewers()
+        public void FreeViewers<T>() where T: Viewer
         {
-            Debug.Log($"Freeing {_viewers.Count} viewers...");
-
-            _assignedViewers.Clear();
-            _unassignedViewers.Clear();
-
-            foreach(Viewer viewer in _viewers) {
-                Destroy(viewer.gameObject);
+            Type viewerType = typeof(T);
+            if(!_viewers.TryGetValue(viewerType, out var viewerSet)) {
+                Debug.LogWarning($"Attempt to free unallocated viewers of type {viewerType}");
+                return;
             }
 
-            _viewers.Clear();
+            viewerSet.FreeViewers();
+        }
+
+        public void FreeAllViewers()
+        {
+            foreach(var kvp in _viewers) {
+                kvp.Value.FreeViewers();
+            }
         }
 #endregion
 
 #region Acquire
         [CanBeNull]
-        public T AcquireViewer<T>() where T: Viewer
+        public T AcquireViewer<T>(GameObject owner) where T: Viewer
         {
-            if(_unassignedViewers.Count < 1) {
-                Debug.LogWarning("Attempt to acquire a viewer when there are none!");
+            Type viewerType = typeof(T);
+            if(!_viewers.TryGetValue(viewerType, out var viewerSet)) {
+                Debug.LogWarning($"Attempt to acquire unallocated viewer of type {viewerType}");
                 return null;
             }
 
-            Viewer viewer = _unassignedViewers.Dequeue();
-            viewer.gameObject.SetActive(true);
-            _assignedViewers.Add(viewer);
-
-            //Debug.Log($"Acquired viewer {viewer.name}  (assigned: {_assignedViewers.Count}, unassigned: {_unassignedViewers.Count})");
-            return viewer as T;
+            return viewerSet.AcquireViewer<T>(owner);
         }
 
         public void ReleaseViewer<T>(T viewer) where T: Viewer
         {
-            if(!_assignedViewers.Contains(viewer)) {
+            Type viewerType = viewer.GetType();
+            if(!_viewers.TryGetValue(viewerType, out var viewerSet)) {
+                Debug.LogWarning($"Attempt to release unallocated viewer of type {viewerType}");
                 return;
             }
 
-            //Debug.Log($"Releasing viewer {viewer.name} (assigned: {_assignedViewers.Count}, unassigned: {_unassignedViewers.Count})");
-
-            viewer.Reset();
-
-            viewer.gameObject.SetActive(false);
-            _assignedViewers.Remove(viewer);
-            _unassignedViewers.Enqueue(viewer);
+            viewerSet.ReleaseViewer(viewer);
         }
 
-        public void ResetViewers()
+        public void ResetViewers<T>() where T: Viewer
         {
-            Debug.Log($"Releasing all ({_assignedViewers.Count}) viewers");
-
-            // we loop through all of the viewers
-            // because we can't loop over the assigned viewers
-            foreach(Viewer viewer in _viewers) {
-                ReleaseViewer(viewer);
-
-                Transform viewerTransform = viewer.transform;
-                viewerTransform.position = Vector3.zero;
-                viewerTransform.rotation = Quaternion.identity;
+            Type viewerType = typeof(T);
+            if(!_viewers.TryGetValue(viewerType, out var viewerSet)) {
+                Debug.LogWarning($"Attempt to reset unallocated viewers of type {viewerType}");
+                return;
             }
+
+            viewerSet.ResetViewers<T>();
+
             ResizeViewports();
         }
 #endregion
 
         public void ResizeViewports()
         {
-            if(_assignedViewers.Count > 0) {
-                ResizeViewports(_assignedViewers);
-            } else if(_unassignedViewers.Count > 0) {
-                ResizeViewports(_unassignedViewers);
+            foreach(var kvp in _viewers) {
+                ViewerSet viewerSet = kvp.Value;
+                if(viewerSet.AssignedViewers.Count > 0) {
+                    ResizeViewports(viewerSet.AssignedViewers);
+                } else if(viewerSet.UnassignedViewers.Count > 0) {
+                    ResizeViewports(viewerSet.UnassignedViewers);
+                }
             }
         }
 
@@ -168,11 +240,14 @@ namespace pdxpartyparrot.Core.Camera
         {
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Core.ViewerManager");
             debugMenuNode.RenderContentsAction = () => {
-                GUILayout.BeginVertical("Viewers", GUI.skin.box);
-                    GUILayout.Label($"Total Viewers: {_viewers.Count}");
-                    GUILayout.Label($"Assigned Viewers: {_assignedViewers.Count}");
-                    GUILayout.Label($"Unassigned Viewers: {_unassignedViewers.Count}");
-                GUILayout.EndVertical();
+                foreach(var kvp in _viewers) {
+                    ViewerSet viewerSet = kvp.Value;
+                    GUILayout.BeginVertical($"{kvp.Key} Viewers", GUI.skin.box);
+                        GUILayout.Label($"Total Viewers: {viewerSet.Viewers.Count}");
+                        GUILayout.Label($"Assigned Viewers: {viewerSet.AssignedViewers.Count}");
+                        GUILayout.Label($"Unassigned Viewers: {viewerSet.UnassignedViewers.Count}");
+                    GUILayout.EndVertical();
+                }
             };
         }
     }
