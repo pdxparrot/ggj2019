@@ -4,13 +4,12 @@ using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Core.Actors
 {
     // TODO: reduce the copy paste in this
     // TODO: rename ActorBehavior2D
-    // TODO: move the manual animation stuff to its own script
+    // TODO: hook the rigidbody rather than requiring it
     [RequireComponent(typeof(Rigidbody2D))]
     public class ActorController2D : ActorController
     {
@@ -36,29 +35,6 @@ namespace pdxpartyparrot.Core.Actors
             }
         }
 
-        [Serializable]
-        private struct ManualAnimationState
-        {
-            public bool IsAnimating;
-
-            public float AnimationSeconds;
-            public float AnimationSecondsRemaining;
-
-            public float PercentComplete => 1.0f - (AnimationSecondsRemaining / AnimationSeconds);
-
-            public bool IsFinished => AnimationSecondsRemaining <= 0.0f;
-
-            public Vector3 StartPosition;
-            public Vector3 EndPosition;
-
-            public float StartRotation;
-            public float EndRotation;
-
-            public bool IsKinematic;
-
-            public Action OnComplete;
-        }
-
         [Space(10)]
 
 #region Physics
@@ -74,7 +50,6 @@ namespace pdxpartyparrot.Core.Actors
 
         public Actor2D Owner2D => (Actor2D)Owner;
 
-        // TODO: move this to the actor
         public Rigidbody2D Rigidbody { get; private set; }
 
         public override Vector3 Position
@@ -122,18 +97,12 @@ namespace pdxpartyparrot.Core.Actors
             get => Rigidbody.angularDrag;
             set => Rigidbody.angularDrag = value;
         }
-#endregion
 
-        [Space(10)]
-
-#region Manual Animation
-        [Header("Manual Animation")]
-
-        [SerializeField]
-        [ReadOnly]
-        private ManualAnimationState _animationState;
-
-        public override bool IsAnimating => _animationState.IsAnimating;
+        public override bool IsKinematic
+        {
+            get => Rigidbody.isKinematic;
+            set => Rigidbody.isKinematic = value;
+        }
 #endregion
 
         [Space(10)]
@@ -147,8 +116,6 @@ namespace pdxpartyparrot.Core.Actors
 
         protected InternalPauseState PauseState => _pauseState;
 #endregion
-
-        public override bool CanMove => !IsAnimating;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -177,71 +144,6 @@ namespace pdxpartyparrot.Core.Actors
         public void AddForce(Vector3 force)
         {
             Rigidbody.AddForce(force, ForceMode2D.Force);
-        }
-
-        public void StartAnimation2D(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete)
-        {
-            if(IsAnimating) {
-                return;
-            }
-
-            Debug.Log($"Starting manual animation from {Rigidbody.position}:{Rigidbody.rotation} to {targetPosition}:{targetRotation} over {timeSeconds} seconds");
-
-            _animationState.IsAnimating = true;
-
-            _animationState.StartPosition = Rigidbody.position;
-            _animationState.EndPosition = targetPosition;
-
-            _animationState.StartRotation = Rigidbody.rotation;
-            _animationState.EndRotation = targetRotation;
-
-            _animationState.AnimationSeconds = timeSeconds;
-            _animationState.AnimationSecondsRemaining = timeSeconds;
-
-            _animationState.IsKinematic = Rigidbody.isKinematic;
-            Rigidbody.isKinematic = true;
-
-            _animationState.OnComplete = onComplete;
-        }
-
-        public void StartAnimation3D(Vector3 targetPosition, Quaternion targetRotation, float timeSeconds, Action onComplete=null)
-        {
-            Debug.Assert(false, "ActorController2D does not support 3D animations");
-        }
-
-        protected override void UpdateAnimation(float dt)
-        {
-            if(!IsAnimating || PartyParrotManager.Instance.IsPaused) {
-                return;
-            }
-
-            Profiler.BeginSample("ActorController2D.UpdateAnimation");
-            try {
-                if(_animationState.IsFinished) {
-                    //Debug.Log("Manual 2D animation complete!");
-
-                    _animationState.IsAnimating = false;
-
-                    Rigidbody.position = _animationState.EndPosition;
-                    Rigidbody.rotation = _animationState.EndRotation;
-                    Rigidbody.isKinematic = _animationState.IsKinematic;
-
-                    _animationState.OnComplete?.Invoke();
-                    _animationState.OnComplete = null;
-
-                    return;
-                }
-
-                _animationState.AnimationSecondsRemaining -= dt;
-                if(_animationState.AnimationSecondsRemaining < 0.0f) {
-                    _animationState.AnimationSecondsRemaining = 0.0f;
-                }
-
-                Rigidbody.position = Vector3.Slerp(_animationState.StartPosition, _animationState.EndPosition, _animationState.PercentComplete);
-                Rigidbody.rotation = Mathf.LerpAngle(_animationState.StartRotation, _animationState.EndRotation, _animationState.PercentComplete);
-            } finally {
-                Profiler.EndSample();
-            }
         }
 
 #region Event Handlers

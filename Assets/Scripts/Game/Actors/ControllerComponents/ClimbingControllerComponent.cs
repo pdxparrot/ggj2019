@@ -158,6 +158,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             base.Awake();
 
+            Assert.IsNotNull(Controller.ActorAnimator, "ClimbingControllerComponent requires an actor animator");
             Assert.IsTrue(Math.Abs(_leftHandTransform.position.y - _rightHandTransform.position.y) < float.Epsilon, "Character hands are at different heights!");
             Assert.IsTrue(_headTransform.position.y > _leftHandTransform.position.y, "Character head should be above player hands!");
             Assert.IsTrue(_chestTransform.position.y < _leftHandTransform.position.y, "Character chest should be below player hands!");
@@ -384,7 +385,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             ResetRaycastDebug();
 
-            if(Controller.IsAnimating) {
+            if(Controller.ActorAnimator.IsAnimating) {
                 return;
             }
 
@@ -533,7 +534,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private void HandleClimbingRaycasts()
         {
-            if(Controller.IsAnimating) {
+            if(Controller.ActorAnimator.IsAnimating) {
                 return;
             }
 
@@ -613,7 +614,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _leftHandHitResult = hit;
 
             Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
 
             return true;
         }
@@ -642,7 +643,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _leftHandHitResult = hit;
 
             Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
 
             return true;
         }
@@ -671,7 +672,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _rightHandHitResult = hit;
 
             Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
 
             return true;
 
@@ -701,7 +702,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _rightHandHitResult = hit;
 
             Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
 
             return true;
 
@@ -724,7 +725,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             }
 
             Vector3 offset = Controller.Owner.Radius * 2.0f * transform.forward;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, offset), Controller.Rotation3D, Controller.ControllerData.ClimbUpTimeSeconds, () => {
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, offset), Controller.Rotation3D, Controller.ControllerData.ClimbUpTimeSeconds, () => {
                 StopClimbing();
             });
 
@@ -740,7 +741,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             RaycastHit hit = (_leftHandHangHitResult ?? _rightHandHangHitResult).Value;
 
             Vector3 offset = -_hangTransform.localPosition;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, offset), Controller.Rotation3D, Controller.ControllerData.HangTimeSeconds, () => {
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, offset), Controller.Rotation3D, Controller.ControllerData.HangTimeSeconds, () => {
                 StartHanging();
             });
 
@@ -756,7 +757,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             RaycastHit hit = (_leftHandHitResult ?? _rightHandHitResult).Value;
 
             Vector3 offset = Controller.Owner.Radius * transform.up;
-            Controller.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Controller.Rotation3D, Controller.ControllerData.ClimbDownTimeSeconds, () => {
+            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Controller.Rotation3D, Controller.ControllerData.ClimbDownTimeSeconds, () => {
                 StartClimbing();
             });
 

@@ -32,19 +32,23 @@ namespace pdxpartyparrot.Core.Actors
 
         public bool IsMoving => _isMoving;
 
-        public virtual bool CanMove => true;
+        public virtual bool CanMove => null == _actorAnimator || !_actorAnimator.IsAnimating;
 #endregion
 
 #region Animation
-        [CanBeNull]
         [SerializeField]
+        [CanBeNull]
         private Animator _animator;
 
         [CanBeNull]
         public Animator Animator => _animator;
 
-        // manual animation flag
-        public virtual bool IsAnimating => false;
+        [SerializeField]
+        [CanBeNull]
+        private ActorAnimator _actorAnimator;
+
+        [CanBeNull]
+        public ActorAnimator ActorAnimator => _actorAnimator;
 #endregion
 
         [SerializeField]
@@ -98,6 +102,12 @@ namespace pdxpartyparrot.Core.Actors
             get => 0.0f;
             set {}
         }
+
+        public virtual bool IsKinematic
+        {
+            get => true;
+            set {}
+        }
 #endregion
 
 #region Unity Lifecycle
@@ -111,8 +121,6 @@ namespace pdxpartyparrot.Core.Actors
             _isMoving = LastMoveAxes.sqrMagnitude > AxesDeadZone;
 
             float dt = Time.deltaTime;
-
-            UpdateAnimation(dt);
 
             AnimationMove(LastMoveAxes, dt);
         }
@@ -144,12 +152,6 @@ namespace pdxpartyparrot.Core.Actors
 
         // NOTE: axes are (x, y, 0)
         public virtual void PhysicsMove(Vector3 axes, float dt)
-        {
-        }
-#endregion
-
-#region Manual Animations
-        protected virtual void UpdateAnimation(float dt)
         {
         }
 #endregion

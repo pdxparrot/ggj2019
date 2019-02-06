@@ -37,10 +37,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private readonly List<int> _health = new List<int>();
 
-        public override float Height => Collider.bounds.size.y;
-
-        public override float Radius => Collider.bounds.size.x / 2.0f;
-
         public override bool IsLocalActor => true;
 
         [SerializeField] private int _maxBees = 5;

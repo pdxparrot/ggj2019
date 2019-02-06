@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    // TODO: reduce the copy paste in this
+    // TODO: merge this into ActorBehavior
     [RequireComponent(typeof(CharacterActorController))]
     [RequireComponent(typeof(CapsuleCollider))]
     public class CharacterActorController3D : ActorController3D, ICharacterActorController

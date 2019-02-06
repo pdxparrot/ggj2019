@@ -22,6 +22,8 @@ namespace pdxpartyparrot.Game.Actors
 
         Animator Animator { get; }
 
+        ActorAnimator ActorAnimator { get; }
+
         // TODO: this could move to the data
         float RaycastRoutineRate { get; }
 
@@ -45,15 +47,9 @@ namespace pdxpartyparrot.Game.Actors
 
         bool IsSliding { get; }
 
-        bool IsAnimating { get; }
-
         bool UseGravity { get; set; }
 
         Vector3 LastMoveAxes { get; }
-
-        void StartAnimation3D(Vector3 targetPosition, Quaternion targetRotation, float timeSeconds, Action onComplete=null);
-
-        void StartAnimation2D(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete=null);
 
         void MovePosition(Vector3 position);
 

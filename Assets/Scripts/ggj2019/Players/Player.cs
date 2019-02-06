@@ -16,10 +16,6 @@ namespace pdxpartyparrot.ggj2019.Players
     {
         public PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
 
-        public override float Height => GamePlayerBehavior.Collider.bounds.size.y;
-
-        public override float Radius => GamePlayerBehavior.Collider.bounds.size.x / 2.0f;
-
         [SerializeField]
         private Interactables _interactables;
 
