@@ -169,6 +169,8 @@ namespace pdxpartyparrot.ggj2019.Players
             _armor[armoridx].GetComponent<EffectTrigger>().Trigger(
                 () => _armor[armoridx].SetActive(false)
             );
+
+            GameManager.Instance.HiveDamage();
         }
 
         private void EndAnimation()
@@ -183,7 +185,8 @@ namespace pdxpartyparrot.ggj2019.Players
             _endGameExplosionBig.Trigger();
         }
 
-        private bool TakeDamage(int armoridx, bool recurse = true) {
+        private bool TakeDamage(int armoridx, bool recurse = true)
+        {
             if(_health[armoridx] > 0) {
                 --_health[armoridx];
 

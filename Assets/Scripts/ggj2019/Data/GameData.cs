@@ -70,6 +70,11 @@ namespace pdxpartyparrot.ggj2019.Data
         public int DeathPenalty => _deathPenalty;
 
         [SerializeField]
+        private int _hiveDamagePenalty;
+
+        public int HiveDamagePenalty => _hiveDamagePenalty;
+
+        [SerializeField]
         private int _pollenScore;
 
         public int PollenScore => _pollenScore;

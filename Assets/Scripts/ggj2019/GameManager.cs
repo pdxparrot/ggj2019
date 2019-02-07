@@ -125,6 +125,15 @@ namespace pdxpartyparrot.ggj2019
         }
 
         //[Server]
+        public void HiveDamage()
+        {
+            _score -= GameGameData.HiveDamagePenalty;
+            if(_score < 0) {
+                _score = 0;
+            }
+        }
+
+        //[Server]
         public void PollenCollected()
         {
             _score += GameGameData.PollenScore;
