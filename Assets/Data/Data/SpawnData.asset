@@ -16,13 +16,11 @@ MonoBehaviour:
   _types:
   - Tag: player
     SpawnMethod: 1
-    CheckOccupied: 0
   - Tag: beetle
     SpawnMethod: 0
-    CheckOccupied: 0
   - Tag: wasp
     SpawnMethod: 0
-    CheckOccupied: 0
   - Tag: flower
     SpawnMethod: 0
-    CheckOccupied: 1
+  - Tag: pollen
+    SpawnMethod: 0

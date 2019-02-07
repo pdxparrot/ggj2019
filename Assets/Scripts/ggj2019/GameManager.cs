@@ -125,6 +125,12 @@ namespace pdxpartyparrot.ggj2019
         }
 
         //[Server]
+        public void PollenCollected()
+        {
+            _score += GameGameData.PollenScore;
+        }
+
+        //[Server]
         public void BeetleKilled()
         {
             _score += GameGameData.BeetleScore;

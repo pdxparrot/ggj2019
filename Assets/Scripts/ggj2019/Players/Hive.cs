@@ -226,6 +226,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public int UnloadPollen(Player player, int amount)
         {
+            GameManager.Instance.PollenCollected();
+
             NPCBee bee = DoSpawnBee();
             if(null != bee && null != player) {
                 player.AddBeeToSwarm(bee);
