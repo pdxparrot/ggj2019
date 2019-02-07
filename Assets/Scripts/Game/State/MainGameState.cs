@@ -21,7 +21,7 @@ namespace pdxpartyparrot.Game.State
         private int _maxLocalPlayers = 1;
 
         [SerializeField]
-        private bool _gamepadsArePlayers = false;
+        private bool _gamepadsArePlayers;
 
         [SerializeField]
         private GameOverState _gameOverState;
@@ -117,10 +117,10 @@ namespace pdxpartyparrot.Game.State
             Core.Network.NetworkManager.Instance.LocalClientReady(GameStateManager.Instance.NetworkClient?.connection);
 
             if(_gamepadsArePlayers) {
-                int count = Mathf.Max(InputManager.Instance.GamepadCount, 1);
+                int count = Mathf.Min(Mathf.Max(InputManager.Instance.GamepadCount, 1), _maxLocalPlayers);
 
                 Debug.Log($"Spawning a player for each controller ({count})...");
-                for(short i=0; i<count && i<_maxLocalPlayers; ++i) {
+                for(short i=0; i<count; ++i) {
                     Core.Network.NetworkManager.Instance.AddLocalPlayer(i);
                 }
             } else {
