@@ -283,10 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba619cf2bdde224d9dc782233d91598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -1
   _model: {fileID: 6352547171094094764}
-  _controller: {fileID: 4359218613803387002}
-  _animator: {fileID: 0}
+  _behavior: {fileID: 4359218613803387002}
   _networkPlayer: {fileID: 7579413692694895314}
   _driver: {fileID: 6318285324892847177}
   _interactables: {fileID: 5023084697306132187}
@@ -353,18 +351,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
+  _animator: {fileID: 0}
+  _actorAnimator: {fileID: 0}
   _owner: {fileID: 2603974987608069630}
   _lastVelocity: {x: 0, y: 0, z: 0}
   _lastAngularVelocity: 0
-  _animationState:
-    IsAnimating: 0
-    AnimationSeconds: 0
-    AnimationSecondsRemaining: 0
-    StartPosition: {x: 0, y: 0, z: 0}
-    EndPosition: {x: 0, y: 0, z: 0}
-    StartRotation: 0
-    EndRotation: 0
-    IsKinematic: 0
+  _rigidbody: {fileID: 7566827058745012155}
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
@@ -384,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752e85aa1946bd94596c2949c0a3e149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 4359218613803387002}
+  _behavior: {fileID: 4359218613803387002}
   _mouseSensitivity: 0.5
   _lastControllerMove: {x: 0, y: 0, z: 0}
   _lastControllerLook: {x: 0, y: 0, z: 0}

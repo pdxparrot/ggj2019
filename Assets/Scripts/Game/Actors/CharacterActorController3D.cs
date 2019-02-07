@@ -44,12 +44,12 @@ namespace pdxpartyparrot.Game.Actors
             {
                 _useGravity = value;
                 if(!_useGravity) {
-                    Rigidbody.velocity = Vector3.zero;
+                    Velocity = Vector3.zero;
                 }
             }
         }
 
-        public bool IsFalling => UseGravity && (!_characterController.IsGrounded && !_characterController.IsSliding && Rigidbody.velocity.y < 0.0f);
+        public bool IsFalling => UseGravity && (!_characterController.IsGrounded && !_characterController.IsSliding && Velocity.y < 0.0f);
 #endregion
 
 #region Unity Lifecycle
@@ -58,8 +58,6 @@ namespace pdxpartyparrot.Game.Actors
             base.Awake();
 
             _characterController = GetComponent<CharacterActorController>();
-
-            InitRigidbody();
         }
 
         protected override void Update()
@@ -81,8 +79,8 @@ namespace pdxpartyparrot.Game.Actors
 
             // turn off gravity if we're grounded and not moving and not sliding
             // this should stop us sliding down slopes we shouldn't slide down
-            Rigidbody.useGravity = UseGravity && (!_characterController.IsGrounded || IsMoving || _characterController.IsSliding);
-            _characterController.IsKinematic = Rigidbody.isKinematic;
+            SetUseGravity(UseGravity && (!_characterController.IsGrounded || IsMoving || _characterController.IsSliding));
+            _characterController.IsKinematic = IsKinematic;
         }
 
         protected virtual void OnDrawGizmos()
@@ -92,23 +90,25 @@ namespace pdxpartyparrot.Game.Actors
             }
 
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(Rigidbody.position, Rigidbody.position + Rigidbody.angularVelocity);
+            Gizmos.DrawLine(Position, Position + AngularVelocity3D);
 
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(Rigidbody.position, Rigidbody.position + Rigidbody.velocity);
+            Gizmos.DrawLine(Position, Position + Velocity);
         }
 #endregion
 
-        private void InitRigidbody()
+        protected override void InitRigidbody(Rigidbody rb)
         {
-            Rigidbody.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
-            Rigidbody.useGravity = !GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
-            Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            Rigidbody.detectCollisions = true;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            base.InitRigidbody(rb);
+
+            rb.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
+            rb.useGravity = !GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            rb.detectCollisions = true;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
             // we run the follow cam in FixedUpdate() and interpolation interferes with that
-            Rigidbody.interpolation = RigidbodyInterpolation.None;
+            rb.interpolation = RigidbodyInterpolation.None;
         }
 
         public override void AnimationMove(Vector3 axes, float dt)
@@ -186,12 +186,12 @@ namespace pdxpartyparrot.Game.Actors
             Vector3 velocity = fixedAxes * speed;
             Quaternion rotation = null != Owner.Viewer ? Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) : transform.rotation;
             velocity = rotation * velocity;
-            velocity.y = Rigidbody.velocity.y;
+            velocity.y = Velocity.y;
 
-            if(Rigidbody.isKinematic) {
-                Rigidbody.MovePosition(Rigidbody.position + velocity * dt);
+            if(IsKinematic) {
+                MovePosition(Position + velocity * dt);
             } else {
-                Rigidbody.velocity = velocity;
+                Velocity = velocity;
             }
         }
 
@@ -209,7 +209,7 @@ namespace pdxpartyparrot.Game.Actors
             float gravity = -Physics.gravity.y + ControllerData.FallSpeedAdjustment;
 
             // v = sqrt(2gh)
-            Rigidbody.velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
+            Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
             if(null != Animator) {
                 Animator.SetTrigger(animationParam);
@@ -218,7 +218,7 @@ namespace pdxpartyparrot.Game.Actors
 
         private void FudgeVelocity(float dt)
         {
-            Vector3 adjustedVelocity = Rigidbody.velocity;
+            Vector3 adjustedVelocity = Velocity;
             if(_characterController.IsGrounded && !IsMoving) {
                 // prevent any weird ground adjustment shenanigans
                 // when we're grounded and not moving
@@ -233,7 +233,7 @@ namespace pdxpartyparrot.Game.Actors
                     adjustedVelocity.y = -ControllerData.TerminalVelocity;
                 }
             }
-            Rigidbody.velocity = adjustedVelocity;
+            Velocity = adjustedVelocity;
         }
     }
 }

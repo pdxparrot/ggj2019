@@ -19,12 +19,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             // TODO: this was originally copied from DefaultPhysicsMove() and probably should be smarter than that
             // TODO: this should have acceleration and momentum
 
-            Vector2 velocity = axes * speed;
-            if(!Controller2D.Rigidbody.isKinematic) {
-                velocity.y = Controller2D.Rigidbody.velocity.y;
+            Vector3 velocity = axes * speed;
+            if(!Controller2D.IsKinematic) {
+                velocity.y = Controller2D.Velocity.y;
             }
 
-            Vector2 updatedPosition = Controller2D.Rigidbody.position + velocity * dt;
+            Vector2 updatedPosition = Controller2D.Position + velocity * dt;
             if(updatedPosition.x + halfSize.x > gameSize.x) {
                 updatedPosition.x = gameSize.x - halfSize.x;
             } else if(updatedPosition.x - halfSize.x < -gameSize.x) {
@@ -37,7 +37,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 updatedPosition.y = -gameSize.y + halfSize.y;
             }
 
-            Controller2D.Rigidbody.MovePosition(updatedPosition);
+            Controller2D.MovePosition(updatedPosition);
 
             return true;
         }

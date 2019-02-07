@@ -29,7 +29,7 @@ namespace pdxpartyparrot.Game.Players
             base.FixedUpdate();
 
             // fixes sketchy rigidbody angular momentum shit
-            Rigidbody.angularVelocity = 0;
+            AngularVelocity2D = 0;
         }
 #endregion
     }

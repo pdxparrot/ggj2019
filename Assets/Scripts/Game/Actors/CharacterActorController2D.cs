@@ -43,11 +43,11 @@ namespace pdxpartyparrot.Game.Actors
             set
             {
                 _useGravity = value;
-                Rigidbody.velocity = Vector3.zero;
+                Velocity = Vector3.zero;
             }
         }
 
-        public bool IsFalling => UseGravity && (!_characterController.IsGrounded && !_characterController.IsSliding && Rigidbody.velocity.y < 0.0f);
+        public bool IsFalling => UseGravity && (!_characterController.IsGrounded && !_characterController.IsSliding && Velocity.y < 0.0f);
 #endregion
 
 #region Unity Lifecycle
@@ -56,8 +56,6 @@ namespace pdxpartyparrot.Game.Actors
             base.Awake();
 
             _characterController = GetComponent<CharacterActorController>();
-
-            InitRigidbody();
         }
 
         protected override void Update()
@@ -77,7 +75,10 @@ namespace pdxpartyparrot.Game.Actors
 
             FudgeVelocity(dt);
 
-            _characterController.IsKinematic = Rigidbody.isKinematic;
+            // turn off gravity if we're grounded and not moving and not sliding
+            // this should stop us sliding down slopes we shouldn't slide down
+            SetUseGravity(UseGravity && (!_characterController.IsGrounded || IsMoving || _characterController.IsSliding));
+            _characterController.IsKinematic = IsKinematic;
         }
 
         protected virtual void OnDrawGizmos()
@@ -87,20 +88,22 @@ namespace pdxpartyparrot.Game.Actors
             }
 
             /*Gizmos.color = Color.green;
-            Gizmos.DrawLine(Rigidbody.position, Rigidbody.position + Rigidbody.angularVelocity);*/
+            Gizmos.DrawLine(Position, Position + AngularVelocity2D);*/
 
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(Rigidbody.position, Rigidbody.position + Rigidbody.velocity);
+            Gizmos.DrawLine(Position, Position + Velocity);
         }
 #endregion
 
-        private void InitRigidbody()
+        protected override void InitRigidbody(Rigidbody2D rb)
         {
-            Rigidbody.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
-            Rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            base.InitRigidbody(rb);
+
+            rb.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
             // we run the follow cam in FixedUpdate() and interpolation interferes with that
-            Rigidbody.interpolation = RigidbodyInterpolation2D.None;
+            rb.interpolation = RigidbodyInterpolation2D.None;
         }
 
         public override void AnimationMove(Vector3 axes, float dt)
@@ -158,15 +161,15 @@ namespace pdxpartyparrot.Game.Actors
 
             // TODO: handle slopes
 
-            Vector2 velocity = axes * speed;
-            if(!Rigidbody.isKinematic) {
-                velocity.y = Rigidbody.velocity.y;
+            Vector3 velocity = axes * speed;
+            if(!IsKinematic) {
+                velocity.y = Velocity.y;
             }
 
-            if(Rigidbody.isKinematic) {
-                Rigidbody.MovePosition(Rigidbody.position + velocity * dt);
+            if(IsKinematic) {
+                MovePosition(Position + velocity * dt);
             } else {
-                Rigidbody.velocity = velocity;
+                Velocity = velocity;
             }
         }
 
@@ -184,7 +187,7 @@ namespace pdxpartyparrot.Game.Actors
             float gravity = -Physics.gravity.y + ControllerData.FallSpeedAdjustment;
 
             // v = sqrt(2gh)
-            Rigidbody.velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
+            Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
             if(null != Animator) {
                 Animator.SetTrigger(animationParam);
@@ -193,7 +196,7 @@ namespace pdxpartyparrot.Game.Actors
 
         private void FudgeVelocity(float dt)
         {
-            Vector3 adjustedVelocity = Rigidbody.velocity;
+            Vector3 adjustedVelocity = Velocity;
             if(_characterController.IsGrounded && !IsMoving) {
                 // prevent any weird ground adjustment shenanigans
                 // when we're grounded and not moving
@@ -208,7 +211,7 @@ namespace pdxpartyparrot.Game.Actors
                     adjustedVelocity.y = -ControllerData.TerminalVelocity;
                 }
             }
-            Rigidbody.velocity = adjustedVelocity;
+            Velocity = adjustedVelocity;
         }
     }
 }

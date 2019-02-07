@@ -9,8 +9,6 @@ namespace pdxpartyparrot.Core.Actors
 {
     // TODO: reduce the copy paste in this
     // TODO: rename ActorBehavior2D
-    // TODO: hook the rigidbody rather than requiring it
-    [RequireComponent(typeof(Rigidbody2D))]
     public class ActorController2D : ActorController
     {
         [Serializable]
@@ -35,6 +33,8 @@ namespace pdxpartyparrot.Core.Actors
             }
         }
 
+        public Actor2D Owner2D => (Actor2D)Owner;
+
         [Space(10)]
 
 #region Physics
@@ -48,17 +48,16 @@ namespace pdxpartyparrot.Core.Actors
         [ReadOnly]
         private float _lastAngularVelocity;
 
-        public Actor2D Owner2D => (Actor2D)Owner;
-
-        public Rigidbody2D Rigidbody { get; private set; }
+        [SerializeField]
+        private Rigidbody2D _rigidbody;
 
         public override Vector3 Position
         {
-            get => Rigidbody.position;
+            get => _rigidbody.position;
             set
             {
                 Debug.Log($"Teleporting actor {Owner.Id} to {value}");
-                Rigidbody.position = value;
+                _rigidbody.position = value;
             }
         }
 
@@ -70,38 +69,50 @@ namespace pdxpartyparrot.Core.Actors
 
         public override float Rotation2D
         {
-            get => Rigidbody.rotation;
-            set => Rigidbody.rotation = value;
+            get => _rigidbody.rotation;
+            set => _rigidbody.rotation = value;
         }
 
         public override Vector3 Velocity
         {
-            get => Rigidbody.velocity;
-            set => Rigidbody.velocity = value;
+            get => _rigidbody.velocity;
+            set => _rigidbody.velocity = value;
+        }
+
+        public override Vector3 AngularVelocity3D
+        {
+            get => Vector3.zero;
+            set {}
+        }
+
+        public override float AngularVelocity2D
+        {
+            get => _rigidbody.angularVelocity;
+            set => _rigidbody.angularVelocity = value;
         }
 
         public override float Mass
         {
-            get => Rigidbody.mass;
-            set => Rigidbody.mass = value;
+            get => _rigidbody.mass;
+            set => _rigidbody.mass = value;
         }
 
         public override float LinearDrag
         {
-            get => Rigidbody.drag;
-            set => Rigidbody.drag = value;
+            get => _rigidbody.drag;
+            set => _rigidbody.drag = value;
         }
 
         public override float AngularDrag
         {
-            get => Rigidbody.angularDrag;
-            set => Rigidbody.angularDrag = value;
+            get => _rigidbody.angularDrag;
+            set => _rigidbody.angularDrag = value;
         }
 
         public override bool IsKinematic
         {
-            get => Rigidbody.isKinematic;
-            set => Rigidbody.isKinematic = value;
+            get => _rigidbody.isKinematic;
+            set => _rigidbody.isKinematic = value;
         }
 #endregion
 
@@ -124,35 +135,65 @@ namespace pdxpartyparrot.Core.Actors
 
             Assert.IsTrue(Owner is Actor2D);
 
-            Rigidbody = GetComponent<Rigidbody2D>();
+            InitRigidbody(_rigidbody);
         }
 
         protected virtual void LateUpdate()
         {
-            _lastVelocity = Rigidbody.velocity;
-            _lastAngularVelocity = Rigidbody.angularVelocity;
+            _lastVelocity = _rigidbody.velocity;
+            _lastAngularVelocity = _rigidbody.angularVelocity;
         }
 #endregion
 
-        public void MovePosition(Vector3 position)
+        protected virtual void InitRigidbody(Rigidbody2D rb)
         {
-            Debug.Log($"Teleporting actor {Owner.Id} to {position} (interpolated)");
-
-            Rigidbody.MovePosition(position);
         }
 
+        protected void SetUseGravity(bool useGravity)
+        {
+            _rigidbody.gravityScale = useGravity ? 1.0f : 0.0f;
+        }
+
+        public void MovePosition(Vector3 position)
+        {
+            //Debug.Log($"Teleporting actor {Owner.Id} to {position} (interpolated)");
+
+            _rigidbody.MovePosition(position);
+        }
+
+        public void MoveRotation(float angle)
+        {
+            _rigidbody.MoveRotation(angle);
+        }
+
+        // TODO: this can go away when ICharacterActorController goes away
         public void AddForce(Vector3 force)
         {
-            Rigidbody.AddForce(force, ForceMode2D.Force);
+            AddForce(force, ForceMode2D.Force);
+        }
+
+        public void AddForce(Vector3 force, ForceMode2D mode)
+        {
+            _rigidbody.AddForce(force, mode);
+        }
+
+        public void AddRelativeForce(Vector3 force, ForceMode2D mode)
+        {
+            _rigidbody.AddRelativeForce(force, mode);
+        }
+
+        public void AddTorque(float torque, ForceMode2D mode=ForceMode2D.Force)
+        {
+            _rigidbody.AddTorque(torque, mode);
         }
 
 #region Event Handlers
         protected override void PauseEventHandler(object sender, EventArgs args)
         {
             if(PartyParrotManager.Instance.IsPaused) {
-                _pauseState.Save(Rigidbody);
+                _pauseState.Save(_rigidbody);
             } else {
-                _pauseState.Restore(Rigidbody);
+                _pauseState.Restore(_rigidbody);
             }
         }
 #endregion

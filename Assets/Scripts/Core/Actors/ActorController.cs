@@ -85,6 +85,18 @@ namespace pdxpartyparrot.Core.Actors
             set {}
         }
 
+        public virtual Vector3 AngularVelocity3D
+        {
+            get => Vector3.zero;
+            set {}
+        }
+
+        public virtual float AngularVelocity2D
+        {
+            get => 0.0f;
+            set {}
+        }
+
         public virtual float Mass
         {
             get => 1.0f;
