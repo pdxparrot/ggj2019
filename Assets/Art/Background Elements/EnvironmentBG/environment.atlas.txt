@@ -1,0 +1,141 @@
+
+environment.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 137
+  rotate: false
+  xy: 2, 936
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 2, 2
+  size: 1922, 404
+  orig: 1922, 404
+  offset: 0, 0
+  index: -1
+night/grass2
+  rotate: false
+  xy: 2, 408
+  size: 1922, 526
+  orig: 1922, 526
+  offset: 0, 0
+  index: -1
+
+environment2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flowers
+  rotate: false
+  xy: 2, 2
+  size: 1922, 447
+  orig: 1922, 447
+  offset: 0, 0
+  index: -1
+gras
+  rotate: false
+  xy: 2, 1327
+  size: 1922, 436
+  orig: 1922, 436
+  offset: 0, 0
+  index: -1
+night/gras
+  rotate: false
+  xy: 2, 889
+  size: 1922, 436
+  orig: 1922, 436
+  offset: 0, 0
+  index: -1
+sunset/gras
+  rotate: false
+  xy: 2, 451
+  size: 1922, 436
+  orig: 1922, 436
+  offset: 0, 0
+  index: -1
+
+environment3.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+leaves
+  rotate: false
+  xy: 2, 2
+  size: 1755, 591
+  orig: 1755, 591
+  offset: 0, 0
+  index: -1
+night/Layer 137
+  rotate: false
+  xy: 2, 595
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+
+environment4.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+night/leaves
+  rotate: false
+  xy: 2, 2
+  size: 1755, 591
+  orig: 1755, 591
+  offset: 0, 0
+  index: -1
+sunset/Layer 137
+  rotate: false
+  xy: 2, 595
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+
+environment5.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+rain
+  rotate: false
+  xy: 2, 595
+  size: 1907, 1079
+  orig: 1907, 1079
+  offset: 0, 0
+  index: -1
+sunset/leaves
+  rotate: false
+  xy: 2, 2
+  size: 1755, 591
+  orig: 1755, 591
+  offset: 0, 0
+  index: -1
+
+environment6.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+grass2
+  rotate: false
+  xy: 2, 2
+  size: 1922, 481
+  orig: 1922, 481
+  offset: 0, 0
+  index: -1
+sunset/grass2
+  rotate: false
+  xy: 2, 485
+  size: 1922, 526
+  orig: 1922, 526
+  offset: 0, 0
+  index: -1
