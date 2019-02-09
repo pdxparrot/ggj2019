@@ -1,0 +1,279 @@
+
+orange_flower.png
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 1
+  rotate: true
+  xy: 1715, 161
+  size: 93, 294
+  orig: 93, 294
+  offset: 0, 0
+  index: -1
+Layer 2
+  rotate: true
+  xy: 209, 2
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1
+Layer 2 copy
+  rotate: true
+  xy: 1574, 150
+  size: 104, 81
+  orig: 104, 81
+  offset: 0, 0
+  index: -1
+Layer 2 copy 2
+  rotate: true
+  xy: 1271, 140
+  size: 114, 97
+  orig: 114, 97
+  offset: 0, 0
+  index: -1
+Layer 2 copy 3
+  rotate: true
+  xy: 461, 4
+  size: 117, 96
+  orig: 117, 96
+  offset: 0, 0
+  index: -1
+Layer 2 copy 4
+  rotate: true
+  xy: 1127, 23
+  size: 114, 100
+  orig: 114, 100
+  offset: 0, 0
+  index: -1
+Layer 2 copy 5
+  rotate: true
+  xy: 993, 139
+  size: 115, 86
+  orig: 115, 86
+  offset: 0, 0
+  index: -1
+Layer 2 copy 6
+  rotate: true
+  xy: 857, 18
+  size: 117, 89
+  orig: 117, 89
+  offset: 0, 0
+  index: -1
+Layer 5 copy
+  rotate: false
+  xy: 1756, 71
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: -1
+Layer 5 copy 2
+  rotate: false
+  xy: 559, 6
+  size: 98, 120
+  orig: 98, 120
+  offset: 0, 0
+  index: -1
+Layer 5 copy 3
+  rotate: false
+  xy: 209, 123
+  size: 99, 131
+  orig: 99, 131
+  offset: 0, 0
+  index: -1
+Layer 5 copy 4
+  rotate: false
+  xy: 512, 128
+  size: 62, 126
+  orig: 62, 126
+  offset: 0, 0
+  index: -1
+Layer 5 copy 5
+  rotate: false
+  xy: 1640, 54
+  size: 56, 94
+  orig: 56, 94
+  offset: 0, 0
+  index: -1
+Layer 5 copy 6
+  rotate: false
+  xy: 1430, 32
+  size: 103, 106
+  orig: 103, 106
+  offset: 0, 0
+  index: -1
+glow
+  rotate: true
+  xy: 2, 9
+  size: 245, 205
+  orig: 245, 205
+  offset: 0, 0
+  index: -1
+pink/Layer 2
+  rotate: true
+  xy: 293, 2
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1
+pink/Layer 2 copy 2
+  rotate: true
+  xy: 1331, 24
+  size: 114, 97
+  orig: 114, 97
+  offset: 0, 0
+  index: -1
+pink/Layer 2 copy 3
+  rotate: true
+  xy: 759, 15
+  size: 117, 96
+  orig: 117, 96
+  offset: 0, 0
+  index: -1
+pink/Layer 2 copy 4
+  rotate: true
+  xy: 1169, 140
+  size: 114, 100
+  orig: 114, 100
+  offset: 0, 0
+  index: -1
+pink/Layer 2 copy 5
+  rotate: true
+  xy: 1039, 22
+  size: 115, 86
+  orig: 115, 86
+  offset: 0, 0
+  index: -1
+pink/Layer 2 copy 6
+  rotate: true
+  xy: 902, 137
+  size: 117, 89
+  orig: 117, 89
+  offset: 0, 0
+  index: -1
+pink/Layer 5 copy
+  rotate: false
+  xy: 1845, 71
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: -1
+pink/Layer 5 copy 2
+  rotate: false
+  xy: 659, 6
+  size: 98, 120
+  orig: 98, 120
+  offset: 0, 0
+  index: -1
+pink/Layer 5 copy 3
+  rotate: false
+  xy: 310, 123
+  size: 99, 131
+  orig: 99, 131
+  offset: 0, 0
+  index: -1
+pink/Layer 5 copy 4
+  rotate: false
+  xy: 576, 128
+  size: 62, 126
+  orig: 62, 126
+  offset: 0, 0
+  index: -1
+pink/Layer 5 copy 5
+  rotate: false
+  xy: 1657, 160
+  size: 56, 94
+  orig: 56, 94
+  offset: 0, 0
+  index: -1
+pink/Layer 5 copy 6
+  rotate: false
+  xy: 1469, 148
+  size: 103, 106
+  orig: 103, 106
+  offset: 0, 0
+  index: -1
+white/Layer 2
+  rotate: true
+  xy: 377, 2
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1
+white/Layer 2 copy 2
+  rotate: true
+  xy: 1370, 140
+  size: 114, 97
+  orig: 114, 97
+  offset: 0, 0
+  index: -1
+white/Layer 2 copy 3
+  rotate: true
+  xy: 804, 137
+  size: 117, 96
+  orig: 117, 96
+  offset: 0, 0
+  index: -1
+white/Layer 2 copy 4
+  rotate: true
+  xy: 1229, 24
+  size: 114, 100
+  orig: 114, 100
+  offset: 0, 0
+  index: -1
+white/Layer 2 copy 5
+  rotate: true
+  xy: 1081, 139
+  size: 115, 86
+  orig: 115, 86
+  offset: 0, 0
+  index: -1
+white/Layer 2 copy 6
+  rotate: true
+  xy: 948, 18
+  size: 117, 89
+  orig: 117, 89
+  offset: 0, 0
+  index: -1
+white/Layer 5 copy
+  rotate: true
+  xy: 1934, 72
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: -1
+white/Layer 5 copy 2
+  rotate: false
+  xy: 704, 134
+  size: 98, 120
+  orig: 98, 120
+  offset: 0, 0
+  index: -1
+white/Layer 5 copy 3
+  rotate: false
+  xy: 411, 123
+  size: 99, 131
+  orig: 99, 131
+  offset: 0, 0
+  index: -1
+white/Layer 5 copy 4
+  rotate: false
+  xy: 640, 128
+  size: 62, 126
+  orig: 62, 126
+  offset: 0, 0
+  index: -1
+white/Layer 5 copy 5
+  rotate: false
+  xy: 1698, 64
+  size: 56, 94
+  orig: 56, 94
+  offset: 0, 0
+  index: -1
+white/Layer 5 copy 6
+  rotate: false
+  xy: 1535, 40
+  size: 103, 106
+  orig: 103, 106
+  offset: 0, 0
+  index: -1

@@ -319,9 +319,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7883bb70e36e3ae4e9308f7907a2bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonAnimation: {fileID: 0}
+  _skeletonAnimation: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
+    type: 3}
   _skinNames:
-  - default
+  - orange_flower
+  - ping_flower
+  - white_flower
 --- !u!114 &5512433957614832504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,10 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f43cde3a8a346a1a94af77cdbdd623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -1
   _model: {fileID: 0}
-  _controller: {fileID: 0}
-  _animator: {fileID: 0}
+  _behavior: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 7498956286358863322}
   _deathEffect: {fileID: 6498468760859895621}
