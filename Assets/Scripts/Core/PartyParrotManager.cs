@@ -127,6 +127,7 @@ namespace pdxpartyparrot.Core
         }
 #endregion
 
+        // TODO: PlayerPrefs is bullshit, use a config file
 #region Player Config
 
 #region Bool

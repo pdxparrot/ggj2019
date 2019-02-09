@@ -209,6 +209,10 @@ namespace pdxpartyparrot.Core.DebugMenu
                     if(GUIUtils.LayoutButton("Quit")) {
                         UnityUtil.Quit();
                     }
+
+                    if(GUIUtils.LayoutButton("Reset PlayerPrefs")) {
+                        PlayerPrefs.DeleteAll();
+                    }
                 GUILayout.EndHorizontal();
             } else {
                 _windowScrollPos = GUILayout.BeginScrollView(_windowScrollPos);
