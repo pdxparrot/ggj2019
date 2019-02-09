@@ -201,7 +201,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             if(Hive.Instance.TakeDamage(transform.position)) {
-                Kill();
+                Kill(false);
             }
         }
 
@@ -217,11 +217,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _attackEffect.Trigger();
         }
 
-        public override void Kill()
+        public override void Kill(bool playerKill)
         {
-            GameManager.Instance.WaspKilled();
+            if(playerKill) {
+                GameManager.Instance.WaspKilled();
+            }
 
-            base.Kill();
+            base.Kill(playerKill);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
@@ -85,6 +86,15 @@ namespace pdxpartyparrot.Core.Audio
 
         [SerializeField]
         private float _updateCrossfadeUpdateMs = 100.0f;
+
+        private float UpdateCrossfadeUpdateS => _updateCrossfadeUpdateMs / 1000.0f;
+
+        [SerializeField]
+        private float _updateMusicTransitionMs = 100.0f;
+
+        private float UpdateMusicTransitionS => _updateMusicTransitionMs / 1000.0f;
+
+        private Coroutine _musicTransitionRoutine;
 #endregion
 
         [Space(10)]
@@ -204,6 +214,14 @@ namespace pdxpartyparrot.Core.Audio
         {
             StartCoroutine(UpdateMusicCrossfade());
         }
+
+        protected override void OnDestroy()
+        {
+            StopAmbient();
+            StopAllMusic();
+
+            base.OnDestroy();
+        }
 #endregion
 
         public void InitSFXAudioMixerGroup(AudioSource source)
@@ -227,29 +245,94 @@ namespace pdxpartyparrot.Core.Audio
             _oneShotAudioSource.PlayOneShot(audioClip);
         }
 
+        // Plays a music clip on the first audio source at no crossfade
         public void PlayMusic(AudioClip musicAudioClip)
         {
-            StopMusic();
+            StopAllMusic();
 
             _music1AudioSource.clip = musicAudioClip;
             _music1AudioSource.Play();
+
+            MusicCrossFade = 0.0f;
         }
 
+        // Plays a music clip on the second audio source at full crossfade
+        public void PlayMusic2(AudioClip musicAudioClip)
+        {
+            StopAllMusic();
+
+            _music2AudioSource.clip = musicAudioClip;
+            _music2AudioSource.Play();
+
+            MusicCrossFade = 1.0f;
+        }
+
+        // Plays 2 music clips at 50% crossfade
         public void PlayMusic(AudioClip music1AudioClip, AudioClip music2AudioClip)
         {
-            StopMusic();
+            StopAllMusic();
 
             _music1AudioSource.clip = music1AudioClip;
             _music1AudioSource.Play();
 
             _music2AudioSource.clip = music2AudioClip;
             _music2AudioSource.Play();
+
+            MusicCrossFade = 0.5f;
+        }
+
+        // if stopOnComplete is true, will stop the clip being transitioned away from
+        public void TransitionMusic(AudioClip musicAudioClip, float seconds, bool stopOnComplete=true)
+        {
+            if(null == musicAudioClip) {
+                return;
+            }
+
+            if(_music1AudioSource.isPlaying && _music2AudioSource.isPlaying) {
+                Debug.LogWarning("Attempt to transition music with 2 clips playing");
+                return;
+            }
+
+            bool transitionToSecond = true;
+            float targetCrossfade = 1.0f - _musicCrossFade;
+            if(_music1AudioSource.isPlaying) {
+                PlayMusic2(musicAudioClip);
+                transitionToSecond = true;
+            } else {
+                PlayMusic(musicAudioClip);
+                transitionToSecond = false;
+            }
+
+            _musicTransitionRoutine = StartCoroutine(MusicTransitionRoutine(targetCrossfade, seconds, () => {
+                if(stopOnComplete) {
+                    if(transitionToSecond) {
+                        StopMusic();
+                    } else {
+                        StopMusic2();
+                    }
+                }
+            }));
         }
 
         public void StopMusic()
         {
             _music1AudioSource.Stop();
+        }
+
+        public void StopMusic2()
+        {
             _music2AudioSource.Stop();
+        }
+
+        public void StopAllMusic()
+        {
+            if(null != _musicTransitionRoutine) {
+                StopCoroutine(_musicTransitionRoutine);
+                _musicTransitionRoutine = null;
+            }
+
+            StopMusic();
+            StopMusic2();
         }
 
         public void PlayAmbient(AudioClip audioClip)
@@ -267,13 +350,34 @@ namespace pdxpartyparrot.Core.Audio
 
         private IEnumerator UpdateMusicCrossfade()
         {
-            WaitForSeconds wait = new WaitForSeconds(_updateCrossfadeUpdateMs / 1000.0f);
+            WaitForSeconds wait = new WaitForSeconds(UpdateCrossfadeUpdateS);
             while(true) {
                 _music1AudioSource.volume = 1.0f - _musicCrossFade;
                 _music2AudioSource.volume = _musicCrossFade;
 
                 yield return wait;
             }
+        }
+
+        private IEnumerator MusicTransitionRoutine(float targetCrossfade, float seconds, Action onComplete)
+        {
+            float pct = 0.0f;
+            float startCrossfade = MusicCrossFade;
+
+            WaitForSeconds wait = new WaitForSeconds(UpdateMusicTransitionS);
+            while(true) {
+                MusicCrossFade = Mathf.Lerp(startCrossfade, targetCrossfade, pct);
+                yield return wait;
+
+                pct += UpdateMusicTransitionS / seconds;
+                if(pct >= 1.0f) {
+                    MusicCrossFade = targetCrossfade;
+                    break;
+                }
+            }
+
+            _musicTransitionRoutine = null;
+            onComplete?.Invoke();
         }
 
         private void InitDebugMenu()
@@ -290,6 +394,7 @@ namespace pdxpartyparrot.Core.Audio
 
                 GUILayout.BeginVertical("Music", GUI.skin.box);
                     GUILayout.Label($"Music Crossfade: {MusicCrossFade}");
+                    GUILayout.Label($"Transitioning: {null != _musicTransitionRoutine}");
                 GUILayout.EndVertical();
             };
         }

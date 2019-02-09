@@ -25,16 +25,16 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private void DamagePlayer(Players.Player player)
         {
-            if(IsDead) {
+            if(GameManager.Instance.IsGameOver || IsDead) {
                 return;
             }
 
-            if(null == player) {
+            if(null == player || player.IsDead) {
                 return;
             }
 
             if(player.Damage(_damage)) {
-                Kill();
+                Kill(true);
             }
         }
     }

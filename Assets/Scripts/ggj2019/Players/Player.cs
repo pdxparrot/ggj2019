@@ -134,6 +134,10 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void DoGather()
         {
+            if(IsDead) {
+                return;
+            }
+
             NPCBee npcBee = _interactables.GetBee();
             if(npcBee != null) {
                 AddBeeToSwarm(npcBee);

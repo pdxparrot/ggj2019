@@ -75,7 +75,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.OnDeSpawn();
         }
 
-        public virtual void Kill()
+        public virtual void Kill(bool playerKill)
         {
             IsDead = true;
 

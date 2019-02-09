@@ -108,7 +108,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             _pollen--;
             if(_pollen <= 0) {
-                Kill();
+                Kill(false);
             }
         }
 
@@ -122,7 +122,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pollenSpawn.Release();
         }
 
-        public override void Kill()
+        public override void Kill(bool playerKill)
         {
             if(null != _deathTrackEntry) {
                 _deathTrackEntry.Complete -= OnDeathComplete;
@@ -141,7 +141,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private void OnDeathComplete(TrackEntry trackEntry)
         {
-            base.Kill();
+            base.Kill(false);
         }
 
         public int BeetleHarvest(int amount)
@@ -150,7 +150,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pollen -= result;
 
             if(_pollen <= 0) {
-                Kill();
+                Kill(false);
             }
 
             return result;

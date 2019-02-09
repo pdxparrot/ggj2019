@@ -86,18 +86,20 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(_flower.IsDead) {
                 _flower = null;
 
-                Kill();
+                Kill(false);
                 return;
             }
 
             _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
         }
 
-        public override void Kill()
+        public override void Kill(bool playerKill)
         {
-            base.Kill();
+            if(playerKill) {
+                GameManager.Instance.BeetleKilled();
+            }
 
-            GameManager.Instance.BeetleKilled();
+            base.Kill(playerKill);
         }
     }
 }

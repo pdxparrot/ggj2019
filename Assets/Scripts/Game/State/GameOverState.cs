@@ -19,7 +19,7 @@ namespace pdxpartyparrot.Game.State
 
         public override void OnEnter()
         {
-            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.StopAllMusic();
             AudioManager.Instance.PlayMusic(_endGameMusic);
 
             _completeTimer.Start(_completeWaitTimeSeconds, () => {
@@ -29,7 +29,7 @@ namespace pdxpartyparrot.Game.State
 
         public override void OnExit()
         {
-            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.StopAllMusic();
         }
 
         public override void OnUpdate(float dt)

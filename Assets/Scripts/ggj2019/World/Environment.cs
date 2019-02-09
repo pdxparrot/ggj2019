@@ -1,4 +1,5 @@
-﻿using pdxpartyparrot.Game.World;
+﻿using pdxpartyparrot.Core.Audio;
+using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Players;
 
 using Spine.Unity;
@@ -12,6 +13,15 @@ namespace pdxpartyparrot.ggj2019.World
     {
         [SerializeField]
         private SkeletonAnimation _animation;
+
+        [SerializeField]
+        private AudioClip _wave4Clip;
+
+        [SerializeField]
+        private AudioClip _wave8Clip;
+
+        [SerializeField]
+        private float _audioTransitionSeconds = 1.0f;
 
         private SpineSkinSwapper _skinSwapper;
 
@@ -38,10 +48,13 @@ namespace pdxpartyparrot.ggj2019.World
 
             if(args.WaveIndex == 0) {
                 _skinSwapper.SetSkin(0);
+                // wave 0 music started by the game state
             } else if(args.WaveIndex == 4) {
                 _skinSwapper.SetSkin(1);
+                AudioManager.Instance.TransitionMusic(_wave4Clip, _audioTransitionSeconds);
             }  else if(args.WaveIndex == 8) {
                 _skinSwapper.SetSkin(2);
+                AudioManager.Instance.TransitionMusic(_wave8Clip, _audioTransitionSeconds);
             }
         }
 #endregion

@@ -119,7 +119,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         private void Gather(Players.Player player)
         {
-            if(null == player) {
+            if(null == player || player.IsDead) {
                 return;
             }
 

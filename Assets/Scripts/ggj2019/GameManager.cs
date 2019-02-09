@@ -2,6 +2,7 @@
 
 using System;
 
+using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
@@ -32,6 +33,9 @@ namespace pdxpartyparrot.ggj2019
         public GameViewer Viewer { get; private set; }
 
         public override bool IsGameOver { get; protected set; }
+
+        [SerializeField]
+        private AudioClip _newWaveAudio;
 
         [SerializeField]
         [ReadOnly]
@@ -107,9 +111,7 @@ namespace pdxpartyparrot.ggj2019
             WaveSpawner.Shutdown();
 
             // save high scores and then kick everyone
-            foreach(Players.Player player in PlayerManager.Instance.Players) {
-                HighScoreManager.Instance.AddHighScore($"{player.Id}", Score);
-            }
+            HighScoreManager.Instance.AddHighScore("", Score);
             PlayerManager.Instance.DespawnPlayers();
 
             IsGameOver = true;
@@ -167,6 +169,11 @@ namespace pdxpartyparrot.ggj2019
         //[Client]
         private void WaveStartEventHandler(object sender, SpawnWaveEventArgs args)
         {
+            if(args.WaveIndex == 0) {
+                return;
+            }
+
+            AudioManager.Instance.PlayOneShot(_newWaveAudio);
             if(null != UIManager.Instance.PlayerUI) {
                 ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowWaveText(args.WaveIndex);
             }

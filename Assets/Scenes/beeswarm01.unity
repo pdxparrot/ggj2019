@@ -260,6 +260,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 29238022}
+  _wave4Clip: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
+  _wave8Clip: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
+  _audioTransitionSeconds: 2
 --- !u!114 &344495195
 MonoBehaviour:
   m_ObjectHideFlags: 0

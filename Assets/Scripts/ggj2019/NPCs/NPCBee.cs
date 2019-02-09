@@ -51,8 +51,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public bool CanJoinSwarm => !IsInSwarm && _state == NPCBeeState.Idle;
 
-        private bool _isFlying;
-
 #region Unity Life Cycle
         private void Update()
         {
@@ -79,10 +77,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
 
             SetState(NPCBeeState.Idle);
-
-            // start true to force the animation the first time
-            _isFlying = true;
-            SetHoverAnimation();
         }
 
         public override void OnDeSpawn()
@@ -96,22 +90,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private void SetHoverAnimation()
         {
-            if(!_isFlying) {
-                return;
-            }
-
             SetAnimation("bee_hover", true);
-            _isFlying = false;
         }
 
         private void SetFlightAnimation()
         {
-            if(_isFlying) {
-                return;
-            }
-
             SetAnimation("bee-flight", true);
-            _isFlying = true;
         }
 
         private void UpdateOffset()
@@ -154,7 +138,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public void RemoveFromSwarm()
         {
-            Kill();
+            Kill(false);
+        }
+
+        public override void Kill(bool playerKill)
+        {
+            _targetSwarm = null;
+
+            base.Kill(playerKill);
         }
 
         private void SetState(NPCBeeState state)

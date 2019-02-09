@@ -30,7 +30,7 @@ namespace pdxpartyparrot.Game.State
 
         public override void OnExit()
         {
-            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.StopAllMusic();
 
             InputManager.Instance.EventSystem.UIModule.DisableAllActions();
 

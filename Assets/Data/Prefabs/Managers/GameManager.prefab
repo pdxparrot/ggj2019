@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameData: {fileID: 11400000, guid: 7e91a85ad52337e4ab27f12254331302, type: 2}
+  _newWaveAudio: {fileID: 8300000, guid: f0e3155e8b68bfd48af0a56a7c30fe6f, type: 3}
+  _gameTimer:
+    _stopwatchSeconds: 0
+    _isRunning: 0
