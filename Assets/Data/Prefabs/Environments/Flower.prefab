@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4261586379689094825
 MonoBehaviour:
@@ -83,6 +83,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8682405549410555323}
   - {fileID: 8001670742348593591}
   - {fileID: 3801272208618207857}
   m_Father: {fileID: 0}
@@ -319,11 +320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7883bb70e36e3ae4e9308f7907a2bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonAnimation: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
-    type: 3}
+  _skeletonAnimation: {fileID: 2414059694599493084}
   _skinNames:
   - orange_flower
-  - ping_flower
+  - pink_flower
   - white_flower
 --- !u!114 &5512433957614832504
 MonoBehaviour:
@@ -337,12 +337,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f43cde3a8a346a1a94af77cdbdd623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _model: {fileID: 0}
+  _model: {fileID: 2203455641299792068}
   _behavior: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 7498956286358863322}
   _deathEffect: {fileID: 6498468760859895621}
-  _animation: {fileID: 0}
+  _animation: {fileID: 2414059694599493084}
   _initialPollen: 5
   _beetleSpawn: {fileID: 4261586379689094825}
   _pollenSpawn: {fileID: 2927692061490181078}
@@ -407,7 +407,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2927692061490181078
 MonoBehaviour:
@@ -423,3 +423,116 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tag: pollen
   _owner: {fileID: 0}
+--- !u!1001 &1013333371945013934
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7620153835371573773}
+    m_Modifications:
+    - target: {fileID: 1190122853531771498, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_Name
+      value: Spine GameObject (flower_skins)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 57803614091421909, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d123fa3f85024444b9cb6efa2700489, type: 3}
+--- !u!1 &2203455641299792068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1190122853531771498, guid: 3d123fa3f85024444b9cb6efa2700489,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013333371945013934}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8682405549410555323 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013333371945013934}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2414059694599493084 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013333371945013934}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203455641299792068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

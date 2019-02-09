@@ -1,7 +1,5 @@
 ﻿using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.ggj2019.Collectable;
 using pdxpartyparrot.ggj2019.Players;
 
 using Spine;
@@ -47,11 +45,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
-            // TODO: _skinSwapper.SetRandomSkin();
-            Model = Instantiate(GameManager.Instance.GameGameData.FlowerPrefabs.GetRandomEntry(), transform);
-
-            // TODO: move this to awake once we know we have a model
-            _animation = Model.GetComponent<SkeletonAnimation>();
+             _skinSwapper.SetRandomSkin();
 
             base.OnSpawn(spawnpoint);
 
@@ -95,13 +89,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pollenSpawn.Release();
 
             base.OnDeSpawn();
-
-            // TODO: remove this when skins are in
-            _animation = null;
-            if(null != Model) {
-                Destroy(Model);
-                Model = null;
-            }
         }
 
         public void SpawnPollen()

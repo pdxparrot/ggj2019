@@ -75,8 +75,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1062197859
+  m_SortingLayer: 2
   m_SortingOrder: 0
 --- !u!114 &3427349086043637618
 MonoBehaviour:
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 71aa38c62fb7f9048bb1854ca53efebb, type: 2}
-  initialSkinName: pink_flower
+  initialSkinName: orange_flower
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -105,6 +105,6 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: flower_idle
+  _animationName: flower_grow
   loop: 1
   timeScale: 1
