@@ -189,10 +189,20 @@ namespace pdxpartyparrot.Core.DebugMenu
         private void RenderWindowContents()
         {
             if(null == _currentNode) {
-                GUILayout.Label($"Frame Time: {(int)(_lastFrameTime * 1000.0f)} ms");
-                GUILayout.Label($"Min Frame Time: {(int)(_minFrameTime * 1000.0f)} ms");
-                GUILayout.Label($"Max Frame Time: {(int)(_maxFrameTime * 1000.0f)} ms");
-                GUILayout.Label($"Average FPS: {(int)AverageFPS}");
+                GUILayout.BeginVertical("Rendering:", GUI.skin.box);
+                    GUILayout.Label($"Frame Time: {(int)(_lastFrameTime * 1000.0f)} ms");
+                    GUILayout.Label($"Min Frame Time: {(int)(_minFrameTime * 1000.0f)} ms");
+                    GUILayout.Label($"Max Frame Time: {(int)(_maxFrameTime * 1000.0f)} ms");
+                    GUILayout.Label($"Average FPS: {(int)AverageFPS}");
+                GUILayout.EndVertical();
+
+                GUILayout.BeginVertical("Memory:", GUI.skin.box);
+                    GUILayout.Label($"Allocated: {Profiler.GetTotalAllocatedMemoryLong() / 1048576.0f:0.00}MB");
+                    GUILayout.Label($"Reserved: {Profiler.GetTotalReservedMemoryLong() / 1048576.0f:0.00}MB");
+                    GUILayout.Label($"Unused: {Profiler.GetTotalUnusedReservedMemoryLong() / 1048576.0f:0.00}MB");
+                    GUILayout.Label($"Mono Heap: {Profiler.GetMonoHeapSizeLong() / 1048576.0f:0.00}MB");
+                    GUILayout.Label($"Mono Used: {Profiler.GetMonoUsedSizeLong() / 1048576.0f:0.00}MB");
+                GUILayout.EndVertical();
 
                 _windowScrollPos = GUILayout.BeginScrollView(_windowScrollPos);
                     foreach(DebugMenuNode node in _nodes) {
