@@ -86,7 +86,6 @@ namespace pdxpartyparrot.ggj2019.Players
             _skinSwapper.SetSkin(NetworkPlayer.playerControllerId);
         }
 
-#region Actions
         public void AddPollen()
         {
             _hasPollen = true;
@@ -109,16 +108,22 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             // TODO: make the rumble configurable
-            GamePlayerDriver.GamepadListener.Rumble(0.5f, 0.25f, 0.5f);
+            GamePlayerDriver.GamepadListener.Rumble(0.5f, 0.5f, 0.0f);
 
             _swarm.Remove(amount);
             return true;
         }
 
+        public void GameOver()
+        {
+            // TODO: make the rumble configurable
+            GamePlayerDriver.GamepadListener.Rumble(2.0f, 0.5f, 0.5f);
+        }
+
         private void Kill()
         {
             // TODO: make the rumble configurable
-            GamePlayerDriver.GamepadListener.Rumble(2.0f, 0.5f, 1.0f);
+            GamePlayerDriver.GamepadListener.Rumble(1.0f, 0.25f, 0.5f);
 
             Behavior.Velocity = Vector3.zero;
 
@@ -168,6 +173,5 @@ namespace pdxpartyparrot.ggj2019.Players
             _respawnEffect.Trigger();
             Model.gameObject.SetActive(true);
         }
-#endregion
     }
 }

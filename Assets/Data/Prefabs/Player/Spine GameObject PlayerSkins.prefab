@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: fcec87b4041101b4f83a1486618cae82, type: 2}
-  initialSkinName: 
+  initialSkinName: bee_player1
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -105,6 +105,6 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: bee_hover
   loop: 1
   timeScale: 1

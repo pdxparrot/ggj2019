@@ -75,10 +75,20 @@ namespace pdxpartyparrot.Game.Data
             private SpawnGroup[] _spawnGroups;
 
             public IReadOnlyCollection<SpawnGroup> SpawnGroups => _spawnGroups;
+
+            [SerializeField]
+            private AudioClip _waveMusic;
+
+            public AudioClip WaveMusic => _waveMusic;
         }
 
         [SerializeField]
         private SpawnWave[] _waves;
+
+        [SerializeField]
+        private float _musicTransitionSeconds = 1.0f;
+
+        public float MusicTransitionSeconds => _musicTransitionSeconds;
 
         public IReadOnlyCollection<SpawnWave> Waves => _waves;
     }

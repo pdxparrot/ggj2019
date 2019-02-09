@@ -158,9 +158,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 1465729543}
-  _wave4Clip: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
-  _wave8Clip: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
+  _wave3Clip: {fileID: 0}
+  _wave6Clip: {fileID: 0}
+  _wave9Clip: {fileID: 0}
   _audioTransitionSeconds: 2
+  _animations:
+  - environment_default
+  - environment_thunder
+  - environment_windy
 --- !u!114 &344495195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,9 +178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7883bb70e36e3ae4e9308f7907a2bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonAnimation: {fileID: 0}
+  _skeletonAnimation: {fileID: 1465729543}
   _skinNames:
-  - default
+  - environment_day
+  - environment_night
+  - environment_rain
+  - environment_sunset
 --- !u!1001 &1052057259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -279,6 +287,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1337937343}
+  - component: {fileID: 1337937344}
+  - component: {fileID: 1337937345}
   m_Layer: 0
   m_Name: Foreground
   m_TagString: Untagged
@@ -301,6 +311,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1337937344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337937342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7883bb70e36e3ae4e9308f7907a2bb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skeletonAnimation: {fileID: 1997248801}
+  _skinNames:
+  - environment_dayFG
+  - environment_nightFG
+  - environment_rainFG
+  - environment_sunsetFG
+--- !u!114 &1337937345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337937342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 749730a86c56149498d60d1422b23e2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 1997248801}
+  _wave3Clip: {fileID: 0}
+  _wave6Clip: {fileID: 0}
+  _wave9Clip: {fileID: 0}
+  _audioTransitionSeconds: 1
+  _animations:
+  - environment_default
+  - environment_thunder
+  - environment_windy
 --- !u!1001 &1465729542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -701,3 +750,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1997248799}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1997248801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 845358599214674899, guid: 2de25276707a6b648b411ed7e6c2bb37,
+    type: 3}
+  m_PrefabInstance: {fileID: 1997248799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -57,7 +57,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 42706e48825bd304196d2d0bd7395fb4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,8 +75,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -444915723
+  m_SortingLayer: 6
   m_SortingOrder: 0
 --- !u!114 &845358599214674899
 MonoBehaviour:
@@ -90,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: f112b258e3db27f41a8c486d5f07af73, type: 2}
-  initialSkinName: 
+  initialSkinName: environment_dayFG
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -104,6 +105,6 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: environment_default
   loop: 1
   timeScale: 1

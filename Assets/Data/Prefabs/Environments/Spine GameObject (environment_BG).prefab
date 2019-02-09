@@ -74,8 +74,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1088374295
+  m_SortingLayer: 1
   m_SortingOrder: 0
 --- !u!114 &4912332184449387553
 MonoBehaviour:
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 6d67dfaf5d8c05749a4529e57d5e50bb, type: 2}
-  initialSkinName: 
+  initialSkinName: environment_day
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -104,6 +104,6 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: environment_default
   loop: 1
   timeScale: 1

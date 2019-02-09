@@ -3,7 +3,6 @@ using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.Players;
 
 using Spine;
-using Spine.Unity;
 
 using UnityEngine;
 

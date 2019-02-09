@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
@@ -151,6 +152,7 @@ namespace pdxpartyparrot.Game.World
                 foreach(SpawnGroup spawnGroup in _spawnGroups) {
                     spawnGroup.Start();
                 }
+                AudioManager.Instance.TransitionMusic(_spawnWaveData.WaveMusic, _owner.WaveSpawnData.MusicTransitionSeconds);
             }
 
             public void Update(float dt)
@@ -170,6 +172,8 @@ namespace pdxpartyparrot.Game.World
 
         [SerializeField]
         private WaveSpawnData _waveSpawnData;
+
+        public WaveSpawnData WaveSpawnData => _waveSpawnData;
 
         [SerializeField]
         [ReadOnly]

@@ -37,6 +37,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -72,6 +73,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -107,6 +109,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -153,6 +156,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -188,6 +192,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -223,6 +228,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -269,6 +275,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -304,6 +311,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -339,6 +347,7 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
@@ -385,3 +394,5 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  _musicTransitionSeconds: 2

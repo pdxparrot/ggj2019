@@ -89,6 +89,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
+        // TODO: move all the SetAnimation junk into a helper behavior
         protected TrackEntry SetAnimation(string animationName, bool loop)
         {
             return SetAnimation(0, animationName, loop);

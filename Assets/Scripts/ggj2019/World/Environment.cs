@@ -1,7 +1,7 @@
-﻿using pdxpartyparrot.Core.Audio;
-using pdxpartyparrot.Game.World;
+﻿using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Players;
 
+using Spine;
 using Spine.Unity;
 
 using UnityEngine;
@@ -15,13 +15,7 @@ namespace pdxpartyparrot.ggj2019.World
         private SkeletonAnimation _animation;
 
         [SerializeField]
-        private AudioClip _wave4Clip;
-
-        [SerializeField]
-        private AudioClip _wave8Clip;
-
-        [SerializeField]
-        private float _audioTransitionSeconds = 1.0f;
+        private string[] _animations;
 
         private SpineSkinSwapper _skinSwapper;
 
@@ -41,20 +35,32 @@ namespace pdxpartyparrot.ggj2019.World
         }
 #endregion
 
+        // TODO: move all the SetAnimation junk into a helper behavior
+        private TrackEntry SetAnimation(string animationName, bool loop)
+        {
+            return SetAnimation(0, animationName, loop);
+        }
+
+        private TrackEntry SetAnimation(int track, string animationName, bool loop)
+        {
+            return _animation.AnimationState.SetAnimation(track, animationName, loop);
+        }
+
 #region Event Handlers
         private void WaveStartEventHandler(object sender, SpawnWaveEventArgs args)
         {
-            // TODO: set animations
-
             if(args.WaveIndex == 0) {
                 _skinSwapper.SetSkin(0);
-                // wave 0 music started by the game state
-            } else if(args.WaveIndex == 4) {
+                SetAnimation(_animations[0], true);
+            } else if(args.WaveIndex == 3) {
                 _skinSwapper.SetSkin(1);
-                AudioManager.Instance.TransitionMusic(_wave4Clip, _audioTransitionSeconds);
-            }  else if(args.WaveIndex == 8) {
+                SetAnimation(_animations[1], true);
+            }  else if(args.WaveIndex == 6) {
                 _skinSwapper.SetSkin(2);
-                AudioManager.Instance.TransitionMusic(_wave8Clip, _audioTransitionSeconds);
+                SetAnimation(_animations[2], true);
+            }  else if(args.WaveIndex == 9) {
+                _skinSwapper.SetSkin(3);
+                SetAnimation(_animations[0], true);
             }
         }
 #endregion
