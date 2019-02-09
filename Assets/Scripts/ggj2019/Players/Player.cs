@@ -16,6 +16,8 @@ namespace pdxpartyparrot.ggj2019.Players
     {
         public PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
 
+        private PlayerDriver GamePlayerDriver => (PlayerDriver)PlayerDriver;
+
         [SerializeField]
         private Interactables _interactables;
 
@@ -106,12 +108,18 @@ namespace pdxpartyparrot.ggj2019.Players
                 return true;
             }
 
+            // TODO: make the rumble configurable
+            GamePlayerDriver.GamepadListener.Rumble(0.5f, 0.25f, 0.5f);
+
             _swarm.Remove(amount);
             return true;
         }
 
         private void Kill()
         {
+            // TODO: make the rumble configurable
+            GamePlayerDriver.GamepadListener.Rumble(2.0f, 0.5f, 1.0f);
+
             Behavior.Velocity = Vector3.zero;
 
             _isDead = true;

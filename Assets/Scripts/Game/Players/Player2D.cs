@@ -38,6 +38,8 @@ namespace pdxpartyparrot.Game.Players
         [SerializeField]
         private PlayerDriver _driver;
 
+        protected PlayerDriver PlayerDriver => _driver;
+
         public virtual PlayerController2D PlayerBehavior => (PlayerController2D)Behavior;
 #endregion
 

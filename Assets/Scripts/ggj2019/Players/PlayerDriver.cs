@@ -31,6 +31,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private GamepadListener _gamepadListener;
 
+        public GamepadListener GamepadListener => _gamepadListener;
+
         private DebugMenuNode _debugMenuNode;
 
         protected override bool CanDrive => base.CanDrive && !GamePlayer.IsDead && !GameManager.Instance.IsGameOver;

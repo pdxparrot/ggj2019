@@ -14,6 +14,10 @@ namespace pdxpartyparrot.Game.Actors
         [ReadOnly]
         private int _gamepadId;
 
+        [SerializeField]
+        [ReadOnly]
+        private bool _isRumbling;
+
         [CanBeNull]
         private Gamepad _gamepad;
 
@@ -42,6 +46,23 @@ namespace pdxpartyparrot.Game.Actors
         public bool IsOurGamepad(InputAction.CallbackContext context)
         {
             return context.control.device == _gamepad;
+        }
+
+        public void Rumble(float seconds, float lowFrequency, float highFrequence)
+        {
+            if(!HasGamepad || _isRumbling) {
+                return;
+            }
+
+            Gamepad.SetMotorSpeeds(lowFrequency, highFrequence);
+            _isRumbling = true;
+
+            TimeManager.Instance.RunAfterDelay(seconds, () => {
+                if(HasGamepad) {
+                    Gamepad.SetMotorSpeeds(0.0f, 0.0f);
+                }
+                _isRumbling = false;
+            });
         }
 
 #region Event Handlers

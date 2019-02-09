@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 using pdxpartyparrot.Core.DebugMenu;
 
@@ -28,6 +29,18 @@ namespace pdxpartyparrot.Core.Util
             InitDebugMenu();
         }
 #endregion
+
+        // NOTE: this ignores the game being paused
+        public void RunAfterDelay(float seconds, Action action)
+        {
+            StartCoroutine(RunAfterDelayRoutine(seconds, action));
+        }
+
+        private IEnumerator RunAfterDelayRoutine(float seconds, Action action)
+        {
+            yield return new WaitForSeconds(seconds);
+            action?.Invoke();
+        }
 
         private void InitDebugMenu()
         {
