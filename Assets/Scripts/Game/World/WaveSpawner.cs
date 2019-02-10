@@ -9,6 +9,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.NPCs;
 
 using UnityEngine;
 
@@ -106,6 +107,14 @@ namespace pdxpartyparrot.Game.World
                         }
                         actor.transform.SetParent(_poolContainer.transform);
 
+                        // init the NPC with data if we have it
+                        if(null != _spawnGroupData.NPCData) {
+                            INPC npc = actor.GetComponent<INPC>();
+                            if(null != npc) {
+                                npc.Initialize(_spawnGroupData.NPCData);
+                            }
+                        }
+
                         if(!_spawnGroupData.Once) {
                             _spawnTimer.Start(_spawnGroupData.Delay, Spawn);
                         }
@@ -183,16 +192,14 @@ namespace pdxpartyparrot.Game.World
 
         private bool HasCurrentWave => _currentWaveIndex >= 0 && _currentWaveIndex < _spawnWaves.Count;
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ List<SpawnWave> _spawnWaves = new List<SpawnWave>();
-
         [CanBeNull]
         private SpawnWave CurrentWave => HasCurrentWave ? _spawnWaves[_currentWaveIndex] : null;
 
         [SerializeField]
         [ReadOnly]
         private /*readonly*/ Timer _waveTimer = new Timer();
+
+        private readonly List<SpawnWave> _spawnWaves = new List<SpawnWave>();
 
 #region Unity Lifecycle
         private void Awake()

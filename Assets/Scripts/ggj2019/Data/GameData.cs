@@ -57,6 +57,11 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public CollectableData CollectableData => _collectableData;
 
+        [SerializeField]
+        private NPCBeeData _beeData;
+
+        public NPCBeeData BeeData => _beeData;
+
         [Space(10)]
 
 #region Score

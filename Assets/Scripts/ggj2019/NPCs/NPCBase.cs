@@ -4,7 +4,9 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Effects;
+using pdxpartyparrot.Game.NPCs;
 
 using Spine;
 using Spine.Unity;
@@ -13,10 +15,11 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
+    // TODO: make core-ish
     [RequireComponent(typeof(PooledObject))]
-    public abstract class NPCBase : Actor2D
+    public abstract class NPCBase : Actor2D, INPC
     {
-        public override bool IsLocalActor => true;
+        public override bool IsLocalActor => false;
 
         [SerializeField]
         [ReadOnly]
@@ -29,15 +32,29 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 
         [SerializeField]
-        protected EffectTrigger _spawnEffect;
+        private EffectTrigger _spawnEffect;
+
+        protected EffectTrigger SpawnEffect => _spawnEffect;
 
         [SerializeField]
-        protected EffectTrigger _deathEffect;
+        private EffectTrigger _deathEffect;
+
+        protected EffectTrigger DeathEffect => _deathEffect;
 
         [SerializeField]
-        protected SkeletonAnimation _animation;
+        private SkeletonAnimation _animation;
 
-        protected PooledObject _pooledObject;
+        protected SkeletonAnimation Animation => _animation;
+
+        [SerializeField]
+        [ReadOnly]
+        private NPCData _npcData;
+
+        protected NPCData NPCData => _npcData;
+
+        private PooledObject _pooledObject;
+
+        protected PooledObject PooledObject => _pooledObject;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -49,6 +66,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+#region Spawn
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
@@ -74,7 +92,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.OnDeSpawn();
         }
+#endregion
 
+        public virtual void Initialize(NPCData data)
+        {
+            _npcData = data;
+        }
+
+        // TODO: name this something else so it's less-death specific
+        // like maybe just "Despawn()" or something?
         public virtual void Kill(bool playerKill)
         {
             IsDead = true;
@@ -89,7 +115,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        // TODO: move all the SetAnimation junk into a helper behavior
+        // TODO: move all the animation junk into a helper behavior
+#region Animation
         protected TrackEntry SetAnimation(string animationName, bool loop)
         {
             return SetAnimation(0, animationName, loop);
@@ -99,6 +126,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             return _animation.AnimationState.SetAnimation(track, animationName, loop);
         }
+
+        protected void SetFacing(Vector3 direction)
+        {
+            _animation.Skeleton.ScaleX = direction.x < 0 ? -1.0f : 1.0f;
+        }
+#endregion
 
 #region Event Handlers
         private void RecycleEventHandler(object sender, EventArgs args)

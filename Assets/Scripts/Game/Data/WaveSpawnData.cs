@@ -25,6 +25,11 @@ namespace pdxpartyparrot.Game.Data
             public Actor ActorPrefab => _actorPrefab;
 
             [SerializeField]
+            private NPCData npcData;
+
+            public NPCData NPCData => npcData;
+
+            [SerializeField]
             [Tooltip("The spawnpoint tag")]
             private string _tag;
    

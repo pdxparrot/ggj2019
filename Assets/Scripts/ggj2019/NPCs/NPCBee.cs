@@ -5,10 +5,13 @@ using JetBrains.Annotations;
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.NPCs.Control;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
@@ -26,15 +29,16 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 
         [SerializeField]
-        private float _swarmSpeedModifier = 2.0f;
+        [ReadOnly]
+        private float _offsetRadius;
 
         [SerializeField]
         [ReadOnly]
-        private Vector2 _offsetChangeTimer = new Vector2(0.2f,0.5f);
+        private Vector3 _offsetPosition = new Vector3(0.0f, 0.0f);
 
-        private float _offsetRadius;
-        private Vector2 _offsetPosition = new Vector3(0, 0);
-        private readonly Timer _offsetUpdateTimer = new Timer();
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _offsetUpdateTimer = new Timer();
 
         [SerializeField]
         [ReadOnly]
@@ -45,6 +49,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [CanBeNull]
         private Swarm _targetSwarm;
 
+        private NPCBeeData BeeData => (NPCBeeData)NPCData;
+
         public Transform Transform => transform;
 
         public bool IsInSwarm => null != _targetSwarm;
@@ -54,10 +60,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Unity Life Cycle
         private void Update()
         {
-            if(IsDead) {
-                return;
-            }
-
             float dt = Time.deltaTime;
 
             _offsetUpdateTimer.Update(dt);
@@ -66,17 +68,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+#region Spawn
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
 
             _bees.Add(this);
-
-            _offsetUpdateTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_offsetChangeTimer.x,_offsetChangeTimer.y), UpdateOffset);
-
-            _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
-
-            SetState(NPCBeeState.Idle);
         }
 
         public override void OnDeSpawn()
@@ -87,26 +84,41 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.OnDeSpawn();
         }
+#endregion
 
+        public override void Initialize(NPCData data)
+        {
+            Assert.IsTrue(data is NPCBeeData);
+
+            base.Initialize(data);
+
+            _offsetUpdateTimer.Start(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
+
+            SetFacing(Vector3.zero - transform.position);
+
+            SetState(NPCBeeState.Idle);
+        }
+
+#region Animation
         private void SetHoverAnimation()
         {
-            SetAnimation("bee_hover", true);
+            SetAnimation(BeeData.HoverAnimationName, true);
         }
 
         private void SetFlightAnimation()
         {
-            SetAnimation("bee-flight", true);
+            SetAnimation(BeeData.FlightAnimationName, true);
         }
 
         private void UpdateOffset()
         {
             _offsetPosition = new Vector2(
-                Random.Range(-_offsetRadius, _offsetRadius),
-                Random.Range(-_offsetRadius, _offsetRadius)
+                PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius),
+                PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius)
             );
-
-            _offsetUpdateTimer.Start(PartyParrotManager.Instance.Random.NextSingle(_offsetChangeTimer.x,_offsetChangeTimer.y), UpdateOffset);
+            _offsetUpdateTimer.Start(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
         }
+#endregion
 
         private void Think(float dt)
         {
@@ -124,16 +136,31 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
+        private void SetState(NPCBeeState state)
+        {
+            _state = state;
+            switch(state)
+            {
+            case NPCBeeState.Idle:
+                _targetSwarm = null;
+                SetHoverAnimation();
+                break;
+            case NPCBeeState.Follow:
+                SetFlightAnimation();
+                break;
+            }
+        }
+
         public void JoinSwarm(Swarm swarm, float radius)
         {
             if(!CanJoinSwarm) {
                 return;
             }
 
+            _offsetRadius = radius;
+
             _targetSwarm = swarm;
             SetState(NPCBeeState.Follow);
-
-            _offsetRadius = radius;
         }
 
         public void RemoveFromSwarm()
@@ -148,28 +175,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.Kill(playerKill);
         }
 
-        private void SetState(NPCBeeState state)
-        {
-            //Debug.Log($"setting state: {state}");
-            _state = state;
-
-            switch(state)
-            {
-            case NPCBeeState.Idle:
-                _targetSwarm = null;
-                SetHoverAnimation();
-                break;
-            case NPCBeeState.Follow:
-                SetFlightAnimation();
-                break;
-            }
-        }
-
         private float CurrentSpeed()
         {
             float modifier = 1.0f;
             if(IsInSwarm) {
-                modifier = _swarmSpeedModifier;
+                modifier = BeeData.SwarmSpeedModifier;
             }
 
             return PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * modifier;
@@ -193,17 +203,16 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            Vector2 position = target.position;
+            Vector3 position = target.position;
             if(IsInSwarm) {
                 position += _offsetPosition;
             }
 
-            transform.position = Vector2.MoveTowards(transform.position,position, CurrentSpeed() * dt);
+            position = Vector3.MoveTowards(transform.position,position, CurrentSpeed() * dt);
+            SetFacing(target.position - position);
+            transform.position = position;
 
             SetFlightAnimation();
-
-            Vector2 direction = target.position - transform.position;
-            _animation.Skeleton.ScaleX = direction.x < 0 ? -1.0f : 1.0f;
         }
 #endregion
     }

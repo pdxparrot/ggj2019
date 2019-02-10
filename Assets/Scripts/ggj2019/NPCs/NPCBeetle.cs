@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -34,13 +35,17 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+        public override void Initialize(NPCData data)
+        {
+        }
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
 
             if(!spawnpoint.Acquire(this, () => _spawnpoint = null)) {
                 Debug.LogError("Unable to acquire spawnpoint!");
-                _pooledObject.Recycle();
+                PooledObject.Recycle();
                 return;
             }
             _spawnpoint = spawnpoint;

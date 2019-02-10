@@ -8,7 +8,7 @@ namespace pdxpartyparrot.ggj2019.NPCs.Control
     public class Swarm : MonoBehaviour
     {
         [SerializeField]
-        private float _swarmRadius;
+        private float _swarmRadius = 1.0f;
 
         private readonly List<ISwarmable> _swarmables = new List<ISwarmable>();
 

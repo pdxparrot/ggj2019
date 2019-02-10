@@ -26,7 +26,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
             Collected
         }
 
-        public override bool IsLocalActor => true;
+        public override bool IsLocalActor => false;
 
         public bool CanBeCollected => _state == State.Floating;
 

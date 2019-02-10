@@ -37,7 +37,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private readonly List<int> _health = new List<int>();
 
-        public override bool IsLocalActor => true;
+        public override bool IsLocalActor => false;
 
         [SerializeField] private int _maxBees = 5;
         [SerializeField] private float _beeSpawnCooldown = 10.0f;
@@ -262,6 +262,7 @@ namespace pdxpartyparrot.ggj2019.Players
             NPCBee bee = ObjectPoolManager.Instance.GetPooledObject<NPCBee>("bees");
             spawnPoint.Spawn(bee, Guid.NewGuid());
             bee.transform.SetParent(_beeContainer.transform);
+            bee.Initialize(GameManager.Instance.GameGameData.BeeData);
 
             return bee;
         }

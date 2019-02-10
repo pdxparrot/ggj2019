@@ -2,6 +2,7 @@
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Effects;
+using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.ggj2019.Players;
 
 using Spine;
@@ -10,7 +11,8 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
-    public class NPCWasp : NPCEnemy
+    // NOTE: wasp art faces the wrong direction so all facing stuff is transposed 
+    public sealed class NPCWasp : NPCEnemy
     {
         // TODO: data
         [SerializeField] private float MaxVel;
@@ -54,23 +56,23 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Unity Lifecycle
         private void Update()
         {
-            if(IsDead) {
-                return;
-            }
-
             float dt = Time.deltaTime;
 
             Think(dt);
         }
 #endregion
 
+        public override void Initialize(NPCData data)
+        {
+        }
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
 
-            float dir = transform.position.x > 0 ? -1 : 1;
-            _acceleration = Vector3.right * Accel * dir;
-            _animation.Skeleton.ScaleX = _acceleration.x < 0 ? 1.0f : -1.0f;
+            Vector3 dir = (Vector3.zero - transform.position).normalized;
+            _acceleration = dir * Accel;
+            SetFacing(-dir);
 
             SetHoverAnimation();
 
@@ -120,7 +122,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
 	            transform.position += _velocity * dt;
 
-                SetFacingDirection(_velocity.x);
+                SetFacing(-_velocity);
 	        }
 
             SetFlightAnimation();
@@ -144,19 +146,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
 	        Vector3 targetLocation = _spline.GetPoint(t);
 
-            SetFacingDirection(targetLocation.x - transform.position.x);
+            SetFacing(transform.position - targetLocation);
 
             transform.position = targetLocation;
 
             return true;
-        }
-
-        private void SetFacingDirection(float xDirection)
-        {
-            if(xDirection < 0.02f && xDirection > -0.02f)
-                return;
-
-            _animation.Skeleton.ScaleX = xDirection < 0 ? 1.0f : -1.0f;
         }
 
         private void SetHoverAnimation()
