@@ -19,6 +19,11 @@ namespace pdxpartyparrot.ggj2019.Players
         private PlayerDriver GamePlayerDriver => (PlayerDriver)PlayerDriver;
 
         [SerializeField]
+        private Transform _pollenTarget;
+
+        public Transform PollenTarget => _pollenTarget;
+
+        [SerializeField]
         private Interactables _interactables;
 
         [SerializeField]

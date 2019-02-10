@@ -52,6 +52,8 @@ namespace pdxpartyparrot.ggj2019
         {
             GameStateManager.Instance.RegisterGameManager(this);
 
+            Assert.IsTrue(GameData is GameData);
+
             WaveSpawner = Instantiate(GameGameData.WaveSpawnerPrefab);
         }
 

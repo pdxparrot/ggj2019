@@ -52,6 +52,11 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public WaveSpawner WaveSpawnerPrefab => _waveSpawnerPrefab;
 
+        [SerializeField]
+        private CollectableData _collectableData;
+
+        public CollectableData CollectableData => _collectableData;
+
         [Space(10)]
 
 #region Score
