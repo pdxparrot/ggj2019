@@ -107,8 +107,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return true;
             }
 
-            // TODO: make the rumble configurable
-            GamePlayerDriver.GamepadListener.Rumble(0.5f, 0.5f, 0.0f);
+            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.DamageRumble);
 
             _swarm.Remove(amount);
             return true;
@@ -116,14 +115,12 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void GameOver()
         {
-            // TODO: make the rumble configurable
-            GamePlayerDriver.GamepadListener.Rumble(2.0f, 0.5f, 0.5f);
+            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.GameOverRumble);
         }
 
         private void Kill()
         {
-            // TODO: make the rumble configurable
-            GamePlayerDriver.GamepadListener.Rumble(1.0f, 0.25f, 0.5f);
+            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.DeathRumble);
 
             Behavior.Velocity = Vector3.zero;
 
@@ -159,6 +156,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Respawn()
         {
+            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.RespawnRumble);
+
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(false);
 
             if(GameManager.Instance.IsGameOver) {

@@ -48,16 +48,16 @@ namespace pdxpartyparrot.Game.Actors
             return context.control.device == _gamepad;
         }
 
-        public void Rumble(float seconds, float lowFrequency, float highFrequence)
+        public void Rumble(RumbleConfig config)
         {
             if(!HasGamepad || _isRumbling) {
                 return;
             }
 
-            Gamepad.SetMotorSpeeds(lowFrequency, highFrequence);
+            Gamepad.SetMotorSpeeds(config.LowFrequency, config.HighFrequency);
             _isRumbling = true;
 
-            TimeManager.Instance.RunAfterDelay(seconds, () => {
+            TimeManager.Instance.RunAfterDelay(config.Seconds, () => {
                 if(HasGamepad) {
                     Gamepad.SetMotorSpeeds(0.0f, 0.0f);
                 }
