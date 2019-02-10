@@ -27,6 +27,7 @@ MonoBehaviour:
   _waveSpawnerPrefab: {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8,
     type: 3}
   _collectableData: {fileID: 11400000, guid: c10afa0e3a0d71841a380235762fe249, type: 2}
+  _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _deathPenalty: 250
   _hiveDamagePenalty: 250
   _pollenScore: 25
