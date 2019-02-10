@@ -154,18 +154,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 344495192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 749730a86c56149498d60d1422b23e2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 72cc24db01cb6ee4692bd2935b7bf656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 1465729543}
-  _wave3Clip: {fileID: 0}
-  _wave6Clip: {fileID: 0}
-  _wave9Clip: {fileID: 0}
-  _audioTransitionSeconds: 2
   _animations:
   - environment_default
   - environment_thunder
   - environment_windy
+  _thunderAudioClip: {fileID: 8300000, guid: ce98948c4fbbf9748b387793b9f77abf, type: 3}
 --- !u!114 &344495195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,10 +339,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animation: {fileID: 1997248801}
-  _wave3Clip: {fileID: 0}
-  _wave6Clip: {fileID: 0}
-  _wave9Clip: {fileID: 0}
-  _audioTransitionSeconds: 1
   _animations:
   - environment_default
   - environment_thunder

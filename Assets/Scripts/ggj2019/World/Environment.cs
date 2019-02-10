@@ -9,13 +9,13 @@ using UnityEngine;
 namespace pdxpartyparrot.ggj2019.World
 {
     [RequireComponent(typeof(SpineSkinSwapper))]
-    public sealed class Environment : MonoBehaviour
+    public class Environment : MonoBehaviour
     {
         [SerializeField]
-        private SkeletonAnimation _animation;
+        protected SkeletonAnimation _animation;
 
         [SerializeField]
-        private string[] _animations;
+        protected string[] _animations;
 
         private SpineSkinSwapper _skinSwapper;
 
@@ -49,20 +49,29 @@ namespace pdxpartyparrot.ggj2019.World
 #region Event Handlers
         private void WaveStartEventHandler(object sender, SpawnWaveEventArgs args)
         {
+            TrackEntry trackEntry = null;
             if(args.WaveIndex == 0) {
                 _skinSwapper.SetSkin(0);
-                SetAnimation(_animations[0], true);
+                trackEntry = SetAnimation(_animations[0], true);
             } else if(args.WaveIndex == 3) {
                 _skinSwapper.SetSkin(1);
-                SetAnimation(_animations[1], true);
+                trackEntry = SetAnimation(_animations[1], true);
             }  else if(args.WaveIndex == 6) {
                 _skinSwapper.SetSkin(2);
-                SetAnimation(_animations[2], true);
+                trackEntry = SetAnimation(_animations[2], true);
             }  else if(args.WaveIndex == 9) {
                 _skinSwapper.SetSkin(3);
-                SetAnimation(_animations[0], true);
+                trackEntry = SetAnimation(_animations[0], true);
+            }
+
+            if(null != trackEntry) {
+                OnWaveAnimationSet(args.WaveIndex, trackEntry);
             }
         }
 #endregion
+
+        protected virtual void OnWaveAnimationSet(int waveIndex, TrackEntry trackEntry)
+        {
+        }
     }
 }
