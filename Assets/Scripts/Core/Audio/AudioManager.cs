@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
 
@@ -18,40 +19,7 @@ namespace pdxpartyparrot.Core.Audio
         private const string AmbientVolumeKey = "audio.volume.ambient";
 
         [SerializeField]
-        private AudioMixer _mixer;
-
-        public AudioMixer Mixer => _mixer;
-
-#region Mixer Groups
-        [Header("Mixer Groups")]
-
-        [SerializeField]
-        private string _musicMixerGroupName = "Music";
-
-        [SerializeField]
-        private string _sfxMixerGroupName = "SFX";
-
-        [SerializeField]
-        private string _ambientMixerGroupName = "Ambient";
-#endregion
-
-        [Space(10)]
-
-#region Attributes
-        [Header("Parameters")]
-
-        [SerializeField]
-        private string _masterVolumeParameter = "MasterVolume";
-
-        [SerializeField]
-        private string _musicVolumeParameter = "MusicVolume";
-
-        [SerializeField]
-        private string _sfxVolumeParameter = "SFXVolume";
-
-        [SerializeField]
-        private string _ambientVolumeParameter = "AmbientVolume";
-#endregion
+        private AudioData _audioData;
 
         [Space(10)]
 
@@ -83,18 +51,6 @@ namespace pdxpartyparrot.Core.Audio
             get => _musicCrossFade;
             set => _musicCrossFade = Mathf.Clamp01(value);
         }
-
-        [SerializeField]
-        private float _updateCrossfadeUpdateMs = 100.0f;
-
-        private float UpdateCrossfadeUpdateS => _updateCrossfadeUpdateMs / 1000.0f;
-
-        [SerializeField]
-        private float _updateMusicTransitionMs = 100.0f;
-
-        private float UpdateMusicTransitionS => _updateMusicTransitionMs / 1000.0f;
-
-        private Coroutine _musicTransitionRoutine;
 #endregion
 
         [Space(10)]
@@ -122,19 +78,19 @@ namespace pdxpartyparrot.Core.Audio
             set
             {
                 _mute = value;
-                Mixer.SetFloat(_masterVolumeParameter, _mute ? 0.0f : MasterVolume);
+                _mixer.SetFloat(_audioData.MasterVolumeParameter, _mute ? 0.0f : MasterVolume);
             }
         }
 
         public float MasterVolume
         {
-            get => PartyParrotManager.Instance.GetFloat(MasterVolumeKey, Mixer.GetFloatOrDefault(_masterVolumeParameter));
+            get => PartyParrotManager.Instance.GetFloat(MasterVolumeKey, _mixer.GetFloatOrDefault(_audioData.MasterVolumeParameter));
 
             set
             {
                 value = Mathf.Clamp(value, -80.0f, 20.0f);
 
-                Mixer.SetFloat(_masterVolumeParameter, value);
+                _mixer.SetFloat(_audioData.MasterVolumeParameter, value);
                 PartyParrotManager.Instance.SetFloat(MasterVolumeKey, value);
 
                 Mute = false;
@@ -143,13 +99,13 @@ namespace pdxpartyparrot.Core.Audio
 
         public float MusicVolume
         {
-            get => PartyParrotManager.Instance.GetFloat(MusicVolumeKey, Mixer.GetFloatOrDefault(_musicVolumeParameter, -5.0f));
+            get => PartyParrotManager.Instance.GetFloat(MusicVolumeKey, _mixer.GetFloatOrDefault(_audioData.MusicVolumeParameter, -5.0f));
 
             set
             {
                 value = Mathf.Clamp(value, -80.0f, 20.0f);
 
-                Mixer.SetFloat(_musicVolumeParameter, value);
+                _mixer.SetFloat(_audioData.MusicVolumeParameter, value);
                 PartyParrotManager.Instance.SetFloat(MusicVolumeKey, value);
 
                 Mute = false;
@@ -158,13 +114,13 @@ namespace pdxpartyparrot.Core.Audio
 
         public float SFXVolume
         {
-            get => PartyParrotManager.Instance.GetFloat(SFXVolumeKey, Mixer.GetFloatOrDefault(_sfxVolumeParameter));
+            get => PartyParrotManager.Instance.GetFloat(SFXVolumeKey, _mixer.GetFloatOrDefault(_audioData.SFXVolumeParameter));
 
             set
             {
                 value = Mathf.Clamp(value, -80.0f, 20.0f);
 
-                Mixer.SetFloat(_sfxVolumeParameter, value);
+                _mixer.SetFloat(_audioData.SFXVolumeParameter, value);
                 PartyParrotManager.Instance.SetFloat(SFXVolumeKey, value);
 
                 Mute = false;
@@ -173,13 +129,13 @@ namespace pdxpartyparrot.Core.Audio
 
         public float AmbientVolume
         {
-            get => PartyParrotManager.Instance.GetFloat(AmbientVolumeKey, Mixer.GetFloatOrDefault(_ambientVolumeParameter, -10.0f));
+            get => PartyParrotManager.Instance.GetFloat(AmbientVolumeKey, _mixer.GetFloatOrDefault(_audioData.AmbientVolumeParameter, -10.0f));
 
             set
             {
                 value = Mathf.Clamp(value, -80.0f, 20.0f);
 
-                Mixer.SetFloat(_ambientVolumeParameter, value);
+                _mixer.SetFloat(_audioData.AmbientVolumeParameter, value);
                 PartyParrotManager.Instance.SetFloat(AmbientVolumeKey, value);
 
                 Mute = false;
@@ -187,18 +143,35 @@ namespace pdxpartyparrot.Core.Audio
         }
 #endregion
 
+        private AudioMixer _mixer;
+
+        private AudioMixerSnapshot[] _unpausedSnapshots;
+        private float[] _unpausedSnapshotsWeights = { 1.0f };
+
+        private AudioMixerSnapshot[] _pausedSnapshots;
+        private float[] _pausedSnapshotsWeights = { 1.0f };
+
+        private Coroutine _musicTransitionRoutine;
+
 #region Unity Lifecycle
         private void Awake()
         {
+            _mixer = _audioData.Mixer;
+
+            // load our snapshots
+            _unpausedSnapshots = new[] { _mixer.FindSnapshot(_audioData.UnpausedSnapshotName) };
+            _pausedSnapshots = new[] { _mixer.FindSnapshot(_audioData.PausedSnapshotName) };
+
+            // init our audio sources
             InitSFXAudioMixerGroup(_oneShotAudioSource);
 
-            InitAudioMixerGroup(_music1AudioSource, _musicMixerGroupName);
+            InitAudioMixerGroup(_music1AudioSource, _audioData.MusicMixerGroupName);
             _music1AudioSource.loop = true;
 
-            InitAudioMixerGroup(_music2AudioSource, _musicMixerGroupName);
+            InitAudioMixerGroup(_music2AudioSource, _audioData.MusicMixerGroupName);
             _music2AudioSource.loop = true;
 
-            InitAudioMixerGroup(_ambientAudioSource, _ambientMixerGroupName);
+            InitAudioMixerGroup(_ambientAudioSource, _audioData.AmbientMixerGroupName);
             _ambientAudioSource.loop = true;
 
             // this ensures we've loaded the volumes from the config
@@ -206,6 +179,8 @@ namespace pdxpartyparrot.Core.Audio
             MusicVolume = MusicVolume;
             SFXVolume = SFXVolume;
             AmbientVolume = AmbientVolume;
+
+            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
 
             InitDebugMenu();
         }
@@ -220,13 +195,17 @@ namespace pdxpartyparrot.Core.Audio
             StopAmbient();
             StopAllMusic();
 
+            if(PartyParrotManager.HasInstance) {
+                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
+            }
+
             base.OnDestroy();
         }
 #endregion
 
         public void InitSFXAudioMixerGroup(AudioSource source)
         {
-            InitAudioMixerGroup(source, _sfxMixerGroupName);
+            InitAudioMixerGroup(source, _audioData.SFXMixerGroupName);
         }
 
         private void InitAudioMixerGroup(AudioSource source, string mixerGroupName)
@@ -237,14 +216,17 @@ namespace pdxpartyparrot.Core.Audio
 
         public void InitAmbientAudioMixerGroup(AudioSource source)
         {
-            InitAudioMixerGroup(source, _ambientMixerGroupName);
+            InitAudioMixerGroup(source, _audioData.AmbientMixerGroupName);
         }
 
+#region SFX
         public void PlayOneShot(AudioClip audioClip)
         {
             _oneShotAudioSource.PlayOneShot(audioClip);
         }
+#endregion
 
+#region Music
         // Plays a music clip on the first audio source at no crossfade
         public void PlayMusic(AudioClip musicAudioClip)
         {
@@ -293,7 +275,7 @@ namespace pdxpartyparrot.Core.Audio
                 return;
             }
 
-            bool transitionToSecond = true;
+            bool transitionToSecond;
             float targetCrossfade = 1.0f - _musicCrossFade;
             if(_music1AudioSource.isPlaying) {
                 PlayMusic2(musicAudioClip);
@@ -335,22 +317,9 @@ namespace pdxpartyparrot.Core.Audio
             StopMusic2();
         }
 
-        public void PlayAmbient(AudioClip audioClip)
-        {
-            StopAmbient();
-
-            _ambientAudioSource.clip = audioClip;
-            _ambientAudioSource.Play();
-        }
-
-        public void StopAmbient()
-        {
-            _ambientAudioSource.Stop();
-        }
-
         private IEnumerator UpdateMusicCrossfade()
         {
-            WaitForSeconds wait = new WaitForSeconds(UpdateCrossfadeUpdateS);
+            WaitForSeconds wait = new WaitForSeconds(_audioData.UpdateCrossfadeUpdateSeconds);
             while(true) {
                 _music1AudioSource.volume = 1.0f - _musicCrossFade;
                 _music2AudioSource.volume = _musicCrossFade;
@@ -364,12 +333,12 @@ namespace pdxpartyparrot.Core.Audio
             float pct = 0.0f;
             float startCrossfade = MusicCrossFade;
 
-            WaitForSeconds wait = new WaitForSeconds(UpdateMusicTransitionS);
+            WaitForSeconds wait = new WaitForSeconds(_audioData.UpdateMusicTransitionSeconds);
             while(true) {
                 MusicCrossFade = Mathf.Lerp(startCrossfade, targetCrossfade, pct);
                 yield return wait;
 
-                pct += UpdateMusicTransitionS / seconds;
+                pct += _audioData.UpdateMusicTransitionSeconds / seconds;
                 if(pct >= 1.0f) {
                     MusicCrossFade = targetCrossfade;
                     break;
@@ -379,6 +348,33 @@ namespace pdxpartyparrot.Core.Audio
             _musicTransitionRoutine = null;
             onComplete?.Invoke();
         }
+#endregion
+
+#region Ambient
+        public void PlayAmbient(AudioClip audioClip)
+        {
+            StopAmbient();
+
+            _ambientAudioSource.clip = audioClip;
+            _ambientAudioSource.Play();
+        }
+
+        public void StopAmbient()
+        {
+            _ambientAudioSource.Stop();
+        }
+#endregion
+
+#region Event Handlers
+        private void PauseEventHandler(object sender, EventArgs args)
+        {
+            if(PartyParrotManager.Instance.IsPaused) {
+                _mixer.TransitionToSnapshots(_pausedSnapshots, _pausedSnapshotsWeights, 0.1f);
+            } else {
+                _mixer.TransitionToSnapshots(_unpausedSnapshots, _unpausedSnapshotsWeights, 0.1f);
+            }
+        }
+#endregion
 
         private void InitDebugMenu()
         {

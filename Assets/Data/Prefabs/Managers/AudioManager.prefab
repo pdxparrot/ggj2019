@@ -47,19 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29d8999a53164148a7d61dc6bdde8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mixer: {fileID: 24100000, guid: 13c7778c24b00664e80a90b89935b8f0, type: 2}
-  _musicMixerGroupName: Music
-  _sfxMixerGroupName: SFX
-  _ambientMixerGroupName: Ambient
-  _masterVolumeParameter: MasterVolume
-  _musicVolumeParameter: MusicVolume
-  _sfxVolumeParameter: SFXVolume
-  _ambientVolumeParameter: AmbientVolume
+  _audioData: {fileID: 11400000, guid: 59159bbb064bc6f48be7146a37df7f63, type: 2}
   _oneShotAudioSource: {fileID: 7372938525683005157}
   _music1AudioSource: {fileID: 3027850095531184306}
   _music2AudioSource: {fileID: 7392853444823684890}
   _musicCrossFade: 0
-  _updateCrossfadeUpdateMs: 100
   _ambientAudioSource: {fileID: 7103993386229004231}
   _mute: 0
 --- !u!82 &7372938525683005157
