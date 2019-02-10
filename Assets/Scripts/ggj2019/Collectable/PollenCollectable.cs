@@ -16,8 +16,20 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.Collectable
 {
     [RequireComponent(typeof(PooledObject))]
-    public class PollenCollectable : Actor2D
+    public class PollenCollectable : Actor2D, ICollectable
     {
+        private enum State
+        {
+            Floating,
+            FollowingPlayer,
+            GoingToHive,
+            Collected
+        }
+
+        public override bool IsLocalActor => true;
+
+        public bool CanBeCollected => _state == State.Floating;
+
         [SerializeField]
         private EffectTrigger _pickupEffect;
 
@@ -26,11 +38,11 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         [SerializeField]
         [ReadOnly]
-        private Players.Player _followPlayer;
+        private float _floatingStartX;
 
         [SerializeField]
         [ReadOnly]
-        private bool _isCollected;
+        private Players.Player _followPlayer;
 
         [SerializeField]
         [ReadOnly]
@@ -38,9 +50,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         [SerializeField]
         [ReadOnly]
-        private Vector3 _startPoint;
-
-        public override bool IsLocalActor => true;
+        private State _state = State.Floating;
 
         private PooledObject _pooledObject;
 
@@ -57,122 +67,141 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         private void Update()
         {
-            if(PartyParrotManager.Instance.IsPaused) {
-                return;
-            }
-
             float dt = Time.deltaTime;
 
-            if(_isCollected) {
-                GoToHive(dt);
-                return;
-            }
-
-            if(FollowPlayer(dt)) {
-                return;
-            }
-
-            Float(dt);
-
-            if(transform.position.y  - Height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D) {
-                _pooledObject.Recycle();
-            }
+            Think(dt);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(_isCollected) {
-                return;
-            }
-
             Gather(other.gameObject.GetComponent<Players.Player>());
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if(_isCollected) {
-                return;
-            }
-
             Gather(other.gameObject.GetComponent<Players.Player>());
         }
 #endregion
 
+#region Spawn
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
 
             NPCFlower flower = spawnpoint.GetComponentInParent<NPCFlower>();
-            Assert.IsFalse(flower.IsDead);
+            Assert.IsTrue(flower.CanSpawnPollen);
             flower.SpawnPollen();
 
-            _startPoint = transform.position;
-            _isCollected = false;
+            SetState(State.Floating);
         }
-
-        public override void OnDeSpawn()
-        {
-            _followPlayer = null;
-
-            base.OnDeSpawn();
-        }
+#endregion
 
         private void Gather(Players.Player player)
         {
-            if(null == player || player.IsDead) {
+            if(!CanBeCollected || null == player || !player.CanGather) {
                 return;
             }
-
-            if(player.HasPollen) {
-                return;
-            }
-
-            _followPlayer = player;
 
             player.AddPollen();
             _pickupEffect.Trigger();
+
+            _followPlayer = player;
+            SetState(State.FollowingPlayer);
         }
 
-        private void GoToHive(float dt)
+        private void SetState(State state)
         {
-            transform.position = Vector3.Lerp(transform.position, Hive.Instance.transform.position,
-                                              GameManager.Instance.GameGameData.CollectableData.GoToHiveSpeed * dt);
-        }
-
-        private bool FollowPlayer(float dt)
-        {
-            if(_followPlayer == null) {
-                return false;
-            }
-
-            if(_followPlayer.IsDead) {
+            _state = state;
+            switch(_state)
+            {
+            case State.Floating:
+                _floatingStartX = transform.position.x;
                 _followPlayer = null;
-                return false;
+                break;
+            case State.GoingToHive:
+                _followPlayer = null;
+                break;
+            case State.Collected:
+                _followPlayer = null;
+                break;
+            }
+        }
+
+        private void Think(float dt)
+        {
+            if(PartyParrotManager.Instance.IsPaused || GameManager.Instance.IsGameOver) {
+                return;
             }
 
-            // pollen was deposited
-            if(!_followPlayer.HasPollen) {
-                Collect();
-                return true;
+            switch(_state)
+            {
+            case State.Floating:
+                Float(dt);
+                break;
+            case State.FollowingPlayer:
+                FollowPlayer(dt);
+                break;
+            case State.GoingToHive:
+                GoToHive(dt);
+                break;
+            case State.Collected:
+                // nothing
+                break;
             }
-
-            transform.position = Vector3.Lerp(transform.position, _followPlayer.PollenTarget.position,
-                                              GameManager.Instance.GameGameData.CollectableData.FollowPlayerSpeed * dt);
-
-            return true;
         }
 
         private void Float(float dt)
         {
-            _signTime += GameManager.Instance.GameGameData.CollectableData.SideSpeed * dt;
+            // recycle if we're off the screen
+            Vector3 position = transform.position;
+            if(position.y - Height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D) {
+                _pooledObject.Recycle();
+                return;
+            }
 
-            transform.position = new Vector3(_startPoint.x + Mathf.Sin(_signTime) * GameManager.Instance.GameGameData.CollectableData.SideDistance,
-                                             transform.position.y + GameManager.Instance.GameGameData.CollectableData.UpwardSpeed * dt);
+            // float side-to-side
+            _signTime += GameManager.Instance.GameGameData.CollectableData.SideSpeed * dt;
+            float wobble = Mathf.Sin(_signTime) * GameManager.Instance.GameGameData.CollectableData.SideDistance;
+
+            position.x = _floatingStartX + wobble;
+            position.y += GameManager.Instance.GameGameData.CollectableData.UpwardSpeed * dt;
+            transform.position = position;
+        }
+
+        private void FollowPlayer(float dt)
+        {
+            // if the player is missing or dead, we float
+            if(_followPlayer == null || _followPlayer.IsDead) {
+                SetState(State.Floating);
+                return;
+            }
+
+            // pollen was deposited, head to the hive
+            if(!_followPlayer.HasPollen) {
+                SetState(State.GoingToHive);
+                return;
+            }
+
+            Vector3 position = transform.position;
+            position = Vector3.Lerp(position, _followPlayer.PollenTarget.position, GameManager.Instance.GameGameData.CollectableData.FollowPlayerSpeed * dt);
+            transform.position = position;
+        }
+
+        private void GoToHive(float dt)
+        {
+            if(Hive.Instance.Collides(this)) {
+                Collect();
+                return;
+            }
+
+            Vector3 position = transform.position;
+            position = Vector3.Lerp(position, Hive.Instance.transform.position, GameManager.Instance.GameGameData.CollectableData.GoToHiveSpeed * dt);
+            transform.position = position;
         }
 
         private void Collect()
         {
-            _isCollected = true;
+            SetState(State.Collected);
 
             _collectEffect.Trigger(() => {
                 _pooledObject.Recycle();

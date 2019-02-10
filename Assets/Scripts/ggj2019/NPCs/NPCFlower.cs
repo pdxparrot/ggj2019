@@ -25,9 +25,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private int _pollen;
 
+        public int Pollen => _pollen;
+
         [SerializeField]
         [ReadOnly]
         private SpawnPoint _spawnpoint;
+
+        public bool CanSpawnPollen => !IsDead && Pollen > 0;
 
         private SpineSkinSwapper _skinSwapper;
 

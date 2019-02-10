@@ -47,6 +47,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public bool HasPollen => _hasPollen;
 
+        public bool CanGather => !IsDead && !HasPollen;
+
         private readonly Timer _deathTimer = new Timer();
 
         private Swarm _swarm;
