@@ -1,6 +1,9 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using JetBrains.Annotations;
+
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,43 +13,39 @@ namespace pdxpartyparrot.ggj2019.NPCs
     public sealed class NPCBeetle : NPCEnemy
     {
         [SerializeField]
-        private float _harvestCooldown = 1.0f;
-
-        [SerializeField]
         [ReadOnly]
         private NPCFlower _flower;
 
         [SerializeField]
         [ReadOnly]
+        [CanBeNull]
         private SpawnPoint _spawnpoint;
 
-        private readonly Timer _harvestCooldownTimer = new Timer();
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _harvestCooldownTimer = new Timer();
+
+        private NPCBeetleData BeetleData => (NPCBeetleData)NPCData;
 
 #region Unity Lifecycle
         private void Update()
         {
-            if(IsDead) {
-                return;
-            }
-
             float dt = Time.deltaTime;
 
             _harvestCooldownTimer.Update(dt);
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+#region Spawn
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-        }
-
-        public override void OnSpawn(SpawnPoint spawnpoint)
-        {
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             if(!spawnpoint.Acquire(this, () => _spawnpoint = null)) {
                 Debug.LogError("Unable to acquire spawnpoint!");
-                PooledObject.Recycle();
-                return;
+                return false;
             }
             _spawnpoint = spawnpoint;
 
@@ -54,9 +53,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             Assert.IsFalse(_flower.IsDead);
             _flower.AcquirePollenSpawnpoint(this);
 
-            _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
-
-            SetIdleAnimation();
+            return true;
         }
 
         public override void OnDeSpawn()
@@ -75,11 +72,30 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.OnDeSpawn();
         }
+#endregion
 
+        public override void Initialize(NPCData data)
+        {
+            Assert.IsTrue(data is NPCBeetleData);
+
+            base.Initialize(data);
+
+            _harvestCooldownTimer.Start(BeetleData.HarvestCooldown, HarvestFlower);
+
+            SetHarvestAnimation();
+        }
+
+#region Animations
         private void SetIdleAnimation()
         {
-            SetAnimation("beetle_idle", true);
+            SetAnimation(BeetleData.IdleAnimation, true);
         }
+
+        private void SetHarvestAnimation()
+        {
+            SetAnimation(BeetleData.HarvestAnimation, true);
+        }
+#endregion
 
         private void HarvestFlower()
         {
@@ -95,7 +111,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            _harvestCooldownTimer.Start(_harvestCooldown, HarvestFlower);
+            _harvestCooldownTimer.Start(BeetleData.HarvestCooldown, HarvestFlower);
         }
 
         public override void Kill(bool playerKill)

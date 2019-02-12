@@ -22,7 +22,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public static IReadOnlyCollection<NPCBee> Bees => _bees;
 
-        private enum NPCBeeState
+        private enum State
         {
             Idle,
             Follow,
@@ -42,7 +42,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         [SerializeField]
         [ReadOnly]
-        private NPCBeeState _state = NPCBeeState.Idle;
+        private State _state = State.Idle;
 
         [SerializeField]
         [ReadOnly]
@@ -55,7 +55,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public bool IsInSwarm => null != _targetSwarm;
 
-        public bool CanJoinSwarm => !IsInSwarm && _state == NPCBeeState.Idle;
+        public bool CanJoinSwarm => !IsInSwarm && _state == State.Idle;
 
 #region Unity Life Cycle
         private void Update()
@@ -69,11 +69,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #endregion
 
 #region Spawn
-        public override void OnSpawn(SpawnPoint spawnpoint)
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             _bees.Add(this);
+
+            return true;
         }
 
         public override void OnDeSpawn()
@@ -96,7 +100,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             SetFacing(Vector3.zero - transform.position);
 
-            SetState(NPCBeeState.Idle);
+            SetState(State.Idle);
         }
 
 #region Animation
@@ -109,6 +113,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             SetAnimation(BeeData.FlightAnimationName, true);
         }
+#endregion
 
         private void UpdateOffset()
         {
@@ -118,7 +123,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             );
             _offsetUpdateTimer.Start(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
         }
-#endregion
 
         private void Think(float dt)
         {
@@ -128,24 +132,24 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             switch(_state)
             {
-            case NPCBeeState.Idle:
+            case State.Idle:
                 break;
-            case NPCBeeState.Follow:
+            case State.Follow:
                 Swarm(dt);
                 break;
             }
         }
 
-        private void SetState(NPCBeeState state)
+        private void SetState(State state)
         {
             _state = state;
             switch(state)
             {
-            case NPCBeeState.Idle:
+            case State.Idle:
                 _targetSwarm = null;
                 SetHoverAnimation();
                 break;
-            case NPCBeeState.Follow:
+            case State.Follow:
                 SetFlightAnimation();
                 break;
             }
@@ -160,7 +164,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _offsetRadius = radius;
 
             _targetSwarm = swarm;
-            SetState(NPCBeeState.Follow);
+            SetState(State.Follow);
         }
 
         public void RemoveFromSwarm()
@@ -185,12 +189,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
             return PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * modifier;
         }
 
-#region the things they bee doing
         private void Swarm(float dt)
         {
             if(null == _targetSwarm) {
                 Debug.LogWarning("lost my swarm!");
-                SetState(NPCBeeState.Idle);
+                SetState(State.Idle);
                 return;
             }
 
@@ -214,6 +217,5 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             SetFlightAnimation();
         }
-#endregion
     }
 }

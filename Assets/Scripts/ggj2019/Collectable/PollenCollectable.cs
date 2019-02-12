@@ -84,15 +84,19 @@ namespace pdxpartyparrot.ggj2019.Collectable
 #endregion
 
 #region Spawn
-        public override void OnSpawn(SpawnPoint spawnpoint)
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             NPCFlower flower = spawnpoint.GetComponentInParent<NPCFlower>();
             Assert.IsTrue(flower.CanSpawnPollen);
             flower.SpawnPollen();
 
             SetState(State.Floating);
+
+            return true;
         }
 #endregion
 

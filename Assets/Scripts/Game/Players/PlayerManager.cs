@@ -103,7 +103,7 @@ namespace pdxpartyparrot.Game.Players
             _players.Add(player.Player);
         }
 
-        public void RespawnPlayer(IPlayer player)
+        public bool RespawnPlayer(IPlayer player)
         {
             Assert.IsTrue(NetworkServer.active);
 
@@ -112,10 +112,10 @@ namespace pdxpartyparrot.Game.Players
             SpawnPoint spawnPoint = SpawnManager.Instance.GetPlayerSpawnPoint(player.NetworkPlayer.playerControllerId);
             if(null == spawnPoint) {
                 Debug.LogError("Failed to get player spawnpoint!");
-                return;
+                return false;
             }
 
-            spawnPoint.ReSpawn((Actor)player);
+            return spawnPoint.ReSpawn((Actor)player);
         }
 
         // TODO: figure out how to work this in when players disconnect

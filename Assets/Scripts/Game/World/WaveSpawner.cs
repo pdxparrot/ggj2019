@@ -101,9 +101,20 @@ namespace pdxpartyparrot.Game.World
                         Actor actor = null;
                         if(null != _poolContainer) {
                             actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
-                            spawnPoint.Spawn(actor, Guid.NewGuid());
+                            if(null == actor) {
+                                // TODO: log a warning?
+                                continue;
+                            }
+
+                            if(!spawnPoint.Spawn(actor, Guid.NewGuid())) {
+                                actor.GetComponent<PooledObject>().Recycle();
+                                continue;
+                            }
                         } else {
-                            spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab, Guid.NewGuid());
+                            actor = spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab, Guid.NewGuid());
+                            if(null == actor) {
+                                continue;
+                            }
                         }
                         actor.transform.SetParent(_poolContainer.transform);
 

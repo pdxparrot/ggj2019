@@ -50,7 +50,7 @@ namespace pdxpartyparrot.Game.Actors
 
         public void Rumble(RumbleConfig config)
         {
-            if(!HasGamepad || _isRumbling) {
+            if(!InputManager.Instance.EnableVibration || !HasGamepad || _isRumbling) {
                 return;
             }
 

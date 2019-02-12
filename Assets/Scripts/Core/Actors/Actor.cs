@@ -67,14 +67,18 @@ namespace pdxpartyparrot.Core.Actors
         }
 
 #region Callbacks
-        public virtual void OnSpawn(SpawnPoint spawnpoint)
+        public virtual bool OnSpawn(SpawnPoint spawnpoint)
         {
             ActorManager.Instance.Register(this);
+
+            return true;
         }
 
-        public virtual void OnReSpawn(SpawnPoint spawnpoint)
+        public virtual bool OnReSpawn(SpawnPoint spawnpoint)
         {
             ActorManager.Instance.Register(this);
+
+            return true;
         }
 
         public virtual void OnDeSpawn()

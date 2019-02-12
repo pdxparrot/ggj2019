@@ -14,6 +14,9 @@ namespace pdxpartyparrot.Core.Input
     // so this will need an update once that's done
     public sealed class InputManager : SingletonBehavior<InputManager>
     {
+        // config keys
+        private const string EnableVibrationKey = "input.vibration.enable";
+
         private static int _lastListenerId;
 
         private static int NextListenerId => ++_lastListenerId;
@@ -33,6 +36,12 @@ namespace pdxpartyparrot.Core.Input
         public EventSystemHelper EventSystem { get; private set; }
 
         public int GamepadCount => _unacquiredGamepads.Count + _acquiredGamepads.Count;
+
+        public bool EnableVibration
+        {
+            get => PartyParrotManager.Instance.GetBool(EnableVibrationKey, true);
+            set => PartyParrotManager.Instance.SetBool(EnableVibrationKey, value);
+        }
 
 #region Gamepads
         private readonly List<Gamepad> _unacquiredGamepads = new List<Gamepad>();
@@ -218,6 +227,8 @@ namespace pdxpartyparrot.Core.Input
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Core.InputManager");
             debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Gamepads", GUI.skin.box);
+                    EnableVibration = GUILayout.Toggle(EnableVibration, "Enable Vibration");
+
                     GUILayout.Label($"Queued listeners: {_gamepadListeners.Count}");
 
                     GUILayout.BeginVertical("Unacquired:", GUI.skin.box);

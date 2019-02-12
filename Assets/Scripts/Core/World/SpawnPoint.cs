@@ -1,5 +1,7 @@
 ﻿using System;
 
+using JetBrains.Annotations;
+
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 
@@ -71,34 +73,38 @@ namespace pdxpartyparrot.Core.World
             actor.Initialize(id);
         }
 
+        [CanBeNull]
         public virtual Actor SpawnPrefab(Actor prefab, Guid id)
         {
             Debug.LogWarning("You probably meant to use NetworkManager.SpawnNetworkPrefab");
 
             Actor actor = Instantiate(prefab);
-            Spawn(actor, id);
+            if(!Spawn(actor, id)) {
+                Destroy(actor);
+                return null;
+            }
             return actor;
         }
 
-        public virtual void Spawn(Actor actor, Guid id)
+        public virtual bool Spawn(Actor actor, Guid id)
         {
             InitActor(actor, id);
 
-            actor.OnSpawn(this);
+            return actor.OnSpawn(this);
         }
 
-        public virtual void SpawnPlayer(Actor actor)
+        public virtual bool SpawnPlayer(Actor actor)
         {
             InitActor(actor);
 
-            actor.OnSpawn(this);
+            return actor.OnSpawn(this);
         }
 
-        public virtual void ReSpawn(Actor actor)
+        public virtual bool ReSpawn(Actor actor)
         {
             InitActor(actor);
 
-            actor.OnReSpawn(this);
+            return actor.OnReSpawn(this);
         }
 
         public bool Acquire(Actor owner, Action onRelease, bool force=false)

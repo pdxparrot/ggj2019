@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0daff5776c39dd74ca0fbb1f512095bd, type: 3}
-  m_Name: NPCBeeData
+  m_Script: {fileID: 11500000, guid: f09ccc08e6c99b245aa948ad415730f2, type: 3}
+  m_Name: Wave1Beetle
   m_EditorClassIdentifier: 
-  _swarmSpeedModifier: 2
+  _harvestCooldown: 5

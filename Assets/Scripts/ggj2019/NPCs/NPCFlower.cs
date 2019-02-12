@@ -47,22 +47,18 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-        }
-
-        public override void OnSpawn(SpawnPoint spawnpoint)
-        {
-             _skinSwapper.SetRandomSkin();
-
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             if(!spawnpoint.Acquire(this, () => _spawnpoint = null)) {
-                Debug.LogError("Unable to acquire spawnpoint!");
-                PooledObject.Recycle();
-                return;
+                return false;
             }
             _spawnpoint = spawnpoint;
+
+             _skinSwapper.SetRandomSkin();
 
             _pollen = _initialPollen;
 
@@ -78,6 +74,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
                 SetAnimation(0, "flower_idle", true);
             };
+
+            return true;
         }
 
         public override void OnDeSpawn()
@@ -97,6 +95,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pollenSpawn.Release();
 
             base.OnDeSpawn();
+        }
+
+        public override void Initialize(NPCData data)
+        {
+            base.Initialize(data);
         }
 
         public void SpawnPollen()

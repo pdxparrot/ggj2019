@@ -54,8 +54,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private PooledObject _pooledObject;
 
-        protected PooledObject PooledObject => _pooledObject;
-
 #region Unity Lifecycle
         protected override void Awake()
         {
@@ -67,9 +65,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #endregion
 
 #region Spawn
-        public override void OnSpawn(SpawnPoint spawnpoint)
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             if(null != Model) {
                 Model.SetActive(true);
@@ -84,6 +84,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(null != _spawnEffect) {
                 _spawnEffect.Trigger();
             }
+
+            return true;
         }
 
         public override void OnDeSpawn()

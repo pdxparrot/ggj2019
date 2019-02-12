@@ -113,9 +113,11 @@ namespace pdxpartyparrot.Game.Players
         {
         }
 
-        public override void OnSpawn(SpawnPoint spawnpoint)
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             Debug.Log($"Spawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
@@ -127,17 +129,23 @@ namespace pdxpartyparrot.Game.Players
             if(!NetworkClient.active) {
                 NetworkPlayer.RpcSpawn(Id.ToString());
             }
+
+            return true;
         }
 
-        public override void OnReSpawn(SpawnPoint spawnpoint)
+        public override bool OnReSpawn(SpawnPoint spawnpoint)
         {
-            base.OnReSpawn(spawnpoint);
+            if(!base.OnReSpawn(spawnpoint)) {
+                return false;
+            }
 
             Debug.Log($"Respawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
             if(NetworkServer.active) {
                 NetworkPlayer.ResetPlayer(GameStateManager.Instance.PlayerManager.PlayerData);
             }
+
+            return true;
         }
     }
 }

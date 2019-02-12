@@ -17,6 +17,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -28,6 +29,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -42,6 +44,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -53,6 +56,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
+      npcData: {fileID: 11400000, guid: fc333e01e2cdf2944bd9afdfa15b669c, type: 2}
       _tag: beetle
       _delay:
         _min: 4
@@ -64,6 +68,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -78,6 +83,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -89,6 +95,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
+      npcData: {fileID: 0}
       _tag: wasp
       _delay:
         _min: 4
@@ -100,6 +107,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -114,6 +122,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -125,6 +134,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
+      npcData: {fileID: 0}
       _tag: wasp
       _delay:
         _min: 4
@@ -136,6 +146,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
+      npcData: {fileID: 11400000, guid: c5ef1db501d14404eb01c15a8cf37c40, type: 2}
       _tag: beetle
       _delay:
         _min: 4
@@ -147,6 +158,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -161,6 +173,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -172,6 +185,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
+      npcData: {fileID: 11400000, guid: c5ef1db501d14404eb01c15a8cf37c40, type: 2}
       _tag: beetle
       _delay:
         _min: 2
@@ -183,6 +197,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -197,6 +212,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -208,6 +224,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
+      npcData: {fileID: 0}
       _tag: wasp
       _delay:
         _min: 2
@@ -219,6 +236,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -233,6 +251,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -244,6 +263,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
+      npcData: {fileID: 0}
       _tag: wasp
       _delay:
         _min: 3
@@ -255,6 +275,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
       _tag: beetle
       _delay:
         _min: 3
@@ -266,6 +287,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -280,6 +302,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -291,6 +314,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
       _tag: beetle
       _delay:
         _min: 1
@@ -302,6 +326,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -316,6 +341,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -327,6 +353,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
+      npcData: {fileID: 0}
       _tag: wasp
       _delay:
         _min: 1
@@ -338,6 +365,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3
@@ -352,6 +380,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 0}
       _tag: flower
       _delay:
         _min: 0
@@ -363,6 +392,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
+      npcData: {fileID: 0}
       _tag: wasp
       _delay:
         _min: 1
@@ -374,6 +404,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
       _tag: beetle
       _delay:
         _min: 1
@@ -385,6 +416,7 @@ MonoBehaviour:
       _once: 0
     - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
         type: 3}
+      npcData: {fileID: 0}
       _tag: pollen
       _delay:
         _min: 3

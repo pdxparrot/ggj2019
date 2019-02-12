@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Effects;
@@ -62,13 +62,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+        public override bool OnSpawn(SpawnPoint spawnpoint)
         {
-        }
-
-        public override void OnSpawn(SpawnPoint spawnpoint)
-        {
-            base.OnSpawn(spawnpoint);
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
 
             Vector3 dir = (Vector3.zero - transform.position).normalized;
             _acceleration = dir * Accel;
@@ -85,6 +83,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 _spline = spline;
                 _splineLen = spline.EstLength();
             }
+
+            return true;
         }
 
         public override void OnDeSpawn()
@@ -104,6 +104,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _velocity = Vector3.zero;
 
             base.OnDeSpawn();
+        }
+
+        public override void Initialize(NPCData data)
+        {
+            base.Initialize(data);
         }
 
         private void Think(float dt)
