@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878949184832311382}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 43.765396, y: -67.019714, z: 1.983375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5774448104967790386}
@@ -4715,17 +4715,17 @@ PrefabInstance:
     - target: {fileID: 2043154243915806985, guid: 52e99f0b7f0c18f4ea663aab2cea366e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7653961
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2043154243915806985, guid: 52e99f0b7f0c18f4ea663aab2cea366e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.983376
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2043154243915806985, guid: 52e99f0b7f0c18f4ea663aab2cea366e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.01971531
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2043154243915806985, guid: 52e99f0b7f0c18f4ea663aab2cea366e,
         type: 3}
@@ -4840,17 +4840,17 @@ PrefabInstance:
     - target: {fileID: 421383687071470430, guid: 77fd4531f7421c845b9b1f8ce9154f78,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7653961
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 421383687071470430, guid: 77fd4531f7421c845b9b1f8ce9154f78,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.983376
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 421383687071470430, guid: 77fd4531f7421c845b9b1f8ce9154f78,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.01971531
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 421383687071470430, guid: 77fd4531f7421c845b9b1f8ce9154f78,
         type: 3}
@@ -4956,6 +4956,11 @@ PrefabInstance:
         type: 3}
       propertyPath: SubModule.subEmitters.Array.data[1].emitProbability
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 266865919242766889, guid: 77fd4531f7421c845b9b1f8ce9154f78,
+        type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77fd4531f7421c845b9b1f8ce9154f78, type: 3}

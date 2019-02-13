@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
@@ -12,6 +13,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
 {
     public sealed class NPCBeetle : NPCEnemy
     {
+        [SerializeField]
+        private EffectTrigger _attackEffect;
+
         [SerializeField]
         [ReadOnly]
         private NPCFlower _flower;
@@ -60,6 +64,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             _harvestCooldownTimer.Stop();
 
+            _attackEffect.StopTrigger();
+
             if(_flower != null) {
                 _flower.ReleasePollenSpawnpoint();
                 _flower = null;
@@ -102,6 +108,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(GameManager.Instance.IsGameOver) {
                 return;
             }
+
+            _attackEffect.Trigger();
 
             _flower.BeetleHarvest(Damage);
             if(_flower.IsDead) {
