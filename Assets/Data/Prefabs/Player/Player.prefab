@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 3462375353545001922}
   - component: {fileID: 1047306618912229679}
   - component: {fileID: 4724521880141845474}
+  - component: {fileID: 5515133998358140594}
   m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
@@ -595,9 +596,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 6992623913396463535}
   _audioClip: {fileID: 8300000, guid: 2d39580d2db849f4a908741ff4667d7e, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!114 &1047306618912229679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,9 +636,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 2544777392152197799}
   _audioClip: {fileID: 8300000, guid: 29dc39de02f81d4469d19370a1ad38b6, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!114 &4724521880141845474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,6 +682,19 @@ MonoBehaviour:
   - bee_player2
   - bee_player3
   - bee_player4
+--- !u!114 &5515133998358140594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8186df2b8ceb9454899499a2bd6ba8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 4740970275388704261}
 --- !u!1 &2830612309196927125
 GameObject:
   m_ObjectHideFlags: 0

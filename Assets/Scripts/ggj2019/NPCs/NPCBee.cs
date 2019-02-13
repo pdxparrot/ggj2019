@@ -98,7 +98,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             _offsetUpdateTimer.Start(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
 
-            SetFacing(Vector3.zero - transform.position);
+            _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
 
             SetState(State.Idle);
         }
@@ -106,12 +106,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Animation
         private void SetHoverAnimation()
         {
-            SetAnimation(BeeData.HoverAnimationName, true);
+            _spineAnimationHelper.SetAnimation(BeeData.HoverAnimationName, true);
         }
 
         private void SetFlightAnimation()
         {
-            SetAnimation(BeeData.FlightAnimationName, true);
+            _spineAnimationHelper.SetAnimation(BeeData.FlightAnimationName, true);
         }
 #endregion
 
@@ -212,7 +212,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             position = Vector3.MoveTowards(transform.position,position, CurrentSpeed() * dt);
-            SetFacing(target.position - position);
+            _spineAnimationHelper.SetFacing(target.position - position);
             transform.position = position;
 
             SetFlightAnimation();

@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 7204223779919184192}
   - component: {fileID: 7129460347712440065}
+  - component: {fileID: 5411031095954356327}
   - component: {fileID: 5512433957614832504}
   - component: {fileID: 7498956286358863322}
   - component: {fileID: 6498468760859895621}
@@ -325,6 +326,19 @@ MonoBehaviour:
   - orange_flower
   - pink_flower
   - white_flower
+--- !u!114 &5411031095954356327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8186df2b8ceb9454899499a2bd6ba8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 2414059694599493084}
 --- !u!114 &5512433957614832504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +356,7 @@ MonoBehaviour:
   _isDead: 0
   _spawnEffect: {fileID: 7498956286358863322}
   _deathEffect: {fileID: 6498468760859895621}
-  _animation: {fileID: 2414059694599493084}
+  _npcData: {fileID: 0}
   _initialPollen: 5
   _beetleSpawn: {fileID: 4261586379689094825}
   _pollenSpawn: {fileID: 2927692061490181078}
@@ -360,9 +374,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 0}
   _audioClip: {fileID: 0}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!114 &6498468760859895621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,9 +414,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 0}
   _audioClip: {fileID: 0}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!1 &5106223850465643844
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,6 +498,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spine GameObject (flower_skins)
+      objectReference: {fileID: 0}
+    - target: {fileID: 57803614091421909, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
         type: 3}
@@ -504,11 +573,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 57803614091421909, guid: 3d123fa3f85024444b9cb6efa2700489,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d123fa3f85024444b9cb6efa2700489, type: 3}

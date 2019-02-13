@@ -1,6 +1,7 @@
 using System;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
@@ -8,15 +9,13 @@ using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.NPCs;
 
-using Spine;
-using Spine.Unity;
-
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     // TODO: make core-ish
     [RequireComponent(typeof(PooledObject))]
+    [RequireComponent(typeof(SpineAnimationHelper))]
     public abstract class NPCBase : Actor2D, INPC
     {
         public override bool IsLocalActor => false;
@@ -42,17 +41,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
         protected EffectTrigger DeathEffect => _deathEffect;
 
         [SerializeField]
-        private SkeletonAnimation _animation;
-
-        protected SkeletonAnimation Animation => _animation;
-
-        [SerializeField]
         [ReadOnly]
         private NPCData _npcData;
 
         protected NPCData NPCData => _npcData;
 
         private PooledObject _pooledObject;
+
+        protected SpineAnimationHelper _spineAnimationHelper;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -61,6 +57,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             _pooledObject = GetComponent<PooledObject>();
             _pooledObject.RecycleEvent += RecycleEventHandler;
+
+            _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
         }
 #endregion
 
@@ -116,24 +114,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 _pooledObject.Recycle();
             }
         }
-
-        // TODO: move all the animation junk into a helper behavior
-#region Animation
-        protected TrackEntry SetAnimation(string animationName, bool loop)
-        {
-            return SetAnimation(0, animationName, loop);
-        }
-
-        protected TrackEntry SetAnimation(int track, string animationName, bool loop)
-        {
-            return _animation.AnimationState.SetAnimation(track, animationName, loop);
-        }
-
-        protected void SetFacing(Vector3 direction)
-        {
-            _animation.Skeleton.ScaleX = direction.x < 0 ? -1.0f : 1.0f;
-        }
-#endregion
 
 #region Event Handlers
         private void RecycleEventHandler(object sender, EventArgs args)

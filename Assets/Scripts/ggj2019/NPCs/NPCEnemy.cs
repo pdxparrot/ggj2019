@@ -12,6 +12,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
         public int Damage => _damage;
 
 #region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Collider.isTrigger = true;
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             DamagePlayer(other.gameObject.GetComponent<Players.Player>());

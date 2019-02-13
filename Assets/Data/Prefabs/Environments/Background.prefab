@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7709342158582463071}
   - component: {fileID: 7709342158582463069}
+  - component: {fileID: 1442547142391499821}
   - component: {fileID: 7709342158582463068}
   m_Layer: 0
   m_Name: Background
@@ -51,6 +52,19 @@ MonoBehaviour:
   - environment_night
   - environment_rain
   - environment_sunset
+--- !u!114 &1442547142391499821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709342158582463070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8186df2b8ceb9454899499a2bd6ba8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 3373488320230645793}
 --- !u!114 &7709342158582463068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72cc24db01cb6ee4692bd2935b7bf656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animation: {fileID: 3373488320230645793}
   _animations:
   - environment_default
   - environment_thunder
@@ -136,6 +149,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4912332184449387553, guid: dd56595131e4ec1499fafabe2900008f,
+        type: 3}
+      propertyPath: _animationName
+      value: environment_default
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912332184449387553, guid: dd56595131e4ec1499fafabe2900008f,
+        type: 3}
+      propertyPath: initialSkinName
+      value: environment_day
+      objectReference: {fileID: 0}
     - target: {fileID: 7886247697613444055, guid: dd56595131e4ec1499fafabe2900008f,
         type: 3}
       propertyPath: m_Mesh
@@ -186,16 +209,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[5]
       value: 
       objectReference: {fileID: 2100000, guid: 85fe48cf9422c8042b93af24db2114ce, type: 2}
-    - target: {fileID: 4912332184449387553, guid: dd56595131e4ec1499fafabe2900008f,
-        type: 3}
-      propertyPath: _animationName
-      value: environment_default
-      objectReference: {fileID: 0}
-    - target: {fileID: 4912332184449387553, guid: dd56595131e4ec1499fafabe2900008f,
-        type: 3}
-      propertyPath: initialSkinName
-      value: environment_day
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd56595131e4ec1499fafabe2900008f, type: 3}
 --- !u!4 &2121860450288622601 stripped

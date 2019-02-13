@@ -88,12 +88,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Animations
         private void SetIdleAnimation()
         {
-            SetAnimation(BeetleData.IdleAnimation, true);
+            _spineAnimationHelper.SetAnimation(BeetleData.IdleAnimation, true);
         }
 
         private void SetHarvestAnimation()
         {
-            SetAnimation(BeetleData.HarvestAnimation, true);
+            _spineAnimationHelper.SetAnimation(BeetleData.HarvestAnimation, true);
         }
 #endregion
 

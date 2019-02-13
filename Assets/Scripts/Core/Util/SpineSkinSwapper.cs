@@ -1,12 +1,10 @@
-﻿using pdxpartyparrot.Core;
-
+﻿#if USE_SPINE
 using Spine.Unity;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.ggj2019.Players
+namespace pdxpartyparrot.Core.Util
 {
-// TODO: make core (if USE_SPINE)
     public sealed class SpineSkinSwapper : MonoBehaviour
     {
         [SerializeField]
@@ -37,3 +35,4 @@ namespace pdxpartyparrot.ggj2019.Players
         }
     }
 }
+#endif

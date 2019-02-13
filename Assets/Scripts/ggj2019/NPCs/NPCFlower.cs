@@ -1,7 +1,6 @@
 ﻿using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.ggj2019.Players;
 
 using Spine;
 
@@ -66,13 +65,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _beetleSpawn.Acquire(this, null);
             _pollenSpawn.Acquire(this, null);
 
-            TrackEntry track = SetAnimation(0, "flower_grow", false);
+            TrackEntry track = _spineAnimationHelper.SetAnimation(0, "flower_grow", false);
             track.Complete += x => {
                 // now free to spawn stuff
                 _beetleSpawn.Release();
                 _pollenSpawn.Release();
 
-                SetAnimation(0, "flower_idle", true);
+                _spineAnimationHelper.SetAnimation(0, "flower_idle", true);
             };
 
             return true;
@@ -133,7 +132,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _beetleSpawn.Acquire(this, null, true);
             _pollenSpawn.Acquire(this, null, true);
 
-            _deathTrackEntry = SetAnimation(0, "flower_death", false);
+            _deathTrackEntry = _spineAnimationHelper.SetAnimation(0, "flower_death", false);
             _deathTrackEntry.Complete += OnDeathComplete;
         }
 

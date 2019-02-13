@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 8978204920876699462}
+  - component: {fileID: 8776328316506336941}
   - component: {fileID: 3666041006512711152}
   - component: {fileID: 497739556831282585}
   - component: {fileID: 2225282234619250759}
@@ -147,7 +148,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -262,6 +263,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: 
+--- !u!114 &8776328316506336941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8186df2b8ceb9454899499a2bd6ba8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 8551462401960752783}
 --- !u!114 &3666041006512711152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,11 +293,14 @@ MonoBehaviour:
   _isDead: 0
   _spawnEffect: {fileID: 497739556831282585}
   _deathEffect: {fileID: 2225282234619250759}
-  _animation: {fileID: 8551462401960752783}
+  _npcData: {fileID: 0}
   _damage: 1
-  _harvestCooldown: 30
   _flower: {fileID: 0}
   _spawnpoint: {fileID: 0}
+  _harvestCooldownTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!114 &497739556831282585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,9 +313,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 1154953431259382900}
   _audioClip: {fileID: 8300000, guid: 715d198187a90c2419ea3b89c670a62b, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!114 &2225282234619250759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,9 +353,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 3803964952432791233}
   _audioClip: {fileID: 8300000, guid: 5cbbab2d222b3d24ba2b31a3dbc71576, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!1001 &4003636345367791783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -321,6 +388,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
+    - target: {fileID: 4667930459531369643, guid: 887e9409c744a08418237b17b46cba5d,
+        type: 3}
+      propertyPath: m_Name
+      value: PS_Spawn
+      objectReference: {fileID: 0}
     - target: {fileID: 7654641961552398550, guid: 887e9409c744a08418237b17b46cba5d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -375,11 +447,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667930459531369643, guid: 887e9409c744a08418237b17b46cba5d,
-        type: 3}
-      propertyPath: m_Name
-      value: PS_Spawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 887e9409c744a08418237b17b46cba5d, type: 3}

@@ -70,7 +70,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             Vector3 dir = (Vector3.zero - transform.position).normalized;
             _acceleration = dir * Accel;
-            SetFacing(-dir);
+            _spineAnimationHelper.SetFacing(-dir);
 
             SetHoverAnimation();
 
@@ -127,7 +127,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
 	            transform.position += _velocity * dt;
 
-                SetFacing(-_velocity);
+                _spineAnimationHelper.SetFacing(-_velocity);
 	        }
 
             SetFlightAnimation();
@@ -151,7 +151,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
 	        Vector3 targetLocation = _spline.GetPoint(t);
 
-            SetFacing(transform.position - targetLocation);
+            _spineAnimationHelper.SetFacing(transform.position - targetLocation);
 
             transform.position = targetLocation;
 
@@ -164,7 +164,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            SetAnimation("wasp_hover", true);
+            _spineAnimationHelper.SetAnimation("wasp_hover", true);
             _isFlying = false;
         }
 
@@ -174,7 +174,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            SetAnimation("wasp_hover", true);
+            _spineAnimationHelper.SetAnimation("wasp_hover", true);
             _isFlying = true;
         }
 
@@ -187,7 +187,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             _isAttacking = true;
 
-            _attackAnimation = SetAnimation(1, "wasp_attack", false);
+            _attackAnimation = _spineAnimationHelper.SetAnimation(1, "wasp_attack", false);
             _attackAnimation.Complete += OnAttackComplete;
         }
 

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7377174901373575}
   - component: {fileID: 1219087108319792121}
   - component: {fileID: 7773629788050860981}
+  - component: {fileID: 8380525285020896805}
   - component: {fileID: 3673602363583183421}
   - component: {fileID: 4776182971955245096}
   - component: {fileID: 8597469290013358255}
@@ -148,7 +149,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -262,6 +263,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9542f830339cece458515f5a9fdef588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tag: 
+--- !u!114 &8380525285020896805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228405151768162015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8186df2b8ceb9454899499a2bd6ba8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 5533115531315814927}
 --- !u!114 &3673602363583183421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,19 +289,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c427761fb3576409fa501fffc9b950d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: -1
   _model: {fileID: 2034252775976364012}
-  _controller: {fileID: 0}
-  _animator: {fileID: 0}
+  _behavior: {fileID: 0}
   _isDead: 0
   _spawnEffect: {fileID: 4776182971955245096}
   _deathEffect: {fileID: 8597469290013358255}
-  _animation: {fileID: 5533115531315814927}
+  _npcData: {fileID: 0}
   _damage: 1
   MaxVel: 6
   Accel: 4
-  pushback: 0.5
-  pushbackvel: -2
+  _acceleration: {x: 0, y: 0, z: 0}
+  _velocity: {x: 0, y: 0, z: 0}
+  _splineLen: 0
+  _splineVel: 0
+  _splinePos: 0
   _spline: {fileID: 0}
   _attackEffect: {fileID: 5796502178962319337}
 --- !u!114 &4776182971955245096
@@ -301,9 +317,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 6284808541075661176}
   _audioClip: {fileID: 8300000, guid: 612b02acf136da448ae81717ed241f8e, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!114 &8597469290013358255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,9 +357,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 8332997807283128432}
   _audioClip: {fileID: 8300000, guid: 0f051caee005e124fbbc834e056dc611, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!114 &5796502178962319337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,9 +397,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 
+  _owner: {fileID: 0}
   _vfx: {fileID: 0}
   _audioClip: {fileID: 8300000, guid: 77063d6866eb92949a08b54e793280c1, type: 3}
   _audioSource: {fileID: 0}
+  _rumble: 0
+  _rumbleConfig:
+    _seconds: 0
+    _lowFrequency: 0
+    _highFrequency: 0
+  _gamepadListener: {fileID: 0}
+  _screenShake: 0
+  _screenShakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
+  _animator: {fileID: 0}
+  _animationTriggerParameter: 
+  _spineAnimation: {fileID: 0}
+  _spineAnimationName: 
+  _spineAnimationTrack: 0
+  _shake: 0
+  _shakeConfig:
+    _duration: 1
+    _strength: {x: 1, y: 1, z: 1}
+    _vibrato: 1
+    _randomness: 45
 --- !u!1001 &2397445644286337174
 PrefabInstance:
   m_ObjectHideFlags: 0
