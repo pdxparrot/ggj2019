@@ -2,11 +2,11 @@ using System;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Animation;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.NPCs;
 
 using UnityEngine;
@@ -76,7 +76,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             IsDead = false;
 
             if(null != _deathEffect) {
-                _deathEffect.Reset();
+                _deathEffect.ResetTrigger();
             }
 
             if(null != _spawnEffect) {

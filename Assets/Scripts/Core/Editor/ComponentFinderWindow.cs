@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.UI;
 
 using UnityEditor;
@@ -40,6 +41,9 @@ namespace pdxpartyparrot.Core.Editor
             // ai
             NavMeshAgent,
             NavMeshObstacle,
+
+            // effects
+            EffectTrigger,
         }
 
         [MenuItem("PDX Party Parrot/Core/Component Finder")]
@@ -112,6 +116,8 @@ namespace pdxpartyparrot.Core.Editor
                 return typeof(NavMeshAgent);
             case ComponentType.NavMeshObstacle:
                 return typeof(NavMeshObstacle);
+            case ComponentType.EffectTrigger:
+                return typeof(EffectTrigger);
             }
             return null;
         }

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+
+using DG.Tweening;
 
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.ggj2019.NPCs;
-
-using DG.Tweening;
 
 using UnityEngine;
 
@@ -21,12 +20,10 @@ namespace pdxpartyparrot.ggj2019.Players
         // TODO: do this better
         public static Hive Instance { get; private set; }
 
-        [SerializeField] private int armorhealth;
-
         // [0 3]
         // [1 4]
         // [2 5]
-        [SerializeField] private List<GameObject> _armor;
+        [SerializeField] private HiveArmor[] _armor;
         [SerializeField] private float _topRow;
         [SerializeField] private float _bottomRow;
 
@@ -34,8 +31,6 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField] private EffectTrigger _endGameExplosionBig;
         [SerializeField] private EffectTrigger _damageEffect;
         [SerializeField] private GameObject _hiveBackground;
-
-        private readonly List<int> _health = new List<int>();
 
         public override bool IsLocalActor => false;
 
@@ -57,10 +52,6 @@ namespace pdxpartyparrot.ggj2019.Players
             base.Awake();
 
             Instance = this;
-
-            for(int i=0; i<_armor.Count; ++i) {
-                _health.Add(armorhealth);
-            }
 
             _beeContainer = new GameObject("bees");
             _beeContainer.transform.SetParent(transform);
@@ -126,7 +117,8 @@ namespace pdxpartyparrot.ggj2019.Players
             case 5: return 4;
         }}
 
-        public bool TakeDamage(Vector3 pos) {
+        public bool TakeDamage(Vector3 pos)
+        {
             int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
                            ((pos.y > _topRow) ? 0 :
                             (pos.y > _bottomRow) ? 1 : 2);
@@ -135,42 +127,18 @@ namespace pdxpartyparrot.ggj2019.Players
             _damageEffect.Trigger();
 
             bool armorLeft = false;
-            for(int i=0; i<_health.Count; ++i) {
-                if(_health[i] > 0) {
+            foreach(HiveArmor armor in _armor) {
+                if(armor.Health > 0) {
                     armorLeft = true;
                 }
             }
 
-            if(!armorLeft)
-            {
+            if(!armorLeft) {
                 EndAnimation();
                 GameManager.Instance.EndGame();
             }
 
             return ret;
-        }
-
-        public void ShowDamage(int armoridx) {
-            float f = (float)_health[armoridx] / (float)armorhealth;
-            Color c = new Color(1, f, f);
-            _armor[armoridx].GetComponent<SpriteRenderer>().color = c;
-            _armor[armoridx].GetComponent<EffectTrigger>().Trigger();
-            _armor[armoridx].transform.DOShakePosition(.3f,  0.3f, 20, 130f);
-        }
-
-        public void DestroyArmor(int armoridx)
-        {
-            _armor[armoridx].transform.DOShakePosition(
-                .1f,
-                0.3f,
-                20,
-                130f)
-                .OnComplete(() => _armor[armoridx].GetComponent<SpriteRenderer>().enabled = false);
-            _armor[armoridx].GetComponent<EffectTrigger>().Trigger(
-                () => _armor[armoridx].SetActive(false)
-            );
-
-            GameManager.Instance.HiveDamage();
         }
 
         private void EndAnimation()
@@ -187,15 +155,11 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private bool TakeDamage(int armoridx, bool recurse = true)
         {
-            if(_health[armoridx] > 0) {
-                --_health[armoridx];
+            HiveArmor armor = _armor[armoridx];
 
-                if(_health[armoridx] == 0) {
-                    DestroyArmor(armoridx);
+            if(armor.Health > 0) {
+                if(armor.Damage(1)) {
                     return true;
-                }
-                else {
-                    ShowDamage(armoridx);
                 }
             }
             else if(recurse) {
@@ -203,9 +167,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 int n2 = neighbor2(armoridx);
                 int n3 = neighbor3(armoridx);
 
-                if(_health[n1] > 0
-                || (n2 != -1 && _health[n2] > 0)
-                || (n3 != -1 && _health[n3] > 0)) {
+                if(_armor[n1].Health > 0
+                || (n2 != -1 && _armor[n2].Health > 0)
+                || (n3 != -1 && _armor[n3].Health > 0)) {
                     bool result  = TakeDamage(n1, false);
                          if(n2 != -1)
                              result |= TakeDamage(n2, false);
@@ -270,6 +234,10 @@ namespace pdxpartyparrot.ggj2019.Players
 #region Event Handlers
         private void GameStartEventHandler(object sender, EventArgs args)
         {
+            foreach(HiveArmor armor in _armor) {
+                armor.Initialize();
+            }
+
             DoSpawnBee();
 
             _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);

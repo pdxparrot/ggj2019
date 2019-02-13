@@ -24,5 +24,12 @@ namespace pdxpartyparrot.Core.Input
         private float _highFrequency;
 
         public float HighFrequency => _highFrequency;
+
+        public RumbleConfig(float seconds, float lowFrequency, float highFrequency)
+        {
+            _seconds = seconds;
+            _lowFrequency = lowFrequency;
+            _highFrequency = highFrequency;
+        }
     }
 }

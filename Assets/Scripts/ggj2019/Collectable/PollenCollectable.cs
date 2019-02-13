@@ -2,10 +2,10 @@ using System;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.Players;

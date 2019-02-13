@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors.ControllerComponents;
 using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 
 using UnityEngine;
@@ -190,6 +190,9 @@ namespace pdxpartyparrot.Game.Actors
 #endregion
 
 #region Components
+// TODO: these, I think, are public because vestigial
+// once these move into the 2D/3D classes, they can probably be private
+
         [CanBeNull]
         public T GetControllerComponent<T>() where T: CharacterActorControllerComponent
         {

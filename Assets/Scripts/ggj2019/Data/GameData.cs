@@ -47,6 +47,14 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [Space(10)]
 
+#region Game
+        [Header("Game")]
+
+        [SerializeField]
+        private int _hiveArmorHealth = 2;
+
+        public int HiveArmorHealth => _hiveArmorHealth;
+
         [SerializeField]
         private WaveSpawner _waveSpawnerPrefab;
 
@@ -61,6 +69,7 @@ namespace pdxpartyparrot.ggj2019.Data
         private NPCBeeData _beeData;
 
         public NPCBeeData BeeData => _beeData;
+#endregion
 
         [Space(10)]
 
