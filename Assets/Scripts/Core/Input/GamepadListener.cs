@@ -1,12 +1,11 @@
 ﻿using JetBrains.Annotations;
 
-using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 using UnityEngine.Experimental.Input;
 
-namespace pdxpartyparrot.Game.Actors
+namespace pdxpartyparrot.Core.Input
 {
     public sealed class GamepadListener : MonoBehaviour
     {

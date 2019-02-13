@@ -4,7 +4,8 @@
         "Unity.Postprocessing.Runtime",
         "Unity.InputSystem",
         "Unity.TextMeshPro",
-        "Kino.Postprocessing"
+        "Kino.Postprocessing",
+        "spine-unity"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

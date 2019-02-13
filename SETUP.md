@@ -1,5 +1,11 @@
 # This document is pretty out of date already :(
 
+# Notes
+
+* USE_SPINE in `Project Settings -> Player -> Other Settings -> Configuration -> Scripting Define Symbols` to enable Spine utilities
+* UNITY_POST_PROCESSING_STACK_V2 to enable PostProcessingStack v2
+* pdxpartyparrot.Core.Util.TimeManager must run before the Default Time (Script Execution Order)
+
 # Pre-Asset Setup
 
 * Create Assets/csc.rsp
