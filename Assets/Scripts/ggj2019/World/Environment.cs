@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Animation;
+﻿using System;
+
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.World;
 
@@ -25,18 +27,30 @@ namespace pdxpartyparrot.ggj2019.World
             _skinSwapper = GetComponent<SpineSkinSwapper>();
             _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
 
-            GameManager.Instance.WaveSpawner.WaveStartEvent += WaveStartEventHandler;
+            GameManager.Instance.GameStartEvent += GameStartEventHandler;
+            GameManager.Instance.GameEndEvent += GameEndEventHandler;
         }
 
         private void OnDestroy()
         {
-            if(GameManager.HasInstance && null != GameManager.Instance.WaveSpawner) {
-                GameManager.Instance.WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
+            if(GameManager.HasInstance) {
+                GameManager.Instance.GameEndEvent -= GameEndEventHandler;
+                GameManager.Instance.GameStartEvent -= GameStartEventHandler;
             }
         }
 #endregion
 
 #region Event Handlers
+        private void GameStartEventHandler(object sender, EventArgs args)
+        {
+            GameManager.Instance.WaveSpawner.WaveStartEvent += WaveStartEventHandler;
+        }
+
+        private void GameEndEventHandler(object sender, EventArgs args)
+        {
+            GameManager.Instance.WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
+        }
+
         private void WaveStartEventHandler(object sender, SpawnWaveEventArgs args)
         {
             TrackEntry trackEntry = null;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8308380061559946417
+--- !u!1 &6051410925556435758
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9123358690629283193}
-  - component: {fileID: 8705135139697152153}
+  - component: {fileID: 379569381444653881}
+  - component: {fileID: 6958230785637716431}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: NPCSpawner - 2 Players
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!4 &9123358690629283193
+--- !u!4 &379569381444653881
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8308380061559946417}
+  m_GameObject: {fileID: 6051410925556435758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,22 +31,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8705135139697152153
+--- !u!114 &6958230785637716431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8308380061559946417}
+  m_GameObject: {fileID: 6051410925556435758}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545b14cc928ed07439921eb3fc4ef28d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f179a2e2b65b904c839c4610f951087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameData: {fileID: 11400000, guid: 7e91a85ad52337e4ab27f12254331302, type: 2}
-  _maxLocalPlayers: 4
-  _gamepadsArePlayers: 1
-  _newWaveAudio: {fileID: 8300000, guid: f0e3155e8b68bfd48af0a56a7c30fe6f, type: 3}
-  _gameTimer:
-    _stopwatchSeconds: 0
+  _waveSpawnData: {fileID: 11400000, guid: 97fe76560883de44b87a50f1475b930b, type: 2}
+  _currentWaveIndex: 0
+  _waveTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
     _isRunning: 0

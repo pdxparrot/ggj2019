@@ -4,6 +4,7 @@ using System;
 
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
@@ -53,8 +54,6 @@ namespace pdxpartyparrot.ggj2019
             GameStateManager.Instance.RegisterGameManager(this);
 
             Assert.IsTrue(GameData is GameData);
-
-            WaveSpawner = Instantiate(GameGameData.WaveSpawnerPrefab);
         }
 
         private void Update()
@@ -66,8 +65,6 @@ namespace pdxpartyparrot.ggj2019
 
         protected override void OnDestroy()
         {
-            Destroy(WaveSpawner);
-
             if(GameStateManager.HasInstance) {
                 GameStateManager.Instance.UnregisterGameManager();
             }
@@ -87,6 +84,15 @@ namespace pdxpartyparrot.ggj2019
 
             _score = 0;
 
+            // TODO: for some dumb reason, we're starting the game before all the players are "connected"
+            // so we're just gonna have to assume we can count on this being correct
+            int playerCount = Math.Min(InputManager.Instance.GamepadCount, MaxLocalPlayers);
+            int waveSpawnerIndex = Math.Min(playerCount, GameGameData.WaveSpawnerPrefabs.Length) - 1;
+            Assert.IsTrue(waveSpawnerIndex >= 0);
+
+            Debug.Log($"Instantiating wave spawner configured for {waveSpawnerIndex + 1} players...");
+
+            WaveSpawner = Instantiate(GameGameData.WaveSpawnerPrefabs[waveSpawnerIndex]);
             WaveSpawner.Initialize();
             WaveSpawner.WaveStartEvent += WaveStartEventHandler;
             WaveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
@@ -111,6 +117,7 @@ namespace pdxpartyparrot.ggj2019
             WaveSpawner.WaveCompleteEvent -= WaveCompleteEventHandler;
             WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
             WaveSpawner.Shutdown();
+            Destroy(WaveSpawner);
 
             foreach(Players.Player player in PlayerManager.Instance.Players) {
                 player.GameOver();

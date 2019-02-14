@@ -1,0 +1,430 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82c6e24d3f04c3385715eecfc4eccd1, type: 3}
+  m_Name: WaveSpawnData - 3 Players
+  m_EditorClassIdentifier: 
+  _waves:
+  - _duration: 5
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: fc333e01e2cdf2944bd9afdfa15b669c, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: wasp
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: wasp
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: c5ef1db501d14404eb01c15a8cf37c40, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 4
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: c5ef1db501d14404eb01c15a8cf37c40, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 2
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: wasp
+      _delay:
+        _min: 2
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: wasp
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: wasp
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 0}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: wasp
+      _delay:
+        _min: 1
+        _max: 2
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+        type: 3}
+      npcData: {fileID: 0}
+      _tag: pollen
+      _delay:
+        _min: 3
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  _musicTransitionSeconds: 2

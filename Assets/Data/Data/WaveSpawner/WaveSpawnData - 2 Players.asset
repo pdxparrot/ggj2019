@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d82c6e24d3f04c3385715eecfc4eccd1, type: 3}
-  m_Name: WaveSpawnData
+  m_Name: WaveSpawnData - 2 Players
   m_EditorClassIdentifier: 
   _waves:
   - _duration: 5

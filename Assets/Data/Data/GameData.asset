@@ -24,8 +24,12 @@ MonoBehaviour:
   _viewerPrefab: {fileID: 1920754528598710306, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}
-  _waveSpawnerPrefab: {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8,
-    type: 3}
+  _hiveArmorHealth: 2
+  _waveSpawnerPrefabs:
+  - {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8, type: 3}
+  - {fileID: 6958230785637716431, guid: b1798b2a86ab9ed418aa66bcbfbb1d89, type: 3}
+  - {fileID: 6958230785637716431, guid: 23d212cac5c6d3c489f82a5459b4c2ef, type: 3}
+  - {fileID: 6958230785637716431, guid: fc7da8ec437127c4d8951de72be453a4, type: 3}
   _collectableData: {fileID: 11400000, guid: c10afa0e3a0d71841a380235762fe249, type: 2}
   _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _deathPenalty: 250

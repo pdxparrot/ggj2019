@@ -56,9 +56,9 @@ namespace pdxpartyparrot.ggj2019.Data
         public int HiveArmorHealth => _hiveArmorHealth;
 
         [SerializeField]
-        private WaveSpawner _waveSpawnerPrefab;
+        private WaveSpawner[] _waveSpawnerPrefabs;
 
-        public WaveSpawner WaveSpawnerPrefab => _waveSpawnerPrefab;
+        public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;
 
         [SerializeField]
         private CollectableData _collectableData;

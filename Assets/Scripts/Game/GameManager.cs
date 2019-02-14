@@ -9,6 +9,10 @@ namespace pdxpartyparrot.Game
     {
         GameData GameData { get; }
 
+        int MaxLocalPlayers { get; }
+
+        bool GamepadsArePlayers { get; }
+
         bool IsGameOver { get; }
     }
 
@@ -18,6 +22,16 @@ namespace pdxpartyparrot.Game
         private GameData _gameData;
 
         public GameData GameData => _gameData;
+
+        [SerializeField]
+        private int _maxLocalPlayers = 1;
+
+        public int MaxLocalPlayers => _maxLocalPlayers;
+
+        [SerializeField]
+        private bool _gamepadsArePlayers;
+
+        public bool GamepadsArePlayers => _gamepadsArePlayers;
 
         public abstract bool IsGameOver { get; protected set; }
     }
