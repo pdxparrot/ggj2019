@@ -14,6 +14,12 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [ReadOnly]
         private GamepadListener _gamepadListener;
 
+        [SerializeField]
+        [ReadOnly]
+        private bool _isPlaying;
+
+        public override bool IsDone => !_isPlaying;
+
         public override void Initialize()
         {
 // TODO: how do we get the right gamepad?
@@ -28,6 +34,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
             if(null != _gamepadListener) {
                 _gamepadListener.Rumble(_rumbleConfig);
             }
+
+            _isPlaying = true;
+            TimeManager.Instance.RunAfterDelay(_rumbleConfig.Seconds, () => _isPlaying = false);
         }
     }
 }

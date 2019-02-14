@@ -1,6 +1,8 @@
 ﻿#if USE_SPINE
 using pdxpartyparrot.Core.Animation;
 
+using Spine;
+
 using UnityEngine;
 
 namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
@@ -16,13 +18,20 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [SerializeField]
         private int _spineAnimationTrack;
 
+        private TrackEntry _trackEntry;
+
+        public override bool IsDone => null == _trackEntry || _trackEntry.IsComplete;
+
         public override void OnStart()
         {
             if(!EffectsManager.Instance.EnableAnimation) {
                 return;
             }
 
-            _spineAnimation.SetAnimation(_spineAnimationTrack, _spineAnimationName, false);
+            _trackEntry = _spineAnimation.SetAnimation(_spineAnimationTrack, _spineAnimationName, false);
+            _trackEntry.Complete += te => {
+                _trackEntry = null;
+            };
         }
     }
 }

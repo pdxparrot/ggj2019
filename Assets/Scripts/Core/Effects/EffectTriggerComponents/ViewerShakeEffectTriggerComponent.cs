@@ -14,6 +14,12 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [ReadOnly]
         private Viewer _viewer;
 
+        [SerializeField]
+        [ReadOnly]
+        private bool _isPlaying;
+
+        public override bool IsDone => !_isPlaying;
+
         public override void Initialize()
         {
 // TODO: how do we get the right viewer?
@@ -26,6 +32,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
             }
 
             Debug.LogWarning("TODO: viewer shake");
+
+            _isPlaying = true;
+            TimeManager.Instance.RunAfterDelay(_screenShakeConfig.Duration, () => _isPlaying = false);
         }
     }
 }

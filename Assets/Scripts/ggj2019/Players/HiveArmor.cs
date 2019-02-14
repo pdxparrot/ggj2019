@@ -1,6 +1,4 @@
-﻿using DG.Tweening;
-
-using pdxpartyparrot.Core.Effects;
+﻿using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -11,13 +9,10 @@ namespace pdxpartyparrot.ggj2019.Players
     public sealed class HiveArmor : MonoBehaviour
     {
         [SerializeField]
-        private ShakeConfig _damageShakeConfig = new ShakeConfig(0.3f, 0.3f, 20, 130.0f);
-
-        [SerializeField]
-        private ShakeConfig _destroyShakeConfig = new ShakeConfig(0.1f, 0.3f, 20, 130.0f);
-
-        [SerializeField]
         private EffectTrigger _damageEffectTrigger;
+
+        [SerializeField]
+        private EffectTrigger _destroyEffectTrigger;
 
         [SerializeField]
         [ReadOnly]
@@ -57,17 +52,13 @@ namespace pdxpartyparrot.ggj2019.Players
             float f = Health / (float)GameManager.Instance.GameGameData.HiveArmorHealth;
             _spriteRenderer.color = new Color(1.0f, f, f);
 
-            transform.DOShakePosition(_damageShakeConfig.Duration, _damageShakeConfig.Strength, _damageShakeConfig.Vibrato, _damageShakeConfig.Randomness);
-
             _damageEffectTrigger.Trigger();
         }
 
         private void ShowDestroy()
         {
-            transform.DOShakePosition(_destroyShakeConfig.Duration, _destroyShakeConfig.Strength, _destroyShakeConfig.Vibrato, _destroyShakeConfig.Randomness)
-                .OnComplete(() => _spriteRenderer.enabled = false);
-
-            _damageEffectTrigger.Trigger(() => gameObject.SetActive(false));
+            _spriteRenderer.enabled = false;
+            _destroyEffectTrigger.Trigger();
         }
     }
 }

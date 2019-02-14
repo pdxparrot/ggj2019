@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Audio;
+﻿using pdxpartyparrot.Core.Effects;
 
 using Spine;
 
@@ -9,7 +9,7 @@ namespace pdxpartyparrot.ggj2019.World
     public sealed class BackgroundEnvironment : Environment
     {
         [SerializeField]
-        private AudioClip _thunderAudioClip;
+        private EffectTrigger _thunderEffect;
 
         protected override void OnWaveAnimationSet(int waveIndex, TrackEntry trackEntry)
         {
@@ -23,7 +23,8 @@ namespace pdxpartyparrot.ggj2019.World
             if(evt.Data.Name != "thunder") {
                 return;
             }
-            AudioManager.Instance.PlayOneShot(_thunderAudioClip);
+
+            _thunderEffect.Trigger();
         }
     }
 }

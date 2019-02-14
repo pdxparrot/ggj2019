@@ -4,6 +4,7 @@ using System;
 
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
@@ -36,7 +37,7 @@ namespace pdxpartyparrot.ggj2019
         public override bool IsGameOver { get; protected set; }
 
         [SerializeField]
-        private AudioClip _newWaveAudio;
+        private EffectTrigger _newWaveEffect;
 
         [SerializeField]
         [ReadOnly]
@@ -186,7 +187,8 @@ namespace pdxpartyparrot.ggj2019
                 return;
             }
 
-            AudioManager.Instance.PlayOneShot(_newWaveAudio);
+            _newWaveEffect.Trigger();
+
             if(null != UIManager.Instance.PlayerUI) {
                 ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowWaveText(args.WaveIndex);
             }
