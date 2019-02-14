@@ -2,6 +2,7 @@ using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
+using pdxpartyparrot.ggj2019.Home;
 using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.NPCs.Control;
 

@@ -13,7 +13,7 @@ using pdxpartyparrot.ggj2019.NPCs;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.ggj2019.Players
+namespace pdxpartyparrot.ggj2019.Home
 {
     public sealed class Hive : Actor2D
     {
@@ -191,7 +191,7 @@ namespace pdxpartyparrot.ggj2019.Players
             return false;
         }
 
-        public int UnloadPollen(Player player, int amount)
+        public int UnloadPollen(Players.Player player, int amount)
         {
             GameManager.Instance.PollenCollected();
 

@@ -3,7 +3,7 @@ using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.ggj2019.Players
+namespace pdxpartyparrot.ggj2019.Home
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class HiveArmor : MonoBehaviour
