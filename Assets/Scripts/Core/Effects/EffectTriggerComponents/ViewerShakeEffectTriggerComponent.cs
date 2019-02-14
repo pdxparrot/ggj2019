@@ -21,6 +21,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
+            if(!EffectsManager.Instance.EnableViewerShake) {
+                return;
+            }
+
             Debug.LogWarning("TODO: viewer shake");
         }
     }

@@ -26,6 +26,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
+            if(!EffectsManager.Instance.EnableAudio) {
+                return;
+            }
+
             if(null == _audioSource) {
                 AudioManager.Instance.PlayOneShot(_audioClip);
             } else {

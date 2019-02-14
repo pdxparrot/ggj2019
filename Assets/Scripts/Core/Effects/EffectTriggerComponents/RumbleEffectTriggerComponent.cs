@@ -21,6 +21,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
+            if(!EffectsManager.Instance.EnableRumble) {
+                return;
+            }
+
             if(null != _gamepadListener) {
                 _gamepadListener.Rumble(_rumbleConfig);
             }

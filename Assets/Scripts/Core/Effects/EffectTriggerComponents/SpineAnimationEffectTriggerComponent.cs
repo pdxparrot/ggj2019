@@ -18,6 +18,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
+            if(!EffectsManager.Instance.EnableAnimation) {
+                return;
+            }
+
             _spineAnimation.SetAnimation(_spineAnimationTrack, _spineAnimationName, false);
         }
     }

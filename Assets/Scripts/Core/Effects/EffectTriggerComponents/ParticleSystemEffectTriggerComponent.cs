@@ -18,6 +18,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
+            if(!EffectsManager.Instance.EnableVFX) {
+                return;
+            }
+
             _vfx.Play();
         }
 

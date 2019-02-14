@@ -12,6 +12,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
+            if(!EffectsManager.Instance.EnableAnimation) {
+                return;
+            }
+
             _animator.SetTrigger(_animationTriggerParameter);
         }
     }
