@@ -17,11 +17,8 @@ namespace pdxpartyparrot.Core.Effects
         private void Awake()
         {
             _components = GetComponents<EffectTriggerComponent>();
-            Debug.Log($"Found {_components.Length} EffectTriggerComponents");
-        }
+            //Debug.Log($"Found {_components.Length} EffectTriggerComponents");
 
-        private void Start()
-        {
             RunOnComponents(c => c.Initialize());
         }
 #endregion

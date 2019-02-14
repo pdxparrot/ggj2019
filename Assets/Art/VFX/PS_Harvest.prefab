@@ -50,7 +50,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4817,6 +4817,11 @@ PrefabInstance:
       propertyPath: EmissionModule.m_BurstCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7414792478119585298, guid: 52e99f0b7f0c18f4ea663aab2cea366e,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52e99f0b7f0c18f4ea663aab2cea366e, type: 3}
 --- !u!4 &2800033738691578655 stripped
@@ -4962,6 +4967,11 @@ PrefabInstance:
       propertyPath: ShapeModule.radiusThickness
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 266865919242766889, guid: 77fd4531f7421c845b9b1f8ce9154f78,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77fd4531f7421c845b9b1f8ce9154f78, type: 3}
 --- !u!4 &5774448104967790386 stripped
@@ -5035,6 +5045,21 @@ PrefabInstance:
     - target: {fileID: 2301511439451335411, guid: 058a32da8e741e344a9552a5a08f2fba,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4445077026789075839, guid: 058a32da8e741e344a9552a5a08f2fba,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7984271104203677852, guid: 058a32da8e741e344a9552a5a08f2fba,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900209680678183378, guid: 058a32da8e741e344a9552a5a08f2fba,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

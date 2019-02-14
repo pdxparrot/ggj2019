@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 {
@@ -11,8 +12,8 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void Initialize()
         {
-            // in case the VFX is set to auto-play
-            OnStop();
+            var main = _vfx.main;
+            Assert.IsFalse(main.playOnAwake, $"ParticleSystem '{_vfx.name}' should not have playOnAwake set!");
         }
 
         public override void OnStart()
