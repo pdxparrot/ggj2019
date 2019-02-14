@@ -124,7 +124,7 @@ namespace pdxpartyparrot.ggj2019
             }
 
             // save high scores and then kick everyone
-            HighScoreManager.Instance.AddHighScore("", Score);
+            HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
             PlayerManager.Instance.DespawnPlayers();
 
             IsGameOver = true;

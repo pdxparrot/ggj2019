@@ -21,6 +21,8 @@ namespace pdxpartyparrot.Game
         {
             public string playerName;
 
+            public int playerCount;
+
             public int score;
 
             public int CompareTo(HighScore other)
@@ -61,7 +63,18 @@ namespace pdxpartyparrot.Game
             _highScores.Add(new HighScore
             {
                 playerName = playerName,
+                playerCount = 1,
                 score = score
+            });
+        }
+
+        public void AddHighScore(int playerCount, int score)
+        {
+            _highScores.Add(new HighScore
+            {
+                playerName = string.Empty,
+                playerCount = playerCount,
+                score = score,
             });
         }
 
@@ -74,7 +87,11 @@ namespace pdxpartyparrot.Game
             StringBuilder builder = new StringBuilder();
             int i=1;
             foreach(HighScore highScore in _highScores) {
-                builder.AppendLine($"{i}. {highScore.score}");
+                if(string.IsNullOrWhiteSpace(highScore.playerName)) {
+                    builder.AppendLine($"{i}. {highScore.score} ({highScore.playerCount})");
+                } else {
+                    builder.AppendLine($"{i}. {highScore.score} {highScore.playerName}");
+                }
                 i++;
             }
             return builder.ToString();
@@ -86,7 +103,7 @@ namespace pdxpartyparrot.Game
             debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("High Scores", GUI.skin.box);
                     foreach(HighScore highScore in HighScores) {
-                        GUILayout.Label($"{highScore.playerName}: {highScore.score}");
+                        GUILayout.Label($"{highScore.playerName} {highScore.playerCount} {highScore.score}");
                     }
                 GUILayout.EndVertical();
             };
