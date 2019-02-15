@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+
+using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 
@@ -24,6 +27,29 @@ namespace pdxpartyparrot.Core.Effects
 #endregion
 
 #region Components
+        [CanBeNull]
+        public T GetEffectTriggerComponent<T>() where T: EffectTriggerComponent
+        {
+            foreach(var component in _components) {
+                T tc = component as T;
+                if(tc != null) {
+                    return tc;
+                }
+            }
+            return null;
+        }
+
+        public void GetEffectTriggerComponents<T>(ICollection<T> components) where T: EffectTriggerComponent
+        {
+            components.Clear();
+            foreach(var component in _components) {
+                T tc = component as T;
+                if(tc != null) {
+                    components.Add(tc);
+                }
+            }
+        }
+
         private void RunOnComponents(Action<EffectTriggerComponent> f)
         {
             foreach(var component in _components) {

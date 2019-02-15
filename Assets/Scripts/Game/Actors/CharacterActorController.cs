@@ -168,7 +168,7 @@ namespace pdxpartyparrot.Game.Actors
         protected virtual void Awake()
         {
             _components = GetComponents<CharacterActorControllerComponent>();
-            Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
+            //Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
 
             if(!GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic) {
                 StartCoroutine(RaycastRoutine());
@@ -190,9 +190,6 @@ namespace pdxpartyparrot.Game.Actors
 #endregion
 
 #region Components
-// TODO: these, I think, are public because vestigial
-// once these move into the 2D/3D classes, they can probably be private
-
         [CanBeNull]
         public T GetControllerComponent<T>() where T: CharacterActorControllerComponent
         {

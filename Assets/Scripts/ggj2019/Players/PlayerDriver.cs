@@ -29,9 +29,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private Player GamePlayer => GamePlayerBehavior.GamePlayer;
 
-        private GamepadListener _gamepadListener;
-
-        public GamepadListener GamepadListener => _gamepadListener;
+        public GamepadListener GamepadListener { get; private set; }
 
         private DebugMenuNode _debugMenuNode;
 
@@ -51,8 +49,8 @@ namespace pdxpartyparrot.ggj2019.Players
             _controls.Player.SetCallbacks(null);
             _controls.Player.Disable();
 
-            Destroy(_gamepadListener);
-            _gamepadListener = null;
+            Destroy(GamepadListener);
+            GamepadListener = null;
 
             DestroyDebugMenu();
 
@@ -72,7 +70,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _controls.Player.SetCallbacks(this);
             _controls.Player.Enable();
 
-            _gamepadListener = gameObject.AddComponent<GamepadListener>();
+            GamepadListener = gameObject.AddComponent<GamepadListener>();
 
             InitDebugMenu();
         }
@@ -84,7 +82,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return false;
             }
 
-            return _gamepadListener.IsOurGamepad(ctx) ||
+            return GamepadListener.IsOurGamepad(ctx) ||
                 // ignore keyboard/mouse while the debug menu is open
                 // TODO: this probably doesn't handle multiple keyboards/mice
                 (!DebugMenuManager.Instance.Enabled && ActorManager.Instance.ActorCount<Player>() == 1 && (Keyboard.current == ctx.control.device || Mouse.current == ctx.control.device));

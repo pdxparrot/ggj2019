@@ -1,4 +1,7 @@
+using System;
+
 using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
@@ -40,7 +43,13 @@ namespace pdxpartyparrot.ggj2019.Players
         private EffectTrigger _respawnEffect;
 
         [SerializeField]
+        private EffectTrigger _damageEffect;
+
+        [SerializeField]
         private EffectTrigger _deathEffect;
+
+        [SerializeField]
+        private EffectTrigger _gameOverEffect;
 
         [SerializeField]
         [ReadOnly]
@@ -84,14 +93,28 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
-        protected override void InitializeViewer()
+        protected override bool InitializeLocalPlayer(Guid id)
         {
-            PlayerViewer = GameManager.Instance.Viewer;
-        }
+            if(!base.InitializeLocalPlayer(id)) {
+                return false;
+            }
 
-        protected override void InitializeModel()
-        {
+            PlayerViewer = GameManager.Instance.Viewer;
             _skinSwapper.SetSkin(NetworkPlayer.playerControllerId);
+
+            RumbleEffectTriggerComponent rumbleEffect = _respawnEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
+            rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;
+
+            rumbleEffect = _damageEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
+            rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;
+
+            rumbleEffect = _deathEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
+            rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;
+
+            rumbleEffect = _gameOverEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
+            rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;
+
+            return true;
         }
 
         public void AddPollen()
@@ -114,22 +137,20 @@ namespace pdxpartyparrot.ggj2019.Players
                 Kill();
                 return true;
             }
-
-            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.DamageRumble);
-
             _swarm.Remove(amount);
+
+            _damageEffect.Trigger();
+
             return true;
         }
 
         public void GameOver()
         {
-            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.GameOverRumble);
+            _gameOverEffect.Trigger();
         }
 
         private void Kill()
         {
-            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.DeathRumble);
-
             Behavior.Velocity = Vector3.zero;
 
             _isDead = true;
@@ -164,8 +185,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Respawn()
         {
-            GamePlayerDriver.GamepadListener.Rumble(PlayerManager.Instance.GamePlayerData.RespawnRumble);
-
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(false);
 
             if(GameManager.Instance.IsGameOver) {

@@ -96,21 +96,7 @@ namespace pdxpartyparrot.Game.Players
             NetworkPlayer.NetworkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncRigidbody3D;
             NetworkPlayer.NetworkTransform.syncRotationAxis = NetworkTransform.AxisSyncMode.AxisY;
 
-            InitializeViewer();
-            InitializeModel();
-            InitializePlayerUI();
-
             return true;
-        }
-
-        protected abstract void InitializeViewer();
-
-        protected virtual void InitializeModel()
-        {
-        }
-
-        protected virtual void InitializePlayerUI()
-        {
         }
 
         public override bool OnSpawn(SpawnPoint spawnpoint)
