@@ -53,6 +53,7 @@ namespace pdxpartyparrot.Core.Input
                 return;
             }
 
+            //Debug.Log($"Rumbling gamepad {Gamepad.id} for {config.Seconds} seconds, (low: {config.LowFrequency} high: {config.HighFrequency})");
             Gamepad.SetMotorSpeeds(config.LowFrequency, config.HighFrequency);
             _isRumbling = true;
 

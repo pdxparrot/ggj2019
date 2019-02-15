@@ -303,10 +303,6 @@ namespace pdxpartyparrot.Game.Actors
                 _isSliding = _groundSlope >= ControllerData.SlopeLimit;
 
                 if(!wasGrounded && IsGrounded) {
-                    if(null != _owner.Behavior.Animator) {
-                        _owner.Behavior.Animator.SetTrigger(ControllerData.GroundedParam);
-                    }
-
                     if(null != _groundedEffect) {
                         _groundedEffect.Trigger();
                     }

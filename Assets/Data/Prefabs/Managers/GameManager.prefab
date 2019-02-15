@@ -58,6 +58,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioClip: {fileID: 8300000, guid: f0e3155e8b68bfd48af0a56a7c30fe6f, type: 3}
   _audioSource: {fileID: 0}
+--- !u!1 &8106416405593008791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6884389483513410852}
+  - component: {fileID: 6964005185560680985}
+  - component: {fileID: 4027548943133558406}
+  m_Layer: 0
+  m_Name: GameOverEffectTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6884389483513410852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8106416405593008791}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9123358690629283193}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6964005185560680985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8106416405593008791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4027548943133558406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8106416405593008791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d086bb8ddd625478d5fc6048564914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenShakeConfig:
+    _duration: 5
+    _strength: {x: 0.3, y: 0.3, z: 0.3}
+    _vibrato: 20
+    _randomness: 130
+  _viewer: {fileID: 0}
+  _isPlaying: 0
 --- !u!1 &8308380061559946417
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +150,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6439173143331639617}
+  - {fileID: 6884389483513410852}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,6 +170,7 @@ MonoBehaviour:
   _maxLocalPlayers: 4
   _gamepadsArePlayers: 1
   _newWaveEffect: {fileID: 7988186786889775175}
+  _gameOverEffect: {fileID: 6964005185560680985}
   _gameTimer:
     _stopwatchSeconds: 0
     _isRunning: 0

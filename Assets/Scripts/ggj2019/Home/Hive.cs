@@ -144,7 +144,6 @@ namespace pdxpartyparrot.ggj2019.Home
         private void EndAnimation()
         {
             _endGameExplosion.Trigger(EndExplosion);
-            transform.DOShakePosition(5f, 0.3f, 20, 130f);
         }
 
         private void EndExplosion()

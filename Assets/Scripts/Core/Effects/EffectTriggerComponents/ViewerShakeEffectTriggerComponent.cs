@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Camera;
+﻿using DG.Tweening;
+
+using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -14,16 +16,17 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [ReadOnly]
         private Viewer _viewer;
 
+        public Viewer Viewer
+        {
+            get => _viewer;
+            set => _viewer = value;
+        }
+
         [SerializeField]
         [ReadOnly]
         private bool _isPlaying;
 
         public override bool IsDone => !_isPlaying;
-
-        public override void Initialize()
-        {
-// TODO: how do we get the right viewer?
-        }
 
         public override void OnStart()
         {
@@ -31,7 +34,7 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
                 return;
             }
 
-            Debug.LogWarning("TODO: viewer shake");
+            Viewer.Camera.DOShakePosition(_screenShakeConfig.Duration, _screenShakeConfig.Strength, _screenShakeConfig.Vibrato, _screenShakeConfig.Randomness);
 
             _isPlaying = true;
             TimeManager.Instance.RunAfterDelay(_screenShakeConfig.Duration, () => _isPlaying = false);

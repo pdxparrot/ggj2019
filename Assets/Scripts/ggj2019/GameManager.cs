@@ -4,6 +4,7 @@ using System;
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
@@ -37,6 +38,9 @@ namespace pdxpartyparrot.ggj2019
 
         [SerializeField]
         private EffectTrigger _newWaveEffect;
+
+        [SerializeField]
+        private EffectTrigger _gameOverEffect;
 
         [SerializeField]
         [ReadOnly]
@@ -128,6 +132,7 @@ namespace pdxpartyparrot.ggj2019
             PlayerManager.Instance.DespawnPlayers();
 
             IsGameOver = true;
+            _gameOverEffect.Trigger();
         }
 
         //[Server]
@@ -175,6 +180,9 @@ namespace pdxpartyparrot.ggj2019
                 Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
                 Viewer.transform.position = GameGameData.ViewerPosition;
             }
+
+            ViewerShakeEffectTriggerComponent viewerShakeEffect = _gameOverEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
+            viewerShakeEffect.Viewer = Viewer;
         }
 
 #region Event Handlers
