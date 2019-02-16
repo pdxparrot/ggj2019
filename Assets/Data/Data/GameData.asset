@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd88203690760a498e3a036bfffc570, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  _viewerLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   _worldLayer:
     serializedVersion: 2
     m_Bits: 8192
   _gameSize2D: 5
-  _viewerLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  _ffaGameStatePrefab: {fileID: 29742012200218022, guid: 0df0709c42ad34140ac759786c4c2832,
+  _maxLocalPlayers: 4
+  _gamepadsArePlayers: 1
+  _mainGameStatePrefab: {fileID: 29742012200218022, guid: 0df0709c42ad34140ac759786c4c2832,
     type: 3}
   _viewerPrefab: {fileID: 1920754528598710306, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}

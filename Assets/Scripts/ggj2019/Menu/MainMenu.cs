@@ -10,7 +10,7 @@ namespace pdxpartyparrot.ggj2019.Menu
         public void OnStart()
         {
             //Owner.PushPanel(_gameTypePanel);
-            GameStateManager.Instance.StartLocal(GameManager.Instance.GameGameData.FFAGameStatePrefab);
+            GameStateManager.Instance.StartLocal(GameManager.Instance.GameGameData.MainGameStatePrefab);
         }
 #endregion
     }

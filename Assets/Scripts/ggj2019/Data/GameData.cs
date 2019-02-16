@@ -6,6 +6,7 @@ using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.State;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
@@ -13,21 +14,13 @@ namespace pdxpartyparrot.ggj2019.Data
     [Serializable]
     public sealed class GameData : Game.Data.GameData
     {
-        [SerializeField]
-        private LayerMask _viewerLayer;
-
-        public LayerMask ViewerLayer => _viewerLayer;
-
-#region Game Mode States
         [Space(10)]
 
-        [Header("Game Mode States")]
-
         [SerializeField]
-        private FFAGameState _ffaGameStatePrefab;
+        [FormerlySerializedAs("_ffaGameStatePrefab")]
+        private FFAGameState _mainGameStatePrefab;
 
-        public FFAGameState FFAGameStatePrefab => _ffaGameStatePrefab;
-#endregion
+        public FFAGameState MainGameStatePrefab => _mainGameStatePrefab;
 
         [Space(10)]
 

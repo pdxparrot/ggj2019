@@ -31,9 +31,6 @@ namespace pdxpartyparrot.ggj2019.Players
         private Interactables _interactables;
 
         [SerializeField]
-        private float _respawnTime = 3f;
-
-        [SerializeField]
         [ReadOnly]
         private bool _isDead;
 
@@ -59,7 +56,9 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public bool CanGather => !IsDead && !HasPollen;
 
-        private readonly Timer _deathTimer = new Timer();
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _respawnTimer = new Timer();
 
         private Swarm _swarm;
 
@@ -89,7 +88,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             float dt = Time.deltaTime;
 
-            _deathTimer.Update(dt);
+            _respawnTimer.Update(dt);
         }
 #endregion
 
@@ -166,14 +165,14 @@ namespace pdxpartyparrot.ggj2019.Players
             _swarm.RemoveAll();
 
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
-            _deathEffect.Trigger(() => {    
-                _deathTimer.Start(_respawnTime, Respawn);
-            });
+            _deathEffect.Trigger();
 
             // despawn the actor (not the player)
             OnDeSpawn();
 
             GameManager.Instance.PlayerDeath();
+
+            _respawnTimer.Start(PlayerManager.Instance.GamePlayerData.RespawnSeconds, Respawn);
         }
 
         public void DoGather()

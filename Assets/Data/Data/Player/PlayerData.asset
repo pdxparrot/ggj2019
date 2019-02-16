@@ -23,19 +23,4 @@ MonoBehaviour:
   _isKinematic: 1
   _movementLerpSpeed: 5
   _lookLerpSpeed: 10
-  _respawnRumble:
-    _seconds: 0.5
-    _lowFrequency: 0.5
-    _highFrequency: 0
-  _damageRumble:
-    _seconds: 0.5
-    _lowFrequency: 0.5
-    _highFrequency: 0
-  _deathRumble:
-    _seconds: 1
-    _lowFrequency: 0.25
-    _highFrequency: 0.5
-  _gameOverRumble:
-    _seconds: 2
-    _lowFrequency: 0.5
-    _highFrequency: 0.5
+  _respawnSeconds: 3

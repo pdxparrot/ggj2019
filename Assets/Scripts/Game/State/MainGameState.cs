@@ -110,8 +110,8 @@ namespace pdxpartyparrot.Game.State
 
             Core.Network.NetworkManager.Instance.LocalClientReady(GameStateManager.Instance.NetworkClient?.connection);
 
-            if(GameStateManager.Instance.GameManager.GamepadsArePlayers) {
-                int count = Math.Min(Math.Max(InputManager.Instance.GamepadCount, 1), GameStateManager.Instance.GameManager.MaxLocalPlayers);
+            if(GameStateManager.Instance.GameManager.GameData.GamepadsArePlayers) {
+                int count = Math.Min(Math.Max(InputManager.Instance.GamepadCount, 1), GameStateManager.Instance.GameManager.GameData.MaxLocalPlayers);
 
                 Debug.Log($"Spawning a player for each controller ({count})...");
                 for(short i=0; i<count; ++i) {

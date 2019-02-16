@@ -90,7 +90,7 @@ namespace pdxpartyparrot.ggj2019
 
             // TODO: for some dumb reason, we're starting the game before all the players are "connected"
             // so we're just gonna have to assume we can count on this being correct
-            int playerCount = Math.Min(InputManager.Instance.GamepadCount, MaxLocalPlayers);
+            int playerCount = Math.Min(InputManager.Instance.GamepadCount, GameGameData.MaxLocalPlayers);
             int waveSpawnerIndex = Math.Min(playerCount, GameGameData.WaveSpawnerPrefabs.Length) - 1;
             Assert.IsTrue(waveSpawnerIndex >= 0);
 
