@@ -30,11 +30,13 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         public bool CanBeCollected => _state == State.Floating;
 
+#region Effects
         [SerializeField]
         private EffectTrigger _pickupEffect;
 
         [SerializeField]
         private EffectTrigger _collectEffect;
+#endregion
 
         [SerializeField]
         [ReadOnly]

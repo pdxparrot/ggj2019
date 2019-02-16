@@ -150,8 +150,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.02}
-  m_Size: {x: 0.3, y: 0.3}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 1}
   m_Direction: 0
 --- !u!114 &3465486619210211549
 MonoBehaviour:
@@ -199,10 +199,6 @@ MonoBehaviour:
   _npcData: {fileID: 0}
   _offsetRadius: 0
   _offsetPosition: {x: 0, y: 0, z: 0}
-  _offsetUpdateTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
   _state: 0
   _targetSwarm: {fileID: 0}
 --- !u!1 &4546608478491391099
@@ -555,7 +551,7 @@ PrefabInstance:
     - target: {fileID: 6935914349046667551, guid: cbb3dbd4cbfd63149a666ea942a89569,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6935914349046667551, guid: cbb3dbd4cbfd63149a666ea942a89569,
         type: 3}

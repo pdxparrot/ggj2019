@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.NPCs.Control;
@@ -15,13 +12,8 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
-    public sealed class NPCBee : NPCBase, ISwarmable
+    public sealed class NPCBee : NPCBase, ISwarmable, IInteractable
     {
-        // TODO: NPCManager.Bees
-        private static readonly List<NPCBee> _bees = new List<NPCBee>();
-
-        public static IReadOnlyCollection<NPCBee> Bees => _bees;
-
         private enum State
         {
             Idle,
@@ -51,7 +43,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public bool IsInSwarm => null != _targetSwarm;
 
-        public bool CanJoinSwarm => !IsInSwarm && _state == State.Idle;
+        public bool CanJoinSwarm => !IsDead && !IsInSwarm && _state == State.Idle;
+
+        public bool CanInteract => CanJoinSwarm;
 
 #region Unity Life Cycle
         private void Update()
@@ -59,26 +53,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             float dt = Time.deltaTime;
 
             Think(dt);
-        }
-#endregion
-
-#region Spawn
-        public override bool OnSpawn(SpawnPoint spawnpoint)
-        {
-            if(!base.OnSpawn(spawnpoint)) {
-                return false;
-            }
-
-            _bees.Add(this);
-
-            return true;
-        }
-
-        public override void OnDeSpawn()
-        {
-            _bees.Remove(this);
-
-            base.OnDeSpawn();
         }
 #endregion
 

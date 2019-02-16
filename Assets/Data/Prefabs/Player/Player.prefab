@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533217167412578872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0.3, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
@@ -206,8 +206,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.05}
-  m_Size: {x: 1, y: 1}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.5, y: 1.5}
   m_Direction: 0
 --- !u!82 &1219087108319792121
 AudioSource:
@@ -323,13 +323,20 @@ MonoBehaviour:
   _driver: {fileID: 6318285324892847177}
   _pollenTarget: {fileID: 8417827668764443029}
   _interactables: {fileID: 5023084697306132187}
-  _respawnTime: 3
   _isDead: 0
   _respawnEffect: {fileID: 6172685723017044385}
   _damageEffect: {fileID: 7674856831482742360}
   _deathEffect: {fileID: 1971960604629102527}
   _gameOverEffect: {fileID: 8821035005184857451}
   _hasPollen: 0
+  _respawnTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+  _immunityTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!114 &5129411227740885415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,7 +673,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.3
+  m_Radius: 1.5
 --- !u!114 &5023084697306132187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1259,7 +1266,7 @@ PrefabInstance:
     - target: {fileID: 988981380167767692, guid: 614b7f0eb133840419fbf1f622c17d15,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 988981380167767692, guid: 614b7f0eb133840419fbf1f622c17d15,
         type: 3}

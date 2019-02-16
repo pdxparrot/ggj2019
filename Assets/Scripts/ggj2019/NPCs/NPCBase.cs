@@ -30,11 +30,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             set => _isDead = value;
         }
 
+#region Effects
         [SerializeField]
         private EffectTrigger _spawnEffect;
 
         [SerializeField]
         private EffectTrigger _deathEffect;
+#endregion
 
         [SerializeField]
         [ReadOnly]

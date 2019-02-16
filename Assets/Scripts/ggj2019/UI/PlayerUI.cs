@@ -85,6 +85,7 @@ namespace pdxpartyparrot.ggj2019.UI
             _animatedGameOverObject.ClearState();
             _animatedGameOverObject.gameObject.SetActive(show);
             _gameOverText.SetActive(show);
+
             if(show) {
                 TrackEntry track = _animatedGameOverObject.AnimationState.SetAnimation(0, "game_over_entrance", false);
                 track.Complete += t => {

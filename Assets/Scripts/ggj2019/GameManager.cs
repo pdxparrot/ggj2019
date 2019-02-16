@@ -36,21 +36,25 @@ namespace pdxpartyparrot.ggj2019
 
         public override bool IsGameOver { get; protected set; }
 
+#region Effects
         [SerializeField]
         private EffectTrigger _newWaveEffect;
 
         [SerializeField]
         private EffectTrigger _gameOverEffect;
+#endregion
 
         [SerializeField]
         [ReadOnly]
-        private Stopwatch _gameTimer;
+        private /*readonly*/ Stopwatch _gameTimer = new Stopwatch();
 
-        public WaveSpawner WaveSpawner { get; private set; }
-
+        [SerializeField]
+        [ReadOnly]
         private int _score;
 
         public int Score => _score + (int)_gameTimer.StopwatchSeconds;
+
+        public WaveSpawner WaveSpawner { get; private set; }
 
 #region Unity Lifecycle
         private void Awake()

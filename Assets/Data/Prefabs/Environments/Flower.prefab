@@ -196,7 +196,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.1}
+  m_Offset: {x: 0, y: 0}
   m_Size: {x: 2, y: 2}
   m_Direction: 1
 --- !u!114 &7204223779919184192
@@ -446,6 +446,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: _animationName
+      value: flower_death
       objectReference: {fileID: 0}
     - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
         type: 3}

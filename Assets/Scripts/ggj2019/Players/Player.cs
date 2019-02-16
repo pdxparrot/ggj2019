@@ -3,6 +3,7 @@ using System;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.ggj2019.Home;
@@ -36,6 +37,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public bool IsDead => _isDead;
 
+#region Effects
         [SerializeField]
         private EffectTrigger _respawnEffect;
 
@@ -47,6 +49,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [SerializeField]
         private EffectTrigger _gameOverEffect;
+#endregion
 
         [SerializeField]
         [ReadOnly]
@@ -59,6 +62,12 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         [ReadOnly]
         private /*readonly*/ Timer _respawnTimer = new Timer();
+
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _immunityTimer = new Timer();
+
+        public bool IsImmune => _immunityTimer.IsRunning;
 
         private Swarm _swarm;
 
@@ -89,6 +98,7 @@ namespace pdxpartyparrot.ggj2019.Players
             float dt = Time.deltaTime;
 
             _respawnTimer.Update(dt);
+            _immunityTimer.Update(dt);
         }
 #endregion
 
@@ -122,14 +132,42 @@ namespace pdxpartyparrot.ggj2019.Players
             return true;
         }
 
+#region Spawn
+        public override bool OnReSpawn(SpawnPoint spawnpoint)
+        {
+            if(!base.OnReSpawn(spawnpoint)) {
+                return false;
+            }
+
+            _respawnEffect.Trigger();
+            _immunityTimer.Start(PlayerManager.Instance.GamePlayerData.SpawnImmunitySeconds);
+
+            return true;
+        }
+
+        public override void OnDeSpawn()
+        {
+            Behavior.Velocity = Vector3.zero;
+
+            _hasPollen = false;
+
+            _swarm.RemoveAll();
+
+            _respawnTimer.Start(PlayerManager.Instance.GamePlayerData.RespawnSeconds, Respawn);
+
+            base.OnDeSpawn();
+        }
+#endregion
+
         public void AddPollen()
         {
             _hasPollen = true;
         }
 
-        public void AddBeeToSwarm(NPCBee npcBee)
+        public void AddBeeToSwarm(NPCBee bee)
         {
-            _swarm.Add(npcBee);
+            _swarm.Add(bee);
+            _interactables.RemoveInteractable(bee);
         }
 
         public bool Damage(int amount)
@@ -138,11 +176,13 @@ namespace pdxpartyparrot.ggj2019.Players
                 return false;
             }
 
-            if(!_swarm.HasSwarm) {
-                Kill();
-                return true;
+            if(!IsImmune) {
+                if(!_swarm.HasSwarm) {
+                    Kill();
+                    return true;
+                }
+                _swarm.Remove(amount);
             }
-            _swarm.Remove(amount);
 
             _damageEffect.Trigger();
 
@@ -156,23 +196,15 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Kill()
         {
-            Behavior.Velocity = Vector3.zero;
-
             _isDead = true;
 
-            _hasPollen = false;
-
-            _swarm.RemoveAll();
+            GameManager.Instance.PlayerDeath();
 
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
             _deathEffect.Trigger();
 
             // despawn the actor (not the player)
             OnDeSpawn();
-
-            GameManager.Instance.PlayerDeath();
-
-            _respawnTimer.Start(PlayerManager.Instance.GamePlayerData.RespawnSeconds, Respawn);
         }
 
         public void DoGather()
@@ -181,9 +213,10 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            NPCBee npcBee = _interactables.GetBee();
-            if(npcBee != null) {
-                AddBeeToSwarm(npcBee);
+            var interactables = _interactables.GetInteractables<NPCBee>();
+            NPCBee bee = (NPCBee)interactables.GetRandomEntry();
+            if(null != bee) {
+                AddBeeToSwarm(bee);
             }
         }
 
@@ -198,8 +231,6 @@ namespace pdxpartyparrot.ggj2019.Players
             _isDead = false;
 
             PlayerManager.Instance.RespawnPlayer(this);
-
-            _respawnEffect.Trigger();
         }
     }
 }

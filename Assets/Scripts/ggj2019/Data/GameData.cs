@@ -49,6 +49,18 @@ namespace pdxpartyparrot.ggj2019.Data
         public int HiveArmorHealth => _hiveArmorHealth;
 
         [SerializeField]
+        private int _minBees = 6;
+
+        public int MinBees => _minBees;
+
+        public int BeePoolSize => MinBees * 4;
+
+        [SerializeField]
+        private float _beeSpawnCooldown = 10.0f;
+
+        public float BeeSpawnCooldown => _beeSpawnCooldown;
+
+        [SerializeField]
         private WaveSpawner[] _waveSpawnerPrefabs;
 
         public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;

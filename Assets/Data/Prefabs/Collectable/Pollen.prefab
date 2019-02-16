@@ -44,32 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
-  _audioClip: {fileID: 8300000, guid: 240539017358dc44996c17b065af2d44, type: 3}
-  _audioSource: {fileID: 0}
-  _rumble: 0
-  _rumbleConfig:
-    _seconds: 0
-    _lowFrequency: 0
-    _highFrequency: 0
-  _gamepadListener: {fileID: 0}
-  _screenShake: 0
-  _screenShakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
-  _animator: {fileID: 0}
-  _animationTriggerParameter: 
-  _spineAnimation: {fileID: 0}
-  _spineAnimationName: 
-  _spineAnimationTrack: 0
-  _shake: 0
-  _shakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
 --- !u!114 &4100077243747384690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: 240539017358dc44996c17b065af2d44, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &3512201406079790479
@@ -128,32 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
-  _audioClip: {fileID: 8300000, guid: 9f5ddc2368b4bd6449daa006b7a5db27, type: 3}
-  _audioSource: {fileID: 0}
-  _rumble: 0
-  _rumbleConfig:
-    _seconds: 0
-    _lowFrequency: 0
-    _highFrequency: 0
-  _gamepadListener: {fileID: 0}
-  _screenShake: 0
-  _screenShakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
-  _animator: {fileID: 0}
-  _animationTriggerParameter: 
-  _spineAnimation: {fileID: 0}
-  _spineAnimationName: 
-  _spineAnimationTrack: 0
-  _shake: 0
-  _shakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
 --- !u!114 &9138182621263611983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: 9f5ddc2368b4bd6449daa006b7a5db27, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &4478823037114562459
@@ -219,7 +169,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 0.5
 --- !u!114 &100115127484628488
 MonoBehaviour:
   m_ObjectHideFlags: 0

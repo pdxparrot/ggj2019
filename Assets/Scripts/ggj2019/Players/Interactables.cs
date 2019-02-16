@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-using pdxpartyparrot.ggj2019.NPCs;
+using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
@@ -10,48 +11,61 @@ namespace pdxpartyparrot.ggj2019.Players
     [RequireComponent(typeof(Collider2D))]
     public class Interactables : MonoBehaviour
     {
+#region Events
+        public event EventHandler<InteractableEventArgs> InteractableAddedEvent;
+        public event EventHandler<InteractableEventArgs> InteractableRemovedEvent;
+#endregion
+
         private Collider2D _trigger;
 
-        private readonly List<NPCBee> _bees = new List<NPCBee>();
+        private readonly Dictionary<Type, HashSet<IInteractable>> _interactables = new Dictionary<Type, HashSet<IInteractable>>();
 
 #region Unity Life Cycle
         private void Awake()
         {
             _trigger = GetComponent<Collider2D>();
-
             _trigger.isTrigger = true;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            NPCBee npcBee = other.GetComponent<NPCBee>();
-            if(npcBee != null && !npcBee.IsInSwarm) {
-                _bees.Add(npcBee);
+            IInteractable interactable = other.GetComponent<IInteractable>();
+            if(null == interactable || !interactable.CanInteract) {
+                return;
+            }
+
+            var interactables = _interactables.GetOrAdd(interactable.GetType());
+            if(interactables.Add(interactable)) {
+                InteractableAddedEvent?.Invoke(this, new InteractableEventArgs{
+                    Interactable = interactable
+                });
             }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            NPCBee npcBee = other.GetComponent<NPCBee>();
-            if(npcBee != null) {
-                _bees.Remove(npcBee);
+            IInteractable interactable = other.GetComponent<IInteractable>();
+            if(null == interactable) {
+                return;
+            }
+
+            if(RemoveInteractable(interactable)) {
+                InteractableRemovedEvent?.Invoke(this, new InteractableEventArgs{
+                    Interactable = interactable
+                });
             }
         }
 #endregion
 
-        public NPCBee GetBee()
+        public bool RemoveInteractable(IInteractable interactable)
         {
-            if(_bees.Count < 1) {
-                return null;
-            }
+            var interactables = _interactables.GetOrAdd(interactable.GetType());
+            return interactables.Remove(interactable);
+        }
 
-            foreach(NPCBee bee in _bees) {
-                if(bee.CanJoinSwarm) {
-                    return bee;
-                }
-            }
-
-            return null;
+        public IReadOnlyCollection<IInteractable> GetInteractables<T>() where T: IInteractable
+        {
+            return _interactables.GetOrAdd(typeof(T));
         }
     }
 }

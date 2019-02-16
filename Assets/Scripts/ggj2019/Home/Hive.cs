@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using JetBrains.Annotations;
 
@@ -11,7 +11,6 @@ using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.NPCs;
 
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Home
 {
@@ -22,6 +21,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public override bool IsLocalActor => false;
 
+#region Armor
         // [0 3]
         // [1 4]
         // [2 5]
@@ -33,7 +33,9 @@ namespace pdxpartyparrot.ggj2019.Home
 
         [SerializeField]
         private float _bottomRow;
+#endregion
 
+#region Effects
         [SerializeField]
         private EffectTrigger _endGameExplosion;
 
@@ -42,13 +44,9 @@ namespace pdxpartyparrot.ggj2019.Home
 
         [SerializeField]
         private EffectTrigger _damageEffect;
+#endregion
 
-        [SerializeField]
-        private int _maxBees = 5;
-
-        [SerializeField]
-        private float _beeSpawnCooldown = 10.0f;
-
+#region Bee Spawning
         [SerializeField]
         [ReadOnly]
         private /*readonly*/ Timer _beeSpawnTimer = new Timer();
@@ -57,6 +55,7 @@ namespace pdxpartyparrot.ggj2019.Home
         private NPCBee _beePrefab;
 
         private GameObject _beeContainer;
+#endregion
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -69,7 +68,7 @@ namespace pdxpartyparrot.ggj2019.Home
             _beeContainer.transform.SetParent(transform);
 
             PooledObject pooledObject = _beePrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, _maxBees * 4);
+            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, GameManager.Instance.GameGameData.BeePoolSize);
 
             GameManager.Instance.GameStartEvent += GameStartEventHandler;
             GameManager.Instance.GameEndEvent += GameEndEventHandler;
@@ -104,6 +103,7 @@ namespace pdxpartyparrot.ggj2019.Home
             viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
         }
 
+#region Damage (clean this up)
         private int neighbor1(int pc) {
             switch(pc) {
             default:
@@ -143,7 +143,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
             int count = 0;
             bool ret = TakeDamage(armoridx, true, ref count);
-            //Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
+            //UnityEngine.Assertions.Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
 
             _damageEffect.Trigger();
 
@@ -155,21 +155,13 @@ namespace pdxpartyparrot.ggj2019.Home
             }
 
             if(!armorLeft) {
-                EndAnimation();
+                _endGameExplosion.Trigger(() => {
+                    _endGameExplosionBig.Trigger();
+                });
                 GameManager.Instance.EndGame();
             }
 
             return ret;
-        }
-
-        private void EndAnimation()
-        {
-            _endGameExplosion.Trigger(EndExplosion);
-        }
-
-        private void EndExplosion()
-        {
-            _endGameExplosionBig.Trigger();
         }
 
         private bool TakeDamage(int armoridx, bool recurse, ref int count)
@@ -181,8 +173,7 @@ namespace pdxpartyparrot.ggj2019.Home
                     count++;
                     return true;
                 }
-            }
-            else if(recurse) {
+            } else if(recurse) {
                 int n1 = neighbor1(armoridx);
                 int n2 = neighbor2(armoridx);
                 int n3 = neighbor3(armoridx);
@@ -194,8 +185,7 @@ namespace pdxpartyparrot.ggj2019.Home
                     if(n3 != -1)
                         result |= TakeDamage(n3, false, ref count);
                     return result;
-                }
-                else {
+                } else {
                     bool result  = TakeDamage(0, false, ref count);
                          result |= TakeDamage(1, false, ref count);
                          result |= TakeDamage(2, false, ref count);
@@ -208,6 +198,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
             return false;
         }
+#endregion
 
         public int UnloadPollen(Players.Player player, int amount)
         {
@@ -217,6 +208,7 @@ namespace pdxpartyparrot.ggj2019.Home
             if(null != bee && null != player) {
                 player.AddBeeToSwarm(bee);
             }
+
             return amount;
         }
 
@@ -226,11 +218,11 @@ namespace pdxpartyparrot.ggj2019.Home
                 return;
             }
 
-            if(NPCBee.Bees.Count < _maxBees) {
+            if(ActorManager.Instance.ActorCount<NPCBee>() < GameManager.Instance.GameGameData.MinBees) {
                 DoSpawnBee();
             }
 
-            _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);
+            _beeSpawnTimer.Start(GameManager.Instance.GameGameData.BeeSpawnCooldown, SpawnBee);
         }
 
         [CanBeNull]
@@ -258,7 +250,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
             DoSpawnBee();
 
-            _beeSpawnTimer.Start(_beeSpawnCooldown, SpawnBee);
+            _beeSpawnTimer.Start(GameManager.Instance.GameGameData.BeeSpawnCooldown, SpawnBee);
         }
 
         private void GameEndEventHandler(object sender, EventArgs args)

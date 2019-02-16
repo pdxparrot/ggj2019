@@ -23,7 +23,7 @@ namespace pdxpartyparrot.ggj2019.NPCs.Control
             _swarmContainer.transform.SetParent(transform);
         }
 
-        private void Destroy()
+        private void OnDestroy()
         {
             Destroy(_swarmContainer);
         }

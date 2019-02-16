@@ -2,7 +2,6 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Input;
-using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.ggj2019.Input;
 using pdxpartyparrot.ggj2019.Players.ControllerComponents;
 
@@ -14,24 +13,14 @@ namespace pdxpartyparrot.ggj2019.Players
 {
     public sealed class PlayerDriver : Game.Players.PlayerDriver, IPlayerActions, IPauseActionHandler
     {
-        private const string InvertLookYKey = "playerdriver.invertlooky";
-
         [SerializeField]
         private PlayerControls _controls;
-
-        private bool InvertLookY
-        {
-            get => PartyParrotManager.Instance.GetBool(InvertLookYKey);
-            set => PartyParrotManager.Instance.SetBool(InvertLookYKey, value);
-        }
 
         private PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
 
         private Player GamePlayer => GamePlayerBehavior.GamePlayer;
 
         public GamepadListener GamepadListener { get; private set; }
-
-        private DebugMenuNode _debugMenuNode;
 
         protected override bool CanDrive => base.CanDrive && !GamePlayer.IsDead && !GameManager.Instance.IsGameOver;
 
@@ -52,8 +41,6 @@ namespace pdxpartyparrot.ggj2019.Players
             Destroy(GamepadListener);
             GamepadListener = null;
 
-            DestroyDebugMenu();
-
             base.OnDestroy();
         }
 #endregion
@@ -71,8 +58,6 @@ namespace pdxpartyparrot.ggj2019.Players
             _controls.Player.Enable();
 
             GamepadListener = gameObject.AddComponent<GamepadListener>();
-
-            InitDebugMenu();
         }
 
         private bool IsOurDevice(InputAction.CallbackContext ctx)
@@ -187,21 +172,5 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 #endregion
-
-        private void InitDebugMenu()
-        {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"ggj2019.Player {Player.Id} Driver");
-            _debugMenuNode.RenderContentsAction = () => {
-                InvertLookY = GUILayout.Toggle(InvertLookY, "Invert Look Y");
-            };
-        }
-
-        private void DestroyDebugMenu()
-        {
-            if(DebugMenuManager.HasInstance) {
-                DebugMenuManager.Instance.RemoveNode(_debugMenuNode);
-            }
-            _debugMenuNode = null;
-        }
     }
 }

@@ -7,20 +7,22 @@ namespace pdxpartyparrot.ggj2019.Home
 {
     public sealed class HiveArmor : MonoBehaviour
     {
+#region Effects
         [SerializeField]
         private EffectTrigger _damageEffectTrigger;
 
         [SerializeField]
         private EffectTrigger _destroyEffectTrigger;
+#endregion
+
+        [SerializeField]
+        private SpriteRenderer _model;
 
         [SerializeField]
         [ReadOnly]
         private int _health;
 
         public int Health => _health;
-
-        [SerializeField]
-        private SpriteRenderer _model;
 
         public void Initialize()
         {

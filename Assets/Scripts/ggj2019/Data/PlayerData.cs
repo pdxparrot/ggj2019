@@ -14,5 +14,10 @@ namespace pdxpartyparrot.ggj2019.Data
         private float _respawnSeconds = 1.0f;
 
         public float RespawnSeconds => _respawnSeconds;
+
+        [SerializeField]
+        private float _spawnImmunitySeconds = 1.0f;
+
+        public float SpawnImmunitySeconds => _spawnImmunitySeconds;
     }
 }
