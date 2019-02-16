@@ -735,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034fc0d01e6460d4abc14d683955fab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _rumbleConfig:
     _seconds: 2
     _lowFrequency: 0.5
@@ -754,6 +755,7 @@ GameObject:
   - component: {fileID: 5876165133130176099}
   - component: {fileID: 6695846932397722229}
   - component: {fileID: 5892078909704092106}
+  - component: {fileID: 8685461160769134884}
   m_Layer: 12
   m_Name: RespawnEffectTrigger
   m_TagString: Untagged
@@ -799,6 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4b57b529704b41bd68332aee4142f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _vfx: {fileID: 6992623913396463535}
 --- !u!114 &6695846932397722229
 MonoBehaviour:
@@ -812,6 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: 2d39580d2db849f4a908741ff4667d7e, type: 3}
   _audioSource: {fileID: 0}
 --- !u!114 &5892078909704092106
@@ -826,12 +830,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034fc0d01e6460d4abc14d683955fab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _rumbleConfig:
     _seconds: 0.5
     _lowFrequency: 0.5
     _highFrequency: 0
   _gamepadListener: {fileID: 0}
   _isPlaying: 0
+--- !u!114 &8685461160769134884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7532839837519197164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed5e196665341359b2b5d7594208d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _gameObject: {fileID: 6352547171094094764}
+  _active: 1
 --- !u!1 &8573244462400402343
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +865,8 @@ GameObject:
   - component: {fileID: 4663146982913846180}
   - component: {fileID: 8401881861774622296}
   - component: {fileID: 8243270551406783114}
+  - component: {fileID: 3974408106517082490}
+  - component: {fileID: 8383168811146439068}
   m_Layer: 12
   m_Name: DeathEffectTrigger
   m_TagString: Untagged
@@ -890,6 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4b57b529704b41bd68332aee4142f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _vfx: {fileID: 2544777392152197799}
 --- !u!114 &8401881861774622296
 MonoBehaviour:
@@ -903,6 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: 29dc39de02f81d4469d19370a1ad38b6, type: 3}
   _audioSource: {fileID: 0}
 --- !u!114 &8243270551406783114
@@ -917,12 +941,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034fc0d01e6460d4abc14d683955fab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _rumbleConfig:
     _seconds: 1
     _lowFrequency: 0.25
     _highFrequency: 0.5
   _gamepadListener: {fileID: 0}
   _isPlaying: 0
+--- !u!114 &3974408106517082490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573244462400402343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d086bb8ddd625478d5fc6048564914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _viewer: {fileID: 0}
+  _screenShakeConfig:
+    _duration: 0.5
+    _strength: {x: 0.3, y: 0.3, z: 0.3}
+    _vibrato: 20
+    _randomness: 45
+  _isPlaying: 0
+--- !u!114 &8383168811146439068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573244462400402343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed5e196665341359b2b5d7594208d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _gameObject: {fileID: 6352547171094094764}
+  _active: 0
 --- !u!1 &9073105908243645982
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +994,7 @@ GameObject:
   - component: {fileID: 8362783230413928584}
   - component: {fileID: 7674856831482742360}
   - component: {fileID: 8462585715695382944}
+  - component: {fileID: 60001784879825778}
   m_Layer: 12
   m_Name: DamageEffectTrigger
   m_TagString: Untagged
@@ -979,11 +1040,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034fc0d01e6460d4abc14d683955fab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _rumbleConfig:
     _seconds: 0.5
     _lowFrequency: 0.5
     _highFrequency: 0
   _gamepadListener: {fileID: 0}
+  _isPlaying: 0
+--- !u!114 &60001784879825778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073105908243645982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d086bb8ddd625478d5fc6048564914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _viewer: {fileID: 0}
+  _screenShakeConfig:
+    _duration: 0.5
+    _strength: {x: 0.1, y: 0.1, z: 0.1}
+    _vibrato: 30
+    _randomness: 45
   _isPlaying: 0
 --- !u!1001 &3061877979847447838
 PrefabInstance:
@@ -1253,15 +1335,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6352547171094094764 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 495395128404236255, guid: 614b7f0eb133840419fbf1f622c17d15,
-    type: 3}
-  m_PrefabInstance: {fileID: 6843000556970554483}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6002921804210348799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 988981380167767692, guid: 614b7f0eb133840419fbf1f622c17d15,
+    type: 3}
+  m_PrefabInstance: {fileID: 6843000556970554483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6352547171094094764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 495395128404236255, guid: 614b7f0eb133840419fbf1f622c17d15,
     type: 3}
   m_PrefabInstance: {fileID: 6843000556970554483}
   m_PrefabAsset: {fileID: 0}

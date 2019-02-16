@@ -33,12 +33,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         private EffectTrigger _spawnEffect;
 
-        protected EffectTrigger SpawnEffect => _spawnEffect;
-
         [SerializeField]
         private EffectTrigger _deathEffect;
-
-        protected EffectTrigger DeathEffect => _deathEffect;
 
         [SerializeField]
         [ReadOnly]
@@ -69,19 +65,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return false;
             }
 
-            if(null != Model) {
-                Model.SetActive(true);
-            }
-
             IsDead = false;
 
-            if(null != _deathEffect) {
-                _deathEffect.ResetTrigger();
-            }
-
-            if(null != _spawnEffect) {
-                _spawnEffect.Trigger();
-            }
+            _deathEffect.ResetTrigger();
+            _spawnEffect.Trigger(OnSpawnComplete);
 
             return true;
         }
@@ -103,22 +90,28 @@ namespace pdxpartyparrot.ggj2019.NPCs
         // like maybe just "Despawn()" or something?
         public virtual void Kill(bool playerKill)
         {
+            if(IsDead) {
+                return;
+            }
+
             IsDead = true;
 
-            Model.SetActive(false);
-            if(null != _deathEffect) {
-                _deathEffect.Trigger(() => {
-                    _pooledObject.Recycle();
-                });
-            } else {
-                _pooledObject.Recycle();
-            }
+            _deathEffect.Trigger(OnDeathComplete);
         }
 
 #region Event Handlers
         private void RecycleEventHandler(object sender, EventArgs args)
         {
             OnDeSpawn();
+        }
+
+        protected virtual void OnSpawnComplete()
+        {
+        }
+
+        protected virtual void OnDeathComplete()
+        {
+            _pooledObject.Recycle();
         }
 #endregion
     }

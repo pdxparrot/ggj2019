@@ -18,11 +18,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
-            if(!EffectsManager.Instance.EnableVFX) {
-                return;
+            if(EffectsManager.Instance.EnableVFX) {
+                _vfx.Play();
+            } else {
+                // TODO: set a timer or something to timeout when we'd normally be done
             }
-
-            _vfx.Play();
         }
 
         public override void OnStop()

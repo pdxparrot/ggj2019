@@ -12,11 +12,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
-            if(!EffectsManager.Instance.EnableAnimation) {
-                return;
+            if(EffectsManager.Instance.EnableAnimation) {
+                _animator.SetTrigger(_animationTriggerParameter);
             }
 
-            _animator.SetTrigger(_animationTriggerParameter);
+            // TODO: is there any way to know how long the triggered animation will take?
         }
     }
 }

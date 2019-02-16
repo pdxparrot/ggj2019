@@ -26,15 +26,16 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
-            if(!EffectsManager.Instance.EnableAudio) {
-                return;
-            }
-
-            if(null == _audioSource) {
-                AudioManager.Instance.PlayOneShot(_audioClip);
+            if(EffectsManager.Instance.EnableAudio) {
+                if(null == _audioSource) {
+                    // TODO: set a timer or something to timeout when we'll be done
+                    AudioManager.Instance.PlayOneShot(_audioClip);
+                } else {
+                    _audioSource.clip = _audioClip;
+                    _audioSource.Play();
+                }
             } else {
-                _audioSource.clip = _audioClip;
-                _audioSource.Play();
+                // TODO: set a timer or something to timeout when we'd normally be done
             }
         }
 

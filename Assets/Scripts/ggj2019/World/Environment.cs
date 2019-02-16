@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
@@ -72,10 +72,16 @@ namespace pdxpartyparrot.ggj2019.World
                 OnWaveAnimationSet(args.WaveIndex, trackEntry);
             }
         }
-#endregion
 
         protected virtual void OnWaveAnimationSet(int waveIndex, TrackEntry trackEntry)
         {
+            //trackEntry.Event += OnAnimationEvent;
         }
+
+        private void OnAnimationEvent(TrackEntry trackEntry, Spine.Event evt)
+        {
+            Debug.Log($"Animation event: {evt.Data.Name}");
+        }
+#endregion
     }
 }

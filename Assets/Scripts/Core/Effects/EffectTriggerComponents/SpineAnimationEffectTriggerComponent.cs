@@ -24,14 +24,14 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
-            if(!EffectsManager.Instance.EnableAnimation) {
-                return;
+            if(EffectsManager.Instance.EnableAnimation) {
+                _trackEntry = _spineAnimation.SetAnimation(_spineAnimationTrack, _spineAnimationName, false);
+                _trackEntry.Complete += te => {
+                    _trackEntry = null;
+                };
+            } else {
+                // TODO: set a timer or something to timeout when we'd normally be done
             }
-
-            _trackEntry = _spineAnimation.SetAnimation(_spineAnimationTrack, _spineAnimationName, false);
-            _trackEntry.Complete += te => {
-                _trackEntry = null;
-            };
         }
     }
 }

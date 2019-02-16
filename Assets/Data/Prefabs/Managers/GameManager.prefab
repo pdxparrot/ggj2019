@@ -56,6 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: f0e3155e8b68bfd48af0a56a7c30fe6f, type: 3}
   _audioSource: {fileID: 0}
 --- !u!1 &8106416405593008791
@@ -114,12 +115,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d086bb8ddd625478d5fc6048564914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _viewer: {fileID: 0}
   _screenShakeConfig:
     _duration: 5
     _strength: {x: 0.3, y: 0.3, z: 0.3}
     _vibrato: 20
-    _randomness: 130
-  _viewer: {fileID: 0}
+    _randomness: 45
   _isPlaying: 0
 --- !u!1 &8308380061559946417
 GameObject:

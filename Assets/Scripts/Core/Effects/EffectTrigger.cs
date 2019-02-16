@@ -89,7 +89,7 @@ namespace pdxpartyparrot.Core.Effects
 
                 bool done = true;
                 foreach(var component in _components) {
-                    if(!component.IsDone) {
+                    if(component.WaitForComplete && !component.IsDone) {
                         done = false;
                         break;
                     }

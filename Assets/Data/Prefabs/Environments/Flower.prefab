@@ -275,6 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3274110978356894680}
   - component: {fileID: 2922206198979121348}
+  - component: {fileID: 390079643414172215}
   m_Layer: 12
   m_Name: SpawnEffectTrigger
   m_TagString: Untagged
@@ -308,33 +309,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
-  _vfx: {fileID: 0}
-  _audioClip: {fileID: 0}
-  _audioSource: {fileID: 0}
-  _rumble: 0
-  _rumbleConfig:
-    _seconds: 0
-    _lowFrequency: 0
-    _highFrequency: 0
-  _gamepadListener: {fileID: 0}
-  _screenShake: 0
-  _screenShakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
-  _animator: {fileID: 0}
-  _animationTriggerParameter: 
-  _spineAnimation: {fileID: 0}
-  _spineAnimationName: 
+--- !u!114 &390079643414172215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5062219595769442791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e750297fb7e0ad46b1064691c87a98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _spineAnimation: {fileID: 5411031095954356327}
+  _spineAnimationName: flower_grow
   _spineAnimationTrack: 0
-  _shake: 0
-  _shakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
 --- !u!1 &5106223850465643844
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,6 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7480186805272819026}
   - component: {fileID: 4962521947015905426}
+  - component: {fileID: 6462687046766428484}
   m_Layer: 12
   m_Name: DeathEffectTrigger
   m_TagString: Untagged
@@ -423,33 +414,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
-  _vfx: {fileID: 0}
-  _audioClip: {fileID: 0}
-  _audioSource: {fileID: 0}
-  _rumble: 0
-  _rumbleConfig:
-    _seconds: 0
-    _lowFrequency: 0
-    _highFrequency: 0
-  _gamepadListener: {fileID: 0}
-  _screenShake: 0
-  _screenShakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
-  _animator: {fileID: 0}
-  _animationTriggerParameter: 
-  _spineAnimation: {fileID: 0}
-  _spineAnimationName: 
+--- !u!114 &6462687046766428484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612808877648277100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e750297fb7e0ad46b1064691c87a98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _spineAnimation: {fileID: 5411031095954356327}
+  _spineAnimationName: flower_death
   _spineAnimationTrack: 0
-  _shake: 0
-  _shakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
 --- !u!1001 &1013333371945013934
 PrefabInstance:
   m_ObjectHideFlags: 0

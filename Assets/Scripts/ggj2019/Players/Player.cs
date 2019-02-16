@@ -114,6 +114,12 @@ namespace pdxpartyparrot.ggj2019.Players
             rumbleEffect = _gameOverEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
             rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;
 
+            ViewerShakeEffectTriggerComponent viewerShakeEffect = _damageEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
+            viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
+
+            viewerShakeEffect = _deathEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
+            viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
+
             return true;
         }
 
@@ -160,7 +166,6 @@ namespace pdxpartyparrot.ggj2019.Players
             _swarm.RemoveAll();
 
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
-            Model.gameObject.SetActive(false);
             _deathEffect.Trigger(() => {    
                 _deathTimer.Start(_respawnTime, Respawn);
             });
@@ -195,9 +200,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             PlayerManager.Instance.RespawnPlayer(this);
 
-            // TODO: maybe we only show the model after the effect ends?
             _respawnEffect.Trigger();
-            Model.gameObject.SetActive(true);
         }
     }
 }

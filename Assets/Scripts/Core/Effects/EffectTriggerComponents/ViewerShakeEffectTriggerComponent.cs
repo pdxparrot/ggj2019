@@ -10,9 +10,6 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
     public class ViewerShakeEffectTriggerComponent : EffectTriggerComponent
     {
         [SerializeField]
-        private ShakeConfig _screenShakeConfig;
-
-        [SerializeField]
         [ReadOnly]
         private Viewer _viewer;
 
@@ -23,6 +20,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         }
 
         [SerializeField]
+        private ShakeConfig _screenShakeConfig;
+
+        [SerializeField]
         [ReadOnly]
         private bool _isPlaying;
 
@@ -30,11 +30,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
-            if(!EffectsManager.Instance.EnableViewerShake) {
-                return;
+            if(EffectsManager.Instance.EnableViewerShake) {
+                Viewer.Camera.DOShakePosition(_screenShakeConfig.Duration, _screenShakeConfig.Strength, _screenShakeConfig.Vibrato, _screenShakeConfig.Randomness);
             }
-
-            Viewer.Camera.DOShakePosition(_screenShakeConfig.Duration, _screenShakeConfig.Strength, _screenShakeConfig.Vibrato, _screenShakeConfig.Randomness);
 
             _isPlaying = true;
             TimeManager.Instance.RunAfterDelay(_screenShakeConfig.Duration, () => _isPlaying = false);

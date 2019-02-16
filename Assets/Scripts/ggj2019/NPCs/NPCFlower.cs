@@ -2,8 +2,6 @@
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 
-using Spine;
-
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.NPCs
@@ -35,8 +33,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private SpineSkinSwapper _skinSwapper;
 
-        private TrackEntry _deathTrackEntry;
-
 #region Unity Lifecycle
         protected override void Awake()
         {
@@ -61,29 +57,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             _pollen = _initialPollen;
 
-            // acquire our spawnpoints during the grow animation
+            // acquire our spawnpoints while we spawn
             _beetleSpawn.Acquire(this, null);
             _pollenSpawn.Acquire(this, null);
-
-            TrackEntry track = _spineAnimationHelper.SetAnimation(0, "flower_grow", false);
-            track.Complete += x => {
-                // now free to spawn stuff
-                _beetleSpawn.Release();
-                _pollenSpawn.Release();
-
-                _spineAnimationHelper.SetAnimation(0, "flower_idle", true);
-            };
 
             return true;
         }
 
         public override void OnDeSpawn()
         {
-            if(null != _deathTrackEntry) {
-                _deathTrackEntry.Complete -= OnDeathComplete;
-                _deathTrackEntry = null;
-            }
-
             if(null != _spawnpoint) {
                 _spawnpoint.Release();
                 _spawnpoint = null;
@@ -121,24 +103,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void Kill(bool playerKill)
         {
-            if(null != _deathTrackEntry) {
-                _deathTrackEntry.Complete -= OnDeathComplete;
-                _deathTrackEntry = null;
-            }
+            base.Kill(playerKill);
 
-            IsDead = true;
-
-            // forcefully acquire our spawnpoints (they're going away)
+            // forcefully acquire our spawnpoints while we die
             _beetleSpawn.Acquire(this, null, true);
             _pollenSpawn.Acquire(this, null, true);
-
-            _deathTrackEntry = _spineAnimationHelper.SetAnimation(0, "flower_death", false);
-            _deathTrackEntry.Complete += OnDeathComplete;
-        }
-
-        private void OnDeathComplete(TrackEntry trackEntry)
-        {
-            base.Kill(false);
         }
 
         public int BeetleHarvest(int amount)
@@ -151,6 +120,17 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             return result;
+        }
+
+        protected override void OnSpawnComplete()
+        {
+            base.OnSpawnComplete();
+
+            // now free to spawn stuff
+            _beetleSpawn.Release();
+            _pollenSpawn.Release();
+
+            _spineAnimationHelper.SetAnimation(0, "flower_idle", true);
         }
     }
 }

@@ -28,11 +28,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override void OnStart()
         {
-            if(!EffectsManager.Instance.EnableRumble) {
-                return;
+            if(EffectsManager.Instance.EnableRumble) {
+                _gamepadListener.Rumble(_rumbleConfig);
             }
-
-            _gamepadListener.Rumble(_rumbleConfig);
 
             _isPlaying = true;
             TimeManager.Instance.RunAfterDelay(_rumbleConfig.Seconds, () => _isPlaying = false);

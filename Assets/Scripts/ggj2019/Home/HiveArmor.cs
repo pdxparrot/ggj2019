@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Home
 {
-    [RequireComponent(typeof(SpriteRenderer))]
     public sealed class HiveArmor : MonoBehaviour
     {
         [SerializeField]
@@ -20,14 +19,8 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public int Health => _health;
 
-        private SpriteRenderer _spriteRenderer;
-
-#region Unity Lifecycle
-        private void Awake()
-        {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-#endregion
+        [SerializeField]
+        private SpriteRenderer _model;
 
         public void Initialize()
         {
@@ -50,14 +43,13 @@ namespace pdxpartyparrot.ggj2019.Home
         private void ShowDamage()
         {
             float f = Health / (float)GameManager.Instance.GameGameData.HiveArmorHealth;
-            _spriteRenderer.color = new Color(1.0f, f, f);
+            _model.color = new Color(1.0f, f, f);
 
             _damageEffectTrigger.Trigger();
         }
 
         private void ShowDestroy()
         {
-            _spriteRenderer.enabled = false;
             _destroyEffectTrigger.Trigger();
         }
     }

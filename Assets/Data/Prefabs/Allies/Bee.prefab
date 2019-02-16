@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 9116564865131581364}
   - component: {fileID: 4273486632605189868}
   - component: {fileID: 1220547203202492739}
+  - component: {fileID: 7469032223783028107}
   m_Layer: 12
   m_Name: SpawnEffectTrigger
   m_TagString: Untagged
@@ -250,32 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
-  _audioClip: {fileID: 8300000, guid: f5d8664c8f905d54da2295e74c665c6c, type: 3}
-  _audioSource: {fileID: 0}
-  _rumble: 0
-  _rumbleConfig:
-    _seconds: 0
-    _lowFrequency: 0
-    _highFrequency: 0
-  _gamepadListener: {fileID: 0}
-  _screenShake: 0
-  _screenShakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
-  _animator: {fileID: 0}
-  _animationTriggerParameter: 
-  _spineAnimation: {fileID: 0}
-  _spineAnimationName: 
-  _spineAnimationTrack: 0
-  _shake: 0
-  _shakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
 --- !u!114 &4273486632605189868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4b57b529704b41bd68332aee4142f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _vfx: {fileID: 8295236522172095707}
 --- !u!114 &1220547203202492739
 MonoBehaviour:
@@ -301,8 +277,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: f5d8664c8f905d54da2295e74c665c6c, type: 3}
   _audioSource: {fileID: 0}
+--- !u!114 &7469032223783028107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546608478491391099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed5e196665341359b2b5d7594208d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _gameObject: {fileID: 2802237419312893253}
+  _active: 1
 --- !u!1 &8541084414506202979
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,6 +307,7 @@ GameObject:
   - component: {fileID: 7501246372000791320}
   - component: {fileID: 4590595778004042158}
   - component: {fileID: 8020566790251014639}
+  - component: {fileID: 1042708720056504087}
   m_Layer: 12
   m_Name: DeathEffectTrigger
   m_TagString: Untagged
@@ -348,32 +341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _owner: {fileID: 0}
-  _audioClip: {fileID: 8300000, guid: 29dc39de02f81d4469d19370a1ad38b6, type: 3}
-  _audioSource: {fileID: 0}
-  _rumble: 0
-  _rumbleConfig:
-    _seconds: 0
-    _lowFrequency: 0
-    _highFrequency: 0
-  _gamepadListener: {fileID: 0}
-  _screenShake: 0
-  _screenShakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
-  _animator: {fileID: 0}
-  _animationTriggerParameter: 
-  _spineAnimation: {fileID: 0}
-  _spineAnimationName: 
-  _spineAnimationTrack: 0
-  _shake: 0
-  _shakeConfig:
-    _duration: 1
-    _strength: {x: 1, y: 1, z: 1}
-    _vibrato: 1
-    _randomness: 45
 --- !u!114 &4590595778004042158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe4b57b529704b41bd68332aee4142f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _vfx: {fileID: 6702342064918538558}
 --- !u!114 &8020566790251014639
 MonoBehaviour:
@@ -399,8 +367,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitForComplete: 1
   _audioClip: {fileID: 8300000, guid: 29dc39de02f81d4469d19370a1ad38b6, type: 3}
   _audioSource: {fileID: 0}
+--- !u!114 &1042708720056504087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8541084414506202979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed5e196665341359b2b5d7594208d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _gameObject: {fileID: 2802237419312893253}
+  _active: 0
 --- !u!1001 &6095173113769758728
 PrefabInstance:
   m_ObjectHideFlags: 0

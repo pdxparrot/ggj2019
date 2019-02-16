@@ -1,17 +1,17 @@
 ﻿using System;
 
-using DG.Tweening;
-
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.NPCs;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Home
 {
@@ -20,22 +20,34 @@ namespace pdxpartyparrot.ggj2019.Home
         // TODO: do this better
         public static Hive Instance { get; private set; }
 
+        public override bool IsLocalActor => false;
+
         // [0 3]
         // [1 4]
         // [2 5]
-        [SerializeField] private HiveArmor[] _armor;
-        [SerializeField] private float _topRow;
-        [SerializeField] private float _bottomRow;
+        [SerializeField]
+        private HiveArmor[] _armor;
 
-        [SerializeField] private EffectTrigger _endGameExplosion;
-        [SerializeField] private EffectTrigger _endGameExplosionBig;
-        [SerializeField] private EffectTrigger _damageEffect;
-        [SerializeField] private GameObject _hiveBackground;
+        [SerializeField]
+        private float _topRow;
 
-        public override bool IsLocalActor => false;
+        [SerializeField]
+        private float _bottomRow;
 
-        [SerializeField] private int _maxBees = 5;
-        [SerializeField] private float _beeSpawnCooldown = 10.0f;
+        [SerializeField]
+        private EffectTrigger _endGameExplosion;
+
+        [SerializeField]
+        private EffectTrigger _endGameExplosionBig;
+
+        [SerializeField]
+        private EffectTrigger _damageEffect;
+
+        [SerializeField]
+        private int _maxBees = 5;
+
+        [SerializeField]
+        private float _beeSpawnCooldown = 10.0f;
 
         [SerializeField]
         [ReadOnly]
@@ -86,6 +98,12 @@ namespace pdxpartyparrot.ggj2019.Home
         }
 #endregion
 
+        public void InitializeClient()
+        {
+            ViewerShakeEffectTriggerComponent viewerShakeEffect = _damageEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
+            viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
+        }
+
         private int neighbor1(int pc) {
             switch(pc) {
             default:
@@ -122,7 +140,10 @@ namespace pdxpartyparrot.ggj2019.Home
             int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
                            ((pos.y > _topRow) ? 0 :
                             (pos.y > _bottomRow) ? 1 : 2);
-            bool ret = TakeDamage(armoridx);
+
+            int count = 0;
+            bool ret = TakeDamage(armoridx, true, ref count);
+            //Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
 
             _damageEffect.Trigger();
 
@@ -148,16 +169,16 @@ namespace pdxpartyparrot.ggj2019.Home
 
         private void EndExplosion()
         {
-            _hiveBackground.gameObject.SetActive(false);
             _endGameExplosionBig.Trigger();
         }
 
-        private bool TakeDamage(int armoridx, bool recurse = true)
+        private bool TakeDamage(int armoridx, bool recurse, ref int count)
         {
             HiveArmor armor = _armor[armoridx];
 
             if(armor.Health > 0) {
                 if(armor.Damage(1)) {
+                    count++;
                     return true;
                 }
             }
@@ -166,23 +187,21 @@ namespace pdxpartyparrot.ggj2019.Home
                 int n2 = neighbor2(armoridx);
                 int n3 = neighbor3(armoridx);
 
-                if(_armor[n1].Health > 0
-                || (n2 != -1 && _armor[n2].Health > 0)
-                || (n3 != -1 && _armor[n3].Health > 0)) {
-                    bool result  = TakeDamage(n1, false);
-                         if(n2 != -1)
-                             result |= TakeDamage(n2, false);
-                         if(n3 != -1)
-                             result |= TakeDamage(n3, false);
+                if(_armor[n1].Health > 0 || (n2 != -1 && _armor[n2].Health > 0) || (n3 != -1 && _armor[n3].Health > 0)) {
+                    bool result  = TakeDamage(n1, false, ref count);
+                    if(n2 != -1)
+                        result |= TakeDamage(n2, false, ref count);
+                    if(n3 != -1)
+                        result |= TakeDamage(n3, false, ref count);
                     return result;
                 }
                 else {
-                    bool result  = TakeDamage(0, false);
-                         result |= TakeDamage(1, false);
-                         result |= TakeDamage(2, false);
-                         result |= TakeDamage(3, false);
-                         result |= TakeDamage(4, false);
-                         result |= TakeDamage(5, false);
+                    bool result  = TakeDamage(0, false, ref count);
+                         result |= TakeDamage(1, false, ref count);
+                         result |= TakeDamage(2, false, ref count);
+                         result |= TakeDamage(3, false, ref count);
+                         result |= TakeDamage(4, false, ref count);
+                         result |= TakeDamage(5, false, ref count);
                     return result;
                 }
             }
