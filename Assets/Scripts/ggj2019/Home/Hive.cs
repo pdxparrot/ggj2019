@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Util;
@@ -57,6 +58,13 @@ namespace pdxpartyparrot.ggj2019.Home
         private GameObject _beeContainer;
 #endregion
 
+#region Debug
+        [SerializeField]
+        private bool _immune;
+
+        private DebugMenuNode _debugMenuNode;
+#endregion
+
 #region Unity Lifecycle
         protected override void Awake()
         {
@@ -72,6 +80,8 @@ namespace pdxpartyparrot.ggj2019.Home
 
             GameManager.Instance.GameStartEvent += GameStartEventHandler;
             GameManager.Instance.GameEndEvent += GameEndEventHandler;
+
+            InitDebugMenu();
         }
 
         private void Update()
@@ -83,6 +93,8 @@ namespace pdxpartyparrot.ggj2019.Home
 
         private void OnDestroy()
         {
+            DestroyDebugMenu();
+
             if(GameManager.HasInstance) {
                 GameManager.Instance.GameEndEvent -= GameEndEventHandler;
                 GameManager.Instance.GameStartEvent -= GameStartEventHandler;
@@ -104,8 +116,11 @@ namespace pdxpartyparrot.ggj2019.Home
         }
 
 #region Damage (clean this up)
-        private int neighbor1(int pc) {
-            switch(pc) {
+// TODO: the HiveArmor can have its neighbors linked....
+        private int neighbor1(int pc)
+        {
+            switch(pc)
+            {
             default:
             case 0: return 3;
             case 1: return 4;
@@ -113,9 +128,13 @@ namespace pdxpartyparrot.ggj2019.Home
             case 3: return 0;
             case 4: return 1;
             case 5: return 2;
-        }}
-        private int neighbor2(int pc) {
-            switch(pc) {
+            }
+        }
+
+        private int neighbor2(int pc)
+        {
+            switch(pc)
+            {
             default:
             case 0: return 1;
             case 1: return 2;
@@ -123,9 +142,13 @@ namespace pdxpartyparrot.ggj2019.Home
             case 3: return 4;
             case 4: return 5;
             case 5: return -1;
-        }}
-        private int neighbor3(int pc) {
-            switch(pc) {
+            }
+        }
+
+        private int neighbor3(int pc)
+        {
+            switch(pc)
+            {
             default:
             case 0: return -1;
             case 1: return 0;
@@ -133,44 +156,55 @@ namespace pdxpartyparrot.ggj2019.Home
             case 3: return -1;
             case 4: return 3;
             case 5: return 4;
-        }}
+            }
+        }
 
-        public bool TakeDamage(Vector3 pos)
+        public bool Damage(Vector3 pos)
         {
-            int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
-                           ((pos.y > _topRow) ? 0 :
-                            (pos.y > _bottomRow) ? 1 : 2);
+            bool armorDestroyed = false;
 
-            int count = 0;
-            bool ret = TakeDamage(armoridx, true, ref count);
-            //UnityEngine.Assertions.Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
+            if(!_immune) {
+                // figure out which armor piece was hit
+                int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
+                               ((pos.y > _topRow) ? 0 :
+                                (pos.y > _bottomRow) ? 1 : 2);
 
-            _damageEffect.Trigger();
+                // damage the armor
+                int count = 0;
+                armorDestroyed = Damage(armoridx, true, ref count);
+                //UnityEngine.Assertions.Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
 
-            bool armorLeft = false;
-            foreach(HiveArmor armor in _armor) {
-                if(armor.Health > 0) {
-                    armorLeft = true;
+                // check to see if we have any armor left
+                bool armorLeft = false;
+                foreach(HiveArmor armor in _armor) {
+                    if(armor.Health > 0) {
+                        armorLeft = true;
+                    }
+                }
+
+                // if no armor left, the game is over
+                if(!armorLeft) {
+                    _endGameExplosion.Trigger(() => {
+                        _endGameExplosionBig.Trigger();
+                    });
+                    GameManager.Instance.EndGame();
                 }
             }
 
-            if(!armorLeft) {
-                _endGameExplosion.Trigger(() => {
-                    _endGameExplosionBig.Trigger();
-                });
-                GameManager.Instance.EndGame();
+            if(armorDestroyed) {
+                GameManager.Instance.HiveDamage();
+                _damageEffect.Trigger();
             }
 
-            return ret;
+            return armorDestroyed;
         }
 
-        private bool TakeDamage(int armoridx, bool recurse, ref int count)
+        private bool Damage(int armoridx, bool recurse, ref int count)
         {
             HiveArmor armor = _armor[armoridx];
-
             if(armor.Health > 0) {
+                count++;
                 if(armor.Damage(1)) {
-                    count++;
                     return true;
                 }
             } else if(recurse) {
@@ -179,19 +213,19 @@ namespace pdxpartyparrot.ggj2019.Home
                 int n3 = neighbor3(armoridx);
 
                 if(_armor[n1].Health > 0 || (n2 != -1 && _armor[n2].Health > 0) || (n3 != -1 && _armor[n3].Health > 0)) {
-                    bool result  = TakeDamage(n1, false, ref count);
+                    bool result  = Damage(n1, false, ref count);
                     if(n2 != -1)
-                        result |= TakeDamage(n2, false, ref count);
+                        result |= Damage(n2, false, ref count);
                     if(n3 != -1)
-                        result |= TakeDamage(n3, false, ref count);
+                        result |= Damage(n3, false, ref count);
                     return result;
                 } else {
-                    bool result  = TakeDamage(0, false, ref count);
-                         result |= TakeDamage(1, false, ref count);
-                         result |= TakeDamage(2, false, ref count);
-                         result |= TakeDamage(3, false, ref count);
-                         result |= TakeDamage(4, false, ref count);
-                         result |= TakeDamage(5, false, ref count);
+                    bool result  = Damage(0, false, ref count);
+                         result |= Damage(1, false, ref count);
+                         result |= Damage(2, false, ref count);
+                         result |= Damage(3, false, ref count);
+                         result |= Damage(4, false, ref count);
+                         result |= Damage(5, false, ref count);
                     return result;
                 }
             }
@@ -212,6 +246,7 @@ namespace pdxpartyparrot.ggj2019.Home
             return amount;
         }
 
+#region Bee Spawning
         private void SpawnBee()
         {
             if(GameManager.Instance.IsGameOver) {
@@ -240,6 +275,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
             return bee;
         }
+#endregion
 
 #region Event Handlers
         private void GameStartEventHandler(object sender, EventArgs args)
@@ -258,5 +294,21 @@ namespace pdxpartyparrot.ggj2019.Home
             _beeSpawnTimer.Stop();
         }
 #endregion
+
+        private void InitDebugMenu()
+        {
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "ggj2019.Hive");
+            _debugMenuNode.RenderContentsAction = () => {
+                _immune = GUILayout.Toggle(_immune, "Immune");
+            };
+        }
+
+        private void DestroyDebugMenu()
+        {
+            if(DebugMenuManager.HasInstance) {
+                DebugMenuManager.Instance.RemoveNode(_debugMenuNode);
+            }
+            _debugMenuNode = null;
+        }
     }
 }

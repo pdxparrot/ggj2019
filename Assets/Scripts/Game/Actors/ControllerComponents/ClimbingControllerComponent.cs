@@ -790,7 +790,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Player {Controller.Owner.name} Climbing Component");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Controller.Owner.Id} Climbing Component");
             _debugMenuNode.RenderContentsAction = () => {
                 _breakOnFall = GUILayout.Toggle(_breakOnFall, "Break on fall");
             };

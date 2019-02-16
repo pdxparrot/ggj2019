@@ -60,6 +60,12 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public float BeeSpawnCooldown => _beeSpawnCooldown;
 
+
+        [SerializeField]
+        private float _enemySpawnImmunitySeconds = 1.0f;
+
+        public float EnemySpawnImmunitySeconds => _enemySpawnImmunitySeconds;
+
         [SerializeField]
         private WaveSpawner[] _waveSpawnerPrefabs;
 

@@ -1,3 +1,5 @@
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
@@ -11,12 +13,25 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public int Damage => _damage;
 
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _immunityTimer = new Timer();
+
+        protected bool IsImmune => _immunityTimer.IsRunning;
+
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
             Collider.isTrigger = true;
+        }
+
+        protected virtual void Update()
+        {
+            float dt = Time.deltaTime;
+
+            _immunityTimer.Update(dt);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -30,17 +45,30 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+#region Spawn
+        public override bool OnSpawn(SpawnPoint spawnpoint)
+        {
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
+
+            _immunityTimer.Start(GameManager.Instance.GameGameData.EnemySpawnImmunitySeconds);
+
+            return true;
+        }
+#endregion
+
         private void DamagePlayer(Players.Player player)
         {
             if(GameManager.Instance.IsGameOver || IsDead) {
                 return;
             }
 
-            if(null == player || player.IsDead) {
+            if(null == player) {
                 return;
             }
 
-            if(player.Damage(_damage)) {
+            if(player.Damage(_damage) && !IsImmune) {
                 Kill(true);
             }
         }

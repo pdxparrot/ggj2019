@@ -34,7 +34,6 @@ namespace pdxpartyparrot.ggj2019.Home
             _health -= amount;
             if(Health <= 0) {
                 ShowDestroy();
-                GameManager.Instance.HiveDamage();
                 return true;
             }
 

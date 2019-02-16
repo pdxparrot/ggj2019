@@ -32,8 +32,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
         private NPCBeetleData BeetleData => (NPCBeetleData)NPCData;
 
 #region Unity Lifecycle
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             float dt = Time.deltaTime;
 
             _harvestCooldownTimer.Update(dt);

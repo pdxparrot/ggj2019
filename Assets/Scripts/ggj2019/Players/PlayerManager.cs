@@ -1,12 +1,21 @@
-﻿using pdxpartyparrot.Game.State;
+﻿using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Data;
+
+using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    // TODO: find a way to make this unnecessary (all it's for is casting the GamePlayerData)
     public sealed class PlayerManager : Game.Players.PlayerManager<PlayerManager, Player>
     {
         public PlayerData GamePlayerData => (PlayerData)PlayerData;
+
+#region Debug
+        [SerializeField]
+        private bool _playersImmune;
+
+        public bool PlayersImmune => _playersImmune;
+#endregion
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -14,6 +23,8 @@ namespace pdxpartyparrot.ggj2019.Players
             base.Awake();
 
             GameStateManager.Instance.RegisterPlayerManager(this);
+
+            InitDebugMenu();
         }
 
         protected override void OnDestroy()
@@ -25,5 +36,13 @@ namespace pdxpartyparrot.ggj2019.Players
             base.OnDestroy();
         }
 #endregion
+
+        private void InitDebugMenu()
+        {
+            DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "ggj2019.PlayerManager");
+            debugMenuNode.RenderContentsAction = () => {
+                _playersImmune = GUILayout.Toggle(_playersImmune, "Players Immune");
+            };
+        }
     }
 }

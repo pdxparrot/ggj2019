@@ -67,7 +67,7 @@ namespace pdxpartyparrot.ggj2019.Players
         [ReadOnly]
         private /*readonly*/ Timer _immunityTimer = new Timer();
 
-        public bool IsImmune => _immunityTimer.IsRunning;
+        private bool IsImmune => PlayerManager.Instance.PlayersImmune || _immunityTimer.IsRunning;
 
         private Swarm _swarm;
 
@@ -138,6 +138,8 @@ namespace pdxpartyparrot.ggj2019.Players
             if(!base.OnReSpawn(spawnpoint)) {
                 return false;
             }
+
+            _isDead = false;
 
             _respawnEffect.Trigger();
             _immunityTimer.Start(PlayerManager.Instance.GamePlayerData.SpawnImmunitySeconds);
@@ -227,8 +229,6 @@ namespace pdxpartyparrot.ggj2019.Players
             if(GameManager.Instance.IsGameOver) {
                 return;
             }
-
-            _isDead = false;
 
             PlayerManager.Instance.RespawnPlayer(this);
         }

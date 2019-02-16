@@ -152,7 +152,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.75, y: 1.5}
+  m_Size: {x: 1.5, y: 1.5}
   m_Direction: 0
 --- !u!114 &7773629788050860981
 MonoBehaviour:
@@ -199,6 +199,10 @@ MonoBehaviour:
   _deathEffect: {fileID: 4934757118172737203}
   _npcData: {fileID: 0}
   _damage: 1
+  _immunityTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
   MaxVel: 6
   Accel: 4
   _acceleration: {x: 0, y: 0, z: 0}
@@ -548,7 +552,7 @@ PrefabInstance:
     - target: {fileID: 2182006773927481773, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2182006773927481773, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}

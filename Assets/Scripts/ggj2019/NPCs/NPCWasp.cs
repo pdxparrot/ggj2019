@@ -54,8 +54,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
         private TrackEntry _attackAnimation;
 
 #region Unity Lifecycle
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             float dt = Time.deltaTime;
 
             Think(dt);
@@ -199,7 +201,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            if(Hive.Instance.TakeDamage(transform.position)) {
+            if(Hive.Instance.Damage(transform.position)) {
                 Kill(false);
             }
         }
