@@ -38,10 +38,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         [SerializeField]
         [ReadOnly]
-        private /*readonly*/ Timer _offsetUpdateTimer = new Timer();
-
-        [SerializeField]
-        [ReadOnly]
         private State _state = State.Idle;
 
         [SerializeField]
@@ -62,8 +58,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             float dt = Time.deltaTime;
 
-            _offsetUpdateTimer.Update(dt);
-
             Think(dt);
         }
 #endregion
@@ -82,8 +76,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void OnDeSpawn()
         {
-            _offsetUpdateTimer.Stop();
-
             _bees.Remove(this);
 
             base.OnDeSpawn();
@@ -96,7 +88,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.Initialize(data);
 
-            _offsetUpdateTimer.Start(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
+            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
 
             _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
 
@@ -117,16 +109,22 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private void UpdateOffset()
         {
+            if(IsDead) {
+                return;
+            }
+
             _offsetPosition = new Vector2(
                 PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius),
                 PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius)
             );
-            _offsetUpdateTimer.Start(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
+            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
         }
 
         private void Think(float dt)
         {
-            if(IsDead || GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
+            // it's ok for us to think if the game is over or paused,
+            // so that way the swarm movement still happens
+            if(IsDead /*|| GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused*/) {
                 return;
             }
 
@@ -214,8 +212,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             position = Vector3.MoveTowards(transform.position,position, CurrentSpeed() * dt);
             _spineAnimationHelper.SetFacing(target.position - position);
             transform.position = position;
-
-            SetFlightAnimation();
         }
     }
 }
