@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.UI;
+using pdxpartyparrot.Core.Util.ObjectPool;
+
+using TMPro;
 
 using UnityEditor;
 using UnityEngine;
@@ -42,8 +48,26 @@ namespace pdxpartyparrot.Core.Editor
             NavMeshAgent,
             NavMeshObstacle,
 
+            // ui
+            TextMeshPro_Text,
+            ButtonHelper,
+            TextHelper,
+
+            // actors
+            Actor,
+
+            // pooled objects
+            PooledObject,
+
             // effects
             EffectTrigger,
+        }
+
+        private struct ComponentLookupResult
+        {
+            public GameObject Prefab;
+
+            public int Count;
         }
 
         [MenuItem("PDX Party Parrot/Core/Component Finder")]
@@ -57,7 +81,7 @@ namespace pdxpartyparrot.Core.Editor
 
         private ComponentType _selectedType = ComponentType.None;
 
-        private readonly List<GameObject> _selectedPrefabs = new List<GameObject>();
+        private readonly List<ComponentLookupResult> _selectedPrefabs = new List<ComponentLookupResult>();
 
         private Vector2 _scrollPosition;
 
@@ -69,12 +93,12 @@ namespace pdxpartyparrot.Core.Editor
                 _selectedType = (ComponentType)EditorGUILayout.EnumPopup("Component Type:", _selectedType);
 
                 _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
-                    foreach(GameObject prefab in _selectedPrefabs) {
+                    foreach(ComponentLookupResult result in _selectedPrefabs) {
                         EditorGUILayout.BeginHorizontal();
-                            if(GUIUtils.LayoutButton(prefab.name)) {
-                                Selection.activeGameObject = prefab;
+                            if(GUIUtils.LayoutButton(result.Prefab.name)) {
+                                Selection.activeGameObject = result.Prefab;
                             }
-                            EditorGUILayout.LabelField(AssetDatabase.GetAssetPath(prefab));
+                            EditorGUILayout.LabelField($"{AssetDatabase.GetAssetPath(result.Prefab)} has {result.Count} instances");
                         EditorGUILayout.EndHorizontal();
                     }
                 EditorGUILayout.EndScrollView();
@@ -86,6 +110,7 @@ namespace pdxpartyparrot.Core.Editor
         }
 #endregion
 
+        [CanBeNull]
         protected virtual Type GetSelectedComponentType()
         {
             switch(_selectedType)
@@ -116,6 +141,16 @@ namespace pdxpartyparrot.Core.Editor
                 return typeof(NavMeshAgent);
             case ComponentType.NavMeshObstacle:
                 return typeof(NavMeshObstacle);
+            case ComponentType.TextMeshPro_Text:
+                return typeof(TextMeshProUGUI);
+            case ComponentType.ButtonHelper:
+                return typeof(ButtonHelper);
+            case ComponentType.TextHelper:
+                return typeof(TextHelper);
+            case ComponentType.Actor:
+                return typeof(Actor);
+            case ComponentType.PooledObject:
+                return typeof(PooledObject);
             case ComponentType.EffectTrigger:
                 return typeof(EffectTrigger);
             }
@@ -124,6 +159,11 @@ namespace pdxpartyparrot.Core.Editor
 
         private void Refresh()
         {
+            Type selectedType = GetSelectedComponentType();
+            if(null == selectedType) {
+                return;
+            }
+
             _selectedPrefabs.Clear();
 
             var assetGUIDs = AssetDatabase.FindAssets("t:prefab");
@@ -132,13 +172,18 @@ namespace pdxpartyparrot.Core.Editor
                 GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
                 if(null == prefab) {
                     Debug.LogWarning($"AssetDatabase returned non prefab at {assetPath}");
-                    return;
+                    continue;
                 }
 
-                Type selectedType = GetSelectedComponentType();
-                if(null == selectedType || null != prefab.GetComponentInChildren(selectedType)) {
-                    _selectedPrefabs.Add(prefab);
+                var components = prefab.GetComponentsInChildren(selectedType);
+                if(components.Length < 1) {
+                    continue;
                 }
+
+                _selectedPrefabs.Add(new ComponentLookupResult {
+                    Prefab = prefab,
+                    Count = components.Length
+                });
             }
         }
     }

@@ -1,7 +1,8 @@
 {
     "name": "com.pdxpartyparrot.Core.Editor",
     "references": [
-        "com.pdxpartyparrot.Core.asmdef"
+        "com.pdxpartyparrot.Core.asmdef",
+        "Unity.TextMeshPro"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
