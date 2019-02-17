@@ -50,6 +50,9 @@ namespace pdxpartyparrot.Core.DebugMenu
         [Range(0, 1000)]
         private int _fpsAccumulatorSize = 100;
 
+        [SerializeField]
+        private bool _frameStepping;
+
         private float _lastFrameTime;
         private float _maxFrameTime;
         private float _minFrameTime;
@@ -116,6 +119,12 @@ namespace pdxpartyparrot.Core.DebugMenu
             }
 
             UpdateFrameStats(Time.unscaledDeltaTime);
+
+#if UNITY_EDITOR
+            if(_frameStepping) {
+                Debug.Break();
+            }
+#endif
         }
 
         private void OnGUI()
@@ -209,6 +218,17 @@ namespace pdxpartyparrot.Core.DebugMenu
                         node.RenderNode();
                     }
                 GUILayout.EndScrollView();
+
+#if UNITY_EDITOR
+                GUILayout.BeginHorizontal();
+                    if(GUIUtils.LayoutButton("Break")) {
+                        Debug.Break();
+                    }
+
+                    _frameStepping = GUILayout.Toggle(_frameStepping, "Enable Frame Stepping (Manually disable in the Hierarchy)");
+                    // TODO: should we force select the manager for the user?
+                GUILayout.EndHorizontal();
+#endif
 
                 GUILayout.BeginHorizontal();
                     // TODO: reloading doesn't work right
