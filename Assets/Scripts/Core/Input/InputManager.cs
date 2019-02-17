@@ -56,10 +56,24 @@ namespace pdxpartyparrot.Core.Input
         {
             InitDebugMenu();
 
-            if(PartyParrotManager.Instance.EnableGoogleVR) {
-                // TODO
-            } else {
-                Debug.Log("Creating EventSystem (no VR)...");
+            bool inputInitialized = false;
+
+#if ENABLE_VR
+            if(!inputInitialized && PartyParrotManager.Instance.EnableVR) {
+                Debug.LogError("TODO: Handle VR Input");
+                inputInitialized = true;
+            }
+#endif
+
+#if ENABLE_GVR
+            if(!inputInitialized && PartyParrotManager.Instance.EnableGoogleVR) {
+                Debug.LogError("TODO: Handle Google VR Input");
+                inputInitialized = true;
+            }
+#endif
+
+            if(!inputInitialized) {
+                Debug.Log("Creating EventSystem...");
                 EventSystem = Instantiate(_eventSystemPrefab, transform);
             }
 

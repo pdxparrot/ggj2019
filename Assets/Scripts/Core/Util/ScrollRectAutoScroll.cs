@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: move to Core.UI
 namespace pdxpartyparrot.Core.Util
 {
     [RequireComponent(typeof(ScrollRect))]

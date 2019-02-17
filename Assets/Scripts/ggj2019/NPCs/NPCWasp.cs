@@ -1,5 +1,6 @@
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.Splines;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
@@ -83,7 +84,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             var spline = spawnpoint.GetComponent<BezierSpline>();
             if(spline != null) {
                 _spline = spline;
-                _splineLen = spline.EstLength();
+                _splineLen = spline.EstimatedLength();
             }
 
             return true;

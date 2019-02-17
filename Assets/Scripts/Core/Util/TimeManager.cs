@@ -5,6 +5,7 @@ using pdxpartyparrot.Core.DebugMenu;
 
 using UnityEngine;
 
+// TODO: move to Core.Time
 namespace pdxpartyparrot.Core.Util
 {
     public sealed class TimeManager : SingletonBehavior<TimeManager>

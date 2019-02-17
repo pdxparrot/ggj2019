@@ -27,15 +27,21 @@ namespace pdxpartyparrot.Core
         [Space(10)]
 
 #region VR Config
+
+#if ENABLE_VR
         [SerializeField]
         private bool _enableVR;
 
         public bool EnableVR => _enableVR;
+#endif
 
+#if ENABLE_GVR
         [SerializeField]
         private bool _enableGoogleVR;
 
         public bool EnableGoogleVR => _enableGoogleVR;
+#endif
+
 #endregion
 
         [Space(10)]

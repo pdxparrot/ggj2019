@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 
 using pdxpartyparrot.Core.DebugMenu;
@@ -159,7 +158,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             base.Awake();
 
             Assert.IsNotNull(Controller.ActorAnimator, "ClimbingControllerComponent requires an actor animator");
-            Assert.IsTrue(Math.Abs(_leftHandTransform.position.y - _rightHandTransform.position.y) < float.Epsilon, "Character hands are at different heights!");
+            Assert.IsTrue(Mathf.Approximately(_leftHandTransform.position.y, _rightHandTransform.position.y), "Character hands are at different heights!");
             Assert.IsTrue(_headTransform.position.y > _leftHandTransform.position.y, "Character head should be above player hands!");
             Assert.IsTrue(_chestTransform.position.y < _leftHandTransform.position.y, "Character chest should be below player hands!");
 
