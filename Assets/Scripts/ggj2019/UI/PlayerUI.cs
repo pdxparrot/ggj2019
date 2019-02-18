@@ -1,7 +1,7 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using pdxpartyparrot.Core.Animation;
+using pdxpartyparrot.Core.Util;
 
 using Spine;
-using Spine.Unity;
 using TMPro;
 
 using UnityEngine;
@@ -13,6 +13,7 @@ namespace pdxpartyparrot.ggj2019.UI
         [SerializeField]
         private PlayerHUD _playerHUD;
 
+#region Intro
         [SerializeField]
         private GameObject _introTextObject;
 
@@ -20,7 +21,33 @@ namespace pdxpartyparrot.ggj2019.UI
         private float _introTextTime = 2.5f;
 
         [SerializeField]
-        private GameObject _deathText;
+        [ReadOnly]
+        private /*readonly*/ Timer _introTextTimer = new Timer();
+#endregion
+
+#region Wave
+        [SerializeField]
+        private GameObject _waveTextObject;
+
+        [SerializeField]
+        private TextMeshProUGUI _waveText;
+
+        [SerializeField]
+        private float _waveTextTime = 2.5f;
+
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _waveTextTimer = new Timer();
+#endregion
+
+#region Death
+        [SerializeField]
+        private GameObject _deathTextObject;
+#endregion
+
+#region End Game
+        [SerializeField]
+        private GameObject _gameOverTextObject;
 
         [SerializeField]
         private TextMeshProUGUI _endGameWaveText;
@@ -28,23 +55,21 @@ namespace pdxpartyparrot.ggj2019.UI
         [SerializeField]
         private TextMeshProUGUI _endGameScoreText;
 
+#region Animation
         [SerializeField]
-        private SkeletonAnimation _animatedGameOverObject;
+        private GameObject _gameOverAnimationObject;
 
         [SerializeField]
-        private GameObject _gameOverText;
+        private SpineAnimationHelper _gameOverAnimationHelper;
 
         [SerializeField]
-        private TextMeshProUGUI _waveText;
+        private string _gameOverEntranceAnimation = "game_over_entrance";
 
         [SerializeField]
-        private GameObject _waveTextObject;
+        private string _gameOverAnimation = "game_over_entrance2";
+#endregion
 
-        [SerializeField]
-        private float _waveTextTime = 2.5f;
-
-        private readonly Timer _waveTextTimer = new Timer();
-        private readonly Timer _introTextTimer = new Timer();
+#endregion
 
 #region Unity Lifecycle
         private void Update()
@@ -77,19 +102,18 @@ namespace pdxpartyparrot.ggj2019.UI
 
         public void ShowDeathText(bool show)
         {
-            _deathText.SetActive(show);
+            _deathTextObject.SetActive(show);
         }
 
         public void ShowGameOver(bool show)
         {
-            _animatedGameOverObject.ClearState();
-            _animatedGameOverObject.gameObject.SetActive(show);
-            _gameOverText.SetActive(show);
+            _gameOverAnimationObject.SetActive(show);
+            _gameOverTextObject.SetActive(show);
 
             if(show) {
-                TrackEntry track = _animatedGameOverObject.AnimationState.SetAnimation(0, "game_over_entrance", false);
+                TrackEntry track = _gameOverAnimationHelper.SetAnimation(_gameOverEntranceAnimation, false);
                 track.Complete += t => {
-                    _animatedGameOverObject.AnimationState.SetAnimation(0, "game_over_entrance2", true);
+                    _gameOverAnimationHelper.SetAnimation(_gameOverAnimation, true);
                 };
 
                 ShowDeathText(false);

@@ -95,57 +95,36 @@ namespace pdxpartyparrot.ggj2019
         {
             Assert.IsTrue(NetworkServer.active);
 
-            IsGameOver = false;
-
             SpawnManager.Instance.Initialize();
 
             InitObjectPools();
 
-            _score = 0;
+            InitWaveSpawner();
 
-            // TODO: for some dumb reason, we're starting the game before all the players are "connected"
-            // so we're just gonna have to assume we can count on this being correct
-            int playerCount = Math.Min(InputManager.Instance.GamepadCount, GameGameData.MaxLocalPlayers);
-            int waveSpawnerIndex = Math.Min(playerCount, GameGameData.WaveSpawnerPrefabs.Length) - 1;
-            Assert.IsTrue(waveSpawnerIndex >= 0);
-
-            Debug.Log($"Instantiating wave spawner configured for {waveSpawnerIndex + 1} players...");
-
-            WaveSpawner = Instantiate(GameGameData.WaveSpawnerPrefabs[waveSpawnerIndex]);
-            WaveSpawner.Initialize();
-            WaveSpawner.WaveStartEvent += WaveStartEventHandler;
-            WaveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
-
+            IsGameOver = false;
             GameStartEvent?.Invoke(this, EventArgs.Empty);
 
             WaveSpawner.StartSpawner();
+
+            _score = 0;
 
             _gameTimer.Reset();
             _gameTimer.Start();
         }
 
-        private void InitObjectPools()
-        {
-            PooledObject pooledObject = GameGameData.BeePrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("bees", pooledObject,GameGameData.BeePoolSize);
-
-            pooledObject = GameGameData.PollenPrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("pollen", pooledObject,GameGameData.PollenPoolSize);
-        }
-
         //[Server]
         public void EndGame()
         {
+            Assert.IsTrue(NetworkServer.active);
+
             _gameTimer.Stop();
 
             WaveSpawner.StopSpawner();
 
+            IsGameOver = true;
             GameEndEvent?.Invoke(this, EventArgs.Empty);
 
-            WaveSpawner.WaveCompleteEvent -= WaveCompleteEventHandler;
-            WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
-            WaveSpawner.Shutdown();
-            Destroy(WaveSpawner);
+            DestroyWaveSpawner();
 
             DestroyObjectPools();
 
@@ -157,8 +136,17 @@ namespace pdxpartyparrot.ggj2019
             HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
             PlayerManager.Instance.DespawnPlayers();
 
-            IsGameOver = true;
             _gameOverEffect.Trigger();
+        }
+
+#region Object Pools
+        private void InitObjectPools()
+        {
+            PooledObject pooledObject = GameGameData.BeePrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("bees", pooledObject,GameGameData.BeePoolSize);
+
+            pooledObject = GameGameData.PollenPrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("pollen", pooledObject,GameGameData.PollenPoolSize);
         }
 
         private void DestroyObjectPools()
@@ -168,6 +156,35 @@ namespace pdxpartyparrot.ggj2019
                 ObjectPoolManager.Instance.DestroyPool("bees");
             }
         }
+#endregion
+
+#region Wave Spawner
+        private void InitWaveSpawner()
+        {
+            // TODO: for some dumb reason, we're starting the game before all the players are "connected"
+            // so we're just gonna have to assume we can count on this being correct
+            int playerCount = Math.Min(InputManager.Instance.GamepadCount, GameGameData.MaxLocalPlayers);
+            int waveSpawnerIndex = Math.Min(playerCount, GameGameData.WaveSpawnerPrefabs.Length) - 1;
+            Assert.IsTrue(waveSpawnerIndex >= 0);
+
+            Debug.Log($"Instantiating wave spawner configured for {waveSpawnerIndex + 1} players...");
+
+            WaveSpawner = Instantiate(GameGameData.WaveSpawnerPrefabs[waveSpawnerIndex]);
+
+            WaveSpawner.Initialize();
+            WaveSpawner.WaveStartEvent += WaveStartEventHandler;
+            WaveSpawner.WaveCompleteEvent += WaveCompleteEventHandler;
+        }
+
+        private void DestroyWaveSpawner()
+        {
+            WaveSpawner.WaveCompleteEvent -= WaveCompleteEventHandler;
+            WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
+            WaveSpawner.Shutdown();
+
+            Destroy(WaveSpawner);
+        }
+#endregion
 
         //[Client]
         public void InitViewer()

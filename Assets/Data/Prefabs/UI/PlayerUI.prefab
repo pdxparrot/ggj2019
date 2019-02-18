@@ -822,6 +822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1211247559298086878}
   - component: {fileID: 7719837326964737951}
+  - component: {fileID: 8370525947250472731}
   m_Layer: 0
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -861,14 +862,38 @@ MonoBehaviour:
   _playerHUD: {fileID: 476329379392408382}
   _introTextObject: {fileID: 7726590095088699856}
   _introTextTime: 2.5
-  _deathText: {fileID: 3134067164408691225}
+  _introTextTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+  _waveTextObject: {fileID: 6500637424092948447}
+  _waveText: {fileID: 3740239397043253258}
+  _waveTextTime: 2.5
+  _waveTextTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+  _deathTextObject: {fileID: 3134067164408691225}
+  _gameOverTextObject: {fileID: 7047304840778109179}
   _endGameWaveText: {fileID: 1752413567310663264}
   _endGameScoreText: {fileID: 5159501633758272764}
-  _animatedGameOverObject: {fileID: 703869060690455760}
-  _gameOverText: {fileID: 7047304840778109179}
-  _waveText: {fileID: 3740239397043253258}
-  _waveTextObject: {fileID: 6500637424092948447}
-  _waveTextTime: 2.5
+  _gameOverAnimationObject: {fileID: 3926502670144364327}
+  _gameOverAnimationHelper: {fileID: 8370525947250472731}
+  _gameOverEntranceAnimation: game_over_entrance
+  _gameOverAnimation: game_over_entrance2
+--- !u!114 &8370525947250472731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008830028397881285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8186df2b8ceb9454899499a2bd6ba8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 703869060690455760}
 --- !u!1 &5010605253717094726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,15 +1415,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1211247559298086878}
     m_Modifications:
+    - target: {fileID: 559437147616080230, guid: 97b01e82b65e2e643941c486c62c0aeb,
+        type: 3}
+      propertyPath: m_Name
+      value: Spine GameObject (game_over)
+      objectReference: {fileID: 0}
     - target: {fileID: 4069738311815791249, guid: 97b01e82b65e2e643941c486c62c0aeb,
         type: 3}
       propertyPath: _animationName
       value: game_over_entrance
       objectReference: {fileID: 0}
-    - target: {fileID: 559437147616080230, guid: 97b01e82b65e2e643941c486c62c0aeb,
+    - target: {fileID: 2853812788981228787, guid: 97b01e82b65e2e643941c486c62c0aeb,
         type: 3}
-      propertyPath: m_Name
-      value: Spine GameObject (game_over)
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853812788981228787, guid: 97b01e82b65e2e643941c486c62c0aeb,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1001257659
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853812788981228787, guid: 97b01e82b65e2e643941c486c62c0aeb,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833649098758961690, guid: 97b01e82b65e2e643941c486c62c0aeb,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1073157211248899361, guid: 97b01e82b65e2e643941c486c62c0aeb,
         type: 3}
@@ -1470,28 +1515,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2853812788981228787, guid: 97b01e82b65e2e643941c486c62c0aeb,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2853812788981228787, guid: 97b01e82b65e2e643941c486c62c0aeb,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 1001257659
-      objectReference: {fileID: 0}
-    - target: {fileID: 2853812788981228787, guid: 97b01e82b65e2e643941c486c62c0aeb,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833649098758961690, guid: 97b01e82b65e2e643941c486c62c0aeb,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97b01e82b65e2e643941c486c62c0aeb, type: 3}
+--- !u!1 &3926502670144364327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 559437147616080230, guid: 97b01e82b65e2e643941c486c62c0aeb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3584364204557315649}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4565144296459606880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1073157211248899361, guid: 97b01e82b65e2e643941c486c62c0aeb,
@@ -1504,7 +1535,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3584364204557315649}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3926502670144364327}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
