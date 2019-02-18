@@ -10,6 +10,10 @@ namespace pdxpartyparrot.Game
         GameData GameData { get; }
 
         bool IsGameOver { get; }
+
+        void Initialize();
+
+        void Shutdown();
     }
 
     public abstract class GameManager<T> : SingletonBehavior<T>, IGameManager where T: GameManager<T>
@@ -20,5 +24,9 @@ namespace pdxpartyparrot.Game
         public GameData GameData => _gameData;
 
         public abstract bool IsGameOver { get; protected set; }
+
+        public abstract void Initialize();
+
+        public abstract void Shutdown();
     }
 }

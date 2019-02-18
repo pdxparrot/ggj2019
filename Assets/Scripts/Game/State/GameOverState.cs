@@ -29,6 +29,8 @@ namespace pdxpartyparrot.Game.State
 
         public override void OnExit()
         {
+            GameStateManager.Instance.GameManager.Shutdown();
+
             AudioManager.Instance.StopAllMusic();
         }
 

@@ -65,6 +65,8 @@ namespace pdxpartyparrot.ggj2019
 
         public WaveSpawner WaveSpawner { get; private set; }
 
+        public GameObject PollenContainer { get; private set; }
+
 #region Unity Lifecycle
         private void Awake()
         {
@@ -90,53 +92,24 @@ namespace pdxpartyparrot.ggj2019
         }
 #endregion
 
-        //[Server]
-        public void StartGame()
+        public override void Initialize()
         {
-            Assert.IsTrue(NetworkServer.active);
-
-            SpawnManager.Instance.Initialize();
-
             InitObjectPools();
 
             InitWaveSpawner();
 
-            IsGameOver = false;
-            GameStartEvent?.Invoke(this, EventArgs.Empty);
-
-            WaveSpawner.StartSpawner();
-
-            _score = 0;
-
-            _gameTimer.Reset();
-            _gameTimer.Start();
+            PollenContainer = new GameObject("pollen");
+            PollenContainer.transform.SetParent(transform);
         }
 
-        //[Server]
-        public void EndGame()
+        public override void Shutdown()
         {
-            Assert.IsTrue(NetworkServer.active);
-
-            _gameTimer.Stop();
-
-            WaveSpawner.StopSpawner();
-
-            IsGameOver = true;
-            GameEndEvent?.Invoke(this, EventArgs.Empty);
+            Destroy(PollenContainer);
+            PollenContainer = null;
 
             DestroyWaveSpawner();
 
             DestroyObjectPools();
-
-            foreach(Players.Player player in PlayerManager.Instance.Players) {
-                player.GameOver();
-            }
-
-            // save high scores and then kick everyone
-            HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
-            PlayerManager.Instance.DespawnPlayers();
-
-            _gameOverEffect.Trigger();
         }
 
 #region Object Pools
@@ -185,6 +158,47 @@ namespace pdxpartyparrot.ggj2019
             Destroy(WaveSpawner);
         }
 #endregion
+
+        //[Server]
+        public void StartGame()
+        {
+            Assert.IsTrue(NetworkServer.active);
+
+            SpawnManager.Instance.Initialize();
+
+            IsGameOver = false;
+            GameStartEvent?.Invoke(this, EventArgs.Empty);
+
+            WaveSpawner.StartSpawner();
+
+            _score = 0;
+
+            _gameTimer.Reset();
+            _gameTimer.Start();
+        }
+
+        //[Server]
+        public void EndGame()
+        {
+            Assert.IsTrue(NetworkServer.active);
+
+            _gameTimer.Stop();
+
+            WaveSpawner.StopSpawner();
+
+            IsGameOver = true;
+            GameEndEvent?.Invoke(this, EventArgs.Empty);
+
+            foreach(Players.Player player in PlayerManager.Instance.Players) {
+                player.GameOver();
+            }
+
+            // save high scores and then kick everyone
+            HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
+            PlayerManager.Instance.DespawnPlayers();
+
+            _gameOverEffect.Trigger();
+        }
 
         //[Client]
         public void InitViewer()

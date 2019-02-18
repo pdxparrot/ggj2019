@@ -186,7 +186,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             PollenCollectable pollen = ObjectPoolManager.Instance.GetPooledObject<PollenCollectable>("pollen");
             _pollenSpawn.Spawn(pollen, Guid.NewGuid());
-            // TODO: reparent?
+            pollen.transform.SetParent(GameManager.Instance.PollenContainer.transform);
             pollen.Initialize(FlowerData.PollenData);
 
             return true;

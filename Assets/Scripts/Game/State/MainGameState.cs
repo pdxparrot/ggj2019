@@ -81,6 +81,8 @@ namespace pdxpartyparrot.Game.State
 
             DebugMenuManager.Instance.ResetFrameStats();
 
+            GameStateManager.Instance.GameManager.Initialize();
+
             InitializeServer();
             InitializeClient();
         }
