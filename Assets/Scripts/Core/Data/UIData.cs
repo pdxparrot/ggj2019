@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+
+using TMPro;
 
 using UnityEngine;
 
@@ -17,5 +19,10 @@ namespace pdxpartyparrot.Core.Data
         private AudioClip _buttonClickAudioClip;
 
         public AudioClip ButtonClickAudioClip => _buttonClickAudioClip;
+
+        [SerializeField]
+        private TMP_FontAsset _defaultFont = TMP_FontAsset.defaultFontAsset;
+
+        public TMP_FontAsset DefaultFont => _defaultFont;
     }
 }

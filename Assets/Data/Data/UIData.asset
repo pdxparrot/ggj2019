@@ -16,3 +16,4 @@ MonoBehaviour:
     type: 3}
   _buttonClickAudioClip: {fileID: 8300000, guid: 19d42c1607c0fd842bf16c95502da7ad,
     type: 3}
+  _defaultFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
