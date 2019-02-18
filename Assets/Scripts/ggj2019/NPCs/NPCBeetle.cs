@@ -113,8 +113,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             _attackEffect.Trigger();
 
-            _flower.BeetleHarvest(Damage);
-            if(_flower.IsDead) {
+            if(_flower.BeetleHarvest()) {
                 _flower = null;
 
                 Kill(false);

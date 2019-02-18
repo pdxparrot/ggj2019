@@ -172,7 +172,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _interactables.RemoveInteractable(bee);
         }
 
-        public bool Damage(int amount)
+        public bool Damage()
         {
             if(IsDead) {
                 return false;
@@ -183,7 +183,7 @@ namespace pdxpartyparrot.ggj2019.Players
                     Kill();
                     return true;
                 }
-                _swarm.Remove(amount);
+                _swarm.Remove(1);
             }
 
             _damageEffect.Trigger();

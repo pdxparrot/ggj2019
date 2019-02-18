@@ -1,58 +1,53 @@
-using pdxpartyparrot.Core;
+﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Splines;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.ggj2019.Home;
 
-using Spine;
-
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
-    // NOTE: wasp art faces the wrong direction so all facing stuff is transposed 
     public sealed class NPCWasp : NPCEnemy
     {
-        // TODO: data
-        [SerializeField] private float MaxVel;
-        [SerializeField] private float Accel;
-
-        [SerializeField]
-        [ReadOnly]
-        private Vector3 _acceleration;
-
-        [SerializeField]
-        [ReadOnly]
-        private Vector3 _velocity;
+        private enum State
+        {
+            Idle,
+            FollowingSpline,
+            Attacking,
+        }
 
 #region Spline
         [SerializeField]
         [ReadOnly]
-        private float _splineLen;
-
-        [SerializeField]
-        [ReadOnly]
-        private float _splineVel;
-
-        [SerializeField]
-        [ReadOnly]
-        private float _splinePos;
-
-        [SerializeField]
-        [ReadOnly]
         private BezierSpline _spline;
+
+        [SerializeField]
+        [ReadOnly]
+        private float _splineLength;
+
+        [SerializeField]
+        [ReadOnly]
+        private float _splinePosition;
+#endregion
+
+#region Effects
+        [SerializeField]
+        private EffectTrigger _attackStartEffect;
+
+        [SerializeField]
+        private EffectTrigger _attackEndEffect;
 #endregion
 
         [SerializeField]
-        private EffectTrigger _attackEffect;
+        [ReadOnly]
+        private State _state = State.Idle;
 
-        // TODO: make this a state enum
-        private bool _isFlying = true;
-        private bool _isAttacking;
-
-        private TrackEntry _attackAnimation;
+        private NPCWaspData WaspData => (NPCWaspData)NPCData;
 
 #region Unity Lifecycle
         protected override void Update()
@@ -65,53 +60,57 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+#region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
         {
             if(!base.OnSpawn(spawnpoint)) {
                 return false;
             }
 
-            Vector3 dir = (Vector3.zero - transform.position).normalized;
-            _acceleration = dir * Accel;
-            _spineAnimationHelper.SetFacing(-dir);
+            _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
 
-            SetHoverAnimation();
-
-            _splineLen = 0.0f;
-            _splinePos = 0.0f;
-            _splineVel = 0.0f;
-
-            var spline = spawnpoint.GetComponent<BezierSpline>();
-            if(spline != null) {
-                _spline = spline;
-                _splineLen = spline.EstimatedLength();
-            }
+            _spline = spawnpoint.GetComponent<BezierSpline>();
+            _splineLength = _spline.EstimatedLength();
+            _splinePosition = 0.0f;
 
             return true;
         }
 
         public override void OnDeSpawn()
         {
-            if(null != _attackAnimation) {
-                _attackAnimation.Complete -= OnAttackComplete;
-                _attackAnimation = null;
-            }
+            _attackEndEffect.StopTrigger();
+            _attackStartEffect.StopTrigger();
 
-            _attackEffect.StopTrigger();
-
-            _isAttacking = false;
-            _isFlying = true;
             _spline = null;
-
-            _acceleration = Vector3.zero;
-            _velocity = Vector3.zero;
 
             base.OnDeSpawn();
         }
+#endregion
 
         public override void Initialize(NPCData data)
         {
+            Assert.IsTrue(data is NPCWaspData);
+
             base.Initialize(data);
+
+            SetState(State.FollowingSpline);
+        }
+
+        private void SetState(State state)
+        {
+            _state = state;
+            switch(state)
+            {
+            case State.Idle:
+                SetIdleAnimation();
+                break;
+            case State.FollowingSpline:
+                SetFlyingAnimation();
+                break;
+            case State.Attacking:
+                Attack();
+                break;
+            }
         }
 
         private void Think(float dt)
@@ -120,104 +119,32 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            if(_isAttacking) {
-                return;
-            }
-
-	        if(!FollowSpline(dt)) {
-	            _velocity += _acceleration * dt;
-	            _velocity = Vector3.ClampMagnitude(_velocity, MaxVel);
-
-	            transform.position += _velocity * dt;
-
-                _spineAnimationHelper.SetFacing(-_velocity);
-	        }
-
-            SetFlightAnimation();
-
-            if(Hive.Instance.Collides(this)) {
-                Attack(Hive.Instance);
+            switch(_state)
+            {
+            case State.Idle:
+                if(Hive.Instance.Collides(this)) {
+                    SetState(State.Attacking);
+                }
+                break;
+            case State.FollowingSpline:
+                FollowSpline(dt);
+                break;
+            case State.Attacking:
+                break;
             }
         }
 
-        private bool FollowSpline(float dt)
+#region Animation
+        private void SetIdleAnimation()
         {
-            if(null == _spline) {
-                return false;
-            }
-
-	        _splineVel += _acceleration.magnitude * dt;
-	        _splineVel = Mathf.Max(_splineVel, MaxVel);
-	        _splinePos += _splineVel * dt;
-
-	        float t = _splinePos / _splineLen;
-
-	        Vector3 targetLocation = _spline.GetPoint(t);
-
-            _spineAnimationHelper.SetFacing(transform.position - targetLocation);
-
-            transform.position = targetLocation;
-
-            return true;
+            _spineAnimationHelper.SetAnimation(WaspData.IdleAnimationName, true);
         }
 
-        private void SetHoverAnimation()
+        private void SetFlyingAnimation()
         {
-            if(!_isFlying) {
-                return;
-            }
-
-            _spineAnimationHelper.SetAnimation("wasp_hover", true);
-            _isFlying = false;
+            _spineAnimationHelper.SetAnimation(WaspData.FlyingAnimationName, true);
         }
-
-        private void SetFlightAnimation()
-        {
-            if(_isFlying) {
-                return;
-            }
-
-            _spineAnimationHelper.SetAnimation("wasp_hover", true);
-            _isFlying = true;
-        }
-
-        private void SetAttackAnimation()
-        {
-            if(null != _attackAnimation) {
-                _attackAnimation.Complete -= OnAttackComplete;
-                _attackAnimation = null;
-            }
-
-            _isAttacking = true;
-
-            _attackAnimation = _spineAnimationHelper.SetAnimation(1, "wasp_attack", false);
-            _attackAnimation.Complete += OnAttackComplete;
-        }
-
-        private void OnAttackComplete(TrackEntry track)
-        {
-            _isAttacking = false;
-
-            if(IsDead) {
-                return;
-            }
-
-            if(Hive.Instance.Damage(transform.position)) {
-                Kill(false);
-            }
-        }
-
-        private void Attack(Hive hive)
-        {
-            if(_isAttacking) {
-                return;
-            }
-
-            _velocity = Vector3.zero;
-
-            SetAttackAnimation();
-            _attackEffect.Trigger();
-        }
+#endregion
 
         public override void Kill(bool playerKill)
         {
@@ -227,5 +154,41 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.Kill(playerKill);
         }
+
+#region Actions
+        private void Attack()
+        {
+            _attackStartEffect.Trigger(DoAttack);
+        }
+
+        private void DoAttack()
+        {
+            _attackEndEffect.Trigger();
+
+            if(Hive.Instance.Damage(transform.position)) {
+                Kill(false);
+            } else {
+                SetState(State.Idle);
+            }
+        }
+
+        private void FollowSpline(float dt)
+        {
+            float speed = WaspData.Speed;
+
+	        _splinePosition += speed * dt;
+	        float t = _splinePosition / _splineLength;
+	        Vector3 targetPosition = _spline.GetPoint(t);
+
+            _spineAnimationHelper.SetFacing(targetPosition - transform.position);
+            //transform.LookAt2DFlip(targetPosition);
+
+            transform.position = targetPosition;
+
+            if(_splinePosition >= _splineLength) {
+                SetState(State.Idle);
+            }
+        }
+#endregion
     }
 }

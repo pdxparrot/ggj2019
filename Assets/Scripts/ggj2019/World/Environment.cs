@@ -80,7 +80,7 @@ namespace pdxpartyparrot.ggj2019.World
 
         private void OnAnimationEvent(TrackEntry trackEntry, Spine.Event evt)
         {
-            Debug.Log($"Animation event: {evt.Data.Name}");
+            Debug.Log($"Animation event: '{evt.Data.Name}'");
         }
 #endregion
     }

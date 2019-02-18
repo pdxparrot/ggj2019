@@ -23,14 +23,14 @@ namespace pdxpartyparrot.ggj2019.Data
 
 #region Animations
         [SerializeField]
-        private string _hoverAnimationName = "bee_hover";
+        private string _idleAnimationName = "bee_hover";
 
-        public string HoverAnimationName => _hoverAnimationName;
+        public string IdleAnimationName => _idleAnimationName;
 
         [SerializeField]
-        private string _flightAnimationName = "bee-flight";
+        private string _flyingAnimationName = "bee-flight";
 
-        public string FlightAnimationName => _flightAnimationName;
+        public string FlyingAnimationName => _flyingAnimationName;
 #endregion
     }
 }

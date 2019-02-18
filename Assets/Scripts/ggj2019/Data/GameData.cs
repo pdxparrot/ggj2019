@@ -66,6 +66,12 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public float EnemySpawnImmunitySeconds => _enemySpawnImmunitySeconds;
 
+
+        [SerializeField]
+        private int _flowerPollen = 5;
+
+        public int FlowerPollen => _flowerPollen;
+
         [SerializeField]
         private WaveSpawner[] _waveSpawnerPrefabs;
 

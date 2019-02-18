@@ -27,6 +27,10 @@ MonoBehaviour:
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}
   _hiveArmorHealth: 2
+  _minBees: 6
+  _beeSpawnCooldown: 10
+  _enemySpawnImmunitySeconds: 0.1
+  _flowerPollen: 5
   _waveSpawnerPrefabs:
   - {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8, type: 3}
   - {fileID: 6958230785637716431, guid: b1798b2a86ab9ed418aa66bcbfbb1d89, type: 3}

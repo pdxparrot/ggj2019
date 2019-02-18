@@ -260,7 +260,6 @@ MonoBehaviour:
   _spawnEffect: {fileID: 2922206198979121348}
   _deathEffect: {fileID: 4962521947015905426}
   _npcData: {fileID: 0}
-  _initialPollen: 5
   _beetleSpawn: {fileID: 4261586379689094825}
   _pollenSpawn: {fileID: 2927692061490181078}
   _pollen: 0
@@ -450,7 +449,7 @@ PrefabInstance:
     - target: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
         type: 3}
       propertyPath: _animationName
-      value: flower_death
+      value: flower_idle
       objectReference: {fileID: 0}
     - target: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
         type: 3}

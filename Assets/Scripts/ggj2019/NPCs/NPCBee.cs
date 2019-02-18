@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.NPCs.Control;
@@ -20,6 +21,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
             Follow,
         }
 
+#region Swarm
+        [SerializeField]
+        [ReadOnly]
+        [CanBeNull]
+        private Swarm _targetSwarm;
+
         [SerializeField]
         [ReadOnly]
         private float _offsetRadius;
@@ -28,24 +35,22 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private Vector3 _offsetPosition = new Vector3(0.0f, 0.0f);
 
+        public bool IsInSwarm => null != _targetSwarm;
+
+        public bool CanJoinSwarm => !IsDead && !IsInSwarm && _state == State.Idle;
+#endregion
+
+#region Interactable
+        public Transform Transform => transform;
+
+        public bool CanInteract => CanJoinSwarm;
+#endregion
+
         [SerializeField]
         [ReadOnly]
         private State _state = State.Idle;
 
-        [SerializeField]
-        [ReadOnly]
-        [CanBeNull]
-        private Swarm _targetSwarm;
-
         private NPCBeeData BeeData => (NPCBeeData)NPCData;
-
-        public Transform Transform => transform;
-
-        public bool IsInSwarm => null != _targetSwarm;
-
-        public bool CanJoinSwarm => !IsDead && !IsInSwarm && _state == State.Idle;
-
-        public bool CanInteract => CanJoinSwarm;
 
 #region Unity Life Cycle
         private void Update()
@@ -56,42 +61,50 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+#region Spawn
+        public override bool OnSpawn(SpawnPoint spawnpoint)
+        {
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
+
+            _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
+
+            return true;
+        }
+
+        public override void OnDeSpawn()
+        {
+            _targetSwarm = null;
+
+            base.OnDeSpawn();
+        }
+#endregion
+
         public override void Initialize(NPCData data)
         {
             Assert.IsTrue(data is NPCBeeData);
 
             base.Initialize(data);
 
-            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
-
-            _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
+            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
 
             SetState(State.Idle);
         }
 
-#region Animation
-        private void SetHoverAnimation()
+        private void SetState(State state)
         {
-            _spineAnimationHelper.SetAnimation(BeeData.HoverAnimationName, true);
-        }
-
-        private void SetFlightAnimation()
-        {
-            _spineAnimationHelper.SetAnimation(BeeData.FlightAnimationName, true);
-        }
-#endregion
-
-        private void UpdateOffset()
-        {
-            if(IsDead) {
-                return;
+            _state = state;
+            switch(state)
+            {
+            case State.Idle:
+                _targetSwarm = null;
+                SetIdleAnimation();
+                break;
+            case State.Follow:
+                SetFlyingAnimation();
+                break;
             }
-
-            _offsetPosition = new Vector2(
-                PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius),
-                PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius)
-            );
-            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateOffset);
         }
 
         private void Think(float dt)
@@ -112,19 +125,30 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        private void SetState(State state)
+#region Animation
+        private void SetIdleAnimation()
         {
-            _state = state;
-            switch(state)
-            {
-            case State.Idle:
-                _targetSwarm = null;
-                SetHoverAnimation();
-                break;
-            case State.Follow:
-                SetFlightAnimation();
-                break;
+            _spineAnimationHelper.SetAnimation(BeeData.IdleAnimationName, true);
+        }
+
+        private void SetFlyingAnimation()
+        {
+            _spineAnimationHelper.SetAnimation(BeeData.FlyingAnimationName, true);
+        }
+#endregion
+
+#region Swarm
+        private void UpdateSwarmOffset()
+        {
+            if(IsDead) {
+                return;
             }
+
+            _offsetPosition = new Vector2(
+                PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius),
+                PartyParrotManager.Instance.Random.NextSingle(-_offsetRadius, _offsetRadius)
+            );
+            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
         }
 
         public void JoinSwarm(Swarm swarm, float radius)
@@ -143,49 +167,21 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             Kill(false);
         }
+#endregion
 
-        public override void Kill(bool playerKill)
-        {
-            _targetSwarm = null;
-
-            base.Kill(playerKill);
-        }
-
-        private float CurrentSpeed()
-        {
-            float modifier = 1.0f;
-            if(IsInSwarm) {
-                modifier = BeeData.SwarmSpeedModifier;
-            }
-
-            return PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * modifier;
-        }
-
+#region Actions
         private void Swarm(float dt)
         {
-            if(null == _targetSwarm) {
-                Debug.LogWarning("lost my swarm!");
-                SetState(State.Idle);
-                return;
-            }
+            float speed = PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * BeeData.SwarmSpeedModifier;
 
-            MoveToTarget(dt, _targetSwarm.transform);
+            Vector3 swarmPosition = _targetSwarm.transform.position;
+            Vector3 targetPosition = swarmPosition + _offsetPosition;
+
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, speed * dt);
+            transform.position = newPosition;
+
+            _spineAnimationHelper.SetFacing(swarmPosition - newPosition);
         }
-
-        private void MoveToTarget(float dt, Transform target)
-        {
-            if(null == target) {
-                return;
-            }
-
-            Vector3 position = target.position;
-            if(IsInSwarm) {
-                position += _offsetPosition;
-            }
-
-            position = Vector3.MoveTowards(transform.position,position, CurrentSpeed() * dt);
-            _spineAnimationHelper.SetFacing(target.position - position);
-            transform.position = position;
-        }
+#endregion
     }
 }

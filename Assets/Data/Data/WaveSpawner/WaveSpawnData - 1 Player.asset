@@ -95,7 +95,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: c77609787d365434bb3c531436f566a5, type: 2}
       _tag: wasp
       _delay:
         _min: 4
@@ -134,7 +134,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: c77609787d365434bb3c531436f566a5, type: 2}
       _tag: wasp
       _delay:
         _min: 4
@@ -224,7 +224,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: e1148b046b460924da0df0e3ae01e5bc, type: 2}
       _tag: wasp
       _delay:
         _min: 2
@@ -263,7 +263,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: e1148b046b460924da0df0e3ae01e5bc, type: 2}
       _tag: wasp
       _delay:
         _min: 3
@@ -353,7 +353,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
       _tag: wasp
       _delay:
         _min: 1
@@ -392,7 +392,7 @@ MonoBehaviour:
       _once: 1
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
       _tag: wasp
       _delay:
         _min: 1

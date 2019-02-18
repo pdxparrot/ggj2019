@@ -9,11 +9,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
     public abstract class NPCEnemy : NPCBase
     {
         [SerializeField]
-        private int _damage = 1;
-
-        public int Damage => _damage;
-
-        [SerializeField]
         [ReadOnly]
         private /*readonly*/ Timer _immunityTimer = new Timer();
 
@@ -68,7 +63,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            if(player.Damage(_damage) && !IsImmune) {
+            if(player.Damage() && !IsImmune) {
                 Kill(true);
             }
         }

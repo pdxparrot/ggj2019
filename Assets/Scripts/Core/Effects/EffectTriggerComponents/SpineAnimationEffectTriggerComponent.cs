@@ -26,13 +26,31 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         {
             if(EffectsManager.Instance.EnableAnimation) {
                 _trackEntry = _spineAnimation.SetAnimation(_spineAnimationTrack, _spineAnimationName, false);
-                _trackEntry.Complete += te => {
-                    _trackEntry = null;
-                };
+                _trackEntry.Complete += OnComplete;
             } else {
                 // TODO: set a timer or something to timeout when we'd normally be done
             }
         }
+
+        public override void OnStop()
+        {
+            // TODO: any way to force-stop the animation?
+
+            if(null != _trackEntry) {
+                _trackEntry.Complete -= OnComplete;
+                _trackEntry = null;
+            }
+        }
+
+#region Event Handlers
+        private void OnComplete(TrackEntry entry)
+        {
+            entry.Complete -= OnComplete;
+            if(entry == _trackEntry) {
+                _trackEntry = null;
+            }
+        }
+#endregion
     }
 }
 #endif

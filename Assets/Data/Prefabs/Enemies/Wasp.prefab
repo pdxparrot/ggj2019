@@ -38,6 +38,7 @@ Transform:
   - {fileID: 4142286714208649019}
   - {fileID: 1432470330878736707}
   - {fileID: 2154941198075360663}
+  - {fileID: 2994465262367486179}
   - {fileID: 5534145077815389942}
   - {fileID: 1912374333337937277}
   - {fileID: 5997032271080122584}
@@ -198,20 +199,16 @@ MonoBehaviour:
   _spawnEffect: {fileID: 5929246219283272664}
   _deathEffect: {fileID: 4934757118172737203}
   _npcData: {fileID: 0}
-  _damage: 1
   _immunityTimer:
     _timerSeconds: 0
     _secondsRemaining: 0
     _isRunning: 0
-  MaxVel: 6
-  Accel: 4
-  _acceleration: {x: 0, y: 0, z: 0}
-  _velocity: {x: 0, y: 0, z: 0}
-  _splineLen: 0
-  _splineVel: 0
-  _splinePos: 0
   _spline: {fileID: 0}
-  _attackEffect: {fileID: 4965444763090320094}
+  _splineLength: 0
+  _splinePosition: 0
+  _attackStartEffect: {fileID: 4920309572028489190}
+  _attackEndEffect: {fileID: 4965444763090320094}
+  _state: 0
 --- !u!1 &2242394050818608027
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +299,66 @@ MonoBehaviour:
   _waitForComplete: 1
   _gameObject: {fileID: 2034252775976364012}
   _active: 0
+--- !u!1 &4930866472083934510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2994465262367486179}
+  - component: {fileID: 4920309572028489190}
+  - component: {fileID: 2873309731487706489}
+  m_Layer: 15
+  m_Name: AttackStartEffectTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2994465262367486179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930866472083934510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7620153835371573773}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4920309572028489190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930866472083934510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2873309731487706489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930866472083934510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e750297fb7e0ad46b1064691c87a98d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitForComplete: 1
+  _spineAnimation: {fileID: 8380525285020896805}
+  _spineAnimationName: wasp_attack
+  _spineAnimationTrack: 0
 --- !u!1 &5145625369740477748
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +461,7 @@ GameObject:
   - component: {fileID: 4965444763090320094}
   - component: {fileID: 9102939160910808653}
   m_Layer: 15
-  m_Name: AttackEffectTrigger
+  m_Name: AttackEndEffectTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -422,7 +479,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4965444763090320094
 MonoBehaviour:
@@ -501,7 +558,7 @@ PrefabInstance:
     - target: {fileID: 8249694085161830478, guid: 3ad899973631d3e4a90d6719b56aadb6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8249694085161830478, guid: 3ad899973631d3e4a90d6719b56aadb6,
         type: 3}
@@ -602,7 +659,7 @@ PrefabInstance:
     - target: {fileID: 2182006773927481773, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2182006773927481773, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}
@@ -618,6 +675,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7781590182877121689, guid: 937eca50486040f44afb659e07d14b79,
+        type: 3}
+      propertyPath: _animationName
+      value: wasp_hover
       objectReference: {fileID: 0}
     - target: {fileID: 5663384113424985439, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}
@@ -636,6 +698,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 937eca50486040f44afb659e07d14b79, type: 3}
+--- !u!1 &2034252775976364012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4255706309802068346, guid: 937eca50486040f44afb659e07d14b79,
+    type: 3}
+  m_PrefabInstance: {fileID: 2824971138571464342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4142286714208649019 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2182006773927481773, guid: 937eca50486040f44afb659e07d14b79,
+    type: 3}
+  m_PrefabInstance: {fileID: 2824971138571464342}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5533115531315814927 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7781590182877121689, guid: 937eca50486040f44afb659e07d14b79,
@@ -648,18 +722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &4142286714208649019 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2182006773927481773, guid: 937eca50486040f44afb659e07d14b79,
-    type: 3}
-  m_PrefabInstance: {fileID: 2824971138571464342}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2034252775976364012 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4255706309802068346, guid: 937eca50486040f44afb659e07d14b79,
-    type: 3}
-  m_PrefabInstance: {fileID: 2824971138571464342}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8120234340678364587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -710,7 +772,7 @@ PrefabInstance:
     - target: {fileID: 7654641961552398550, guid: 887e9409c744a08418237b17b46cba5d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7654641961552398550, guid: 887e9409c744a08418237b17b46cba5d,
         type: 3}
