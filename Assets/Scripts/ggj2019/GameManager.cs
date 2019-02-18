@@ -33,6 +33,7 @@ namespace pdxpartyparrot.ggj2019
 
         public GameData GameGameData => (GameData)GameData;
 
+        // only valid on the client
         public GameViewer Viewer { get; private set; }
 
         [SerializeField]
@@ -48,9 +49,6 @@ namespace pdxpartyparrot.ggj2019
 #region Effects
         [SerializeField]
         private EffectTrigger _newWaveEffect;
-
-        [SerializeField]
-        private EffectTrigger _gameOverEffect;
 #endregion
 
         [SerializeField]
@@ -196,8 +194,6 @@ namespace pdxpartyparrot.ggj2019
             // save high scores and then kick everyone
             HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
             PlayerManager.Instance.DespawnPlayers();
-
-            _gameOverEffect.Trigger();
         }
 
         //[Client]
@@ -209,9 +205,6 @@ namespace pdxpartyparrot.ggj2019
                 Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
                 Viewer.transform.position = GameGameData.ViewerPosition;
             }
-
-            ViewerShakeEffectTriggerComponent viewerShakeEffect = _gameOverEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
-            viewerShakeEffect.Viewer = Viewer;
         }
 
 #region Score

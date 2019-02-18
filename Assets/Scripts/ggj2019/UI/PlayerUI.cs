@@ -54,21 +54,6 @@ namespace pdxpartyparrot.ggj2019.UI
 
         [SerializeField]
         private TextMeshProUGUI _endGameScoreText;
-
-#region Animation
-        [SerializeField]
-        private GameObject _gameOverAnimationObject;
-
-        [SerializeField]
-        private SpineAnimationHelper _gameOverAnimationHelper;
-
-        [SerializeField]
-        private string _gameOverEntranceAnimation = "game_over_entrance";
-
-        [SerializeField]
-        private string _gameOverAnimation = "game_over_entrance2";
-#endregion
-
 #endregion
 
 #region Unity Lifecycle
@@ -76,8 +61,8 @@ namespace pdxpartyparrot.ggj2019.UI
         {
             float dt = Time.deltaTime;
 
-            _waveTextTimer.Update(dt);
             _introTextTimer.Update(dt);
+            _waveTextTimer.Update(dt);
         }
 #endregion
 
@@ -107,25 +92,17 @@ namespace pdxpartyparrot.ggj2019.UI
 
         public void ShowGameOver(bool show)
         {
-            _gameOverAnimationObject.SetActive(show);
             _gameOverTextObject.SetActive(show);
 
             if(show) {
-                TrackEntry track = _gameOverAnimationHelper.SetAnimation(_gameOverEntranceAnimation, false);
-                track.Complete += t => {
-                    _gameOverAnimationHelper.SetAnimation(_gameOverAnimation, true);
-                };
+                _endGameWaveText.text = $"You Made It To Wave {GameManager.Instance.WaveSpawner.CurrentWaveIndex}!";
+                _endGameScoreText.text = $"Your Score: {GameManager.Instance.Score}";
 
                 ShowDeathText(false);
+
                 _waveTextObject.SetActive(false);
                 _waveTextTimer.Stop();
             }
-        }
-
-        public void SetScoreText(int score, int wave)
-        {
-            _endGameWaveText.text = $"You Made It To Wave {wave}!";
-            _endGameScoreText.text = $"Your Score: {score}";
         }
 
         public void ShowWaveText(int wave)

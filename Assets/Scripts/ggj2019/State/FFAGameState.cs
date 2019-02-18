@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.ggj2019.Home;
@@ -9,6 +10,11 @@ namespace pdxpartyparrot.ggj2019.State
 {
     public sealed class FFAGameState : MainGameState
     {
+#region Effects
+        [SerializeField]
+        private EffectTrigger _startGameEffect;
+#endregion
+
         protected override bool InitializeServer()
         {
             if(!base.InitializeServer()) {
@@ -37,6 +43,8 @@ namespace pdxpartyparrot.ggj2019.State
 
             UIManager.Instance.InitializePlayerUI(GameManager.Instance.Viewer.UICamera);
             ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowPlayerHUD(true);
+
+            _startGameEffect.Trigger();
 
             return true;
         }
