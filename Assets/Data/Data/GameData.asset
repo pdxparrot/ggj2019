@@ -28,7 +28,7 @@ MonoBehaviour:
   _viewerPosition: {x: 0, y: 0, z: -10}
   _hiveArmorHealth: 2
   _minBees: 6
-  _beeSpawnCooldown: 10
+  _beeSpawnCooldown: 5
   _enemySpawnImmunitySeconds: 0.1
   _flowerPollen: 5
   _waveSpawnerPrefabs:
@@ -38,6 +38,8 @@ MonoBehaviour:
   - {fileID: 6958230785637716431, guid: fc7da8ec437127c4d8951de72be453a4, type: 3}
   _collectableData: {fileID: 11400000, guid: c10afa0e3a0d71841a380235762fe249, type: 2}
   _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
+  _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
+    type: 3}
   _deathPenalty: 250
   _hiveDamagePenalty: 250
   _pollenScore: 25

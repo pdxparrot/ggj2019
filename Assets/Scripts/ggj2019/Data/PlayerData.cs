@@ -19,5 +19,17 @@ namespace pdxpartyparrot.ggj2019.Data
         private float _spawnImmunitySeconds = 1.0f;
 
         public float SpawnImmunitySeconds => _spawnImmunitySeconds;
+
+#region Animation
+        [SerializeField]
+        private string _idleAnimationName = "bee_hover";
+
+        public string IdleAnimationName => _idleAnimationName;  
+
+        [SerializeField]
+        private string _flyingAnimationName = "bee-flight";
+
+        public string FlyingAnimationName => _flyingAnimationName;
+#endregion
     }
 }

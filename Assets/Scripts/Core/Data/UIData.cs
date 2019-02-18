@@ -21,7 +21,7 @@ namespace pdxpartyparrot.Core.Data
         public AudioClip ButtonClickAudioClip => _buttonClickAudioClip;
 
         [SerializeField]
-        private TMP_FontAsset _defaultFont = TMP_FontAsset.defaultFontAsset;
+        private TMP_FontAsset _defaultFont;
 
         public TMP_FontAsset DefaultFont => _defaultFont;
     }

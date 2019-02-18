@@ -52,9 +52,6 @@ namespace pdxpartyparrot.ggj2019.Home
         [ReadOnly]
         private /*readonly*/ Timer _beeSpawnTimer = new Timer();
 
-        [SerializeField]
-        private NPCBee _beePrefab;
-
         private GameObject _beeContainer;
 #endregion
 
@@ -75,7 +72,7 @@ namespace pdxpartyparrot.ggj2019.Home
             _beeContainer = new GameObject("bees");
             _beeContainer.transform.SetParent(transform);
 
-            PooledObject pooledObject = _beePrefab.GetComponent<PooledObject>();
+            PooledObject pooledObject = GameManager.Instance.GameGameData.BeePrefab.GetComponent<PooledObject>();
             ObjectPoolManager.Instance.InitializePool("bees", pooledObject, GameManager.Instance.GameGameData.BeePoolSize);
 
             GameManager.Instance.GameStartEvent += GameStartEventHandler;

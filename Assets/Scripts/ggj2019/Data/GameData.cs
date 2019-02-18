@@ -3,6 +3,7 @@
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.World;
+using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.State;
 
 using UnityEngine;
@@ -86,6 +87,11 @@ namespace pdxpartyparrot.ggj2019.Data
         private NPCBeeData _beeData;
 
         public NPCBeeData BeeData => _beeData;
+
+        [SerializeField]
+        private NPCBee _beePrefab;
+
+        public NPCBee BeePrefab => _beePrefab;
 #endregion
 
         [Space(10)]

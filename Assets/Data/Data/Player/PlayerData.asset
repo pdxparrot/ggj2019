@@ -24,4 +24,4 @@ MonoBehaviour:
   _movementLerpSpeed: 5
   _lookLerpSpeed: 10
   _respawnSeconds: 3
-  _spawnImmunitySeconds: 0.1
+  _spawnImmunitySeconds: 0.5

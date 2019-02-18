@@ -1,4 +1,4 @@
-using Spine.Unity;
+using pdxpartyparrot.Core.Animation;
 
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace pdxpartyparrot.ggj2019.Players
         public Player GamePlayer => (Player)Player;
 
         [SerializeField]
-        private SkeletonAnimation _animation;
+        private SpineAnimationHelper _animation;
 
         // start true to force the animation the first time
         private bool _isFlying = true;
@@ -20,8 +20,8 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Initialize();
 
-            _animation.Skeleton.ScaleX = transform.position.x > 0 ? 1.0f : -1.0f;
-            SetHoverAnimation();
+            _animation.SetFacing(Vector3.zero - transform.position);
+            SetIdleAnimation();
         }
 
         public override void DefaultAnimationMove(Vector3 axes, float dt)
@@ -31,36 +31,33 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             if(IsMoving) {
-                SetFlightAnimation();
-                _animation.Skeleton.ScaleX = LastMoveAxes.x < 0 ? -1.0f : 1.0f;
+                _animation.SetFacing(LastMoveAxes);
+                SetFlyingAnimation();
             } else  {
-                SetHoverAnimation();
+                SetIdleAnimation();
             }
         }
 
-        private void SetHoverAnimation()
+#region Animation
+        private void SetIdleAnimation()
         {
             if(!_isFlying) {
                 return;
             }
 
-            SetAnimation("bee_hover", true);
+            _animation.SetAnimation(PlayerManager.Instance.GamePlayerData.IdleAnimationName, true);
             _isFlying = false;
         }
 
-        private void SetFlightAnimation()
+        private void SetFlyingAnimation()
         {
             if(_isFlying) {
                 return;
             }
 
-            SetAnimation("bee-flight", true);
+            _animation.SetAnimation(PlayerManager.Instance.GamePlayerData.FlyingAnimationName, true);
             _isFlying = true;
         }
-
-        private void SetAnimation(string animationName, bool loop)
-        {
-            _animation.AnimationState.SetAnimation(0, animationName, loop);
-        }
+#endregion
     }
 }

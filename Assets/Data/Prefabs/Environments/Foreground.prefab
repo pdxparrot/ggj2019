@@ -79,8 +79,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animations:
   - environment_default
-  - environment_thunder
   - environment_windy
+  - environment_thunder
 --- !u!1001 &1408458828255923904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92,6 +92,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spine GameObject (environment_FG)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2914565136767375000, guid: 2de25276707a6b648b411ed7e6c2bb37,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8421020203258336334, guid: 2de25276707a6b648b411ed7e6c2bb37,
         type: 3}
@@ -147,11 +152,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2914565136767375000, guid: 2de25276707a6b648b411ed7e6c2bb37,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2de25276707a6b648b411ed7e6c2bb37, type: 3}

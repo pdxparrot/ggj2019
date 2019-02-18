@@ -31,7 +31,7 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         public override void OnStart()
         {
             if(EffectsManager.Instance.EnableViewerShake) {
-                Viewer.Camera.DOShakePosition(_screenShakeConfig.Duration, _screenShakeConfig.Strength, _screenShakeConfig.Vibrato, _screenShakeConfig.Randomness);
+                Viewer.Camera.DOShakePosition(_screenShakeConfig.Duration, _screenShakeConfig.Strength, _screenShakeConfig.Vibrato, _screenShakeConfig.Randomness, _screenShakeConfig.FadeOut);
             }
 
             _isPlaying = true;

@@ -23,7 +23,7 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         public override void OnStart()
         {
             if(EffectsManager.Instance.EnableShakePosition) {
-                _owner.transform.DOShakePosition(_shakeConfig.Duration, _shakeConfig.Strength, _shakeConfig.Vibrato, _shakeConfig.Randomness);
+                _owner.transform.DOShakePosition(_shakeConfig.Duration, _shakeConfig.Strength, _shakeConfig.Vibrato, _shakeConfig.Randomness, _shakeConfig.FadeOut);
             }
 
             _isPlaying = true;

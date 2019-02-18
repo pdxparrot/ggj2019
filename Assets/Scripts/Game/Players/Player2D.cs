@@ -5,7 +5,6 @@ using System;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
-using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Camera;
@@ -19,7 +18,6 @@ namespace pdxpartyparrot.Game.Players
 {
     // TODO: reduce the copy paste in this
     [RequireComponent(typeof(NetworkPlayer))]
-    [RequireComponent(typeof(AudioSource))]
     public abstract class Player2D : Actor2D, IPlayer
     {
         public GameObject GameObject => gameObject;
@@ -56,17 +54,12 @@ namespace pdxpartyparrot.Game.Players
         }
 #endregion
 
-        private AudioSource _audioSource;
-
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
             Assert.IsTrue(Behavior is PlayerController2D);
-
-            _audioSource = GetComponent<AudioSource>();
-            AudioManager.Instance.InitSFXAudioMixerGroup(_audioSource);
         }
 
         protected virtual void OnDestroy()
