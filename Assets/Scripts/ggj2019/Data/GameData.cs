@@ -41,8 +41,8 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [Space(10)]
 
-#region Game
-        [Header("Game")]
+#region Hive
+        [Header("Hive")]
 
         [SerializeField]
         private int _hiveArmorHealth = 2;
@@ -61,28 +61,6 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public float BeeSpawnCooldown => _beeSpawnCooldown;
 
-
-        [SerializeField]
-        private float _enemySpawnImmunitySeconds = 1.0f;
-
-        public float EnemySpawnImmunitySeconds => _enemySpawnImmunitySeconds;
-
-
-        [SerializeField]
-        private int _flowerPollen = 5;
-
-        public int FlowerPollen => _flowerPollen;
-
-        [SerializeField]
-        private WaveSpawner[] _waveSpawnerPrefabs;
-
-        public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;
-
-        [SerializeField]
-        private CollectableData _collectableData;
-
-        public CollectableData CollectableData => _collectableData;
-
         [SerializeField]
         private NPCBeeData _beeData;
 
@@ -93,6 +71,23 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public NPCBee BeePrefab => _beePrefab;
 #endregion
+
+        [Space(10)]
+
+        [SerializeField]
+        private float _enemySpawnImmunitySeconds = 1.0f;
+
+        public float EnemySpawnImmunitySeconds => _enemySpawnImmunitySeconds;
+
+        [SerializeField]
+        private WaveSpawner[] _waveSpawnerPrefabs;
+
+        public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;
+
+        [SerializeField]
+        private CollectableData _collectableData;
+
+        public CollectableData CollectableData => _collectableData;
 
         [Space(10)]
 

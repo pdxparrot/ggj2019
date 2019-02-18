@@ -1,6 +1,7 @@
-using pdxpartyparrot.Core.Util;
+﻿using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,11 +11,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
     [RequireComponent(typeof(SpineSkinSwapper))]
     public sealed class NPCFlower : NPCBase
     {
+#region Spawn Points
         [SerializeField]
         private SpawnPoint _beetleSpawn;
 
         [SerializeField]
         private SpawnPoint _pollenSpawn;
+#endregion
 
         [SerializeField]
         [ReadOnly]
@@ -22,11 +25,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public int Pollen => _pollen;
 
+        public bool CanSpawnPollen => !IsDead && Pollen > 0;
+
         [SerializeField]
         [ReadOnly]
         private SpawnPoint _spawnpoint;
 
-        public bool CanSpawnPollen => !IsDead && Pollen > 0;
+        private NPCFlowerData FlowerData => (NPCFlowerData)NPCData;
 
         private SpineSkinSwapper _skinSwapper;
 
@@ -39,6 +44,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
+#region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
         {
             if(!base.OnSpawn(spawnpoint)) {
@@ -55,8 +61,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             // acquire our spawnpoints while we spawn
             _beetleSpawn.Acquire(this, null);
             _pollenSpawn.Acquire(this, null);
-
-            _pollen = GameManager.Instance.GameGameData.FlowerPollen;
 
             return true;
         }
@@ -75,17 +79,34 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.OnDeSpawn();
         }
 
+        protected override void OnSpawnComplete()
+        {
+            base.OnSpawnComplete();
+
+            // now free to spawn stuff
+            _beetleSpawn.Release();
+            _pollenSpawn.Release();
+
+            _spineAnimationHelper.SetAnimation(FlowerData.IdleAnimationName, true);
+        }
+#endregion
+
         public override void Initialize(NPCData data)
         {
+            Assert.IsTrue(data is NPCFlowerData);
+
             base.Initialize(data);
+
+            _pollen = FlowerData.Pollen;
         }
 
-        public void SpawnPollen()
+        public override void Kill(bool playerKill)
         {
-            _pollen--;
-            if(_pollen <= 0) {
-                Kill(false);
-            }
+            // forcefully acquire our spawnpoints while we die
+            _beetleSpawn.Acquire(this, null, true);
+            _pollenSpawn.Acquire(this, null, true);
+
+            base.Kill(playerKill);
         }
 
         public void AcquirePollenSpawnpoint(NPCBase owner)
@@ -98,36 +119,23 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _pollenSpawn.Release();
         }
 
-        public override void Kill(bool playerKill)
+        public void SpawnPollen()
         {
-            base.Kill(playerKill);
-
-            // forcefully acquire our spawnpoints while we die
-            _beetleSpawn.Acquire(this, null, true);
-            _pollenSpawn.Acquire(this, null, true);
+            _pollen--;
+            if(_pollen <= 0) {
+                Kill(false);
+            }
         }
 
         public bool BeetleHarvest()
         {
             _pollen--;
-
             if(_pollen <= 0) {
                 Kill(false);
                 return true;
             }
 
             return false;
-        }
-
-        protected override void OnSpawnComplete()
-        {
-            base.OnSpawnComplete();
-
-            // now free to spawn stuff
-            _beetleSpawn.Release();
-            _pollenSpawn.Release();
-
-            _spineAnimationHelper.SetAnimation(0, "flower_idle", true);
         }
     }
 }

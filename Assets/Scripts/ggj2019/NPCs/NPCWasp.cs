@@ -104,6 +104,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetState(State.FollowingSpline);
         }
 
+        public override void Kill(bool playerKill)
+        {
+            if(playerKill) {
+                GameManager.Instance.WaspKilled();
+            }
+
+            base.Kill(playerKill);
+        }
+
         private void SetState(State state)
         {
             _state = state;
@@ -151,15 +160,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _spineAnimationHelper.SetAnimation(WaspData.FlyingAnimationName, true);
         }
 #endregion
-
-        public override void Kill(bool playerKill)
-        {
-            if(playerKill) {
-                GameManager.Instance.WaspKilled();
-            }
-
-            base.Kill(playerKill);
-        }
 
 #region Actions
         private void AttackHive()
