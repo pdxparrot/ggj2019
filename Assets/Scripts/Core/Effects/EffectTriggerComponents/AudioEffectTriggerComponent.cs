@@ -15,6 +15,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [CanBeNull]
         private AudioSource _audioSource;
 
+        [SerializeField]
+        private bool _waitForComplete;
+
+        public override bool WaitForComplete => _waitForComplete;
+
         public override bool IsDone => null == _audioSource || !_audioSource.isPlaying;
 
         public override void Initialize()

@@ -11,6 +11,11 @@ namespace pdxpartyparrot.Core.Animation
         [SerializeField]
         private SkeletonAnimation _animation;
 
+        public void ResetAnimation()
+        {
+            _animation.ClearState();
+        }
+
         public TrackEntry SetAnimation(string animationName, bool loop)
         {
             return SetAnimation(0, animationName, loop);

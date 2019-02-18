@@ -5,10 +5,7 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
     [RequireComponent(typeof(EffectTrigger))]
     public abstract class EffectTriggerComponent : MonoBehaviour
     {
-        [SerializeField]
-        private bool _waitForComplete = true;
-
-        public bool WaitForComplete => _waitForComplete;
+        public abstract bool WaitForComplete { get; }
 
         public virtual bool IsDone => true;
 

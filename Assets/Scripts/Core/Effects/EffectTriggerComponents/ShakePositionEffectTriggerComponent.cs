@@ -15,6 +15,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         private ShakeConfig _shakeConfig;
 
         [SerializeField]
+        private bool _waitForComplete = true;
+
+        public override bool WaitForComplete => _waitForComplete;
+
+        [SerializeField]
         [ReadOnly]
         private bool _isPlaying;
 

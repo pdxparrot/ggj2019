@@ -10,6 +10,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [SerializeField]
         private string _animationTriggerParameter;
 
+        // TODO: if we can know when the animation will finish, we can set this
+        public override bool WaitForComplete => false;
+
         public override void OnStart()
         {
             if(EffectsManager.Instance.EnableAnimation) {

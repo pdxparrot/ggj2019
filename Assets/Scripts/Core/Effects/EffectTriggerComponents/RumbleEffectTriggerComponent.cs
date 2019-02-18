@@ -21,6 +21,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         }
 
         [SerializeField]
+        private bool _waitForComplete;
+
+        public override bool WaitForComplete => _waitForComplete;
+
+        [SerializeField]
         [ReadOnly]
         private bool _isPlaying;
 

@@ -18,9 +18,14 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [SerializeField]
         private int _spineAnimationTrack;
 
-        private TrackEntry _trackEntry;
+        [SerializeField]
+        private bool _waitForComplete = true;
+
+        public override bool WaitForComplete => _waitForComplete;
 
         public override bool IsDone => null == _trackEntry || _trackEntry.IsComplete;
+
+        private TrackEntry _trackEntry;
 
         public override void OnStart()
         {
@@ -40,6 +45,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
                 _trackEntry.Complete -= OnComplete;
                 _trackEntry = null;
             }
+        }
+
+        public override void OnReset()
+        {
+            _spineAnimation.ResetAnimation();
         }
 
 #region Event Handlers

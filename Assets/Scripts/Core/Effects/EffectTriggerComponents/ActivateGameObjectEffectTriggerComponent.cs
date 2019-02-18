@@ -10,6 +10,8 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [SerializeField]
         private bool _active;
 
+        public override bool WaitForComplete => false;
+
         public override void OnStart()
         {
             _gameObject.SetActive(_active);

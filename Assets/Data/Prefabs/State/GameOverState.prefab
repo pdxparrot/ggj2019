@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d086bb8ddd625478d5fc6048564914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitForComplete: 1
   _viewer: {fileID: 0}
   _screenShakeConfig:
     _duration: 5
@@ -133,6 +132,7 @@ MonoBehaviour:
     _vibrato: 20
     _randomness: 45
     _fadeOut: 1
+  _waitForComplete: 0
   _isPlaying: 0
 --- !u!1001 &5827476727563202089
 PrefabInstance:

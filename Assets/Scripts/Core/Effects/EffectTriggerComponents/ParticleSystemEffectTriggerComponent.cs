@@ -8,6 +8,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         [SerializeField]
         private ParticleSystem _vfx;
 
+        [SerializeField]
+        private bool _waitForComplete = true;
+
+        public override bool WaitForComplete => _waitForComplete;
+
         public override bool IsDone => !_vfx.isPlaying;
 
         public override void Initialize()
