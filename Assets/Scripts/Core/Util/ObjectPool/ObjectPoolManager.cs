@@ -203,7 +203,6 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             pool.EnsureSize(size);
         }
 
-
         [CanBeNull]
         public PooledObject GetPooledObject(string poolTag, Transform parent=null, bool activate=true)
         {
@@ -228,7 +227,12 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
         public void Recycle(PooledObject pooledObject)
         {
             ObjectPool pool = _objectPools.GetOrDefault(pooledObject.Tag);
-            pool?.Recycle(pooledObject);
+            if(null == pool) {
+                Debug.LogWarning($"No pool for recycled object {pooledObject.name}, destroying...");
+                Destroy(pooledObject.gameObject);
+            } else {
+                pool.Recycle(pooledObject);
+            }
         }
     }
 }

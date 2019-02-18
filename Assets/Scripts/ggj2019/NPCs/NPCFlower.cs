@@ -1,6 +1,11 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using System;
+
+using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.ggj2019.Collectable;
 using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
@@ -23,9 +28,19 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private int _pollen;
 
-        public int Pollen => _pollen;
+        [SerializeField]
+        [ReadOnly]
+        private bool _canSpawnPollen;
 
-        public bool CanSpawnPollen => !IsDead && Pollen > 0;
+        [SerializeField]
+        [ReadOnly]
+        private bool _isDead = true;
+
+        public override bool IsDead => _isDead;
+
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _pollenSpawnTimer = new Timer();
 
         [SerializeField]
         [ReadOnly]
@@ -41,6 +56,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.Awake();
 
             _skinSwapper = GetComponent<SpineSkinSwapper>();
+        }
+
+        private void Update()
+        {
+            float dt = Time.deltaTime;
+
+            _pollenSpawnTimer.Update(dt);
         }
 #endregion
 
@@ -60,13 +82,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             // acquire our spawnpoints while we spawn
             _beetleSpawn.Acquire(this, null);
-            _pollenSpawn.Acquire(this, null);
+            _canSpawnPollen = false;
 
             return true;
         }
 
         public override void OnDeSpawn()
         {
+            _pollenSpawnTimer.Stop();
+
             if(null != _spawnpoint) {
                 _spawnpoint.Release();
                 _spawnpoint = null;
@@ -74,7 +98,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             // need to release these before the spawnpoints disable
             _beetleSpawn.Release();
-            _pollenSpawn.Release();
+            _canSpawnPollen = false;
 
             base.OnDeSpawn();
         }
@@ -85,9 +109,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             // now free to spawn stuff
             _beetleSpawn.Release();
-            _pollenSpawn.Release();
+            _canSpawnPollen = true;
 
             _spineAnimationHelper.SetAnimation(FlowerData.IdleAnimationName, true);
+
+            _pollenSpawnTimer.Start(FlowerData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
         }
 #endregion
 
@@ -98,33 +124,29 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.Initialize(data);
 
             _pollen = FlowerData.Pollen;
+
+            _isDead = false;
         }
 
         public override void Kill(bool playerKill)
         {
             // forcefully acquire our spawnpoints while we die
             _beetleSpawn.Acquire(this, null, true);
-            _pollenSpawn.Acquire(this, null, true);
+            _canSpawnPollen = false;
 
             base.Kill(playerKill);
+
+            _isDead = true;
         }
 
         public void AcquirePollenSpawnpoint(NPCBase owner)
         {
-            _pollenSpawn.Acquire(owner, null);
+            _canSpawnPollen = false;
         }
 
         public void ReleasePollenSpawnpoint()
         {
-            _pollenSpawn.Release();
-        }
-
-        public void SpawnPollen()
-        {
-            _pollen--;
-            if(_pollen <= 0) {
-                Kill(false);
-            }
+            _canSpawnPollen = true;
         }
 
         public bool BeetleHarvest()
@@ -137,5 +159,38 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             return false;
         }
+
+#region Actions
+        private void SpawnPollen()
+        {
+            if(GameManager.Instance.IsGameOver) {
+                return;
+            }
+
+            if(DoSpawnPollen()) {
+                _pollen--;
+                if(_pollen <= 0) {
+                    Kill(false);
+                    return;
+                }
+            }
+
+            _pollenSpawnTimer.Start(FlowerData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
+        }
+
+        private bool DoSpawnPollen()
+        {
+            if(!_canSpawnPollen || ActorManager.Instance.ActorCount<PollenCollectable>() >= FlowerData.MaxPollen) {
+                return false;
+            }
+
+            PollenCollectable pollen = ObjectPoolManager.Instance.GetPooledObject<PollenCollectable>("pollen");
+            _pollenSpawn.Spawn(pollen, Guid.NewGuid());
+            // TODO: reparent?
+            pollen.Initialize(FlowerData.PollenData);
+
+            return true;
+        }
+#endregion
     }
 }

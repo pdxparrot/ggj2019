@@ -7,6 +7,7 @@ using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.State;
@@ -34,7 +35,15 @@ namespace pdxpartyparrot.ggj2019
 
         public GameViewer Viewer { get; private set; }
 
-        public override bool IsGameOver { get; protected set; }
+        [SerializeField]
+        [ReadOnly]
+        private bool _isGameOver;
+
+        public override bool IsGameOver
+        {
+            get => _isGameOver;
+            protected set => _isGameOver = value;
+        }
 
 #region Effects
         [SerializeField]
@@ -90,6 +99,8 @@ namespace pdxpartyparrot.ggj2019
 
             SpawnManager.Instance.Initialize();
 
+            InitObjectPools();
+
             _score = 0;
 
             // TODO: for some dumb reason, we're starting the game before all the players are "connected"
@@ -113,6 +124,15 @@ namespace pdxpartyparrot.ggj2019
             _gameTimer.Start();
         }
 
+        private void InitObjectPools()
+        {
+            PooledObject pooledObject = GameGameData.BeePrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("bees", pooledObject,GameGameData.BeePoolSize);
+
+            pooledObject = GameGameData.PollenPrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("pollen", pooledObject,GameGameData.PollenPoolSize);
+        }
+
         //[Server]
         public void EndGame()
         {
@@ -127,6 +147,8 @@ namespace pdxpartyparrot.ggj2019
             WaveSpawner.Shutdown();
             Destroy(WaveSpawner);
 
+            DestroyObjectPools();
+
             foreach(Players.Player player in PlayerManager.Instance.Players) {
                 player.GameOver();
             }
@@ -139,6 +161,29 @@ namespace pdxpartyparrot.ggj2019
             _gameOverEffect.Trigger();
         }
 
+        private void DestroyObjectPools()
+        {
+            if(ObjectPoolManager.HasInstance) {
+                ObjectPoolManager.Instance.DestroyPool("pollen");
+                ObjectPoolManager.Instance.DestroyPool("bees");
+            }
+        }
+
+        //[Client]
+        public void InitViewer()
+        {
+            Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>(gameObject);
+            if(null != Viewer) {
+                Viewer.Set2D();
+                Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
+                Viewer.transform.position = GameGameData.ViewerPosition;
+            }
+
+            ViewerShakeEffectTriggerComponent viewerShakeEffect = _gameOverEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
+            viewerShakeEffect.Viewer = Viewer;
+        }
+
+#region Score
         //[Server]
         public void PlayerDeath()
         {
@@ -174,20 +219,7 @@ namespace pdxpartyparrot.ggj2019
         {
             _score += GameGameData.WaspScore;
         }
-
-        //[Client]
-        public void InitViewer()
-        {
-            Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>(gameObject);
-            if(null != Viewer) {
-                Viewer.Set2D();
-                Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
-                Viewer.transform.position = GameGameData.ViewerPosition;
-            }
-
-            ViewerShakeEffectTriggerComponent viewerShakeEffect = _gameOverEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
-            viewerShakeEffect.Viewer = Viewer;
-        }
+#endregion
 
 #region Event Handlers
         // TODO: this should come from a server command

@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37bb2ae2ca36d8f4fa1f74fe58a3ec90, type: 3}
-  m_Name: Wave1Flower
+  m_Script: {fileID: 11500000, guid: f88c991c674b87b4c9163c6ae68c4e2d, type: 3}
+  m_Name: Wave0PollenData
   m_EditorClassIdentifier: 
-  _pollen: 5
-  _pollenSpawnCooldown:
-    _min: 1
-    _max: 30
-  _pollenData: {fileID: 11400000, guid: 7ebc7fc109e981c41b27440e0c197006, type: 2}
-  _maxPollen: 3
-  _idleAnimationName: flower_idle
+  _sideDistance: 0.25
+  _sideSpeed: 3
+  _upwardSpeed: 1.5
+  _goToHiveSpeed: 5
+  _followPlayerSpeed: 10

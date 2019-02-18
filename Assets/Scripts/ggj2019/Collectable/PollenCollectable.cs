@@ -5,13 +5,11 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
-using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.State;
-using pdxpartyparrot.ggj2019.NPCs;
+using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
 
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Collectable
 {
@@ -54,6 +52,10 @@ namespace pdxpartyparrot.ggj2019.Collectable
         [ReadOnly]
         private State _state = State.Floating;
 
+        [SerializeField]
+        [ReadOnly]
+        private CollectableData _pollenData;
+
         private PooledObject _pooledObject;
 
 #region Unity Lifecycle
@@ -85,34 +87,11 @@ namespace pdxpartyparrot.ggj2019.Collectable
         }
 #endregion
 
-#region Spawn
-        public override bool OnSpawn(SpawnPoint spawnpoint)
+        public void Initialize(CollectableData data)
         {
-            if(!base.OnSpawn(spawnpoint)) {
-                return false;
-            }
-
-            NPCFlower flower = spawnpoint.GetComponentInParent<NPCFlower>();
-            Assert.IsTrue(flower.CanSpawnPollen);
-            flower.SpawnPollen();
+            _pollenData = data;
 
             SetState(State.Floating);
-
-            return true;
-        }
-#endregion
-
-        private void Gather(Players.Player player)
-        {
-            if(!CanBeCollected || null == player || !player.CanGather) {
-                return;
-            }
-
-            player.AddPollen();
-            _pickupEffect.Trigger();
-
-            _followPlayer = player;
-            SetState(State.FollowingPlayer);
         }
 
         private void SetState(State state)
@@ -135,7 +114,9 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         private void Think(float dt)
         {
-            if(PartyParrotManager.Instance.IsPaused || GameManager.Instance.IsGameOver) {
+            // it's ok for us to think if the game is over,
+            // so that way the float still happens
+            if(PartyParrotManager.Instance.IsPaused /*|| GameManager.Instance.IsGameOver*/) {
                 return;
             }
 
@@ -150,10 +131,20 @@ namespace pdxpartyparrot.ggj2019.Collectable
             case State.GoingToHive:
                 GoToHive(dt);
                 break;
-            case State.Collected:
-                // nothing
-                break;
             }
+        }
+
+        private void Gather(Players.Player player)
+        {
+            if(!CanBeCollected || null == player || !player.CanGather) {
+                return;
+            }
+
+            player.AddPollen();
+            _pickupEffect.Trigger();
+
+            _followPlayer = player;
+            SetState(State.FollowingPlayer);
         }
 
         private void Float(float dt)
@@ -166,11 +157,11 @@ namespace pdxpartyparrot.ggj2019.Collectable
             }
 
             // float side-to-side
-            _signTime += GameManager.Instance.GameGameData.CollectableData.SideSpeed * dt;
-            float wobble = Mathf.Sin(_signTime) * GameManager.Instance.GameGameData.CollectableData.SideDistance;
+            _signTime += _pollenData.SideSpeed * dt;
+            float wobble = Mathf.Sin(_signTime) * _pollenData.SideDistance;
 
             position.x = _floatingStartX + wobble;
-            position.y += GameManager.Instance.GameGameData.CollectableData.UpwardSpeed * dt;
+            position.y += _pollenData.UpwardSpeed * dt;
             transform.position = position;
         }
 
@@ -189,7 +180,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
             }
 
             Vector3 position = transform.position;
-            position = Vector3.Lerp(position, _followPlayer.PollenTarget.position, GameManager.Instance.GameGameData.CollectableData.FollowPlayerSpeed * dt);
+            position = Vector3.MoveTowards(position, _followPlayer.PollenTarget.position, _pollenData.FollowPlayerSpeed * dt);
             transform.position = position;
         }
 
@@ -201,7 +192,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
             }
 
             Vector3 position = transform.position;
-            position = Vector3.Lerp(position, Hive.Instance.transform.position, GameManager.Instance.GameGameData.CollectableData.GoToHiveSpeed * dt);
+            position = Vector3.MoveTowards(position, Hive.Instance.transform.position, _pollenData.GoToHiveSpeed * dt);
             transform.position = position;
         }
 

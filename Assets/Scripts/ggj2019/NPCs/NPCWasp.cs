@@ -19,6 +19,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             Idle,
             FollowingSpline,
             Attacking,
+            Dead
         }
 
 #region Spline
@@ -46,6 +47,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         [ReadOnly]
         private State _state = State.Idle;
+
+        public override bool IsDead => _state == State.Dead;
 
         [SerializeField]
         [ReadOnly]
@@ -111,6 +114,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             base.Kill(playerKill);
+
+            SetState(State.Dead);
         }
 
         private void SetState(State state)
@@ -132,7 +137,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private void Think(float dt)
         {
-            if(IsDead || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
+            if(GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
                 return;
             }
 
@@ -143,8 +148,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 break;
             case State.FollowingSpline:
                 FollowSpline(dt);
-                break;
-            case State.Attacking:
                 break;
             }
         }

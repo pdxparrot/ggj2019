@@ -17,7 +17,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 5898b0d87f055b54c8727e1f69adf6b0, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -27,24 +27,12 @@ MonoBehaviour:
         _max: 9
       _poolSize: 10
       _once: 1
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 4d4c7a2ba23af794b993be0a4f6149dd, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -66,24 +54,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 4d4c7a2ba23af794b993be0a4f6149dd, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -105,24 +81,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 5
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: c2c909faa01deca4cb3d9fc54f4bc032, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -156,24 +120,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: c2c909faa01deca4cb3d9fc54f4bc032, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -195,24 +147,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: c2c909faa01deca4cb3d9fc54f4bc032, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -234,24 +174,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 5
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -285,24 +213,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -324,24 +240,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 10
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -363,24 +267,12 @@ MonoBehaviour:
         _max: 1
       _poolSize: 5
       _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -409,18 +301,6 @@ MonoBehaviour:
       _delay:
         _min: 1
         _max: 3
-      _count:
-        _min: 1
-        _max: 1
-      _poolSize: 10
-      _once: 0
-    - _actorPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
-        type: 3}
-      npcData: {fileID: 0}
-      _tag: pollen
-      _delay:
-        _min: 3
-        _max: 5
       _count:
         _min: 1
         _max: 1

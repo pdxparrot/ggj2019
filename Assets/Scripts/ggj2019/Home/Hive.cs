@@ -72,9 +72,6 @@ namespace pdxpartyparrot.ggj2019.Home
             _beeContainer = new GameObject("bees");
             _beeContainer.transform.SetParent(transform);
 
-            PooledObject pooledObject = GameManager.Instance.GameGameData.BeePrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, GameManager.Instance.GameGameData.BeePoolSize);
-
             GameManager.Instance.GameStartEvent += GameStartEventHandler;
             GameManager.Instance.GameEndEvent += GameEndEventHandler;
 
@@ -97,9 +94,6 @@ namespace pdxpartyparrot.ggj2019.Home
                 GameManager.Instance.GameStartEvent -= GameStartEventHandler;
             }
 
-            if(ObjectPoolManager.HasInstance) {
-                ObjectPoolManager.Instance.DestroyPool("bees");
-            }
             Destroy(_beeContainer);
 
             Instance = null;
@@ -261,9 +255,6 @@ namespace pdxpartyparrot.ggj2019.Home
         private NPCBee DoSpawnBee()
         {
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
-            if(spawnPoint == null) {
-                return null;
-            }
 
             NPCBee bee = ObjectPoolManager.Instance.GetPooledObject<NPCBee>("bees");
             spawnPoint.Spawn(bee, Guid.NewGuid());

@@ -20,15 +20,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
     {
         public override bool IsLocalActor => false;
 
-        [SerializeField]
-        [ReadOnly]
-        private bool _isDead;
-
-        public bool IsDead
-        {
-            get => _isDead;
-            set => _isDead = value;
-        }
+        public abstract bool IsDead { get; }
 
 #region Effects
         [SerializeField]
@@ -67,8 +59,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return false;
             }
 
-            IsDead = false;
-
             _deathEffect.ResetTrigger();
             _spawnEffect.Trigger(OnSpawnComplete);
 
@@ -95,8 +85,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(IsDead) {
                 return;
             }
-
-            IsDead = true;
 
             _deathEffect.Trigger(OnDeathComplete);
         }

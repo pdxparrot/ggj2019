@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using UnityEngine;
 
@@ -8,9 +8,6 @@ namespace pdxpartyparrot.ggj2019.Data
     [Serializable]
     public sealed class CollectableData : ScriptableObject
     {
-#region Pollen
-        [Header("Pollen")]
-
         [SerializeField]
         private float _sideDistance = 1.0f;
 
@@ -35,6 +32,5 @@ namespace pdxpartyparrot.ggj2019.Data
         private float _followPlayerSpeed = 1.0f;
 
         public float FollowPlayerSpeed => _followPlayerSpeed;
-#endregion
     }
 }

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Wave6Flower
   m_EditorClassIdentifier: 
   _pollen: 2
+  _pollenSpawnCooldown:
+    _min: 1
+    _max: 60
+  _pollenData: {fileID: 11400000, guid: 741d678b52258e349b777288a6ffad81, type: 2}
+  _maxPollen: 5
   _idleAnimationName: flower_idle

@@ -22,5 +22,3 @@ MonoBehaviour:
     SpawnMethod: 0
   - Tag: flower
     SpawnMethod: 0
-  - Tag: pollen
-    SpawnMethod: 0

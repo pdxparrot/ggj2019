@@ -29,17 +29,18 @@ MonoBehaviour:
   _hiveArmorHealth: 2
   _minBees: 6
   _beeSpawnCooldown: 5
+  _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
+  _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
+    type: 3}
+  _maxPollen: 3
+  _pollenPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
+    type: 3}
   _enemySpawnImmunitySeconds: 0.1
-  _flowerPollen: 5
   _waveSpawnerPrefabs:
   - {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8, type: 3}
   - {fileID: 6958230785637716431, guid: b1798b2a86ab9ed418aa66bcbfbb1d89, type: 3}
   - {fileID: 6958230785637716431, guid: 23d212cac5c6d3c489f82a5459b4c2ef, type: 3}
   - {fileID: 6958230785637716431, guid: fc7da8ec437127c4d8951de72be453a4, type: 3}
-  _collectableData: {fileID: 11400000, guid: c10afa0e3a0d71841a380235762fe249, type: 2}
-  _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
-  _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
-    type: 3}
   _deathPenalty: 250
   _hiveDamagePenalty: 250
   _pollenScore: 25

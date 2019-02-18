@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88c991c674b87b4c9163c6ae68c4e2d, type: 3}
-  m_Name: CollectableData
+  m_Name: Wave1PollenData
   m_EditorClassIdentifier: 
   _sideDistance: 0.25
   _sideSpeed: 3

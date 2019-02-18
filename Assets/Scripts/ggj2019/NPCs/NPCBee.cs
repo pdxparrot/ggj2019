@@ -19,6 +19,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             Idle,
             Follow,
+            Dead
         }
 
 #region Swarm
@@ -49,6 +50,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         [ReadOnly]
         private State _state = State.Idle;
+
+        public override bool IsDead => _state == State.Dead;
 
         private NPCBeeData BeeData => (NPCBeeData)NPCData;
 
@@ -92,6 +95,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetState(State.Idle);
         }
 
+        public override void Kill(bool playerKill)
+        {
+            base.Kill(playerKill);
+
+            SetState(State.Dead);
+        }
+
         private void SetState(State state)
         {
             _state = state;
@@ -111,14 +121,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             // it's ok for us to think if the game is over or paused,
             // so that way the swarm movement still happens
-            if(IsDead /*|| GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused*/) {
+            /*if(GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
                 return;
-            }
+            }*/
 
             switch(_state)
             {
-            case State.Idle:
-                break;
             case State.Follow:
                 Swarm(dt);
                 break;

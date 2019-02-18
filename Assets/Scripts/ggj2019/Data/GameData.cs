@@ -3,6 +3,7 @@
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.World;
+using pdxpartyparrot.ggj2019.Collectable;
 using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.State;
 
@@ -74,6 +75,22 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [Space(10)]
 
+#region Pollen
+        [Header("Pollen")]
+
+        [SerializeField]
+        private PollenCollectable _pollenPrefab;
+
+        public PollenCollectable PollenPrefab => _pollenPrefab;
+
+        [SerializeField]
+        private int _pollenPoolSize = 20;
+
+        public int PollenPoolSize => _pollenPoolSize;
+#endregion
+
+        [Space(10)]
+
         [SerializeField]
         private float _enemySpawnImmunitySeconds = 1.0f;
 
@@ -83,11 +100,6 @@ namespace pdxpartyparrot.ggj2019.Data
         private WaveSpawner[] _waveSpawnerPrefabs;
 
         public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;
-
-        [SerializeField]
-        private CollectableData _collectableData;
-
-        public CollectableData CollectableData => _collectableData;
 
         [Space(10)]
 
