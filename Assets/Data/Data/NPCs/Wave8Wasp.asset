@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Wave8Wasp
   m_EditorClassIdentifier: 
   _speed: 7
+  _attackCooldown: 0.5
   _idleAnimationName: wasp_hover
   _flyingAnimationName: wasp_hover
-  _attackAnimationName: wasp_attack

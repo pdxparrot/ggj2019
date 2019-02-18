@@ -352,10 +352,12 @@ MonoBehaviour:
     _timerSeconds: 0
     _secondsRemaining: 0
     _isRunning: 0
-  _attackEffect: {fileID: 1802039788445271293}
+  _attackStartEffect: {fileID: 1802039788445271293}
+  _attackEndEffect: {fileID: 5954302684267042136}
+  _state: 0
   _flower: {fileID: 0}
   _spawnpoint: {fileID: 0}
-  _harvestCooldownTimer:
+  _attackCooldownTimer:
     _timerSeconds: 0
     _secondsRemaining: 0
     _isRunning: 0

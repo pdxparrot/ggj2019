@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
@@ -13,8 +14,23 @@ namespace pdxpartyparrot.ggj2019.NPCs
 {
     public sealed class NPCBeetle : NPCEnemy
     {
+        private enum State
+        {
+            Idle,
+            Attacking,
+        }
+
+#region Effects
         [SerializeField]
-        private EffectTrigger _attackEffect;
+        private EffectTrigger _attackStartEffect;
+
+        [SerializeField]
+        private EffectTrigger _attackEndEffect;
+#endregion
+
+        [SerializeField]
+        [ReadOnly]
+        private State _state = State.Idle;
 
         [SerializeField]
         [ReadOnly]
@@ -27,7 +43,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         [SerializeField]
         [ReadOnly]
-        private /*readonly*/ Timer _harvestCooldownTimer = new Timer();
+        private /*readonly*/ Timer _attackCooldownTimer = new Timer();
 
         private NPCBeetleData BeetleData => (NPCBeetleData)NPCData;
 
@@ -38,7 +54,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             float dt = Time.deltaTime;
 
-            _harvestCooldownTimer.Update(dt);
+            _attackCooldownTimer.Update(dt);
+
+            Think(dt);
         }
 #endregion
 
@@ -64,9 +82,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void OnDeSpawn()
         {
-            _harvestCooldownTimer.Stop();
+            _attackCooldownTimer.Stop();
 
-            _attackEffect.StopTrigger();
+            _attackEndEffect.StopTrigger();
+            _attackStartEffect.StopTrigger();
 
             if(_flower != null) {
                 _flower.ReleasePollenSpawnpoint();
@@ -88,9 +107,39 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.Initialize(data);
 
-            _harvestCooldownTimer.Start(BeetleData.HarvestCooldown, HarvestFlower);
+            _attackCooldownTimer.Start(BeetleData.AttackCooldown);
 
-            SetHarvestAnimation();
+            SetState(State.Idle);
+        }
+
+        private void SetState(State state)
+        {
+            _state = state;
+            switch(state)
+            {
+            case State.Idle:
+                SetIdleAnimation();
+                break;
+            case State.Attacking:
+                _attackStartEffect.Trigger(DoAttackFlower);
+                break;
+            }
+        }
+
+        private void Think(float dt)
+        {
+            if(IsDead || GameManager.Instance.IsGameOver  || PartyParrotManager.Instance.IsPaused) {
+                return;
+            }
+
+            switch(_state)
+            {
+            case State.Idle:
+                AttackFlower();
+                break;
+            case State.Attacking:
+                break;
+            }
         }
 
 #region Animations
@@ -98,30 +147,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             _spineAnimationHelper.SetAnimation(BeetleData.IdleAnimation, true);
         }
-
-        private void SetHarvestAnimation()
-        {
-            _spineAnimationHelper.SetAnimation(BeetleData.HarvestAnimation, true);
-        }
 #endregion
-
-        private void HarvestFlower()
-        {
-            if(GameManager.Instance.IsGameOver) {
-                return;
-            }
-
-            _attackEffect.Trigger();
-
-            if(_flower.BeetleHarvest()) {
-                _flower = null;
-
-                Kill(false);
-                return;
-            }
-
-            _harvestCooldownTimer.Start(BeetleData.HarvestCooldown, HarvestFlower);
-        }
 
         public override void Kill(bool playerKill)
         {
@@ -131,5 +157,29 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.Kill(playerKill);
         }
+
+#region Actions
+        private void AttackFlower()
+        {
+            if(_state == State.Attacking || _attackCooldownTimer.IsRunning) {
+                return;
+            }
+
+            SetState(State.Attacking);
+        }
+
+        private void DoAttackFlower()
+        {
+            _attackEndEffect.Trigger();
+
+            if(_flower.BeetleHarvest()) {
+                Kill(false);
+                return;
+            }
+
+            _attackCooldownTimer.Start(BeetleData.AttackCooldown);
+            SetState(State.Idle);
+        }
+#endregion
     }
 }

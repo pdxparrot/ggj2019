@@ -10,6 +10,8 @@ namespace pdxpartyparrot.ggj2019.Data
     [Serializable]
     public sealed class PlayerData : Game.Data.PlayerData
     {
+        [Space(10)]
+
         [SerializeField]
         private float _respawnSeconds = 1.0f;
 

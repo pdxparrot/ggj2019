@@ -13,6 +13,11 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public float Speed => _speed;
 
+        [SerializeField]
+        private float _attackCooldown = 1.0f;
+
+        public float AttackCooldown => _attackCooldown;
+
 #region Animations
         [SerializeField]
         private string _idleAnimationName = "wasp_hover";

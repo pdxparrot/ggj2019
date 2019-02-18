@@ -47,6 +47,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private State _state = State.Idle;
 
+        [SerializeField]
+        [ReadOnly]
+        private /*readonly*/ Timer _attackCooldownTimer = new Timer();
+
         private NPCWaspData WaspData => (NPCWaspData)NPCData;
 
 #region Unity Lifecycle
@@ -55,6 +59,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.Update();
 
             float dt = Time.deltaTime;
+
+            _attackCooldownTimer.Update(dt);
 
             Think(dt);
         }
@@ -78,6 +84,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void OnDeSpawn()
         {
+            _attackCooldownTimer.Stop();
+
             _attackEndEffect.StopTrigger();
             _attackStartEffect.StopTrigger();
 
@@ -108,7 +116,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 SetFlyingAnimation();
                 break;
             case State.Attacking:
-                Attack();
+                _attackStartEffect.Trigger(DoAttackHive);
                 break;
             }
         }
@@ -122,9 +130,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             switch(_state)
             {
             case State.Idle:
-                if(Hive.Instance.Collides(this)) {
-                    SetState(State.Attacking);
-                }
+                AttackHive();
                 break;
             case State.FollowingSpline:
                 FollowSpline(dt);
@@ -156,20 +162,26 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 
 #region Actions
-        private void Attack()
+        private void AttackHive()
         {
-            _attackStartEffect.Trigger(DoAttack);
+            if(_state == State.Attacking || _attackCooldownTimer.IsRunning || !Hive.Instance.Collides(this)) {
+                return;
+            }
+
+            SetState(State.Attacking);
         }
 
-        private void DoAttack()
+        private void DoAttackHive()
         {
             _attackEndEffect.Trigger();
 
             if(Hive.Instance.Damage(transform.position)) {
                 Kill(false);
-            } else {
-                SetState(State.Idle);
+                return;
             }
+
+            _attackCooldownTimer.Start(WaspData.AttackCooldown);
+            SetState(State.Idle);
         }
 
         private void FollowSpline(float dt)

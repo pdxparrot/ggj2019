@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c602481e426b048b759c6735dbb8d1, type: 3}
   m_Name: Wave2Wasp
   m_EditorClassIdentifier: 
-  _damage: 1
   _speed: 5
+  _attackCooldown: 0.5
   _idleAnimationName: wasp_hover
   _flyingAnimationName: wasp_hover
-  _attackAnimationName: wasp_attack

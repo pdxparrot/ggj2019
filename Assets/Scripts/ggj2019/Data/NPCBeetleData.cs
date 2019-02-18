@@ -1,6 +1,7 @@
 ﻿using System;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
@@ -9,20 +10,16 @@ namespace pdxpartyparrot.ggj2019.Data
     public sealed class NPCBeetleData : NPCEnemyData
     {
         [SerializeField]
-        private float _harvestCooldown = 1.0f;
+        [FormerlySerializedAs("_harvestCooldown")]
+        private float _attackCooldown = 1.0f;
 
-        public float HarvestCooldown => _harvestCooldown;
+        public float AttackCooldown => _attackCooldown;
 
 #region Animations
         [SerializeField]
         private string _idleAnimation = "beetle_idle";
 
         public string IdleAnimation => _idleAnimation;
-
-        [SerializeField]
-        private string _harvestAnimation = "beetle_idle";
-
-        public string HarvestAnimation => _harvestAnimation;
 #endregion
     }
 }
