@@ -3,8 +3,8 @@ using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Splines;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
 
 using UnityEngine;

@@ -23,11 +23,6 @@ namespace pdxpartyparrot.ggj2019.Data
         private string _flyingAnimationName = "wasp_hover";
 
         public string FlyingAnimationName => _flyingAnimationName;
-
-        [SerializeField]
-        private string _attackAnimationName = "wasp_attack";
-
-        public string AttackAnimationName => _attackAnimationName;
 #endregion
     }
 }

@@ -1,4 +1,5 @@
 using pdxpartyparrot.Core.Animation;
+using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
@@ -14,6 +15,9 @@ namespace pdxpartyparrot.ggj2019.Players
         private SpineAnimationHelper _animation;
 
         // start true to force the animation the first time
+        // TODO: is this actually necessary?
+        [SerializeField]
+        [ReadOnly]
         private bool _isFlying = true;
 
         public override void Initialize()
