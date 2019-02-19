@@ -8,6 +8,7 @@ using UnityEngine;
 namespace pdxpartyparrot.Game.Actors
 {
     // TODO: merge this into ActorBehavior
+    // TODO: this shouldn't care about USE_SPINE being set
     [RequireComponent(typeof(CharacterActorController))]
     [RequireComponent(typeof(CapsuleCollider))]
     public class CharacterActorController3D : ActorController3D, ICharacterActorController
@@ -64,9 +65,11 @@ namespace pdxpartyparrot.Game.Actors
         {
             base.Update();
 
+#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetBool(ControllerData.FallingParam, IsFalling);
             }
+#endif
         }
 
         protected override void FixedUpdate()
@@ -142,10 +145,12 @@ namespace pdxpartyparrot.Game.Actors
                 transform.forward = forward;
             }
 
+#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
                 Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
             }
+#endif
         }
 
         public override void PhysicsMove(Vector3 axes, float dt)
@@ -211,9 +216,11 @@ namespace pdxpartyparrot.Game.Actors
             // v = sqrt(2gh)
             Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
+#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetTrigger(animationParam);
             }
+#endif
         }
 
         private void FudgeVelocity(float dt)

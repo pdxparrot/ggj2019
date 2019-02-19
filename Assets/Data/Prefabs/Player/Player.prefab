@@ -359,7 +359,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
-  _animator: {fileID: 0}
   _actorAnimator: {fileID: 0}
   _owner: {fileID: 2603974987608069630}
   _lastVelocity: {x: 0, y: 0, z: 0}
@@ -368,10 +367,10 @@ MonoBehaviour:
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
+  _spineAnimation: {fileID: 5515133998358140594}
   _useGravity: 0
   _playerControllerData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,
     type: 2}
-  _animation: {fileID: 5515133998358140594}
   _isFlying: 1
 --- !u!114 &6318285324892847177
 MonoBehaviour:
@@ -1176,16 +1175,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
-    - target: {fileID: 8997265690965591359, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
-        type: 3}
-      propertyPath: m_Name
-      value: PS_Explosion
-      objectReference: {fileID: 0}
-    - target: {fileID: 8997265690965591359, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3425180358741031906, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1241,6 +1230,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8997265690965591359, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
+        type: 3}
+      propertyPath: m_Name
+      value: PS_Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997265690965591359, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88, type: 3}
 --- !u!4 &2004403956193392396 stripped
@@ -1262,11 +1261,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7620153835371573773}
     m_Modifications:
-    - target: {fileID: 495395128404236255, guid: 614b7f0eb133840419fbf1f622c17d15,
-        type: 3}
-      propertyPath: m_Name
-      value: Spine GameObject PlayerSkins
-      objectReference: {fileID: 0}
     - target: {fileID: 2250805412645139062, guid: 614b7f0eb133840419fbf1f622c17d15,
         type: 3}
       propertyPath: initialSkinName
@@ -1336,6 +1330,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 495395128404236255, guid: 614b7f0eb133840419fbf1f622c17d15,
+        type: 3}
+      propertyPath: m_Name
+      value: Spine GameObject PlayerSkins
       objectReference: {fileID: 0}
     - target: {fileID: 3980960456156569574, guid: 614b7f0eb133840419fbf1f622c17d15,
         type: 3}

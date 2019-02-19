@@ -146,9 +146,11 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             _isHovering = true;
 
+#if !USE_SPINE
             if(null != Controller.Animator) {
                 Controller.Animator.SetBool(Controller.ControllerData.HoverParam, true);
             }
+#endif
 
             // stop all vertical movement immediately
             Controller.Velocity = new Vector3(Controller.Velocity.x, 0.0f, Controller.Velocity.z);
@@ -159,9 +161,11 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             bool wasHovering = IsHovering;
             _isHovering = false;
 
+#if !USE_SPINE
             if(null != Controller.Animator) {
                 Controller.Animator.SetBool(Controller.ControllerData.HoverParam, false);
             }
+#endif
 
             if(wasHovering) {
                 _cooldownTimer.Start(Controller.ControllerData.HoverCooldownSeconds);

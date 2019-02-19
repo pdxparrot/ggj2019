@@ -258,10 +258,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 break;
             }
 
+#if !USE_SPINE
             if(null != Controller.Animator) {
                 Controller.Animator.SetFloat(Controller.ControllerData.MoveXAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.x) : 0.0f);
                 Controller.Animator.SetFloat(Controller.ControllerData.MoveZAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.y) : 0.0f);
             }
+#endif
             return true;
         }
 
@@ -334,10 +336,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _climbMode = ClimbMode.Climbing;
             Controller.UseGravity = false;
 
+#if !USE_SPINE
             if(null != Controller.Animator) {
                 Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, true);
                 Controller.Animator.SetBool(Controller.ControllerData.HangingParam, false);
             }
+#endif
         }
 
         private void StartHanging()
@@ -345,10 +349,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _climbMode = ClimbMode.Hanging;
             Controller.UseGravity = false;
 
+#if !USE_SPINE
             if(null != Controller.Animator) {
                 Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
                 Controller.Animator.SetBool(Controller.ControllerData.HangingParam, true);
             }
+#endif
         }
 
 
@@ -357,10 +363,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _climbMode = ClimbMode.None;
             Controller.UseGravity = true;
 
+#if !USE_SPINE
             if(null != Controller.Animator) {
                 Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
                 Controller.Animator.SetBool(Controller.ControllerData.HangingParam, false);
             }
+#endif
 
             // fix our orientation, just in case
             Vector3 rotation = transform.eulerAngles;

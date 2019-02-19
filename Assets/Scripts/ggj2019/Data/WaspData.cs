@@ -6,7 +6,7 @@ namespace pdxpartyparrot.ggj2019.Data
 {
     [CreateAssetMenu(fileName="NPCWaspData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Wasp Data")]
     [Serializable]
-    public sealed class NPCWaspData : NPCEnemyData
+    public sealed class WaspData : EnemyData
     {
         [SerializeField]
         private float _speed = 1.0f;

@@ -1,6 +1,7 @@
 ﻿using System;
 
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace pdxpartyparrot.ggj2019.Data
 {
     [CreateAssetMenu(fileName="NPCFlowerData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Flower Data")]
     [Serializable]
-    public sealed class NPCFlowerData : NPCEnemyData
+    public sealed class FlowerData : NPCData
     {
         [SerializeField]
         private int _pollen = 5;

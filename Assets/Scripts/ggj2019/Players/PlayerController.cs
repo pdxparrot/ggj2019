@@ -1,4 +1,3 @@
-using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -11,9 +10,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public Player GamePlayer => (Player)Player;
 
-        [SerializeField]
-        private SpineAnimationHelper _animation;
-
         // start true to force the animation the first time
         // TODO: is this actually necessary?
         [SerializeField]
@@ -24,7 +20,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Initialize();
 
-            _animation.SetFacing(Vector3.zero - transform.position);
+            SpineAnimation.SetFacing(Vector3.zero - transform.position);
             SetIdleAnimation();
         }
 
@@ -34,8 +30,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
+            base.DefaultAnimationMove(axes, dt);
+
             if(IsMoving) {
-                _animation.SetFacing(LastMoveAxes);
                 SetFlyingAnimation();
             } else  {
                 SetIdleAnimation();
@@ -49,7 +46,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            _animation.SetAnimation(PlayerManager.Instance.GamePlayerData.IdleAnimationName, true);
+            SpineAnimation.SetAnimation(PlayerManager.Instance.GamePlayerData.IdleAnimationName, true);
             _isFlying = false;
         }
 
@@ -59,7 +56,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            _animation.SetAnimation(PlayerManager.Instance.GamePlayerData.FlyingAnimationName, true);
+            SpineAnimation.SetAnimation(PlayerManager.Instance.GamePlayerData.FlyingAnimationName, true);
             _isFlying = true;
         }
 #endregion

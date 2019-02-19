@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Interactables;
@@ -14,7 +15,8 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.NPCs
 {
-    public sealed class NPCBee : NPCBase, ISwarmable, IInteractable
+    [RequireComponent(typeof(PooledObject))]
+    public sealed class Bee : NPC2D, ISwarmable, IInteractable
     {
         private enum State
         {
@@ -54,16 +56,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override bool IsDead => _state == State.Dead;
 
-        private NPCBeeData BeeData => (NPCBeeData)NPCData;
-
-#region Unity Life Cycle
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            Think(dt);
-        }
-#endregion
+        private BeeData BeeData => (BeeData)NPCData;
 
 #region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
@@ -87,7 +80,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void Initialize(NPCData data)
         {
-            Assert.IsTrue(data is NPCBeeData);
+            Assert.IsTrue(data is BeeData);
 
             base.Initialize(data);
 
@@ -118,13 +111,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        private void Think(float dt)
+        protected override void Think(float dt)
         {
             // it's ok for us to think if the game is over or paused,
             // so that way the swarm movement still happens
             /*if(GameManager.Instance.IsGameOver || PartyParrotManager.Instance.IsPaused) {
                 return;
             }*/
+
+            base.Think(dt);
 
             switch(_state)
             {

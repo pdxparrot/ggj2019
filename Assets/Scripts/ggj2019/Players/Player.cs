@@ -180,7 +180,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _hasPollen = true;
         }
 
-        public void AddBeeToSwarm(NPCBee bee)
+        public void AddBeeToSwarm(Bee bee)
         {
             _swarm.Add(bee);
             _interactables.RemoveInteractable(bee);
@@ -228,8 +228,8 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            var interactables = _interactables.GetInteractables<NPCBee>();
-            NPCBee bee = (NPCBee)interactables.GetRandomEntry();
+            var interactables = _interactables.GetInteractables<Bee>();
+            Bee bee = (Bee)interactables.GetRandomEntry();
             if(null != bee) {
                 AddBeeToSwarm(bee);
             }

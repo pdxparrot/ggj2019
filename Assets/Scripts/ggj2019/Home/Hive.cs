@@ -229,7 +229,7 @@ namespace pdxpartyparrot.ggj2019.Home
         {
             GameManager.Instance.PollenCollected();
 
-            NPCBee bee = DoSpawnBee();
+            Bee bee = DoSpawnBee();
             if(null != bee && null != player) {
                 player.AddBeeToSwarm(bee);
             }
@@ -244,7 +244,7 @@ namespace pdxpartyparrot.ggj2019.Home
                 return;
             }
 
-            if(ActorManager.Instance.ActorCount<NPCBee>() < GameManager.Instance.GameGameData.MinBees) {
+            if(ActorManager.Instance.ActorCount<Bee>() < GameManager.Instance.GameGameData.MinBees) {
                 DoSpawnBee();
             }
 
@@ -252,11 +252,11 @@ namespace pdxpartyparrot.ggj2019.Home
         }
 
         [CanBeNull]
-        private NPCBee DoSpawnBee()
+        private Bee DoSpawnBee()
         {
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
 
-            NPCBee bee = ObjectPoolManager.Instance.GetPooledObject<NPCBee>("bees");
+            Bee bee = ObjectPoolManager.Instance.GetPooledObject<Bee>("bees");
             spawnPoint.Spawn(bee, Guid.NewGuid());
             bee.transform.SetParent(_beeContainer.transform);
             bee.Initialize(GameManager.Instance.GameGameData.BeeData);

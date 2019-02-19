@@ -1,4 +1,5 @@
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.State;
@@ -29,6 +30,13 @@ namespace pdxpartyparrot.Game.Actors
         public bool IsSliding => _characterController.IsSliding;
 
         public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
+
+#if USE_SPINE
+        [SerializeField]
+        private SpineAnimationHelper _spineAnimation;
+
+        protected SpineAnimationHelper SpineAnimation => _spineAnimation;
+#endif
 
 #region Physics
         [Header("Physics")]
@@ -62,9 +70,11 @@ namespace pdxpartyparrot.Game.Actors
         {
             base.Update();
 
+#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetBool(ControllerData.FallingParam, IsFalling);
             }
+#endif
         }
 
         protected override void FixedUpdate()
@@ -125,13 +135,15 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            // TODO: do we need to rotate to face the direction of movement?
-            // (use scaleX)
-
+#if USE_SPINE
+            SpineAnimation.SetFacing(LastMoveAxes);
+#else
+            // TODO: set facing (set localScale.x)
             if(null != Animator) {
                 Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
                 Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
             }
+#endif
         }
 
         public override void PhysicsMove(Vector3 axes, float dt)
@@ -189,9 +201,11 @@ namespace pdxpartyparrot.Game.Actors
             // v = sqrt(2gh)
             Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
+#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetTrigger(animationParam);
             }
+#endif
         }
 
         private void FudgeVelocity(float dt)

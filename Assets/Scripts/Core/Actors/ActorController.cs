@@ -36,12 +36,14 @@ namespace pdxpartyparrot.Core.Actors
 #endregion
 
 #region Animation
+#if !USE_SPINE
         [SerializeField]
         [CanBeNull]
         private Animator _animator;
 
         [CanBeNull]
         public Animator Animator => _animator;
+#endif
 
         [SerializeField]
         [CanBeNull]
@@ -171,9 +173,11 @@ namespace pdxpartyparrot.Core.Actors
 #region Event Handlers
         protected virtual void PauseEventHandler(object sender, EventArgs args)
         {
+#if !USE_SPINE
             if(Animator != null) {
                 Animator.enabled = !PartyParrotManager.Instance.IsPaused;
             }
+#endif
         }
 #endregion
     }

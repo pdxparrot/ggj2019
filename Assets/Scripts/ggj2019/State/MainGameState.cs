@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.State
 {
-    public sealed class FFAGameState : MainGameState
+    public sealed class MainGameState : Game.State.MainGameState
     {
 #region Effects
         [SerializeField]

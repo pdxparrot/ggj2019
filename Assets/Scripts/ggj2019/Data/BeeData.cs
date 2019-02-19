@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
-    [CreateAssetMenu(fileName="NPCBeeData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Bee Data")]
+    [CreateAssetMenu(fileName="BeeData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Bee Data")]
     [Serializable]
-    public sealed class NPCBeeData : NPCData
+    public sealed class BeeData : NPCData
     {
         [SerializeField]
         private float _swarmSpeedModifier = 2.0f;

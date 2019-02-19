@@ -20,9 +20,9 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [SerializeField]
         [FormerlySerializedAs("_ffaGameStatePrefab")]
-        private FFAGameState _mainGameStatePrefab;
+        private MainGameState _mainGameStatePrefab;
 
-        public FFAGameState MainGameStatePrefab => _mainGameStatePrefab;
+        public MainGameState MainGameStatePrefab => _mainGameStatePrefab;
 
         [Space(10)]
 
@@ -63,14 +63,14 @@ namespace pdxpartyparrot.ggj2019.Data
         public float BeeSpawnCooldown => _beeSpawnCooldown;
 
         [SerializeField]
-        private NPCBeeData _beeData;
+        private BeeData _beeData;
 
-        public NPCBeeData BeeData => _beeData;
+        public BeeData BeeData => _beeData;
 
         [SerializeField]
-        private NPCBee _beePrefab;
+        private Bee _beePrefab;
 
-        public NPCBee BeePrefab => _beePrefab;
+        public Bee BeePrefab => _beePrefab;
 #endregion
 
         [Space(10)]

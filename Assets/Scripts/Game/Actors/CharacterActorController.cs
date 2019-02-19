@@ -20,7 +20,9 @@ namespace pdxpartyparrot.Game.Actors
     {
         CharacterActorControllerData ControllerData { get; }
 
+#if !USE_SPINE
         Animator Animator { get; }
+#endif
 
         ActorAnimator ActorAnimator { get; }
 
