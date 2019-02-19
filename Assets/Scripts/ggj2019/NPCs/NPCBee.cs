@@ -4,8 +4,9 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.Interactables;
+using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Data;
-using pdxpartyparrot.ggj2019.NPCs.Control;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;

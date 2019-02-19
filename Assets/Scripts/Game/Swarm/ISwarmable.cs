@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-namespace pdxpartyparrot.ggj2019.NPCs.Control
+namespace pdxpartyparrot.Game.Swarm
 {
-    // TODO: make this core
     public interface ISwarmable
     {
         Transform Transform { get; }

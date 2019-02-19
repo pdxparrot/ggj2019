@@ -1,4 +1,4 @@
-﻿namespace pdxpartyparrot.ggj2019.Players
+﻿namespace pdxpartyparrot.Game.Interactables
 {
     public interface IInteractable
     {

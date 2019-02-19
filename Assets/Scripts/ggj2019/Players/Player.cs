@@ -4,10 +4,11 @@ using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.Interactables;
 using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Home;
 using pdxpartyparrot.ggj2019.NPCs;
-using pdxpartyparrot.ggj2019.NPCs.Control;
 
 using UnityEngine;
 using UnityEngine.Assertions;

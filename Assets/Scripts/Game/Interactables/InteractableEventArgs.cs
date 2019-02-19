@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace pdxpartyparrot.ggj2019.Players
+namespace pdxpartyparrot.Game.Interactables
 {
     public class InteractableEventArgs : EventArgs
     {

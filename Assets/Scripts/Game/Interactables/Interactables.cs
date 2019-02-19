@@ -5,9 +5,8 @@ using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.ggj2019.Players
+namespace pdxpartyparrot.Game.Interactables
 {
-    // TODO: make this core
     [RequireComponent(typeof(Collider2D))]
     public class Interactables : MonoBehaviour
     {
