@@ -5,16 +5,19 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
+using pdxpartyparrot.Game.Collectables;
+using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
-namespace pdxpartyparrot.ggj2019.Collectable
+namespace pdxpartyparrot.ggj2019.Collectables
 {
     [RequireComponent(typeof(PooledObject))]
-    public class PollenCollectable : Actor2D, ICollectable
+    public class Pollen : Actor2D, ICollectable
     {
         private enum State
         {
@@ -54,7 +57,7 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         [SerializeField]
         [ReadOnly]
-        private CollectableData _pollenData;
+        private PollenData _pollenData;
 
         private PooledObject _pooledObject;
 
@@ -89,7 +92,9 @@ namespace pdxpartyparrot.ggj2019.Collectable
 
         public void Initialize(CollectableData data)
         {
-            _pollenData = data;
+            Assert.IsTrue(data is PollenData);
+
+            _pollenData = (PollenData)data;
 
             SetState(State.Floating);
         }

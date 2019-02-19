@@ -5,7 +5,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.ggj2019.Collectable;
+using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
@@ -180,11 +180,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private bool DoSpawnPollen()
         {
-            if(!_canSpawnPollen || ActorManager.Instance.ActorCount<PollenCollectable>() >= FlowerData.MaxPollen) {
+            if(!_canSpawnPollen || ActorManager.Instance.ActorCount<Pollen>() >= FlowerData.MaxPollen) {
                 return false;
             }
 
-            PollenCollectable pollen = ObjectPoolManager.Instance.GetPooledObject<PollenCollectable>("pollen");
+            Pollen pollen = ObjectPoolManager.Instance.GetPooledObject<Pollen>("pollen");
             _pollenSpawn.Spawn(pollen, Guid.NewGuid());
             pollen.transform.SetParent(GameManager.Instance.PollenContainer.transform);
             pollen.Initialize(FlowerData.PollenData);

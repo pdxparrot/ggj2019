@@ -3,7 +3,7 @@
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.World;
-using pdxpartyparrot.ggj2019.Collectable;
+using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.State;
 
@@ -79,9 +79,9 @@ namespace pdxpartyparrot.ggj2019.Data
         [Header("Pollen")]
 
         [SerializeField]
-        private PollenCollectable _pollenPrefab;
+        private Pollen _pollenPrefab;
 
-        public PollenCollectable PollenPrefab => _pollenPrefab;
+        public Pollen PollenPrefab => _pollenPrefab;
 
         [SerializeField]
         private int _pollenPoolSize = 20;

@@ -1,12 +1,14 @@
-using System;
+﻿using System;
+
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
-    [CreateAssetMenu(fileName="CollectableData", menuName="pdxpartyparrot/ggj2019/Data/Collectable Data")]
+    [CreateAssetMenu(fileName="PollenData", menuName="pdxpartyparrot/ggj2019/Data/Pollen Data")]
     [Serializable]
-    public sealed class CollectableData : ScriptableObject
+    public sealed class PollenData : CollectableData
     {
         [SerializeField]
         private float _sideDistance = 1.0f;

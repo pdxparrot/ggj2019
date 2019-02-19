@@ -21,9 +21,9 @@ namespace pdxpartyparrot.ggj2019.Data
         public FloatRange PollenSpawnCooldown => _pollenSpawnCooldown;
 
         [SerializeField]
-        private CollectableData _pollenData;
+        private PollenData _pollenData;
 
-        public CollectableData PollenData => _pollenData;
+        public PollenData PollenData => _pollenData;
 
         [SerializeField]
         private int _maxPollen = 2;
