@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 901499963466529183}
   - component: {fileID: 3681020909045797133}
   - component: {fileID: 1496933364213432368}
+  - component: {fileID: 370505066629193111}
+  - component: {fileID: 3413381529974294049}
   m_Layer: 0
   m_Name: GameOverEffectTrigger
   m_TagString: Untagged
@@ -113,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _triggerOnComplete: []
 --- !u!114 &1496933364213432368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +137,34 @@ MonoBehaviour:
     _fadeOut: 1
   _waitForComplete: 0
   _isPlaying: 0
+--- !u!114 &370505066629193111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487899008123690859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2584e92448432a84f92ba3ae9b04e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiObjectName: player_hud
+  _show: 0
+--- !u!114 &3413381529974294049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487899008123690859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2584e92448432a84f92ba3ae9b04e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiObjectName: game_over_text
+  _show: 1
 --- !u!1001 &5827476727563202089
 PrefabInstance:
   m_ObjectHideFlags: 0

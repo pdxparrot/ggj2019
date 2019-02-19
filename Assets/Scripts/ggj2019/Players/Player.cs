@@ -5,7 +5,6 @@ using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Players;
-using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.ggj2019.Home;
 using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.NPCs.Control;
@@ -38,6 +37,9 @@ namespace pdxpartyparrot.ggj2019.Players
         public bool IsDead => _isDead;
 
 #region Effects
+        [SerializeField]
+        private EffectTrigger _spawnEffect;
+
         [SerializeField]
         private EffectTrigger _respawnEffect;
 
@@ -133,6 +135,17 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 
 #region Spawn
+        public override bool OnSpawn(SpawnPoint spawnpoint)
+        {
+            if(!base.OnSpawn(spawnpoint)) {
+                return false;
+            }
+
+            _spawnEffect.Trigger();
+
+            return true;
+        }
+
         public override bool OnReSpawn(SpawnPoint spawnpoint)
         {
             if(!base.OnReSpawn(spawnpoint)) {
@@ -202,7 +215,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
             GameManager.Instance.PlayerDeath();
 
-            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(true);
             _deathEffect.Trigger();
 
             // despawn the actor (not the player)
@@ -224,8 +236,6 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Respawn()
         {
-            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowDeathText(false);
-
             if(GameManager.Instance.IsGameOver) {
                 return;
             }

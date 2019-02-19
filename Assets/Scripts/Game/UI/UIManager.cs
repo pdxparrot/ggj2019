@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
@@ -30,6 +31,8 @@ namespace pdxpartyparrot.Game.UI
         private Menu.Menu _pauseMenu;
 
         private GameObject _uiContainer;
+
+        private readonly Dictionary<string, GameObject> _uiObjects = new Dictionary<string, GameObject>();
 
 #region Unity Lifecycle
         private void Awake()
@@ -85,6 +88,32 @@ namespace pdxpartyparrot.Game.UI
             _pauseMenu = null;
         }
 
+#region UI Objects
+        public void RegisterUIObject(string name, GameObject uiObject)
+        {
+            //Debug.Log($"Registering UI object {name}: {uiObject.name}");
+            _uiObjects.Add(name, uiObject);
+        }
+
+        public void UnregisterUIObject(string name)
+        {
+            //Debug.Log($"Unregistering UI object {name}");
+            _uiObjects.Remove(name);
+        }
+
+        public void ShowUIObject(string name, bool show)
+        {
+            if(!_uiObjects.TryGetValue(name, out var uiObject)) {
+                Debug.LogWarning($"Failed to lookup UI object {name}!");
+                return;
+            }
+
+            //Debug.Log($"Showing UI object {name}: {show}");
+            uiObject.SetActive(show);
+        }
+#endregion
+
+        // helper for instantiating UI prefabs under the UI comtainer
         public TV InstantiateUIPrefab<TV>(TV prefab) where TV: Component
         {
             return Instantiate(prefab, _uiContainer.transform);
@@ -112,6 +141,7 @@ namespace pdxpartyparrot.Game.UI
         {
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.UIManager");
             debugMenuNode.RenderContentsAction = () => {
+// TODO: print the known UI objects
             };
         }
     }

@@ -12,6 +12,9 @@ namespace pdxpartyparrot.Core.Effects
 {
     public class EffectTrigger : MonoBehaviour
     {
+        [SerializeField]
+        private EffectTrigger[] _triggerOnComplete;
+
         private Coroutine _effectWaiter;
 
         private EffectTriggerComponent[] _components;
@@ -102,6 +105,11 @@ namespace pdxpartyparrot.Core.Effects
 
             _effectWaiter = null;
             callback?.Invoke();
+
+            //Debug.Log($"Trigger {_triggerOnComplete.Length} more effects from {name}");
+            foreach(EffectTrigger onCompleteEffect in _triggerOnComplete) {
+                onCompleteEffect.Trigger();
+            }
         }
     }
 }

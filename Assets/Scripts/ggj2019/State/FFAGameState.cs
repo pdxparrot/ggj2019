@@ -34,15 +34,14 @@ namespace pdxpartyparrot.ggj2019.State
             ViewerManager.Instance.AllocateViewers(1, GameManager.Instance.GameGameData.ViewerPrefab);
             GameManager.Instance.InitViewer();
 
+            UIManager.Instance.InitializePlayerUI(GameManager.Instance.Viewer.UICamera);
+
             if(!base.InitializeClient()) {
                 Debug.LogWarning("Failed to initialize client!");
                 return false;
             }
 
             Hive.Instance.InitializeClient();
-
-            UIManager.Instance.InitializePlayerUI(GameManager.Instance.Viewer.UICamera);
-            ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowPlayerHUD(true);
 
             _startGameEffect.Trigger();
 

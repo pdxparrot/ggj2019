@@ -4,19 +4,16 @@ using System;
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Effects;
-using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.State;
-
+using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Players;
-using pdxpartyparrot.Game.UI;
-using pdxpartyparrot.Game.World;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -255,10 +252,6 @@ namespace pdxpartyparrot.ggj2019
             }
 
             _newWaveEffect.Trigger();
-
-            if(null != UIManager.Instance.PlayerUI) {
-                ((UI.PlayerUI)UIManager.Instance.PlayerUI).ShowWaveText(args.WaveIndex);
-            }
         }
 
         // TODO: this should come from a server command

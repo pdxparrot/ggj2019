@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6439173143331639617}
   - component: {fileID: 7988186786889775175}
   - component: {fileID: 8082473673572082007}
+  - component: {fileID: 5889189273505293931}
+  - component: {fileID: 1313739704723267371}
   m_Layer: 0
   m_Name: NewWaveEffectTrigger
   m_TagString: Untagged
@@ -44,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _triggerOnComplete:
+  - {fileID: 5454586887457216405}
 --- !u!114 &8082473673572082007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,9 +60,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a70af2732b88a408b88bace30961d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitForComplete: 0
   _audioClip: {fileID: 8300000, guid: f0e3155e8b68bfd48af0a56a7c30fe6f, type: 3}
   _audioSource: {fileID: 0}
+  _waitForComplete: 0
+--- !u!114 &5889189273505293931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198086677271475805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2584e92448432a84f92ba3ae9b04e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiObjectName: wave_text
+  _show: 1
+--- !u!114 &1313739704723267371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198086677271475805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4898942f39150c4bb81409d89e4491c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seconds: 2.5
+  _timer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!1 &8308380061559946417
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6439173143331639617}
+  - {fileID: 8977539462973932530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -110,3 +146,62 @@ MonoBehaviour:
     _stopwatchSeconds: 0
     _isRunning: 0
   _score: 0
+--- !u!1 &8630435001328562533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8977539462973932530}
+  - component: {fileID: 5454586887457216405}
+  - component: {fileID: 7234442480789047992}
+  m_Layer: 0
+  m_Name: CleanupNewWaveEffectTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8977539462973932530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630435001328562533}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9123358690629283193}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5454586887457216405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630435001328562533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerOnComplete: []
+--- !u!114 &7234442480789047992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630435001328562533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2584e92448432a84f92ba3ae9b04e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiObjectName: wave_text
+  _show: 0

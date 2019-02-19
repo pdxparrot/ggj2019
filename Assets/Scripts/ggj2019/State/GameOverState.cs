@@ -4,7 +4,6 @@ using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Game.State;
-using pdxpartyparrot.Game.UI;
 
 using Spine;
 
@@ -36,10 +35,6 @@ namespace pdxpartyparrot.ggj2019.State
             base.OnEnter();
 
             if(NetworkClient.active) {
-                UI.PlayerUI playerUI = (UI.PlayerUI)UIManager.Instance.PlayerUI;
-                playerUI.ShowPlayerHUD(false);
-                playerUI.ShowGameOver(true);
-
                 ViewerShakeEffectTriggerComponent viewerShakeEffect = _gameOverEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
                 viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
 
