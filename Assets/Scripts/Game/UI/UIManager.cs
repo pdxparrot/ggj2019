@@ -32,7 +32,7 @@ namespace pdxpartyparrot.Game.UI
 
         private GameObject _uiContainer;
 
-        private readonly Dictionary<string, GameObject> _uiObjects = new Dictionary<string, GameObject>();
+        private readonly Dictionary<string, UIObject> _uiObjects = new Dictionary<string, UIObject>();
 
 #region Unity Lifecycle
         private void Awake()
@@ -89,27 +89,31 @@ namespace pdxpartyparrot.Game.UI
         }
 
 #region UI Objects
-        public void RegisterUIObject(string name, GameObject uiObject)
+        public void RegisterUIObject(UIObject uiObject)
         {
-            //Debug.Log($"Registering UI object {name}: {uiObject.name}");
-            _uiObjects.Add(name, uiObject);
+            //Debug.Log($"Registering UI object {uiObject.Id}: {uiObject.name}");
+            try {
+                _uiObjects.Add(uiObject.Id, uiObject);
+            } catch(ArgumentException) {
+                Debug.LogWarning($"Failed overwrite of UI object {uiObject.Id}!");
+            }
         }
 
-        public void UnregisterUIObject(string name)
+        public bool UnregisterUIObject(UIObject uiObject)
         {
-            //Debug.Log($"Unregistering UI object {name}");
-            _uiObjects.Remove(name);
+            //Debug.Log($"Unregistering UI object {uiObject.Id}");
+            return _uiObjects.Remove(uiObject.Id);
         }
 
-        public void ShowUIObject(string name, bool show)
+        public void ShowUIObject(string id, bool show)
         {
-            if(!_uiObjects.TryGetValue(name, out var uiObject)) {
-                Debug.LogWarning($"Failed to lookup UI object {name}!");
+            if(!_uiObjects.TryGetValue(id, out var uiObject)) {
+                Debug.LogWarning($"Failed to lookup UI object {id}!");
                 return;
             }
 
             //Debug.Log($"Showing UI object {name}: {show}");
-            uiObject.SetActive(show);
+            uiObject.gameObject.SetActive(show);
         }
 #endregion
 

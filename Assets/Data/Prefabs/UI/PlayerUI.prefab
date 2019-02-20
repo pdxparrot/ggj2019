@@ -567,7 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3837557225444970178}
   - component: {fileID: 2707591855105055090}
-  - component: {fileID: 7416203523010246036}
+  - component: {fileID: 5917692036023685275}
   m_Layer: 5
   m_Name: Death
   m_TagString: Untagged
@@ -603,7 +603,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3134067164408691225}
   m_CullTransparentMesh: 0
---- !u!114 &7416203523010246036
+--- !u!114 &5917692036023685275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -612,9 +612,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3134067164408691225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38eaa102d4d0e474db676bc5d9873280, type: 3}
+  m_Script: {fileID: 11500000, guid: b6a6ad8358618ed4c8ddaf6a2333dede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: player_death_text
 --- !u!1 &3332031149756914638
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 762801813997078158}
   - component: {fileID: 4592302733733564688}
+  - component: {fileID: 3159848535518958874}
   - component: {fileID: 476329379392408382}
   m_Layer: 5
   m_Name: HUD
@@ -821,6 +823,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4285807585951930032}
   m_CullTransparentMesh: 0
+--- !u!114 &3159848535518958874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285807585951930032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a6ad8358618ed4c8ddaf6a2333dede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: player_hud
 --- !u!114 &476329379392408382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,6 +1149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3104019848274801249}
   - component: {fileID: 2521105685363745568}
+  - component: {fileID: 2162067383673692355}
   - component: {fileID: 2501147335573747592}
   m_Layer: 5
   m_Name: Wave
@@ -1170,6 +1186,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6500637424092948447}
   m_CullTransparentMesh: 0
+--- !u!114 &2162067383673692355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6500637424092948447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a6ad8358618ed4c8ddaf6a2333dede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: wave_text
 --- !u!114 &2501147335573747592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1353,6 +1382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1663813487257048832}
   - component: {fileID: 1662222143083105472}
+  - component: {fileID: 6658600493438777949}
   - component: {fileID: 1188364537450247456}
   m_Layer: 5
   m_Name: GameOver
@@ -1390,6 +1420,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7047304840778109179}
   m_CullTransparentMesh: 0
+--- !u!114 &6658600493438777949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047304840778109179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a6ad8358618ed4c8ddaf6a2333dede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: game_over_text
 --- !u!114 &1188364537450247456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,7 +1457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6544673338838264310}
   - component: {fileID: 266515560335708188}
-  - component: {fileID: 7095698389839007658}
+  - component: {fileID: 2447012949790820237}
   m_Layer: 5
   m_Name: Intro
   m_TagString: Untagged
@@ -1450,7 +1493,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7726590095088699856}
   m_CullTransparentMesh: 0
---- !u!114 &7095698389839007658
+--- !u!114 &2447012949790820237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1459,6 +1502,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7726590095088699856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7b5a0222855f54ca8a36fc4cac5c2b, type: 3}
+  m_Script: {fileID: 11500000, guid: b6a6ad8358618ed4c8ddaf6a2333dede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: intro_text

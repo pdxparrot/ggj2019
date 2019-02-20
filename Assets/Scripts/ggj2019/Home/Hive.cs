@@ -164,6 +164,10 @@ namespace pdxpartyparrot.ggj2019.Home
                 int count = 0;
                 armorDestroyed = Damage(armoridx, true, ref count);
                 //UnityEngine.Assertions.Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
+                if(armorDestroyed) {
+                    GameManager.Instance.HiveDamage();
+                    _damageEffect.Trigger();
+                }
 
                 // check to see if we have any armor left
                 bool armorLeft = false;
@@ -180,11 +184,6 @@ namespace pdxpartyparrot.ggj2019.Home
                     });
                     GameManager.Instance.EndGame();
                 }
-            }
-
-            if(armorDestroyed) {
-                GameManager.Instance.HiveDamage();
-                _damageEffect.Trigger();
             }
 
             return armorDestroyed;

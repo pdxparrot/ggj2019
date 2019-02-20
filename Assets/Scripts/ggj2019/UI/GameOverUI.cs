@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Game.UI;
+using pdxpartyparrot.Game.UI;
 
 using TMPro;
 
@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.UI
 {
+    [RequireComponent(typeof(UIObject))]
     public sealed class GameOverUI : MonoBehaviour
     {
         [SerializeField]
@@ -15,18 +16,6 @@ namespace pdxpartyparrot.ggj2019.UI
         private TextMeshProUGUI _endGameScoreText;
 
 #region Unity Lifecycle
-        private void Awake()
-        {
-            UIManager.Instance.RegisterUIObject("game_over_text", gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            if(UIManager.HasInstance) {
-                UIManager.Instance.UnregisterUIObject("game_over_text");
-            }
-        }
-
         private void OnEnable()
         {
             _endGameWaveText.text = $"You Made It To Wave {GameManager.Instance.WaveSpawner.CurrentWaveIndex}!";
