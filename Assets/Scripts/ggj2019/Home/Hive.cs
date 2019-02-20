@@ -12,7 +12,6 @@ using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.NPCs;
 
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Home
 {
@@ -23,18 +22,8 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public override bool IsLocalActor => false;
 
-#region Armor
         [SerializeField]
         private HiveArmor[] _armor;
-
-        [SerializeField]
-        [Tooltip("Local Y position of the bottom of the top row (red)")]
-        private float _topRow;
-
-        [SerializeField]
-        [Tooltip("Local Y position of the top of the bottom row (green)")]
-        private float _bottomRow;
-#endregion
 
 #region Effects
         [SerializeField]
@@ -59,15 +48,13 @@ namespace pdxpartyparrot.ggj2019.Home
         [SerializeField]
         private bool _immune;
 
+        public bool Immune => _immune;
+
         [SerializeField]
         private bool _logBeeSpawn;
 
         private DebugMenuNode _debugMenuNode;
 #endregion
-
-        private float TopRow => transform.position.y + _topRow;
-
-        private float BottomRow => transform.position.y + _bottomRow;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -105,15 +92,6 @@ namespace pdxpartyparrot.ggj2019.Home
 
             Instance = null;
         }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(new Vector3(-3.0f, TopRow), new Vector3(2.5f, TopRow));
-
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(new Vector3(-3.0f, BottomRow), new Vector3(2.5f, BottomRow));
-        }
 #endregion
 
         public void InitializeClient()
@@ -122,51 +100,25 @@ namespace pdxpartyparrot.ggj2019.Home
             viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
         }
 
-#region Damage
-        private int ArmorIndex(Vector3 pos)
+        public void ArmorDestroyed()
         {
-            return (pos.x > 0.0f ? 3 : 0) +         // left / right side
-                    (pos.y >= TopRow ? 0 :         // top row or above
-                        pos.y <= BottomRow ? 2 :   // bottom row or below
-                            1);                     // middle
-        }
+            GameManager.Instance.HiveDamage();
 
-        public bool Damage(Vector3 pos)
-        {
-            if(_immune) {
-                return false;
-            }
-
-            // figure out which armor piece was hit
-            int armoridx = ArmorIndex(pos);
-
-            // damage the armor
-            bool armorDestroyed = _armor[armoridx].Damage();
-            if(armorDestroyed) {
-                GameManager.Instance.HiveDamage();
-                _damageEffect.Trigger();
-            }
+            _damageEffect.Trigger();
 
             // check to see if we have any armor left
-            bool armorLeft = false;
             foreach(HiveArmor armor in _armor) {
                 if(armor.Health > 0) {
-                    armorLeft = true;
-                    break;
+                    return;
                 }
             }
 
-            // if no armor left, the game is over
-            if(!armorLeft) {
-                _endGameExplosion.Trigger(() => {
-                    _endGameExplosionBig.Trigger();
-                });
-                GameManager.Instance.EndGame();
-            }
-
-            return armorDestroyed;
+            // no armor left, the game is over
+            _endGameExplosion.Trigger(() => {
+                _endGameExplosionBig.Trigger();
+            });
+            GameManager.Instance.EndGame();
         }
-#endregion
 
         public int UnloadPollen(Players.Player player, int amount)
         {

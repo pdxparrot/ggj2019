@@ -7,6 +7,7 @@ using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
+using pdxpartyparrot.ggj2019.World;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -54,6 +55,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         [SerializeField]
         [ReadOnly]
+        private HiveArmor _armorToAttack;
+
+        [SerializeField]
+        [ReadOnly]
         private /*readonly*/ Timer _attackCooldownTimer = new Timer();
 
         private WaspData WaspData => (WaspData)NPCData;
@@ -76,11 +81,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return false;
             }
 
-            _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
+            WaspSpawnPoint waspSpawn = spawnpoint.GetComponent<WaspSpawnPoint>();
+            _armorToAttack = waspSpawn.ArmorToAttack;
 
             _spline = spawnpoint.GetComponent<BezierSpline>();
             _splineLength = _spline.EstimatedLength();
             _splinePosition = 0.0f;
+
+            _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
 
             return true;
         }
@@ -93,6 +101,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _attackStartEffect.StopTrigger();
 
             _spline = null;
+            _armorToAttack = null;
 
             base.OnDeSpawn();
         }
@@ -169,7 +178,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Actions
         private void AttackHive()
         {
-            if(_state == State.Attacking || _attackCooldownTimer.IsRunning || !Hive.Instance.Collides(this)) {
+            if(_state == State.Attacking || _attackCooldownTimer.IsRunning) {
                 return;
             }
 
@@ -180,7 +189,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             _attackEndEffect.Trigger();
 
-            if(Hive.Instance.Damage(transform.position)) {
+            if(_armorToAttack.Damage()) {
                 Kill(false);
                 return;
             }

@@ -20,6 +20,9 @@ namespace pdxpartyparrot.ggj2019.Home
         [SerializeField]
         private SpriteRenderer _model;
 
+        [SerializeField]
+        private Hive _owner;
+
 #region Neighbors
         [SerializeField]
         private HiveArmor _acrossNeighbor;
@@ -47,11 +50,16 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public bool Damage()
         {
+            if(_owner.Immune) {
+                return false;
+            }
+
             // try to damage ourselves first
             if(Health > 0) {
                 _health--;
                 if(Health <= 0) {
                     ShowDestroy();
+                    _owner.ArmorDestroyed();
                     return true;
                 }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1732379929763720300}
   - component: {fileID: 1732379929763720303}
   - component: {fileID: 503758724177762310}
+  - component: {fileID: 6661501887385523287}
   m_Layer: 0
   m_Name: WaspSpawnL (1)
   m_TagString: Untagged
@@ -58,13 +59,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: -2, y: 1, z: 0}
   - {x: 1, y: -7, z: 0}
-  - {x: 2, y: 2, z: 0}
-  - {x: 8, y: -1, z: 0}
-  modes: 0000000000000000
-  loop: 0
+  - {x: 2, y: 3, z: 0}
+  - {x: 8, y: 0, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+--- !u!114 &6661501887385523287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732379929763720301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192295cd3edeee5479028a5ad4404b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorToAttack: {fileID: 0}
 --- !u!1 &1732379929867678515
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,6 +90,7 @@ GameObject:
   - component: {fileID: 1732379929867678514}
   - component: {fileID: 1732379929867678509}
   - component: {fileID: 1732379929867678508}
+  - component: {fileID: 4399130481328139148}
   m_Layer: 0
   m_Name: WaspSpawnL
   m_TagString: Untagged
@@ -123,13 +138,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: -2, y: 1, z: 0}
   - {x: 0, y: -3, z: 0}
-  - {x: 5, y: 3, z: 0}
-  - {x: 8, y: -1, z: 0}
-  modes: 0000000000000000
-  loop: 0
+  - {x: 5.5, y: 3.4, z: 0}
+  - {x: 8.5, y: -0.6, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+--- !u!114 &4399130481328139148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732379929867678515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192295cd3edeee5479028a5ad4404b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorToAttack: {fileID: 0}
 --- !u!1 &1732379930651837874
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +169,7 @@ GameObject:
   - component: {fileID: 1732379930651837869}
   - component: {fileID: 1732379930651837868}
   - component: {fileID: 3483784896107952571}
+  - component: {fileID: 654505638363021575}
   m_Layer: 0
   m_Name: WaspSpawnR (2)
   m_TagString: Untagged
@@ -188,13 +217,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: -1, y: 9, z: 0}
   - {x: -1, y: 2, z: 0}
-  - {x: -7, y: -2, z: 0}
-  - {x: -9, y: 0, z: 0}
-  modes: 0000000000000000
-  loop: 0
+  - {x: -6, y: -1.5, z: 0}
+  - {x: -8, y: 0.5, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+--- !u!114 &654505638363021575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732379930651837874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192295cd3edeee5479028a5ad4404b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorToAttack: {fileID: 0}
 --- !u!1 &1732379930673991556
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +248,7 @@ GameObject:
   - component: {fileID: 1732379930673991559}
   - component: {fileID: 1732379930673991558}
   - component: {fileID: 3833262854536508089}
+  - component: {fileID: 5521393994261932}
   m_Layer: 0
   m_Name: WaspSpawnR
   m_TagString: Untagged
@@ -253,13 +296,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: 2, y: 1, z: 0}
   - {x: 0, y: -3, z: 0}
-  - {x: -5.5, y: 3, z: 0}
-  - {x: -8.5, y: -1, z: 0}
-  modes: 0000000000000000
-  loop: 0
+  - {x: -5.5, y: 3.4, z: 0}
+  - {x: -8.5, y: -0.6, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+--- !u!114 &5521393994261932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732379930673991556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192295cd3edeee5479028a5ad4404b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorToAttack: {fileID: 0}
 --- !u!1 &1732379930864418895
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,6 +363,7 @@ GameObject:
   - component: {fileID: 1732379931008445954}
   - component: {fileID: 1732379931008445949}
   - component: {fileID: 489973640994431168}
+  - component: {fileID: 2072332705724507898}
   m_Layer: 0
   m_Name: WaspSpawnL (2)
   m_TagString: Untagged
@@ -354,13 +411,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: 1, y: 9, z: 0}
   - {x: 1, y: 2, z: 0}
-  - {x: 7, y: -2, z: 0}
-  - {x: 9, y: 0, z: 0}
-  modes: 0000000000000000
-  loop: 0
+  - {x: 6, y: -1.5, z: 0}
+  - {x: 8, y: 0.5, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+--- !u!114 &2072332705724507898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732379931008445955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192295cd3edeee5479028a5ad4404b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorToAttack: {fileID: 0}
 --- !u!1 &1732379931267184627
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +442,7 @@ GameObject:
   - component: {fileID: 1732379931267184626}
   - component: {fileID: 1732379931267184621}
   - component: {fileID: 2976726806149800825}
+  - component: {fileID: 5679264562697105180}
   m_Layer: 0
   m_Name: WaspSpawnR (1)
   m_TagString: Untagged
@@ -419,10 +490,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154883273c2845f39445c8015d81639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: 2, y: 1, z: 0}
   - {x: -1, y: -7, z: 0}
-  - {x: -2, y: 2, z: 0}
-  - {x: -8, y: -1, z: 0}
-  modes: 0000000000000000
-  loop: 0
+  - {x: -2, y: 3, z: 0}
+  - {x: -8, y: 0, z: 0}
+  _modes: 0000000000000000
+  _loop: 0
+--- !u!114 &5679264562697105180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732379931267184627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192295cd3edeee5479028a5ad4404b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _armorToAttack: {fileID: 0}
