@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 3681020909045797133}
   - component: {fileID: 1496933364213432368}
   - component: {fileID: 370505066629193111}
+  - component: {fileID: 5338397690891690357}
   - component: {fileID: 3413381529974294049}
   m_Layer: 0
   m_Name: GameOverEffectTrigger
@@ -151,6 +152,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiObjectName: player_hud
   _show: 0
+--- !u!114 &5338397690891690357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487899008123690859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2584e92448432a84f92ba3ae9b04e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiObjectName: wave_text
+  _show: 0
 --- !u!114 &3413381529974294049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,11 +191,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spine GameObject (game_over)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833649098758961690, guid: 97b01e82b65e2e643941c486c62c0aeb,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1073157211248899361, guid: 97b01e82b65e2e643941c486c62c0aeb,
         type: 3}
@@ -236,6 +246,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833649098758961690, guid: 97b01e82b65e2e643941c486c62c0aeb,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97b01e82b65e2e643941c486c62c0aeb, type: 3}

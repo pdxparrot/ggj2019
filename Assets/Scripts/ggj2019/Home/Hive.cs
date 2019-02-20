@@ -12,6 +12,7 @@ using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.NPCs;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Home
 {
@@ -23,16 +24,15 @@ namespace pdxpartyparrot.ggj2019.Home
         public override bool IsLocalActor => false;
 
 #region Armor
-        // [0 3]
-        // [1 4]
-        // [2 5]
         [SerializeField]
         private HiveArmor[] _armor;
 
         [SerializeField]
+        [Tooltip("Local Y position of the bottom of the top row (red)")]
         private float _topRow;
 
         [SerializeField]
+        [Tooltip("Local Y position of the top of the bottom row (green)")]
         private float _bottomRow;
 #endregion
 
@@ -59,8 +59,15 @@ namespace pdxpartyparrot.ggj2019.Home
         [SerializeField]
         private bool _immune;
 
+        [SerializeField]
+        private bool _logBeeSpawn;
+
         private DebugMenuNode _debugMenuNode;
 #endregion
+
+        private float TopRow => transform.position.y + _topRow;
+
+        private float BottomRow => transform.position.y + _bottomRow;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -98,6 +105,15 @@ namespace pdxpartyparrot.ggj2019.Home
 
             Instance = null;
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(new Vector3(-3.0f, TopRow), new Vector3(2.5f, TopRow));
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(new Vector3(-3.0f, BottomRow), new Vector3(2.5f, BottomRow));
+        }
 #endregion
 
         public void InitializeClient()
@@ -106,121 +122,49 @@ namespace pdxpartyparrot.ggj2019.Home
             viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
         }
 
-#region Damage (clean this up)
-// TODO: the HiveArmor can have its neighbors linked....
-        private int neighbor1(int pc)
+#region Damage
+        private int ArmorIndex(Vector3 pos)
         {
-            switch(pc)
-            {
-            default:
-            case 0: return 3;
-            case 1: return 4;
-            case 2: return 5;
-            case 3: return 0;
-            case 4: return 1;
-            case 5: return 2;
-            }
-        }
-
-        private int neighbor2(int pc)
-        {
-            switch(pc)
-            {
-            default:
-            case 0: return 1;
-            case 1: return 2;
-            case 2: return -1;
-            case 3: return 4;
-            case 4: return 5;
-            case 5: return -1;
-            }
-        }
-
-        private int neighbor3(int pc)
-        {
-            switch(pc)
-            {
-            default:
-            case 0: return -1;
-            case 1: return 0;
-            case 2: return 1;
-            case 3: return -1;
-            case 4: return 3;
-            case 5: return 4;
-            }
+            return (pos.x > 0.0f ? 3 : 0) +         // left / right side
+                    (pos.y >= TopRow ? 0 :         // top row or above
+                        pos.y <= BottomRow ? 2 :   // bottom row or below
+                            1);                     // middle
         }
 
         public bool Damage(Vector3 pos)
         {
-            bool armorDestroyed = false;
+            if(_immune) {
+                return false;
+            }
 
-            if(!_immune) {
-                // figure out which armor piece was hit
-                int armoridx = ((pos.x > 0.0f) ? 3 : 0) +
-                               ((pos.y > _topRow) ? 0 :
-                                (pos.y > _bottomRow) ? 1 : 2);
+            // figure out which armor piece was hit
+            int armoridx = ArmorIndex(pos);
 
-                // damage the armor
-                int count = 0;
-                armorDestroyed = Damage(armoridx, true, ref count);
-                //UnityEngine.Assertions.Assert.IsTrue(count <= 1, $"Damaged {count} armor pieces!");
-                if(armorDestroyed) {
-                    GameManager.Instance.HiveDamage();
-                    _damageEffect.Trigger();
+            // damage the armor
+            bool armorDestroyed = _armor[armoridx].Damage();
+            if(armorDestroyed) {
+                GameManager.Instance.HiveDamage();
+                _damageEffect.Trigger();
+            }
+
+            // check to see if we have any armor left
+            bool armorLeft = false;
+            foreach(HiveArmor armor in _armor) {
+                if(armor.Health > 0) {
+                    armorLeft = true;
+                    break;
                 }
+            }
 
-                // check to see if we have any armor left
-                bool armorLeft = false;
-                foreach(HiveArmor armor in _armor) {
-                    if(armor.Health > 0) {
-                        armorLeft = true;
-                    }
-                }
-
-                // if no armor left, the game is over
-                if(!armorLeft) {
-                    _endGameExplosion.Trigger(() => {
-                        _endGameExplosionBig.Trigger();
-                    });
-                    GameManager.Instance.EndGame();
-                }
+            // if no armor left, the game is over
+            if(!armorLeft) {
+                _endGameExplosion.Trigger(() => {
+                    _endGameExplosionBig.Trigger();
+                });
+                GameManager.Instance.EndGame();
             }
 
             return armorDestroyed;
-        }
-
-        private bool Damage(int armoridx, bool recurse, ref int count)
-        {
-            HiveArmor armor = _armor[armoridx];
-            if(armor.Health > 0) {
-                count++;
-                if(armor.Damage(1)) {
-                    return true;
-                }
-            } else if(recurse) {
-                int n1 = neighbor1(armoridx);
-                int n2 = neighbor2(armoridx);
-                int n3 = neighbor3(armoridx);
-
-                if(_armor[n1].Health > 0 || (n2 != -1 && _armor[n2].Health > 0) || (n3 != -1 && _armor[n3].Health > 0)) {
-                    bool result  = Damage(n1, false, ref count);
-                    if(n2 != -1)
-                        result |= Damage(n2, false, ref count);
-                    if(n3 != -1)
-                        result |= Damage(n3, false, ref count);
-                    return result;
-                } else {
-                    bool result  = Damage(0, false, ref count);
-                         result |= Damage(1, false, ref count);
-                         result |= Damage(2, false, ref count);
-                         result |= Damage(3, false, ref count);
-                         result |= Damage(4, false, ref count);
-                         result |= Damage(5, false, ref count);
-                    return result;
-                }
-            }
-
-            return false;
         }
 #endregion
 
@@ -243,8 +187,11 @@ namespace pdxpartyparrot.ggj2019.Home
                 return;
             }
 
-            if(ActorManager.Instance.ActorCount<Bee>() < GameManager.Instance.GameGameData.MinBees) {
+            int activeBeeCount = ActorManager.Instance.ActorCount<Bee>();
+            if(activeBeeCount < GameManager.Instance.GameGameData.MinBees) {
                 DoSpawnBee();
+            } else if(_logBeeSpawn) {
+                Debug.Log($"not spawning bees {activeBeeCount} of {GameManager.Instance.GameGameData.MinBees} active");
             }
 
             _beeSpawnTimer.Start(GameManager.Instance.GameGameData.BeeSpawnCooldown, SpawnBee);
@@ -287,6 +234,7 @@ namespace pdxpartyparrot.ggj2019.Home
             _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "ggj2019.Hive");
             _debugMenuNode.RenderContentsAction = () => {
                 _immune = GUILayout.Toggle(_immune, "Immune");
+                _logBeeSpawn = GUILayout.Toggle(_logBeeSpawn, "Log Bee Spawn");
             };
         }
 
