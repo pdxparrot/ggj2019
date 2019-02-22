@@ -95,6 +95,7 @@ namespace pdxpartyparrot.Game.World
                     for(int i=0; i<amount; ++i) {
                         var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_spawnGroupData.Tag);
                         if(null == spawnPoint) {
+                            Debug.LogWarning($"No spawnpoints for {_spawnGroupData.Tag}!");
                             continue;
                         }
 
@@ -102,12 +103,13 @@ namespace pdxpartyparrot.Game.World
                         if(null != _poolContainer) {
                             actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
                             if(null == actor) {
-                                // TODO: log a warning?
+                                Debug.LogWarning($"Actor for pool {PoolTag} missing its PooledObject!");
                                 continue;
                             }
 
                             if(!spawnPoint.Spawn(actor, Guid.NewGuid())) {
                                 actor.GetComponent<PooledObject>().Recycle();
+                                Debug.LogWarning($"Failed to spawn actor for {_spawnGroupData.Tag}");
                                 continue;
                             }
                         } else {
