@@ -95,36 +95,35 @@ namespace pdxpartyparrot.Game.World
                     for(int i=0; i<amount; ++i) {
                         var spawnPoint = SpawnManager.Instance.GetSpawnPoint(_spawnGroupData.Tag);
                         if(null == spawnPoint) {
-                            Debug.LogWarning($"No spawnpoints for {_spawnGroupData.Tag}!");
-                            continue;
-                        }
-
-                        Actor actor = null;
-                        if(null != _poolContainer) {
-                            actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
-                            if(null == actor) {
-                                Debug.LogWarning($"Actor for pool {PoolTag} missing its PooledObject!");
-                                continue;
-                            }
-
-                            if(!spawnPoint.Spawn(actor, Guid.NewGuid())) {
-                                actor.GetComponent<PooledObject>().Recycle();
-                                Debug.LogWarning($"Failed to spawn actor for {_spawnGroupData.Tag}");
-                                continue;
-                            }
+                            //Debug.LogWarning($"No spawnpoints for {_spawnGroupData.Tag}!");
                         } else {
-                            actor = spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab, Guid.NewGuid());
-                            if(null == actor) {
-                                continue;
-                            }
-                        }
-                        actor.transform.SetParent(_poolContainer.transform);
+                            Actor actor = null;
+                            if(null != _poolContainer) {
+                                actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
+                                if(null == actor) {
+                                    Debug.LogWarning($"Actor for pool {PoolTag} missing its PooledObject!");
+                                    continue;
+                                }
 
-                        // init the NPC with data if we have it
-                        if(null != _spawnGroupData.NPCData) {
-                            INPC npc = actor.GetComponent<INPC>();
-                            if(null != npc) {
-                                npc.Initialize(_spawnGroupData.NPCData);
+                                if(!spawnPoint.Spawn(actor, Guid.NewGuid())) {
+                                    actor.GetComponent<PooledObject>().Recycle();
+                                    Debug.LogWarning($"Failed to spawn actor for {_spawnGroupData.Tag}");
+                                    continue;
+                                }
+                            } else {
+                                actor = spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab, Guid.NewGuid());
+                                if(null == actor) {
+                                    continue;
+                                }
+                            }
+                            actor.transform.SetParent(_poolContainer.transform);
+
+                            // init the NPC with data if we have it
+                            if(null != _spawnGroupData.NPCData) {
+                                INPC npc = actor.GetComponent<INPC>();
+                                if(null != npc) {
+                                    npc.Initialize(_spawnGroupData.NPCData);
+                                }
                             }
                         }
 
