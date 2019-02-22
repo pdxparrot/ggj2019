@@ -32,7 +32,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 4d4c7a2ba23af794b993be0a4f6149dd, type: 2}
+      npcData: {fileID: 11400000, guid: 349d2c6c98b5a4e4fb6c94e24abc16ff, type: 2}
       _tag: flower
       _delay:
         _min: 1
