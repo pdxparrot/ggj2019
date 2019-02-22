@@ -52,7 +52,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 2
-      _poolSize: 10
+      _poolSize: 15
       _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
@@ -86,7 +86,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: c2c909faa01deca4cb3d9fc54f4bc032, type: 2}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
       _tag: flower
       _delay:
         _min: 3
@@ -102,7 +102,7 @@ MonoBehaviour:
       _tag: beetle
       _delay:
         _min: 3
-        _max: 10
+        _max: 8
       _count:
         _min: 1
         _max: 3
@@ -113,7 +113,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
       _tag: flower
       _delay:
         _min: 3
@@ -257,7 +257,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
       _tag: flower
       _delay:
         _min: 1
@@ -284,6 +284,180 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
+      npcData: {fileID: 11400000, guid: 1373ce981f5557143a3a22535d48934a, type: 2}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 2
+        _max: 5
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 8a5aee5b77568e347980fb582abe3b44, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 2
+        _max: 4
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
+      _tag: flower
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 6
+        _max: 9
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: fc333e01e2cdf2944bd9afdfa15b669c, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 10
+        _max: 20
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: f8f93b96c37ec2c4785f4f7f0b9e7fd4, type: 3}
+  - _duration: 45
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 1373ce981f5557143a3a22535d48934a, type: 2}
+      _tag: flower
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 6
+        _max: 9
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: c77609787d365434bb3c531436f566a5, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 2
+        _max: 4
+      _count:
+        _min: 1
+        _max: 2
+      _poolSize: 20
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  - _duration: 15
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
+      _tag: flower
+      _delay:
+        _min: 1
+        _max: 1
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    _waveMusic: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
+  - _duration: 10
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 4
+        _max: 4
+      _poolSize: 10
+      _once: 1
+    _waveMusic: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 3
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 2
+        _max: 4
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
       npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
       _tag: flower
       _delay:
@@ -299,8 +473,8 @@ MonoBehaviour:
       npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
       _tag: wasp
       _delay:
-        _min: 1
-        _max: 2
+        _min: 3
+        _max: 6
       _count:
         _min: 1
         _max: 1
@@ -311,8 +485,164 @@ MonoBehaviour:
       npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
       _tag: beetle
       _delay:
+        _min: 2
+        _max: 4
+      _count:
         _min: 1
-        _max: 3
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      _tag: flower
+      _delay:
+        _min: 2
+        _max: 5
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: e1148b046b460924da0df0e3ae01e5bc, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 3
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: fc333e01e2cdf2944bd9afdfa15b669c, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 2
+        _max: 4
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: f8f93b96c37ec2c4785f4f7f0b9e7fd4, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 20
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 6162f03c89c329c458af70dff4506bae, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 4
+        _max: 8
+      _count:
+        _min: 3
+        _max: 6
+      _poolSize: 20
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: c5ef1db501d14404eb01c15a8cf37c40, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 4
+        _max: 8
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  - _duration: 30
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 1373ce981f5557143a3a22535d48934a, type: 2}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 0d3b3bf464ff6f246b72a5c8367c7faf, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 3
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 2
+        _max: 4
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 5600923b9ae59a4448f9d2c58273e900, type: 3}
+  - _duration: 60
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 0cc42a671867f4547b4d95c58dbf3247, type: 2}
+      _tag: flower
+      _delay:
+        _min: 0
+        _max: 0
+      _count:
+        _min: 9
+        _max: 9
+      _poolSize: 10
+      _once: 1
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: f2369d0c7ce9ee94f93fe9cc86c0f625, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 3
+        _max: 6
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 22a57460d1afe8344a401e00c846f0bc, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 2
+        _max: 4
       _count:
         _min: 1
         _max: 1
