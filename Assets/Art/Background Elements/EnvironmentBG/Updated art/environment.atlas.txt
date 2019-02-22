@@ -1,0 +1,190 @@
+
+environment.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 137
+  rotate: false
+  xy: 2, 936
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+Lightning02
+  rotate: false
+  xy: 1926, 1637
+  size: 88, 381
+  orig: 88, 381
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 2, 2
+  size: 1922, 404
+  orig: 1922, 404
+  offset: 0, 0
+  index: -1
+night/grass2
+  rotate: false
+  xy: 2, 408
+  size: 1922, 526
+  orig: 1922, 526
+  offset: 0, 0
+  index: -1
+
+environment2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Cloud Lightning 01
+  rotate: false
+  xy: 541, 232
+  size: 513, 200
+  orig: 513, 200
+  offset: 0, 0
+  index: -1
+Cloud Lightning 02
+  rotate: false
+  xy: 2, 2
+  size: 514, 196
+  orig: 514, 196
+  offset: 0, 0
+  index: -1
+Cloud Lightning 03
+  rotate: false
+  xy: 1056, 208
+  size: 485, 224
+  orig: 485, 224
+  offset: 0, 0
+  index: -1
+Cloud Lightning 04
+  rotate: false
+  xy: 1543, 60
+  size: 317, 187
+  orig: 317, 187
+  offset: 0, 0
+  index: -1
+Lightning01
+  rotate: true
+  xy: 1543, 249
+  size: 183, 450
+  orig: 183, 450
+  offset: 0, 0
+  index: -1
+Lightning03
+  rotate: true
+  xy: 2, 200
+  size: 232, 537
+  orig: 232, 537
+  offset: 0, 0
+  index: -1
+night/Layer 137
+  rotate: false
+  xy: 2, 962
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+sunset/grass2
+  rotate: false
+  xy: 2, 434
+  size: 1922, 526
+  orig: 1922, 526
+  offset: 0, 0
+  index: -1
+
+environment3.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flowers
+  rotate: false
+  xy: 2, 2
+  size: 1922, 447
+  orig: 1922, 447
+  offset: 0, 0
+  index: -1
+grass2
+  rotate: false
+  xy: 2, 451
+  size: 1922, 481
+  orig: 1922, 481
+  offset: 0, 0
+  index: -1
+sunset/Layer 137
+  rotate: false
+  xy: 2, 934
+  size: 1922, 1082
+  orig: 1922, 1082
+  offset: 0, 0
+  index: -1
+
+environment4.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gras
+  rotate: false
+  xy: 2, 1521
+  size: 1922, 436
+  orig: 1922, 436
+  offset: 0, 0
+  index: -1
+night/gras
+  rotate: false
+  xy: 2, 1083
+  size: 1922, 436
+  orig: 1922, 436
+  offset: 0, 0
+  index: -1
+rain
+  rotate: false
+  xy: 2, 2
+  size: 1907, 1079
+  orig: 1907, 1079
+  offset: 0, 0
+  index: -1
+
+environment5.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+leaves
+  rotate: false
+  xy: 2, 1188
+  size: 1755, 591
+  orig: 1755, 591
+  offset: 0, 0
+  index: -1
+night/leaves
+  rotate: false
+  xy: 2, 595
+  size: 1755, 591
+  orig: 1755, 591
+  offset: 0, 0
+  index: -1
+sunset/leaves
+  rotate: false
+  xy: 2, 2
+  size: 1755, 591
+  orig: 1755, 591
+  offset: 0, 0
+  index: -1
+
+environment6.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sunset/gras
+  rotate: false
+  xy: 2, 2
+  size: 1922, 436
+  orig: 1922, 436
+  offset: 0, 0
+  index: -1

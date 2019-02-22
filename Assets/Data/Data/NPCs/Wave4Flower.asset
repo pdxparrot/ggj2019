@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c602481e426b048b759c6735dbb8d1, type: 3}
-  m_Name: Wave2Wasp
+  m_Script: {fileID: 11500000, guid: 37bb2ae2ca36d8f4fa1f74fe58a3ec90, type: 3}
+  m_Name: Wave4Flower
   m_EditorClassIdentifier: 
-  _speed: 5
-  _attackCooldown: 0.5
-  _idleAnimationName: wasp_hover
-  _flyingAnimationName: wasp_hover
+  _pollen: 3
+  _pollenSpawnCooldown:
+    _min: 1
+    _max: 30
+  _pollenData: {fileID: 11400000, guid: 7281765ef48236b4393e202ad4b1b731, type: 2}
+  _maxPollen: 3
+  _idleAnimationName: flower_idle

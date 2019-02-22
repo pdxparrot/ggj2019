@@ -27,14 +27,14 @@ MonoBehaviour:
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}
   _hiveArmorHealth: 2
-  _minBees: 6
+  _minBees: 1
   _beeSpawnCooldown: 5
   _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
     type: 3}
-  _maxPollen: 3
   _pollenPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
     type: 3}
+  _pollenPoolSize: 20
   _enemySpawnImmunitySeconds: 0.1
   _waveSpawnerPrefabs:
   - {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8, type: 3}

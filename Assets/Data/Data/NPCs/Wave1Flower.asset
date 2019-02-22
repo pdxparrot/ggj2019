@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bb2ae2ca36d8f4fa1f74fe58a3ec90, type: 3}
   m_Name: Wave1Flower
   m_EditorClassIdentifier: 
-  _pollen: 5
+  _pollen: 1
   _pollenSpawnCooldown:
-    _min: 1
-    _max: 15
+    _min: 7
+    _max: 10
   _pollenData: {fileID: 11400000, guid: 7ebc7fc109e981c41b27440e0c197006, type: 2}
-  _maxPollen: 2
+  _maxPollen: 3
   _idleAnimationName: flower_idle
