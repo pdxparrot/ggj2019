@@ -4,8 +4,13 @@
 
 * USE_SPINE in `Project Settings -> Player -> Other Settings -> Configuration -> Scripting Define Symbols` to enable Spine utilities
 * UNITY_POST_PROCESSING_STACK_V2 to enable PostProcessingStack v2
-* pdxpartyparrot.Core.Util.TimeManager must run before the Default Time (Script Execution Order)
-* pdxpartyparrot.Core.Debug.DebugMenuManager must run after all other scripts (Script Execution Order)
+
+# Script Execution Order
+* pdxpartyparrot.{project}.Loading.LoadingManager
+* pdxpartyparrot.Core.Util.TimeManager
+* pdxpartyparrot.Game.State.GameStateManager
+* Default Scripts
+* pdxpartyparrot.Core.Debug.DebugMenuManager must run last
 
 # Pre-Asset Setup
 
