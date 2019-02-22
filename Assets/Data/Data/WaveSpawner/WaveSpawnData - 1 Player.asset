@@ -177,7 +177,7 @@ MonoBehaviour:
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
       npcData: {fileID: 11400000, guid: e1148b046b460924da0df0e3ae01e5bc, type: 2}
-      _tag: beettle
+      _tag: beetle
       _delay:
         _min: 3
         _max: 8

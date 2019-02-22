@@ -65,7 +65,7 @@ namespace pdxpartyparrot.Core.World
         {
             foreach(var spawnPointType in _spawnData.Types) {
                 if(_spawnTypes.ContainsKey(spawnPointType.Tag)) {
-                    Debug.LogError($"Duplicate spawn point tag {spawnPointType.Tag}, ignoring");
+                    Debug.LogError($"Duplicate spawn point tag '{spawnPointType.Tag}', ignoring");
                     continue;
                 }
                 _spawnTypes.Add(spawnPointType.Tag, spawnPointType);
@@ -76,14 +76,14 @@ namespace pdxpartyparrot.Core.World
 #region Registration
         public virtual void RegisterSpawnPoint(SpawnPoint spawnPoint)
         {
-            //Debug.Log($"Registering spawnpoint {spawnPoint.name} of type {spawnPoint.Tag}");
+            //Debug.Log($"Registering spawnpoint {spawnPoint.name} of type '{spawnPoint.Tag}'");
 
             _spawnPoints.GetOrAdd(spawnPoint.Tag).SpawnPoints.Add(spawnPoint);
         }
 
         public virtual void UnregisterSpawnPoint(SpawnPoint spawnPoint)
         {
-            //Debug.Log($"Unregistering spawnpoint {spawnPoint.name}");
+            //Debug.Log($"Unregistering spawnpoint '{spawnPoint.name}'");
 
             if(_spawnPoints.TryGetValue(spawnPoint.Tag, out var spawnPoints)) {
                 spawnPoints.SpawnPoints.Remove(spawnPoint);
@@ -103,7 +103,7 @@ namespace pdxpartyparrot.Core.World
         public SpawnPoint GetSpawnPoint(string tag)
         {
             if(!_spawnPoints.TryGetValue(tag, out var spawnPoints)) {
-                Debug.LogWarning($"No spawn points with tag {tag} registered on spawn, are there any in the scene?");
+                Debug.LogWarning($"No spawn points with tag '{tag}' registered on spawn, are there any in the scene?");
                 return null;
             }
 
