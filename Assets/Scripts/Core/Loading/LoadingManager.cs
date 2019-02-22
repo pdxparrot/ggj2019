@@ -48,6 +48,9 @@ namespace pdxpartyparrot.Core.Loading
         private DebugMenuManager _debugMenuManagerPrefab;
 
         [SerializeField]
+        private SaveGameManager _saveGameManagerPrefab;
+
+        [SerializeField]
         private LocalizationManager _localizationManagerPrefab;
 
         [SerializeField]
@@ -124,6 +127,7 @@ namespace pdxpartyparrot.Core.Loading
             // core managers
             DebugMenuManager.CreateFromPrefab(_debugMenuManagerPrefab, ManagersContainer);
             PartyParrotManager.CreateFromPrefab(_engineManagerPrefab, ManagersContainer);
+            SaveGameManager.CreateFromPrefab(_saveGameManagerPrefab, ManagersContainer);
             LocalizationManager.CreateFromPrefab(_localizationManagerPrefab, ManagersContainer);
 
             // TODO: for now this dude does stuff in Start() rather than Awake()

@@ -352,7 +352,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1001257659
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
 --- !u!33 &438709071
 MeshFilter:
@@ -568,6 +568,8 @@ MonoBehaviour:
   _engineManagerPrefab: {fileID: 404857996654783440, guid: a9911b81118be8c46b9f51589968258b,
     type: 3}
   _debugMenuManagerPrefab: {fileID: 7812979617479560367, guid: 01f244cfab2135044bcd17bba0ad8dbc,
+    type: 3}
+  _saveGameManagerPrefab: {fileID: 4833360945638835468, guid: dc8a994c04576c443b942249d74db276,
     type: 3}
   _localizationManagerPrefab: {fileID: 7237645413708916831, guid: 020c6bfa53d03404484c7ee1e1371d6f,
     type: 3}
