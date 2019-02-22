@@ -55,7 +55,10 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public int MinBees => _minBees;
 
-        public int BeePoolSize => MinBees * 4;
+        [SerializeField]
+        private int _beePoolSize = 20;
+
+        public int BeePoolSize => _beePoolSize;
 
         [SerializeField]
         private float _beeSpawnCooldown = 10.0f;

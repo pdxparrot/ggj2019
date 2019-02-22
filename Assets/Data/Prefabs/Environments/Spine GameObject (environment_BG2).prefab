@@ -57,12 +57,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 0410a5a817257994bba064c29933b5c2, type: 2}
-  - {fileID: 2100000, guid: 9e7cdc358dae8164bb2f240b861038d5, type: 2}
-  - {fileID: 2100000, guid: 0410a5a817257994bba064c29933b5c2, type: 2}
-  - {fileID: 2100000, guid: d0ddaf7e55c071f43aa825f51262bc52, type: 2}
-  - {fileID: 2100000, guid: c0ba7498e32b4a94bae20ce5e5f0cd73, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: e3ff5052499ce0445b60e0159a38ea11, type: 2}
-  initialSkinName: 
+  initialSkinName: environment_day
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -109,6 +104,6 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: environment_default
   loop: 1
   timeScale: 1

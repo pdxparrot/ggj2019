@@ -226,6 +226,11 @@ PrefabInstance:
       propertyPath: initialSkinName
       value: environment_day
       objectReference: {fileID: 0}
+    - target: {fileID: 2310867783999513941, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: _animationName
+      value: environment_default
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab389e66e7a222e44b88c522f202868f, type: 3}
 --- !u!4 &8232828413614319073 stripped
