@@ -142,6 +142,19 @@ MonoBehaviour:
   - environment_default
   - environment_thunder
   - environment_thunder
+  _environmentSwappers:
+  - _wave: 0
+    _skin: 0
+    _animation: environment_default
+  - _wave: 3
+    _skin: 1
+    _animation: environment_thunder
+  - _wave: 6
+    _skin: 2
+    _animation: environment_thunder
+  - _wave: 9
+    _skin: 3
+    _animation: environment_default
   _thunderEffect: {fileID: 4352220818728083460}
   _thunderEventName: thunder
 --- !u!1001 &5931587962420986033
@@ -211,16 +224,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2310867783999513943, guid: ab389e66e7a222e44b88c522f202868f,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2310867783999513941, guid: ab389e66e7a222e44b88c522f202868f,
         type: 3}
       propertyPath: initialSkinName
@@ -231,6 +234,41 @@ PrefabInstance:
       propertyPath: _animationName
       value: environment_default
       objectReference: {fileID: 0}
+    - target: {fileID: 2310867783999513943, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0410a5a817257994bba064c29933b5c2, type: 2}
+    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e7cdc358dae8164bb2f240b861038d5, type: 2}
+    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0410a5a817257994bba064c29933b5c2, type: 2}
+    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: d0ddaf7e55c071f43aa825f51262bc52, type: 2}
+    - target: {fileID: 2310867783999513942, guid: ab389e66e7a222e44b88c522f202868f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: c0ba7498e32b4a94bae20ce5e5f0cd73, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab389e66e7a222e44b88c522f202868f, type: 3}
 --- !u!4 &8232828413614319073 stripped

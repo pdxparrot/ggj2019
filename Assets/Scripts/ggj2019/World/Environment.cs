@@ -15,7 +15,7 @@ namespace pdxpartyparrot.ggj2019.World
     public class Environment : MonoBehaviour
     {
         [SerializeField]
-        protected string[] _animations;
+        private WaveEnvironmentSwapper[] _environmentSwappers;
 
         private SpineSkinSwapper _skinSwapper;
 
@@ -53,23 +53,12 @@ namespace pdxpartyparrot.ggj2019.World
 
         private void WaveStartEventHandler(object sender, SpawnWaveEventArgs args)
         {
-            TrackEntry trackEntry = null;
-            if(args.WaveIndex == 0) {
-                _skinSwapper.SetSkin(0);
-                trackEntry = _spineAnimationHelper.SetAnimation(_animations[0], true);
-            } else if(args.WaveIndex == 3) {
-                _skinSwapper.SetSkin(1);
-                trackEntry = _spineAnimationHelper.SetAnimation(_animations[1], true);
-            }  else if(args.WaveIndex == 6) {
-                _skinSwapper.SetSkin(2);
-                trackEntry = _spineAnimationHelper.SetAnimation(_animations[2], true);
-            }  else if(args.WaveIndex == 9) {
-                _skinSwapper.SetSkin(3);
-                trackEntry = _spineAnimationHelper.SetAnimation(_animations[0], true);
-            }
-
-            if(null != trackEntry) {
-                OnWaveAnimationSet(args.WaveIndex, trackEntry);
+            foreach(WaveEnvironmentSwapper swapper in _environmentSwappers) {
+                if(args.WaveIndex == swapper.Wave) {
+                    _skinSwapper.SetSkin(swapper.Skin);
+                    TrackEntry trackEntry = _spineAnimationHelper.SetAnimation(swapper.Animation, true);
+                    OnWaveAnimationSet(args.WaveIndex, trackEntry);
+                }
             }
         }
 
