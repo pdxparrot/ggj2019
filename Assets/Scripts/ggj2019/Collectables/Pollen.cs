@@ -17,6 +17,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.Collectables
 {
     [RequireComponent(typeof(PooledObject))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Pollen : Actor2D, ICollectable
     {
         private enum State
@@ -49,6 +50,10 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
         [SerializeField]
         [ReadOnly]
+        private Hive _hive;
+
+        [SerializeField]
+        [ReadOnly]
         private float _signTime;
 
         [SerializeField]
@@ -59,6 +64,8 @@ namespace pdxpartyparrot.ggj2019.Collectables
         [ReadOnly]
         private PollenData _pollenData;
 
+        private Rigidbody2D _rigidbody;
+
         private PooledObject _pooledObject;
 
 #region Unity Lifecycle
@@ -66,15 +73,18 @@ namespace pdxpartyparrot.ggj2019.Collectables
         {
             base.Awake();
 
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody.gravityScale = 0.0f;
+
             Collider.isTrigger = true;
 
             _pooledObject = GetComponent<PooledObject>();
             _pooledObject.RecycleEvent += RecycleEventHandler;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            float dt = Time.deltaTime;
+            float dt = Time.fixedDeltaTime;
 
             Think(dt);
         }
@@ -82,11 +92,18 @@ namespace pdxpartyparrot.ggj2019.Collectables
         private void OnTriggerEnter2D(Collider2D other)
         {
             Gather(other.gameObject.GetComponent<Players.Player>());
+            Collect(other.gameObject.GetComponent<Hive>());
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            Collect(other.gameObject.GetComponent<Hive>());
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             Gather(other.gameObject.GetComponent<Players.Player>());
+            Collect(other.gameObject.GetComponent<Hive>());
         }
 #endregion
 
@@ -107,12 +124,13 @@ namespace pdxpartyparrot.ggj2019.Collectables
             case State.Floating:
                 _floatingStartX = transform.position.x;
                 _followPlayer = null;
+                _hive = null;
                 break;
             case State.GoingToHive:
-                _followPlayer = null;
                 break;
             case State.Collected:
                 _followPlayer = null;
+                _hive = null;
                 break;
             }
         }
@@ -139,17 +157,39 @@ namespace pdxpartyparrot.ggj2019.Collectables
             }
         }
 
+        public void Unload(Hive hive)
+        {
+            _hive = hive;
+
+            SetState(State.GoingToHive);
+        }
+
         private void Gather(Players.Player player)
         {
             if(!CanBeCollected || null == player || !player.CanGather) {
                 return;
             }
 
-            player.AddPollen();
+            player.AddPollen(this);
             _pickupEffect.Trigger();
 
             _followPlayer = player;
             SetState(State.FollowingPlayer);
+        }
+
+        private void Collect(Hive hive)
+        {
+            if(null == hive || _state != State.GoingToHive) {
+                return;
+            }
+
+            hive.CollectPollen(_followPlayer);
+
+            SetState(State.Collected);
+
+            _collectEffect.Trigger(() => {
+                _pooledObject.Recycle();
+            });
         }
 
         private void Float(float dt)
@@ -167,7 +207,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
             position.x = _floatingStartX + wobble;
             position.y += _pollenData.UpwardSpeed * dt;
-            transform.position = position;
+            _rigidbody.MovePosition(position);
         }
 
         private void FollowPlayer(float dt)
@@ -178,36 +218,21 @@ namespace pdxpartyparrot.ggj2019.Collectables
                 return;
             }
 
-            // pollen was deposited, head to the hive
-            if(!_followPlayer.HasPollen) {
-                SetState(State.GoingToHive);
-                return;
-            }
-
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _followPlayer.PollenTarget.position, _pollenData.FollowPlayerSpeed * dt);
-            transform.position = position;
+            _rigidbody.MovePosition(position);
         }
 
         private void GoToHive(float dt)
         {
-            if(Hive.Instance.Collides(this)) {
-                Collect();
+            if(_hive == null) {
+                SetState(State.Floating);
                 return;
             }
 
             Vector3 position = transform.position;
-            position = Vector3.MoveTowards(position, Hive.Instance.transform.position, _pollenData.GoToHiveSpeed * dt);
-            transform.position = position;
-        }
-
-        private void Collect()
-        {
-            SetState(State.Collected);
-
-            _collectEffect.Trigger(() => {
-                _pooledObject.Recycle();
-            });
+            position = Vector3.MoveTowards(position, _hive.transform.position, _pollenData.GoToHiveSpeed * dt);
+            _rigidbody.MovePosition(position);
         }
 
 #region Event Handlers

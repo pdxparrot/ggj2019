@@ -33,5 +33,10 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public string FlyingAnimationName => _flyingAnimationName;
 #endregion
+
+        [SerializeField]
+        private int _maxPollen = -1;
+
+        public int MaxPollen => _maxPollen;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 
-using JetBrains.Annotations;
-
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Effects;
@@ -18,9 +16,6 @@ namespace pdxpartyparrot.ggj2019.Home
 {
     public sealed class Hive : Actor2D
     {
-        // TODO: do this better
-        public static Hive Instance { get; private set; }
-
         public override bool IsLocalActor => false;
 
         [SerializeField]
@@ -62,7 +57,7 @@ namespace pdxpartyparrot.ggj2019.Home
         {
             base.Awake();
 
-            Instance = this;
+            Collider.isTrigger = true;
 
             _beeContainer = new GameObject("bees");
             _beeContainer.transform.SetParent(transform);
@@ -90,8 +85,6 @@ namespace pdxpartyparrot.ggj2019.Home
             }
 
             Destroy(_beeContainer);
-
-            Instance = null;
         }
 #endregion
 
@@ -121,7 +114,7 @@ namespace pdxpartyparrot.ggj2019.Home
             GameManager.Instance.EndGame();
         }
 
-        public int UnloadPollen(Players.Player player, int amount)
+        public void CollectPollen(Players.Player player)
         {
             GameManager.Instance.PollenCollected();
 
@@ -129,8 +122,6 @@ namespace pdxpartyparrot.ggj2019.Home
             if(null != bee && null != player) {
                 player.AddBeeToSwarm(bee);
             }
-
-            return amount;
         }
 
 #region Bee Spawning

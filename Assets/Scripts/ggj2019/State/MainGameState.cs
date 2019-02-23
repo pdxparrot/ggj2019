@@ -41,7 +41,10 @@ namespace pdxpartyparrot.ggj2019.State
                 return false;
             }
 
-            Hive.Instance.InitializeClient();
+            Hive[] hives = FindObjectsOfType<Hive>();
+            foreach(Hive hive in hives) {
+                hive.InitializeClient();
+            }
 
             _startGameEffect.Trigger();
 

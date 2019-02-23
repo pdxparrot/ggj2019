@@ -16,4 +16,4 @@ MonoBehaviour:
   _sideSpeed: 3
   _upwardSpeed: 1.5
   _goToHiveSpeed: 5
-  _followPlayerSpeed: 10
+  _followPlayerSpeed: 6

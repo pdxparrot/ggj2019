@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
@@ -7,6 +8,7 @@ using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Interactables;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.Swarm;
+using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.Home;
 using pdxpartyparrot.ggj2019.NPCs;
 
@@ -54,13 +56,11 @@ namespace pdxpartyparrot.ggj2019.Players
         private EffectTrigger _gameOverEffect;
 #endregion
 
-        [SerializeField]
-        [ReadOnly]
-        private bool _hasPollen;
+        private readonly List<Pollen> _pollen = new List<Pollen>();
 
-        public bool HasPollen => _hasPollen;
+        public bool HasPollen => _pollen.Count > 0;
 
-        public bool CanGather => !IsDead && !HasPollen;
+        public bool CanGather => !IsDead && (PlayerManager.Instance.GamePlayerData.MaxPollen < 0 || _pollen.Count < PlayerManager.Instance.GamePlayerData.MaxPollen);
 
         [SerializeField]
         [ReadOnly]
@@ -71,6 +71,8 @@ namespace pdxpartyparrot.ggj2019.Players
         private /*readonly*/ Timer _immunityTimer = new Timer();
 
         private bool IsImmune => PlayerManager.Instance.PlayersImmune || _immunityTimer.IsRunning;
+
+        public int SkinIndex => NetworkPlayer.playerControllerId;
 
         private Swarm _swarm;
 
@@ -89,19 +91,25 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Update()
         {
-            if(GameManager.Instance.IsGameOver) {
-                return;
-            }
-
-            if(HasPollen && Hive.Instance.Collides(this)) {
-                Hive.Instance.UnloadPollen(this, 1);
-                _hasPollen = false;
-            }
-
             float dt = Time.deltaTime;
 
             _respawnTimer.Update(dt);
             _immunityTimer.Update(dt);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            UnloadPollen(other.gameObject.GetComponent<Hive>());
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            UnloadPollen(other.gameObject.GetComponent<Hive>());
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            UnloadPollen(other.gameObject.GetComponent<Hive>());
         }
 #endregion
 
@@ -112,7 +120,7 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             PlayerViewer = GameManager.Instance.Viewer;
-            _skinSwapper.SetSkin(NetworkPlayer.playerControllerId);
+            _skinSwapper.SetSkin(SkinIndex);
 
             RumbleEffectTriggerComponent rumbleEffect = _respawnEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
             rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;
@@ -165,7 +173,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             Behavior.Velocity = Vector3.zero;
 
-            _hasPollen = false;
+            _pollen.Clear();
 
             _swarm.RemoveAll();
 
@@ -175,9 +183,9 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
-        public void AddPollen()
+        public void AddPollen(Pollen pollen)
         {
-            _hasPollen = true;
+            _pollen.Add(pollen);
         }
 
         public void AddBeeToSwarm(Bee bee)
@@ -235,6 +243,18 @@ namespace pdxpartyparrot.ggj2019.Players
             if(null != bee) {
                 AddBeeToSwarm(bee);
             }
+        }
+
+        private void UnloadPollen(Hive hive)
+        {
+            if(null == hive || !HasPollen) {
+                return;
+            }
+
+            foreach(Pollen pollen in _pollen) {
+                pollen.Unload(hive);
+            }
+            _pollen.Clear();
         }
 
         private void Respawn()

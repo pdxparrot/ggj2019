@@ -147,7 +147,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public void SetPlayerSkin(Players.Player player)
         {
-            _skinSwapper.SetSkin(player.NetworkPlayer.playerControllerId);
+            _skinSwapper.SetSkin(player.SkinIndex);
         }
 
         private void SetIdleAnimation()
