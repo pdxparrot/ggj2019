@@ -224,7 +224,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             _isDead = true;
 
-            GameManager.Instance.PlayerDeath();
+            GameManager.Instance.PlayerDeath(this);
 
             _deathEffect.Trigger();
 

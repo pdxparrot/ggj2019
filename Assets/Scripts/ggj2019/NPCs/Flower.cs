@@ -5,6 +5,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.Data;
 
@@ -131,13 +132,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _isDead = false;
         }
 
-        public override void Kill(bool playerKill)
+        public override void Kill(IPlayer player)
         {
             // forcefully acquire our spawnpoints while we die
             _beetleSpawn.Acquire(this, null, true);
             _canSpawnPollen = false;
 
-            base.Kill(playerKill);
+            base.Kill(player);
 
             _isDead = true;
         }
@@ -156,7 +157,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             _pollen--;
             if(_pollen <= 0) {
-                Kill(false);
+                Kill(null);
                 return true;
             }
 
@@ -173,7 +174,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(DoSpawnPollen()) {
                 _pollen--;
                 if(_pollen <= 0) {
-                    Kill(false);
+                    Kill(null);
                     return;
                 }
             }

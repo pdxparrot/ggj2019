@@ -28,6 +28,7 @@ MonoBehaviour:
   _viewerPosition: {x: 0, y: 0, z: -10}
   _hiveArmorHealth: 2
   _minBees: 1
+  _beePoolSize: 20
   _beeSpawnCooldown: 5
   _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
@@ -41,6 +42,10 @@ MonoBehaviour:
   - {fileID: 6958230785637716431, guid: b1798b2a86ab9ed418aa66bcbfbb1d89, type: 3}
   - {fileID: 6958230785637716431, guid: 23d212cac5c6d3c489f82a5459b4c2ef, type: 3}
   - {fileID: 6958230785637716431, guid: fc7da8ec437127c4d8951de72be453a4, type: 3}
+  _floatingTextPrefab: {fileID: 3904025210956900713, guid: 3b3866f6c984a2743986d5775b458015,
+    type: 3}
+  FloatingTextPrefab: {fileID: 0}
+  _floatingTextPoolSize: 10
   _deathPenalty: 250
   _hiveDamagePenalty: 250
   _pollenScore: 25

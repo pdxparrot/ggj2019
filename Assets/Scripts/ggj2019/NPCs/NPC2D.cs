@@ -10,6 +10,7 @@ using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.NPCs;
+using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 
@@ -99,7 +100,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         // TODO: name this something else so it's less-death specific
         // like maybe just "Despawn()" or something?
-        public virtual void Kill(bool playerKill)
+        public virtual void Kill([CanBeNull] IPlayer player)
         {
             if(IsDead) {
                 return;

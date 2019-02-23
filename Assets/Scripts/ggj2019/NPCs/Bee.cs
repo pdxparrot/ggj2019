@@ -6,6 +6,7 @@ using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Interactables;
+using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Players;
@@ -99,9 +100,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetState(State.Idle);
         }
 
-        public override void Kill(bool playerKill)
+        public override void Kill(IPlayer player)
         {
-            base.Kill(playerKill);
+            base.Kill(player);
 
             SetState(State.Dead);
         }
@@ -199,7 +200,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public void RemoveFromSwarm()
         {
-            Kill(false);
+            Kill(null);
         }
 #endregion
 

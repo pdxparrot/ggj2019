@@ -96,7 +96,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public void ArmorDestroyed()
         {
-            GameManager.Instance.HiveDamage();
+            GameManager.Instance.HiveDamage(this);
 
             _damageEffect.Trigger();
 
@@ -116,7 +116,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public void CollectPollen(Players.Player player)
         {
-            GameManager.Instance.PollenCollected();
+            GameManager.Instance.PollenCollected(player);
 
             Bee bee = DoSpawnBee();
             if(null != bee && null != player) {

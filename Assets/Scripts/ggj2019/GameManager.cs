@@ -5,14 +5,17 @@ using System;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Input;
+using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
+using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
+using pdxpartyparrot.ggj2019.Home;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
@@ -111,15 +114,19 @@ namespace pdxpartyparrot.ggj2019
         private void InitObjectPools()
         {
             PooledObject pooledObject = GameGameData.BeePrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("bees", pooledObject,GameGameData.BeePoolSize);
+            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, GameGameData.BeePoolSize);
 
             pooledObject = GameGameData.PollenPrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("pollen", pooledObject,GameGameData.PollenPoolSize);
+            ObjectPoolManager.Instance.InitializePool("pollen", pooledObject, GameGameData.PollenPoolSize);
+
+            pooledObject = GameGameData.FloatingTextPrefab.GetComponent<PooledObject>();
+            ObjectPoolManager.Instance.InitializePool("floating_text", pooledObject, GameGameData.FloatingTextPoolSize);
         }
 
         private void DestroyObjectPools()
         {
             if(ObjectPoolManager.HasInstance) {
+                ObjectPoolManager.Instance.DestroyPool("floating_text");
                 ObjectPoolManager.Instance.DestroyPool("pollen");
                 ObjectPoolManager.Instance.DestroyPool("bees");
             }
@@ -206,39 +213,57 @@ namespace pdxpartyparrot.ggj2019
 
 #region Score
         //[Server]
-        public void PlayerDeath()
+        public void PlayerDeath(IPlayer player)
         {
             _score -= GameGameData.DeathPenalty;
             if(_score < 0) {
                 _score = 0;
             }
+
+            ShowScoreText(player.Behavior.Position, Color.red, GameGameData.DeathPenalty);
         }
 
         //[Server]
-        public void HiveDamage()
+        public void HiveDamage(Hive hive)
         {
             _score -= GameGameData.HiveDamagePenalty;
             if(_score < 0) {
                 _score = 0;
             }
+
+            ShowScoreText(hive.transform.position, Color.red, GameGameData.HiveDamagePenalty);
         }
 
         //[Server]
-        public void PollenCollected()
+        public void PollenCollected(IPlayer player)
         {
             _score += GameGameData.PollenScore;
+
+            ShowScoreText(player.Behavior.Position, Color.green, GameGameData.PollenScore);
         }
 
         //[Server]
-        public void BeetleKilled()
+        public void BeetleKilled(IPlayer player)
         {
             _score += GameGameData.BeetleScore;
+
+            ShowScoreText(player.Behavior.Position, Color.green, GameGameData.BeetleScore);
         }
 
         //[Server]
-        public void WaspKilled()
+        public void WaspKilled(IPlayer player)
         {
             _score += GameGameData.WaspScore;
+
+            ShowScoreText(player.Behavior.Position, Color.green, GameGameData.WaspScore);
+        }
+
+        private void ShowScoreText(Vector3 position, Color color, int score)
+        {
+            FloatingText text = ObjectPoolManager.Instance.GetPooledObject<FloatingText>("floating_text");
+            text.Text.text = $"{score}";
+            text.Text.color = color;
+            text.Show(position);
         }
 #endregion
 

@@ -1,6 +1,7 @@
 ﻿using System;
 
 using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Collectables;
@@ -104,6 +105,20 @@ namespace pdxpartyparrot.ggj2019.Data
         private WaveSpawner[] _waveSpawnerPrefabs;
 
         public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;
+
+        [Space(10)]
+
+#region Floating Text
+        [SerializeField]
+        private FloatingText _floatingTextPrefab;
+
+        public FloatingText FloatingTextPrefab => _floatingTextPrefab;
+
+        [SerializeField]
+        private int _floatingTextPoolSize = 10;
+
+        public int FloatingTextPoolSize => _floatingTextPoolSize;
+#endregion
 
         [Space(10)]
 

@@ -6,6 +6,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
@@ -115,13 +116,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetState(State.Idle);
         }
 
-        public override void Kill(bool playerKill)
+        public override void Kill(IPlayer player)
         {
-            if(playerKill) {
-                GameManager.Instance.BeetleKilled();
+            if(null != player) {
+                GameManager.Instance.BeetleKilled(player);
             }
 
-            base.Kill(playerKill);
+            base.Kill(player);
 
             SetState(State.Dead);
         }
@@ -178,7 +179,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _attackEndEffect.Trigger();
 
             if(_flower.BeetleHarvest()) {
-                Kill(false);
+                Kill(null);
                 return;
             }
 
