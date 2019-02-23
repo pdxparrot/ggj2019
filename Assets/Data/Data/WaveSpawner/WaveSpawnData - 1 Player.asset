@@ -191,7 +191,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
       _tag: flower
       _delay:
         _min: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
       _tag: flower
       _delay:
         _min: 1
@@ -323,7 +323,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
       _tag: flower
       _delay:
         _min: 1
@@ -392,7 +392,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
+      npcData: {fileID: 11400000, guid: 1b77370d7596ae54dadd66910958d11b, type: 2}
       _tag: flower
       _delay:
         _min: 0
