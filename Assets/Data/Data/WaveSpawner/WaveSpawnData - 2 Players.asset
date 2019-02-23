@@ -191,7 +191,7 @@ MonoBehaviour:
     _spawnGroups:
     - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
         type: 3}
-      npcData: {fileID: 0}
+      npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
       _tag: flower
       _delay:
         _min: 2
@@ -206,11 +206,11 @@ MonoBehaviour:
       npcData: {fileID: 11400000, guid: 6162f03c89c329c458af70dff4506bae, type: 2}
       _tag: wasp
       _delay:
-        _min: 1
-        _max: 4
-      _count:
         _min: 2
         _max: 3
+      _count:
+        _min: 3
+        _max: 4
       _poolSize: 5
       _once: 0
     _waveMusic: {fileID: 8300000, guid: f8f93b96c37ec2c4785f4f7f0b9e7fd4, type: 3}
@@ -326,8 +326,8 @@ MonoBehaviour:
       npcData: {fileID: 11400000, guid: 9d8feb3aacb4b244aa6d8e2a31257dd0, type: 2}
       _tag: flower
       _delay:
-        _min: 2
-        _max: 4
+        _min: 1
+        _max: 3
       _count:
         _min: 1
         _max: 1
@@ -470,11 +470,11 @@ MonoBehaviour:
       npcData: {fileID: 11400000, guid: f2369d0c7ce9ee94f93fe9cc86c0f625, type: 2}
       _tag: wasp
       _delay:
-        _min: 2
-        _max: 4
+        _min: 1
+        _max: 3
       _count:
         _min: 1
-        _max: 1
+        _max: 2
       _poolSize: 10
       _once: 0
     _waveMusic: {fileID: 8300000, guid: b011fe6d5b29d69488f8cb752aa0b227, type: 3}
@@ -590,11 +590,11 @@ MonoBehaviour:
       npcData: {fileID: 11400000, guid: 4340a8bd119df4f4e860e1fa54754df7, type: 2}
       _tag: flower
       _delay:
-        _min: 2
-        _max: 4
+        _min: 1
+        _max: 3
       _count:
         _min: 1
-        _max: 1
+        _max: 2
       _poolSize: 10
       _once: 0
     - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
@@ -659,6 +659,57 @@ MonoBehaviour:
         _min: 1
         _max: 2
       _poolSize: 5
+      _once: 0
+    _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
+  - _duration: 60
+    _spawnGroups:
+    - _actorPrefab: {fileID: 5512433957614832504, guid: 8569110d38bbc8b41a10cf4820372627,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 1373ce981f5557143a3a22535d48934a, type: 2}
+      _tag: flower
+      _delay:
+        _min: 1
+        _max: 2
+      _count:
+        _min: 1
+        _max: 1
+      _poolSize: 10
+      _once: 0
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: f2369d0c7ce9ee94f93fe9cc86c0f625, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 1
+        _max: 3
+      _count:
+        _min: 1
+        _max: 3
+      _poolSize: 20
+      _once: 0
+    - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
+        type: 3}
+      npcData: {fileID: 11400000, guid: fc333e01e2cdf2944bd9afdfa15b669c, type: 2}
+      _tag: beetle
+      _delay:
+        _min: 1
+        _max: 2
+      _count:
+        _min: 1
+        _max: 2
+      _poolSize: 5
+      _once: 0
+    - _actorPrefab: {fileID: 3673602363583183421, guid: 47da3c3b345ec4f43bb91b294b431d05,
+        type: 3}
+      npcData: {fileID: 11400000, guid: 6224e1dc89c3a9e49bcea99b982b340a, type: 2}
+      _tag: wasp
+      _delay:
+        _min: 4
+        _max: 8
+      _count:
+        _min: 3
+        _max: 5
+      _poolSize: 20
       _once: 0
     _waveMusic: {fileID: 8300000, guid: 1d9676ae653440341a55c9de972ba33c, type: 3}
   _musicTransitionSeconds: 2
