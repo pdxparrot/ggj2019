@@ -10,6 +10,8 @@ using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Players;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -50,6 +52,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public bool CanInteract => CanJoinSwarm;
 #endregion
+
+        [SerializeField]
+        private TextMeshPro _gatherText;
 
         [SerializeField]
         [ReadOnly]
@@ -107,11 +112,16 @@ namespace pdxpartyparrot.ggj2019.NPCs
             switch(state)
             {
             case State.Idle:
+                _gatherText.gameObject.SetActive(true);
                 _targetSwarm = null;
                 SetIdleAnimation();
                 break;
             case State.Follow:
+                _gatherText.gameObject.SetActive(false);
                 SetFlyingAnimation();
+                break;
+            case State.Dead:
+                _gatherText.gameObject.SetActive(false);
                 break;
             }
         }
