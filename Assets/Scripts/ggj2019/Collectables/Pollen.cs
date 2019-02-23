@@ -11,6 +11,8 @@ using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -39,6 +41,9 @@ namespace pdxpartyparrot.ggj2019.Collectables
         [SerializeField]
         private EffectTrigger _collectEffect;
 #endregion
+
+        [SerializeField]
+        private TextMeshPro _collectText;
 
         [SerializeField]
         [ReadOnly]
@@ -122,13 +127,19 @@ namespace pdxpartyparrot.ggj2019.Collectables
             switch(_state)
             {
             case State.Floating:
+                _collectText.gameObject.SetActive(true);
                 _floatingStartX = transform.position.x;
                 _followPlayer = null;
                 _hive = null;
                 break;
+            case State.FollowingPlayer:
+                _collectText.gameObject.SetActive(false);
+                break;
             case State.GoingToHive:
+                _collectText.gameObject.SetActive(false);
                 break;
             case State.Collected:
+                _collectText.gameObject.SetActive(false);
                 _followPlayer = null;
                 _hive = null;
                 break;
