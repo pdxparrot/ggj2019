@@ -51,6 +51,7 @@ namespace pdxpartyparrot.ggj2019.Data
         public int HiveArmorHealth => _hiveArmorHealth;
 
         [SerializeField]
+        [Tooltip("Minimum number of bees to keep in the world, per-player")]
         private int _minBees = 6;
 
         public int MinBees => _minBees;

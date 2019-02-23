@@ -184,6 +184,8 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             _swarm.Add(bee);
             _interactables.RemoveInteractable(bee);
+
+            bee.SetPlayerSkin(this);
         }
 
         public bool Damage()

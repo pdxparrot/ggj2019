@@ -10,6 +10,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.NPCs;
+using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 
@@ -140,8 +141,10 @@ namespace pdxpartyparrot.ggj2019.Home
             }
 
             int activeBeeCount = ActorManager.Instance.ActorCount<Bee>();
-            if(activeBeeCount < GameManager.Instance.GameGameData.MinBees) {
-                DoSpawnBee();
+            if(activeBeeCount < GameManager.Instance.GameGameData.MinBees * PlayerManager.Instance.PlayerCount) {
+                Bee bee = DoSpawnBee();
+                //bee.SetRandomSkin();
+                bee.SetDefaultSkin();
             } else if(_logBeeSpawn) {
                 Debug.Log($"not spawning bees {activeBeeCount} of {GameManager.Instance.GameGameData.MinBees} active");
             }
@@ -149,7 +152,6 @@ namespace pdxpartyparrot.ggj2019.Home
             _beeSpawnTimer.Start(GameManager.Instance.GameGameData.BeeSpawnCooldown, SpawnBee);
         }
 
-        [CanBeNull]
         private Bee DoSpawnBee()
         {
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
