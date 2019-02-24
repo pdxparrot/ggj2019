@@ -18,5 +18,10 @@ namespace pdxpartyparrot.Core.Math
         {
             return angle % 360.0f;
         }
+
+        public static float WrapAngleRad(float angle)
+        {
+            return angle % (Mathf.PI * 2.0f);
+        }
     }
 }

@@ -3,6 +3,7 @@
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
@@ -11,19 +12,10 @@ namespace pdxpartyparrot.ggj2019.Data
     public sealed class PollenData : CollectableData
     {
         [SerializeField]
-        private float _sideDistance = 1.0f;
+        [FormerlySerializedAs("_upwardSpeed")]
+        private float _floatSpeed = 1.0f;
 
-        public float SideDistance => _sideDistance;
-
-        [SerializeField]
-        private float _sideSpeed = 1.0f;
-
-        public float SideSpeed => _sideSpeed;
-
-        [SerializeField]
-        private float _upwardSpeed = 1.0f;
-
-        public float UpwardSpeed => _upwardSpeed;
+        public float FloatSpeed => _floatSpeed;
 
         [SerializeField]
         private float _goToHiveSpeed = 1.0f;

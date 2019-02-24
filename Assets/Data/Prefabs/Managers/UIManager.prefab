@@ -47,3 +47,6 @@ MonoBehaviour:
     type: 3}
   _pauseMenuPrefab: {fileID: 2048374829278761307, guid: 18d587ac9018ca54890aa156d49308ee,
     type: 3}
+  _floatingTextSpawnRate: 0.1
+  _floatingTextSpawnOffset: 0.25
+  _floatingTextSpawnTime: 0

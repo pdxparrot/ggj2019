@@ -7,6 +7,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Game.Collectables;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.Effects;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
@@ -40,14 +41,13 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
         [SerializeField]
         private EffectTrigger _collectEffect;
+
+        [SerializeField]
+        private Oscillator _oscillator;
 #endregion
 
         [SerializeField]
         private TextMeshPro _collectText;
-
-        [SerializeField]
-        [ReadOnly]
-        private float _floatingStartX;
 
         [SerializeField]
         [ReadOnly]
@@ -56,10 +56,6 @@ namespace pdxpartyparrot.ggj2019.Collectables
         [SerializeField]
         [ReadOnly]
         private Hive _hive;
-
-        [SerializeField]
-        [ReadOnly]
-        private float _signTime;
 
         [SerializeField]
         [ReadOnly]
@@ -128,18 +124,21 @@ namespace pdxpartyparrot.ggj2019.Collectables
             {
             case State.Floating:
                 _collectText.gameObject.SetActive(true);
-                _floatingStartX = transform.position.x;
+                _oscillator.enabled = true;
                 _followPlayer = null;
                 _hive = null;
                 break;
             case State.FollowingPlayer:
                 _collectText.gameObject.SetActive(false);
+                _oscillator.enabled = false;
                 break;
             case State.GoingToHive:
                 _collectText.gameObject.SetActive(false);
+                _oscillator.enabled = false;
                 break;
             case State.Collected:
                 _collectText.gameObject.SetActive(false);
+                _oscillator.enabled = false;
                 _followPlayer = null;
                 _hive = null;
                 break;
@@ -212,12 +211,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
                 return;
             }
 
-            // float side-to-side
-            _signTime += _pollenData.SideSpeed * dt;
-            float wobble = Mathf.Sin(_signTime) * _pollenData.SideDistance;
-
-            position.x = _floatingStartX + wobble;
-            position.y += _pollenData.UpwardSpeed * dt;
+            position.y += _pollenData.FloatSpeed * dt;
             _rigidbody.MovePosition(position);
         }
 

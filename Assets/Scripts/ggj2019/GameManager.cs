@@ -222,7 +222,7 @@ namespace pdxpartyparrot.ggj2019
             }
 
             Vector3 position = player.Behavior.Position;
-            ShowScoreText(GameGameData.DeathPenalty, GameGameData.NegativeFloatingTextColor, () => position);
+            ShowScoreText(-GameGameData.DeathPenalty, GameGameData.NegativeFloatingTextColor, () => position);
         }
 
         //[Server]
@@ -241,7 +241,7 @@ namespace pdxpartyparrot.ggj2019
             }
 
             Vector3 position = hive.transform.position;
-            ShowScoreText(GameGameData.HiveDamagePenalty, GameGameData.NegativeFloatingTextColor, () => position);
+            ShowScoreText(-GameGameData.HiveDamagePenalty, GameGameData.NegativeFloatingTextColor, () => position);
         }
 
         //[Server]
@@ -272,7 +272,7 @@ namespace pdxpartyparrot.ggj2019
         public void BeetleHarvest(Beetle beetle, int amount)
         {
             Vector3 position = beetle.transform.position;
-            ShowScoreText(amount, GameGameData.PollenFloatingTextColor, () => position);
+            ShowScoreText(-amount, GameGameData.PollenFloatingTextColor, () => position);
         }
 
         //[Server]

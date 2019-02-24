@@ -5,6 +5,8 @@ using System.Linq;
 
 using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.DebugMenu;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
@@ -16,6 +18,8 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
         private sealed class ObjectPool
         {
             public int Size { get; }
+
+            public int Count => _pooledObjects.Count;
 
             public string Tag { get; }
 
@@ -116,6 +120,8 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
         private void Awake()
         {
             _poolContainer = new GameObject("Object Pools");
+
+            InitDebugMenu();
         }
 
         protected override void OnDestroy()
@@ -233,6 +239,22 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             } else {
                 pool.Recycle(pooledObject);
             }
+        }
+
+        private void InitDebugMenu()
+        {
+            DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Core.ObjectPoolManager");
+            debugMenuNode.RenderContentsAction = () => {
+                GUILayout.BeginVertical("Object Pools:", GUI.skin.box);
+                    foreach(var kvp in _objectPools) {
+                        GUILayout.BeginVertical(kvp.Key, GUI.skin.box);
+                            GUILayout.Label($"Expandable: {kvp.Value.AllowExpand}");
+                            GUILayout.Label($"Networked: {kvp.Value.IsNetwork}");
+                            GUILayout.Label($"Size: {kvp.Value.Count} / {kvp.Value.Size}");
+                        GUILayout.EndVertical();
+                    }
+                GUILayout.EndVertical();
+            };
         }
     }
 }

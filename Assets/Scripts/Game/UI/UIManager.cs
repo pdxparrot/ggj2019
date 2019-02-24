@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Input;
+using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Game.Menu;
@@ -48,6 +49,13 @@ namespace pdxpartyparrot.Game.UI
 #region Floating Text
         [SerializeField]
         private float _floatingTextSpawnRate = 0.1f;
+
+        [SerializeField]
+        private float _floatingTextSpawnOffset = 1.0f;
+
+        [SerializeField]
+        [ReadOnly]
+        private float _nextFloatingTextSpawnOffset;
 #endregion
 
         private GameObject _uiContainer;
@@ -194,6 +202,9 @@ namespace pdxpartyparrot.Game.UI
 
         private IEnumerator FloatingTextRoutine()
         {
+            // start at an extremity
+            _nextFloatingTextSpawnOffset = _floatingTextSpawnOffset;
+
             WaitForSeconds wait = new WaitForSeconds(_floatingTextSpawnRate);
             while(true) {
                 yield return wait;
@@ -211,9 +222,14 @@ namespace pdxpartyparrot.Game.UI
                 }
                 floatingText.transform.SetParent(_floatingTextContainer.transform);
 
+                // offset our starting x (TODO: offset z also ?)
+                Vector3 position = entry.position();
+                position.x += _nextFloatingTextSpawnOffset;
+                _nextFloatingTextSpawnOffset = -_nextFloatingTextSpawnOffset;
+
                 floatingText.Text.text = entry.text;
                 floatingText.Text.color = entry.color;
-                floatingText.Show(entry.position());
+                floatingText.Show(position);
             }
         }
 
@@ -221,7 +237,17 @@ namespace pdxpartyparrot.Game.UI
         {
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.UIManager");
             debugMenuNode.RenderContentsAction = () => {
-// TODO: print the known UI objects
+                GUILayout.BeginVertical("UI Objects:", GUI.skin.box);
+                    foreach(var kvp in _uiObjects) {
+                        GUILayout.Label(kvp.Key);
+                    }
+                GUILayout.EndVertical();
+
+                GUILayout.Label($"Queued floating text: {_floatingText.Count}");
+                if(GUIUtils.LayoutButton("Spawn Floating Text")) {
+                    // TODO: need to be able to input the params to this
+                    QueueFloatingText("floating_text", "Test", Color.black, () => Vector3.zero);
+                }
             };
         }
     }
