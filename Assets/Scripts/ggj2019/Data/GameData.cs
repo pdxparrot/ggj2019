@@ -1,8 +1,8 @@
 ﻿using System;
 
 using pdxpartyparrot.Core.Camera;
-using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.NPCs;

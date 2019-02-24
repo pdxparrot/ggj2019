@@ -5,7 +5,7 @@ using TMPro;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.Core.UI
+namespace pdxpartyparrot.Game.UI
 {
     [RequireComponent(typeof(PooledObject))]
     public class FloatingText : MonoBehaviour
@@ -29,10 +29,6 @@ namespace pdxpartyparrot.Core.UI
         }
 
         [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _lifeTimer = new Timer();
-
-        [SerializeField]
         private TextMeshPro _text;
 
         public TextMeshPro Text => _text;
@@ -49,8 +45,6 @@ namespace pdxpartyparrot.Core.UI
         {
             float dt = Time.deltaTime;
 
-            _lifeTimer.Update(dt);
-
             Float(dt);
         }
 #endregion
@@ -58,7 +52,7 @@ namespace pdxpartyparrot.Core.UI
         public void Show(Vector3 position)
         {
             transform.position = position;
-            _lifeTimer.Start(LifeSpanSeconds, () => {
+            TimeManager.Instance.RunAfterDelay(LifeSpanSeconds, () => {
                 _pooledObject.Recycle();
             });
         }

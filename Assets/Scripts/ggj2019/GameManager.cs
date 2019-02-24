@@ -5,13 +5,13 @@ using System;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Input;
-using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.State;
+using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
@@ -221,13 +221,15 @@ namespace pdxpartyparrot.ggj2019
                 _score = 0;
             }
 
-            ShowScoreText(player.Behavior.Position, GameGameData.NegativeFloatingTextColor, GameGameData.DeathPenalty);
+            Vector3 position = player.Behavior.Position;
+            ShowScoreText(GameGameData.DeathPenalty, GameGameData.NegativeFloatingTextColor, () => position);
         }
 
         //[Server]
         public void HiveArmorDamage(HiveArmor armor)
         {
-            ShowScoreText(armor.transform.position, GameGameData.NegativeFloatingTextColor, "Damage");
+            Vector3 position = armor.transform.position;
+            ShowScoreText("Damage", GameGameData.NegativeFloatingTextColor, () => position);
         }
 
         //[Server]
@@ -238,7 +240,8 @@ namespace pdxpartyparrot.ggj2019
                 _score = 0;
             }
 
-            ShowScoreText(hive.transform.position, GameGameData.NegativeFloatingTextColor, GameGameData.HiveDamagePenalty);
+            Vector3 position = hive.transform.position;
+            ShowScoreText(GameGameData.HiveDamagePenalty, GameGameData.NegativeFloatingTextColor, () => position);
         }
 
         //[Server]
@@ -246,7 +249,11 @@ namespace pdxpartyparrot.ggj2019
         {
             _score += GameGameData.PollenScore;
 
-            ShowScoreText(player.Behavior.Position, GameGameData.PositiveFloatingTextColor, GameGameData.PollenScore);
+            Vector3 position = player.Behavior.Position;
+            ShowScoreText(GameGameData.PollenScore, GameGameData.PositiveFloatingTextColor, () => {
+                Players.Player gamePlayer = (Players.Player)player;
+                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior.Position;
+            });
         }
 
         //[Server]
@@ -254,13 +261,18 @@ namespace pdxpartyparrot.ggj2019
         {
             _score += GameGameData.BeetleScore;
 
-            ShowScoreText(player.Behavior.Position, GameGameData.PositiveFloatingTextColor, GameGameData.BeetleScore);
+            Vector3 position = player.Behavior.Position;
+            ShowScoreText(GameGameData.BeetleScore, GameGameData.PositiveFloatingTextColor, () => {
+                Players.Player gamePlayer = (Players.Player)player;
+                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior.Position;
+            });
         }
 
         //[Server]
         public void BeetleHarvest(Beetle beetle, int amount)
         {
-            ShowScoreText(beetle.transform.position, GameGameData.PollenFloatingTextColor, amount);
+            Vector3 position = beetle.transform.position;
+            ShowScoreText(amount, GameGameData.PollenFloatingTextColor, () => position);
         }
 
         //[Server]
@@ -268,25 +280,21 @@ namespace pdxpartyparrot.ggj2019
         {
             _score += GameGameData.WaspScore;
 
-            ShowScoreText(player.Behavior.Position, Color.green, GameGameData.WaspScore);
+            Vector3 position = player.Behavior.Position;
+            ShowScoreText(GameGameData.WaspScore, GameGameData.PositiveFloatingTextColor, () => {
+                Players.Player gamePlayer = (Players.Player)player;
+                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior.Position;
+            });
         }
 
-        // TODO: this should use a queue so that the numbers don't clump
-        // TODO: we also need to contain the text in something until it recycles
-        private void ShowScoreText(Vector3 position, Color color, int score)
+        private void ShowScoreText(int score, Color color, Func<Vector3> position)
         {
-            FloatingText floatingText = ObjectPoolManager.Instance.GetPooledObject<FloatingText>("floating_text");
-            floatingText.Text.text = $"{score}";
-            floatingText.Text.color = color;
-            floatingText.Show(position);
+            ShowScoreText($"{score}", color, position);
         }
 
-        private void ShowScoreText(Vector3 position, Color color, string text)
+        private void ShowScoreText(string text, Color color, Func<Vector3> position)
         {
-            FloatingText floatingText = ObjectPoolManager.Instance.GetPooledObject<FloatingText>("floating_text");
-            floatingText.Text.text = text;
-            floatingText.Text.color = color;
-            floatingText.Show(position);
+            UIManager.Instance.QueueFloatingText("floating_text", text, color, position);
         }
 #endregion
 
