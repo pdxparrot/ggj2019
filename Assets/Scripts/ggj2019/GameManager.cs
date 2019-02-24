@@ -16,6 +16,7 @@ using pdxpartyparrot.Game.World;
 using pdxpartyparrot.ggj2019.Camera;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
+using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
@@ -220,7 +221,13 @@ namespace pdxpartyparrot.ggj2019
                 _score = 0;
             }
 
-            ShowScoreText(player.Behavior.Position, Color.red, GameGameData.DeathPenalty);
+            ShowScoreText(player.Behavior.Position, GameGameData.NegativeFloatingTextColor, GameGameData.DeathPenalty);
+        }
+
+        //[Server]
+        public void HiveArmorDamage(HiveArmor armor)
+        {
+            ShowScoreText(armor.transform.position, GameGameData.NegativeFloatingTextColor, "Damage");
         }
 
         //[Server]
@@ -231,7 +238,7 @@ namespace pdxpartyparrot.ggj2019
                 _score = 0;
             }
 
-            ShowScoreText(hive.transform.position, Color.red, GameGameData.HiveDamagePenalty);
+            ShowScoreText(hive.transform.position, GameGameData.NegativeFloatingTextColor, GameGameData.HiveDamagePenalty);
         }
 
         //[Server]
@@ -239,7 +246,7 @@ namespace pdxpartyparrot.ggj2019
         {
             _score += GameGameData.PollenScore;
 
-            ShowScoreText(player.Behavior.Position, Color.green, GameGameData.PollenScore);
+            ShowScoreText(player.Behavior.Position, GameGameData.PositiveFloatingTextColor, GameGameData.PollenScore);
         }
 
         //[Server]
@@ -247,7 +254,13 @@ namespace pdxpartyparrot.ggj2019
         {
             _score += GameGameData.BeetleScore;
 
-            ShowScoreText(player.Behavior.Position, Color.green, GameGameData.BeetleScore);
+            ShowScoreText(player.Behavior.Position, GameGameData.PositiveFloatingTextColor, GameGameData.BeetleScore);
+        }
+
+        //[Server]
+        public void BeetleHarvest(Beetle beetle, int amount)
+        {
+            ShowScoreText(beetle.transform.position, GameGameData.PollenFloatingTextColor, amount);
         }
 
         //[Server]
@@ -258,12 +271,22 @@ namespace pdxpartyparrot.ggj2019
             ShowScoreText(player.Behavior.Position, Color.green, GameGameData.WaspScore);
         }
 
+        // TODO: this should use a queue so that the numbers don't clump
+        // TODO: we also need to contain the text in something until it recycles
         private void ShowScoreText(Vector3 position, Color color, int score)
         {
-            FloatingText text = ObjectPoolManager.Instance.GetPooledObject<FloatingText>("floating_text");
-            text.Text.text = $"{score}";
-            text.Text.color = color;
-            text.Show(position);
+            FloatingText floatingText = ObjectPoolManager.Instance.GetPooledObject<FloatingText>("floating_text");
+            floatingText.Text.text = $"{score}";
+            floatingText.Text.color = color;
+            floatingText.Show(position);
+        }
+
+        private void ShowScoreText(Vector3 position, Color color, string text)
+        {
+            FloatingText floatingText = ObjectPoolManager.Instance.GetPooledObject<FloatingText>("floating_text");
+            floatingText.Text.text = text;
+            floatingText.Text.color = color;
+            floatingText.Show(position);
         }
 #endregion
 

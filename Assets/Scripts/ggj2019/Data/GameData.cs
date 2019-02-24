@@ -118,6 +118,21 @@ namespace pdxpartyparrot.ggj2019.Data
         private int _floatingTextPoolSize = 10;
 
         public int FloatingTextPoolSize => _floatingTextPoolSize;
+
+        [SerializeField]
+        private Color _negativeFloatingTextColor = Color.red;
+
+        public Color NegativeFloatingTextColor => _negativeFloatingTextColor;
+
+        [SerializeField]
+        private Color _positiveFloatingTextColor = Color.green;
+
+        public Color PositiveFloatingTextColor => _positiveFloatingTextColor;
+
+        [SerializeField]
+        private Color _pollenFloatingTextColor = Color.cyan;
+
+        public Color PollenFloatingTextColor => _pollenFloatingTextColor;
 #endregion
 
         [Space(10)]
@@ -126,27 +141,27 @@ namespace pdxpartyparrot.ggj2019.Data
         [Header("Score")]
 
         [SerializeField]
-        private int _deathPenalty;
+        private int _deathPenalty = 10;
 
         public int DeathPenalty => _deathPenalty;
 
         [SerializeField]
-        private int _hiveDamagePenalty;
+        private int _hiveDamagePenalty = 10;
 
         public int HiveDamagePenalty => _hiveDamagePenalty;
 
         [SerializeField]
-        private int _pollenScore;
+        private int _pollenScore = 10;
 
         public int PollenScore => _pollenScore;
 
         [SerializeField]
-        private int _beetleScore;
+        private int _beetleScore = 10;
 
         public int BeetleScore => _beetleScore;
 
         [SerializeField]
-        private int _waspScore;
+        private int _waspScore = 10;
 
         public int WaspScore => _waspScore;
 #endregion

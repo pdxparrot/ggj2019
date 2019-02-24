@@ -153,13 +153,15 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _canSpawnPollen = true;
         }
 
-        public bool BeetleHarvest()
+        public bool BeetleHarvest(Beetle beetle)
         {
             _pollen--;
             if(_pollen <= 0) {
                 Kill(null);
                 return true;
             }
+
+            GameManager.Instance.BeetleHarvest(beetle, 1);
 
             return false;
         }

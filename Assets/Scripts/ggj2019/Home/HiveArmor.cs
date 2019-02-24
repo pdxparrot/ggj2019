@@ -58,12 +58,12 @@ namespace pdxpartyparrot.ggj2019.Home
             if(Health > 0) {
                 _health--;
                 if(Health <= 0) {
-                    ShowDestroy();
+                    DestroyArmor();
                     _owner.ArmorDestroyed();
                     return true;
                 }
 
-                ShowDamage();
+                DamageArmor();
                 return false;
             }
 
@@ -108,15 +108,17 @@ namespace pdxpartyparrot.ggj2019.Home
             return false;
         }
 
-        private void ShowDamage()
+        private void DamageArmor()
         {
+            GameManager.Instance.HiveArmorDamage(this);
+
             float f = Health / (float)GameManager.Instance.GameGameData.HiveArmorHealth;
             _model.color = new Color(1.0f, f, f);
 
             _damageEffectTrigger.Trigger();
         }
 
-        private void ShowDestroy()
+        private void DestroyArmor()
         {
             _destroyEffectTrigger.Trigger();
         }
