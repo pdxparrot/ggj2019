@@ -269,6 +269,13 @@ namespace pdxpartyparrot.ggj2019
         }
 
         //[Server]
+        public void FlowerDestroyed(Flower flower)
+        {
+            Vector3 position = flower.transform.position;
+            ShowScoreText(-GameGameData.FlowerDestroyedPenalty, GameGameData.NegativeFloatingTextColor, () => position);
+        }
+
+        //[Server]
         public void WaspKilled(IPlayer player)
         {
             _score += GameGameData.WaspScore;

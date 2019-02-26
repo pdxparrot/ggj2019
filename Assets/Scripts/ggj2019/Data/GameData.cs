@@ -161,6 +161,11 @@ namespace pdxpartyparrot.ggj2019.Data
         public int BeetleScore => _beetleScore;
 
         [SerializeField]
+        private int _flowerDestroyedPenalty = 10;
+
+        public int FlowerDestroyedPenalty => _flowerDestroyedPenalty;
+
+        [SerializeField]
         private int _waspScore = 10;
 
         public int WaspScore => _waspScore;

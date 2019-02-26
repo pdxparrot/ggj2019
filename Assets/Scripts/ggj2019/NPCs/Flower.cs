@@ -157,6 +157,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             _pollen--;
             if(_pollen <= 0) {
+                GameManager.Instance.FlowerDestroyed(this);
+
                 Kill(null);
                 return true;
             }
