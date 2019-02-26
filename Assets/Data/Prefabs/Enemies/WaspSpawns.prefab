@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorToAttack: {fileID: 0}
+  _offset: 0.25
 --- !u!1 &1732379929867678515
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorToAttack: {fileID: 0}
+  _offset: 0.25
 --- !u!1 &1732379930651837874
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorToAttack: {fileID: 0}
+  _offset: 0.25
 --- !u!1 &1732379930673991556
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorToAttack: {fileID: 0}
+  _offset: 0.25
 --- !u!1 &1732379930864418895
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorToAttack: {fileID: 0}
+  _offset: 0.25
 --- !u!1 &1732379931267184627
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,3 +515,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _armorToAttack: {fileID: 0}
+  _offset: 0.25

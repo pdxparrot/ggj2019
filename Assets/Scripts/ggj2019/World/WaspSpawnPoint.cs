@@ -14,5 +14,11 @@ namespace pdxpartyparrot.ggj2019.World
         private HiveArmor _armorToAttack;
 
         public HiveArmor ArmorToAttack => _armorToAttack;
+
+        [SerializeField]
+        [Tooltip("Spawn y-offset plus or minus to help prevent overlapping spawns")]
+        private float _offset = 0.5f;
+
+        public float Offset => _offset;
     }
 }

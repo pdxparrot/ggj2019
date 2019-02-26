@@ -38,6 +38,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [SerializeField]
         [ReadOnly]
         private float _splinePosition;
+
+        [SerializeField]
+        [ReadOnly]
+        private float _splineYOffset;
 #endregion
 
 #region Effects
@@ -84,6 +88,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             WaspSpawnPoint waspSpawn = spawnpoint.GetComponent<WaspSpawnPoint>();
             _armorToAttack = waspSpawn.ArmorToAttack;
+
+            _splineYOffset = PartyParrotManager.Instance.Random.NextSingle(-waspSpawn.Offset, waspSpawn.Offset);
 
             _spline = spawnpoint.GetComponent<BezierSpline>();
             _splineLength = _spline.EstimatedLength();
@@ -206,6 +212,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 	        _splinePosition += speed * dt;
 	        float t = _splinePosition / _splineLength;
 	        Vector3 targetPosition = _spline.GetPoint(t);
+            targetPosition.y += _splineYOffset;
 
             _spineAnimationHelper.SetFacing(targetPosition - transform.position);
             //transform.LookAt2DFlip(targetPosition);
