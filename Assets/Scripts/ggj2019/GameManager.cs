@@ -226,13 +226,6 @@ namespace pdxpartyparrot.ggj2019
         }
 
         //[Server]
-        public void HiveArmorDamage(HiveArmor armor)
-        {
-            Vector3 position = armor.transform.position;
-            ShowScoreText("Damage", GameGameData.NegativeFloatingTextColor, () => position);
-        }
-
-        //[Server]
         public void HiveDamage(Hive hive)
         {
             _score -= GameGameData.HiveDamagePenalty;
@@ -289,12 +282,10 @@ namespace pdxpartyparrot.ggj2019
 
         private void ShowScoreText(int score, Color color, Func<Vector3> position)
         {
-            ShowScoreText($"{score}", color, position);
-        }
-
-        private void ShowScoreText(string text, Color color, Func<Vector3> position)
-        {
-            UIManager.Instance.QueueFloatingText("floating_text", text, color, position);
+            if(score == 0) {
+                return;
+            }
+            UIManager.Instance.QueueFloatingText("floating_text", $"{score}", color, position);
         }
 #endregion
 

@@ -110,8 +110,6 @@ namespace pdxpartyparrot.ggj2019.Home
 
         private void DamageArmor()
         {
-            GameManager.Instance.HiveArmorDamage(this);
-
             float f = Health / (float)GameManager.Instance.GameGameData.HiveArmorHealth;
             _model.color = new Color(1.0f, f, f);
 
