@@ -79,7 +79,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
-      _poolSize: 5
+      _poolSize: 10
       _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
@@ -106,7 +106,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
-      _poolSize: 5
+      _poolSize: 10
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -172,7 +172,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
-      _poolSize: 5
+      _poolSize: 10
       _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30
@@ -199,7 +199,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
-      _poolSize: 5
+      _poolSize: 10
       _once: 0
     - _actorPrefab: {fileID: 3666041006512711152, guid: 6815962084016f747b33b16b8b0e337a,
         type: 3}
@@ -265,7 +265,7 @@ MonoBehaviour:
       _count:
         _min: 1
         _max: 1
-      _poolSize: 5
+      _poolSize: 10
       _once: 0
     _waveMusic: {fileID: 0}
   - _duration: 30

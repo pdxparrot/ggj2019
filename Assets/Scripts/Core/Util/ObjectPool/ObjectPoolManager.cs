@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 0618    // disable obsolete warning for now
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,11 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
     {
         private sealed class ObjectPool
         {
-            public int Size { get; }
+            private int _initialTargetSize;
+
+            public int TargetSize { get; set; }
+
+            public int Size { get; private set; }
 
             public int Count => _pooledObjects.Count;
 
@@ -29,23 +34,31 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
 
             public PooledObject Prefab { get; }
 
+            public Coroutine Expander { get; set; }
+
             private readonly Queue<PooledObject> _pooledObjects;
 
             private GameObject _container;
+
+            private Coroutine _expandRoutine;
 
             public ObjectPool(GameObject parent, string tag, PooledObject prefab, int size, bool isNetwork)
             {
                 Tag = tag;
                 Prefab = prefab;
-                Size = size;
                 IsNetwork = isNetwork;
+
+                _initialTargetSize = size;
+                TargetSize = size;
 
                 _container = new GameObject(Tag);
                 _container.transform.SetParent(parent.transform);
 
-                _pooledObjects = new Queue<PooledObject>(Size);
+                _pooledObjects = new Queue<PooledObject>(TargetSize);
 
-                Expand(Size);
+                // start at our target size
+                // (this is a performance hit for large pools)
+                DoExpand(TargetSize);
             }
 
             public void Destroy()
@@ -62,8 +75,14 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                         return null;
                     }
 
-                    Debug.LogWarning($"Expanding object pool {Tag} by {Size}!");
-                    Expand(Size);
+                    // only grow if we've reached our target
+                    if(Size >= TargetSize) {
+                        Debug.LogWarning($"Growing object pool {Tag} by {_initialTargetSize}!");
+                        TargetSize += _initialTargetSize;
+                    }
+
+                    // expand by 1 immediately so we have something to return
+                    DoExpand(1);
                 }
 
                 // NOTE: reparent then activate to avoid hierarchy rebuild
@@ -78,7 +97,23 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                 return pooledObject;
             }
 
-            public void Expand(int amount)
+            public IEnumerator ExpandRoutine()
+            {
+                WaitForSeconds wait = new WaitForSeconds(ObjectPoolManager.Instance.ExpandCooldown);
+                while(true) {
+                    yield return wait;
+
+                    if(Size >= TargetSize) {
+                        continue;
+                    }
+
+                    int amount = Mathf.Min(TargetSize - Size, ObjectPoolManager.Instance.MaxExpandAmount);
+                    Debug.Log($"Expanding object pool {Tag} by {amount}");
+                    DoExpand(amount);
+                }
+            }
+
+            private void DoExpand(int amount)
             {
                 Assert.IsTrue(!IsNetwork || NetworkServer.active);
 
@@ -91,11 +126,18 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                     pooledObject.Tag = Tag;
                     Recycle(pooledObject);
                 }
+
+                Size += amount;
             }
 
             public void EnsureSize(int size)
             {
-                Expand(size - Size);
+                int amount = size - TargetSize;
+                if(amount <= 0) {
+                    return;
+                }
+
+                TargetSize += amount;
             }
 
             public void Recycle(PooledObject pooledObject)
@@ -112,6 +154,18 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             }
         }
 
+        [SerializeField]
+        [Tooltip("The time between expand routine frames")]
+        private float _expandCooldown = 0.01f;
+
+        public float ExpandCooldown => _expandCooldown;
+
+        [SerializeField]
+        [Tooltip("The number of pooled objects to expand by each frame of the expand routine")]
+        private int _maxExpandAmount = 5;
+
+        public int MaxExpandAmount => _maxExpandAmount;
+
         private readonly Dictionary<string, ObjectPool> _objectPools = new Dictionary<string, ObjectPool>();
 
         private GameObject _poolContainer;
@@ -127,6 +181,9 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
         protected override void OnDestroy()
         {
             foreach(var kvp in _objectPools) {
+                StopCoroutine(kvp.Value.Expander);
+                kvp.Value.Expander = null;
+
                 kvp.Value.Destroy();
             }
             _objectPools.Clear();
@@ -145,10 +202,7 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
 
         public void InitializePool(string poolTag, PooledObject prefab, int size, bool allowExpand=true)
         {
-            if(null == prefab) {
-                Debug.LogError("Attempt to pool non-PooledObject!");
-                return;
-            }
+            Assert.IsNotNull(prefab);
 
             NetworkBehaviour networkBehaviour = prefab.GetComponent<NetworkBehaviour>();
             if(null != networkBehaviour) {
@@ -171,6 +225,8 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             {
                 AllowExpand = allowExpand
             };
+            objectPool.Expander = StartCoroutine(objectPool.ExpandRoutine());
+
             _objectPools.Add(poolTag, objectPool);
         }
 
@@ -186,6 +242,10 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             }
 
             _objectPools.Remove(poolTag);
+
+            StopCoroutine(objectPool.Expander);
+            objectPool.Expander = null;
+
             objectPool.Destroy();
         }
 
@@ -196,7 +256,7 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                 Debug.LogWarning($"No pool for tag {poolTag}!");
                 return;
             }
-            pool.Expand(amount);
+            pool.TargetSize += amount;
         }
 
         public void EnsurePoolSize(string poolTag, int size)
@@ -250,7 +310,7 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
                         GUILayout.BeginVertical(kvp.Key, GUI.skin.box);
                             GUILayout.Label($"Expandable: {kvp.Value.AllowExpand}");
                             GUILayout.Label($"Networked: {kvp.Value.IsNetwork}");
-                            GUILayout.Label($"Size: {kvp.Value.Count} / {kvp.Value.Size}");
+                            GUILayout.Label($"Size: {kvp.Value.Count} / {kvp.Value.Size} / {kvp.Value.TargetSize}");
                         GUILayout.EndVertical();
                     }
                 GUILayout.EndVertical();

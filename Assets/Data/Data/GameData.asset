@@ -28,14 +28,14 @@ MonoBehaviour:
   _viewerPosition: {x: 0, y: 0, z: -10}
   _hiveArmorHealth: 2
   _minBees: 1
-  _beePoolSize: 20
+  _beePoolSize: 10
   _beeSpawnCooldown: 5
   _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
     type: 3}
   _pollenPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
     type: 3}
-  _pollenPoolSize: 20
+  _pollenPoolSize: 10
   _enemySpawnImmunitySeconds: 0.1
   _waveSpawnerPrefabs:
   - {fileID: 6958230785637716431, guid: 105aecb27211fd34895ef5b7e05885d8, type: 3}
@@ -44,10 +44,13 @@ MonoBehaviour:
   - {fileID: 6958230785637716431, guid: fc7da8ec437127c4d8951de72be453a4, type: 3}
   _floatingTextPrefab: {fileID: 3904025210956900713, guid: 3b3866f6c984a2743986d5775b458015,
     type: 3}
-  FloatingTextPrefab: {fileID: 0}
   _floatingTextPoolSize: 10
+  _negativeFloatingTextColor: {r: 1, g: 0, b: 0, a: 1}
+  _positiveFloatingTextColor: {r: 0, g: 1, b: 0, a: 1}
+  _pollenFloatingTextColor: {r: 0, g: 1, b: 1, a: 1}
   _deathPenalty: 250
   _hiveDamagePenalty: 250
   _pollenScore: 25
   _beetleScore: 50
+  _flowerDestroyedPenalty: 10
   _waspScore: 100
