@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Core.Audio;
+using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -19,6 +19,8 @@ namespace pdxpartyparrot.Game.State
 
         public override void OnEnter()
         {
+            base.OnEnter();
+
             AudioManager.Instance.StopAllMusic();
             AudioManager.Instance.PlayMusic(_endGameMusic);
 
@@ -27,11 +29,13 @@ namespace pdxpartyparrot.Game.State
             });
         }
 
-        public override void OnExit()
+        public sealed override void OnExit()
         {
-            GameStateManager.Instance.GameManager.Shutdown();
+            // NOTE: be careful doing game-related cleanup in here
+            // because if the game is restarted from the pause menu
+            // it won't get cleaned up
 
-            AudioManager.Instance.StopAllMusic();
+            base.OnExit();
         }
 
         public override void OnUpdate(float dt)

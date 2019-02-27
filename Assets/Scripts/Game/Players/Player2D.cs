@@ -62,12 +62,14 @@ namespace pdxpartyparrot.Game.Players
             Assert.IsTrue(Behavior is PlayerController2D);
         }
 
-        protected virtual void OnDestroy()
+        protected override void OnDestroy()
         {
             if(null != Viewer && ViewerManager.HasInstance) {
                 ViewerManager.Instance.ReleaseViewer(Viewer);
             }
             PlayerViewer = null;
+
+            base.OnDestroy();
         }
 #endregion
 

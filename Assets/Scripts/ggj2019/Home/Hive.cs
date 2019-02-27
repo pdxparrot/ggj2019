@@ -75,7 +75,7 @@ namespace pdxpartyparrot.ggj2019.Home
             _beeSpawnTimer.Update(dt);
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             DestroyDebugMenu();
 
@@ -85,6 +85,8 @@ namespace pdxpartyparrot.ggj2019.Home
             }
 
             Destroy(_beeContainer);
+
+            base.OnDestroy();
         }
 #endregion
 

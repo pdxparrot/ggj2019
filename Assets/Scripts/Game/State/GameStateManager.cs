@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
+#pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Audio;
+using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
@@ -68,17 +70,15 @@ namespace pdxpartyparrot.Game.State
         [ReadOnly]
         private IGameManager _gameManager;
 
+        [CanBeNull]
         public IGameManager GameManager => _gameManager;
-
-        public bool HasGameManager => null != _gameManager;
 
         [SerializeField]
         [ReadOnly]
         private IPlayerManager _playerManager;
 
+        [CanBeNull]
         public IPlayerManager PlayerManager => _playerManager;
-
-        public bool HasPlayerManager => null != _playerManager;
 #endregion
 
 #region Unity Lifecycle
@@ -139,6 +139,12 @@ namespace pdxpartyparrot.Game.State
 #region State Management
         public void TransitionToInitialState(Action<GameState> initializeState=null, Action onStateLoaded=null)
         {
+            if(null != GameManager) {
+                GameManager.Shutdown();
+            }
+
+            AudioManager.Instance.StopAllMusic();
+
             Debug.Log("Transition to initial state");
             TransitionState(_mainMenuStatePrefab, initializeState, onStateLoaded);
         }

@@ -103,12 +103,18 @@ namespace pdxpartyparrot.ggj2019
 
         public override void Shutdown()
         {
+            _gameTimer.Stop();
+
             Destroy(PollenContainer);
             PollenContainer = null;
 
             DestroyWaveSpawner();
 
             DestroyObjectPools();
+
+            if(NetworkServer.active) {
+                PlayerManager.Instance.DespawnPlayers();
+            }
         }
 
 #region Object Pools
@@ -154,11 +160,16 @@ namespace pdxpartyparrot.ggj2019
 
         private void DestroyWaveSpawner()
         {
+            if(null == WaveSpawner) {
+                return;
+            }
+
             WaveSpawner.WaveCompleteEvent -= WaveCompleteEventHandler;
             WaveSpawner.WaveStartEvent -= WaveStartEventHandler;
             WaveSpawner.Shutdown();
 
             Destroy(WaveSpawner);
+            WaveSpawner = null;
         }
 #endregion
 
@@ -196,9 +207,8 @@ namespace pdxpartyparrot.ggj2019
                 player.GameOver();
             }
 
-            // save high scores and then kick everyone
+            // save high scores
             HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
-            PlayerManager.Instance.DespawnPlayers();
         }
 
         //[Client]

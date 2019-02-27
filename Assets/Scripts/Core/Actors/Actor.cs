@@ -52,6 +52,15 @@ namespace pdxpartyparrot.Core.Actors
 
         public abstract bool IsLocalActor { get; }
 
+#region Unity Lifecycle
+        protected virtual void OnDestroy()
+        {
+            if(ActorManager.HasInstance) {
+                ActorManager.Instance.Unregister(this);
+            }
+        }
+#endregion
+
         public virtual void Initialize(Guid id)
         {
             _id = id;

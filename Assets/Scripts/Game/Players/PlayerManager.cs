@@ -128,9 +128,13 @@ namespace pdxpartyparrot.Game.Players
             _players.Remove(player);
         }
 
-        // TODO: figure out how to even do thid
+        // TODO: figure out how to even do this
         public void DespawnPlayers()
         {
+            if(Players.Count < 1) {
+                return;
+            }
+
             Assert.IsTrue(NetworkServer.active);
 
             Debug.Log($"Despawning {Players.Count} players...");
