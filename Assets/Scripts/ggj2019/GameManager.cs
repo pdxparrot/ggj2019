@@ -121,13 +121,13 @@ namespace pdxpartyparrot.ggj2019
             ObjectPoolManager.Instance.InitializePool("pollen", pooledObject, GameGameData.PollenPoolSize);
 
             pooledObject = GameGameData.FloatingTextPrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("floating_text", pooledObject, GameGameData.FloatingTextPoolSize);
+            ObjectPoolManager.Instance.InitializePool(UIManager.Instance.DefaultFloatingTextPoolName, pooledObject, GameGameData.FloatingTextPoolSize);
         }
 
         private void DestroyObjectPools()
         {
             if(ObjectPoolManager.HasInstance) {
-                ObjectPoolManager.Instance.DestroyPool("floating_text");
+                ObjectPoolManager.Instance.DestroyPool(UIManager.Instance.DefaultFloatingTextPoolName);
                 ObjectPoolManager.Instance.DestroyPool("pollen");
                 ObjectPoolManager.Instance.DestroyPool("bees");
             }
@@ -292,7 +292,7 @@ namespace pdxpartyparrot.ggj2019
             if(score == 0) {
                 return;
             }
-            UIManager.Instance.QueueFloatingText("floating_text", $"{score}", color, position);
+            UIManager.Instance.QueueFloatingText(UIManager.Instance.DefaultFloatingTextPoolName, $"{score}", color, position);
         }
 #endregion
 

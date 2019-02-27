@@ -237,6 +237,7 @@ MonoBehaviour:
   _poolName: floating_text
   _text: Damage
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _spawnLocation: {fileID: 2943178633844672577}
 --- !u!1 &442210468265235097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,6 +1306,7 @@ MonoBehaviour:
   _poolName: floating_text
   _text: Damage
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _spawnLocation: {fileID: 610739028151181349}
 --- !u!1 &3425773629946604881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,6 +2023,7 @@ MonoBehaviour:
   _poolName: floating_text
   _text: Damage
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _spawnLocation: {fileID: 7331172188968996445}
 --- !u!1 &6069241942767778305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2404,6 +2407,7 @@ MonoBehaviour:
   _poolName: floating_text
   _text: Damage
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _spawnLocation: {fileID: 1672108704867753667}
 --- !u!1 &7295531712815618503
 GameObject:
   m_ObjectHideFlags: 0
@@ -2562,6 +2566,7 @@ MonoBehaviour:
   _poolName: floating_text
   _text: Damage
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _spawnLocation: {fileID: 7911017614375915796}
 --- !u!1 &7432584403641783854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,6 +2996,7 @@ MonoBehaviour:
   _poolName: floating_text
   _text: Damage
   _color: {r: 1, g: 0, b: 0, a: 1}
+  _spawnLocation: {fileID: 2460740849315312046}
 --- !u!1 &8225554324597598380
 GameObject:
   m_ObjectHideFlags: 0

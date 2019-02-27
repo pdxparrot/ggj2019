@@ -48,6 +48,11 @@ namespace pdxpartyparrot.Game.UI
 
 #region Floating Text
         [SerializeField]
+        private string _defaultFloatingTextPoolName = "floating_text";
+
+        public string DefaultFloatingTextPoolName => _defaultFloatingTextPoolName;
+
+        [SerializeField]
         private float _floatingTextSpawnRate = 0.1f;
 
         [SerializeField]
@@ -246,7 +251,7 @@ namespace pdxpartyparrot.Game.UI
                 GUILayout.Label($"Queued floating text: {_floatingText.Count}");
                 if(GUIUtils.LayoutButton("Spawn Floating Text")) {
                     // TODO: need to be able to input the params to this
-                    QueueFloatingText("floating_text", "Test", Color.black, () => Vector3.zero);
+                    QueueFloatingText(DefaultFloatingTextPoolName, "Test", Color.black, () => Vector3.zero);
                 }
             };
         }
