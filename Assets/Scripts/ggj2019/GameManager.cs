@@ -308,8 +308,7 @@ namespace pdxpartyparrot.ggj2019
             _newWaveEffect.Trigger();
         }
 
-        // TODO: this should come from a server command
-        //[Client]
+        //[Server]
         private void WaveCompleteEventHandler(object sender, SpawnWaveEventArgs args)
         {
             if(args.IsFinalWave) {
