@@ -198,6 +198,8 @@ namespace pdxpartyparrot.Core.DebugMenu
         private void RenderWindowContents()
         {
             if(null == _currentNode) {
+                GUILayout.Label($"Random seed: {PartyParrotManager.Instance.RandomSeed}");
+
                 GUILayout.BeginVertical("Rendering:", GUI.skin.box);
                     GUILayout.Label($"Frame Time: {(int)(_lastFrameTime * 1000.0f)} ms");
                     GUILayout.Label($"Min Frame Time: {(int)(_minFrameTime * 1000.0f)} ms");

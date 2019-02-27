@@ -67,6 +67,12 @@ namespace pdxpartyparrot.Core
         [Header("Game State")]
 
         [SerializeField]
+        [Tooltip("Set to a value greater than 0 to seed the random generator")]
+        private int _randomSeed;
+
+        public int RandomSeed => _randomSeed;
+
+        [SerializeField]
         [ReadOnly]
         private bool _isPaused;
 
@@ -113,11 +119,15 @@ namespace pdxpartyparrot.Core
 
         public Config Config { get; } = new Config();
 
-        public System.Random Random { get; } = new System.Random();
+        public System.Random Random { get; private set; }
 
 #region Unity Lifecycle
         private void Awake()
         {
+            // Environment.TickCount is what C# uses under the hood
+            // we duplicate it here so we can save it out (since it's not exposed anywhere)
+            SetRandomSeed(_randomSeed > 0 ? _randomSeed : Environment.TickCount);
+
             QualitySettings.vSyncCount = 0;
 
             Debug.Log($"Gravity: {Physics.gravity}");
@@ -125,6 +135,12 @@ namespace pdxpartyparrot.Core
             Config.Load(Application.streamingAssetsPath, ConfigFileName);
         }
 #endregion
+
+        public void SetRandomSeed(int seed)
+        {
+            _randomSeed = seed;
+            Random = new System.Random(_randomSeed);
+        }
 
 #region Manager Registration
         public void RegisterLoadingManager(ILoadingManager loadingManager)

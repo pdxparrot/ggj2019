@@ -28,15 +28,26 @@ namespace pdxpartyparrot.Game.World
 	    [SerializeField]
         private Vector2Int _citySize;
 
+        [SerializeField]
+        [Tooltip("Set to greater than 0 to seed the random generator")]
+        private int _randomSeed;
+
         private GameObject _root;
 
-        private readonly System.Random _random = new System.Random();
+        private System.Random _random = new System.Random();
 
         // random block spawning
         private float _maxFrequency;
 
 #region Unity Lifecycle
-	    private void Start ()
+        private void Awake()
+        {
+            if(_randomSeed > 0) {
+                _random = new System.Random(_randomSeed);
+            }
+        }
+
+	    private void Start()
         {
             if(_generateOnAwake) {
                 Generate(false);

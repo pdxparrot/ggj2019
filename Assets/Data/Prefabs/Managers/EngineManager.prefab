@@ -45,11 +45,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiData: {fileID: 11400000, guid: d730e1ac386174348bfe945d08ade4cb, type: 2}
   _enableVR: 0
-  _enableGoogleVR: 0
   _frictionlesssMaterial: {fileID: 13400000, guid: 21324c3bf79808a448a8bc92105ce162,
     type: 2}
   _frictionlesssMaterial2D: {fileID: 6200000, guid: 7f34acb8f12e4eb44b215027ef8187f1,
     type: 2}
+  _randomSeed: 0
   _isPaused: 0
   _uiLayer:
     serializedVersion: 2
