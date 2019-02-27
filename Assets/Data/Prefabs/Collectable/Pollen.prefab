@@ -28,9 +28,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8303773493982415684}
   - {fileID: 8618006694791261288}
   m_Father: {fileID: 1623889003402342926}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4619501727304245245
 MonoBehaviour:
@@ -44,10 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c6fd52834ab784c9e52d3dd6128f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: {x: 3, y: 0, z: 0}
-  _distance: {x: 0.5, y: 0, z: 0}
+  _speed: {x: 3, y: 2, z: 0}
+  _distance: {x: 0.5, y: 0.25, z: 0}
   _localPosition: 1
-  _time: {x: 0, y: 0, z: 0}
+  _randomizeOnEnable: 1
+  _angle: {x: 0, y: 0, z: 0}
 --- !u!1 &3108271822953982041
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,7 +80,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1623889003402342926}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1153777927961132368
 MonoBehaviour:
@@ -138,7 +140,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1623889003402342926}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8625049844941809157
 MonoBehaviour:
@@ -199,7 +201,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8303773493982415684}
   - {fileID: 5696055955067901768}
   - {fileID: 8666632476314007068}
   - {fileID: 1208008032206364483}
@@ -305,11 +306,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8950322107541760296}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1623889003402342926}
+  m_Father: {fileID: 5696055955067901768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -540,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 7969813972310383032, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7969813972310383032, guid: c2fd1b7e3f66a234a99bef69a70c8c8c,
         type: 3}
