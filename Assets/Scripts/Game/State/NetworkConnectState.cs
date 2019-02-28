@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
+#pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
 
@@ -85,8 +85,8 @@ namespace pdxpartyparrot.Game.State
         {
             if(null != _networkConnectUI) {
                 Destroy(_networkConnectUI.gameObject);
-                _networkConnectUI = null;
             }
+            _networkConnectUI = null;
 
             if(Core.Network.NetworkManager.HasInstance) {
                 Core.Network.NetworkManager.Instance.Discovery.ReceivedBroadcastEvent -= ReceivedBroadcastEventHandler;
@@ -147,6 +147,7 @@ namespace pdxpartyparrot.Game.State
             _networkConnectUI.SetStatus("Client connected, loading scene...");
 
             Core.Network.NetworkManager.Instance.ServerChangeScene(_gameStatePrefab.SceneName);
+
             GameStateManager.Instance.TransitionState(_gameStatePrefab, _gameStateInit);
         }
 
