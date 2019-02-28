@@ -93,6 +93,8 @@ namespace pdxpartyparrot.ggj2019
 
         public override void Initialize()
         {
+            IsGameOver = false;
+
             InitObjectPools();
 
             InitWaveSpawner();
