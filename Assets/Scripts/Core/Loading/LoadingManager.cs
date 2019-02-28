@@ -91,11 +91,11 @@ namespace pdxpartyparrot.Core.Loading
 
         protected virtual void Start()
         {
-            StartCoroutine(Load());
+            StartCoroutine(LoadRoutine());
         }
 #endregion
 
-        private IEnumerator Load()
+        private IEnumerator LoadRoutine()
         {
             UpdateLoadingScreen(0.0f, "Creating managers...");
             yield return null;
@@ -109,14 +109,21 @@ namespace pdxpartyparrot.Core.Loading
             UpdateLoadingScreen(0.5f, "Initializing managers...");
             yield return null;
 
-            InitializeManagers();
+            IEnumerator runner = InitializeManagersRoutine();
+            while(runner.MoveNext()) {
+                yield return null;
+            }
+
+            UpdateLoadingScreen(1.0f, "Manager loading complete!");
             yield return null;
 
-            UpdateLoadingScreen(1.0f, "Loading complete!");
-
-            OnLoad();
+            runner = OnLoadRoutine();
+            while(runner.MoveNext()) {
+                yield return null;
+            }
 
             ShowLoadingScreen(false);
+            yield return null;
         }
 
         private void PreCreateManagers()
@@ -154,12 +161,14 @@ namespace pdxpartyparrot.Core.Loading
             SpawnManager.CreateFromPrefab(_spawnManagerPrefab, ManagersContainer);
         }
 
-        protected virtual void InitializeManagers()
+        protected virtual IEnumerator InitializeManagersRoutine()
         {
+            yield break;
         }
 
-        protected virtual void OnLoad()
+        protected virtual IEnumerator OnLoadRoutine()
         {
+            yield break;
         }
 
 #region Loading Screen
@@ -167,13 +176,18 @@ namespace pdxpartyparrot.Core.Loading
         {
             _mainCamera.cullingMask = show ? -1 : 0;
             _loadingScreen.gameObject.SetActive(show);
-            UpdateLoadingScreen(0.0f, "Loading...");
+
+            if(show) {
+                UpdateLoadingScreen(0.0f, "Loading...");
+            }
         }
 
         public void UpdateLoadingScreen(float percent, string text)
         {
             SetLoadingScreenPercent(percent);
             SetLoadingScreenText(text);
+
+            Debug.Log($"{percent * 100}%: {text}");
         }
 
         public void SetLoadingScreenText(string text)

@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Game.State;
+﻿using System.Collections;
+
+using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
@@ -24,9 +26,12 @@ namespace pdxpartyparrot.Game.Loading
             HighScoreManager.Create(ManagersContainer);
         }
 
-        protected override void OnLoad()
+        protected override IEnumerator OnLoadRoutine()
         {
-            base.OnLoad();
+            IEnumerator runner = base.OnLoadRoutine();
+            while(runner.MoveNext()) {
+                yield return null;
+            }
 
             GameStateManager.Instance.TransitionToInitialState();
         }

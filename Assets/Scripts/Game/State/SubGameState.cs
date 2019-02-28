@@ -2,7 +2,7 @@
 
 namespace pdxpartyparrot.Game.State
 {
-    public abstract class SubGameState : MonoBehaviour, IGameState
+    public abstract class SubGameState : MonoBehaviour
     {
         public string Name => name;
 

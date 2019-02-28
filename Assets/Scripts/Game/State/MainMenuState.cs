@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Audio;
+﻿using System.Collections.Generic;
+
+using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Game.Menu;
 using pdxpartyparrot.Game.UI;
@@ -17,27 +19,49 @@ namespace pdxpartyparrot.Game.State
         [SerializeField]
         private AudioClip _music;
 
-        public override void OnEnter()
+        public override IEnumerator<GameStateLoadStatus> OnEnterRoutine()
         {
-            base.OnEnter();
+            yield return new GameStateLoadStatus(0.0f, "Initializing...");
+
+            IEnumerator<GameStateLoadStatus> runner = base.OnEnterRoutine();
+            while(runner.MoveNext()) {
+                yield return runner.Current;
+            }
+
+            yield return new GameStateLoadStatus(0.5f, "Initializing...");
 
             InputManager.Instance.EventSystem.UIModule.EnableAllActions();
 
+            AudioManager.Instance.PlayMusic(_music);
+
             _menu = UIManager.Instance.InstantiateUIPrefab(_menuPrefab);
 
-            AudioManager.Instance.PlayMusic(_music);
+            yield return new GameStateLoadStatus(1.0f, "Done!");
         }
 
-        public override void OnExit()
+        public override IEnumerator<GameStateLoadStatus> OnExitRoutine()
         {
-            AudioManager.Instance.StopAllMusic();
+            yield return new GameStateLoadStatus(0.0f, "Shutting down...");
 
-            InputManager.Instance.EventSystem.UIModule.DisableAllActions();
+            if(AudioManager.HasInstance) {
+                AudioManager.Instance.StopAllMusic();
+            }
+
+            if(InputManager.HasInstance) {
+                InputManager.Instance.EventSystem.UIModule.DisableAllActions();
+            }
 
             Destroy(_menu.gameObject);
             _menu = null;
 
-            base.OnExit();
+            yield return new GameStateLoadStatus(0.5f, "Shutting down...");
+
+            IEnumerator<GameStateLoadStatus> runner = base.OnExitRoutine();
+            while(runner.MoveNext()) {
+                yield return runner.Current;
+            }
+
+            yield return new GameStateLoadStatus(1.0f, "Done!");
         }
 
         public override void OnResume()

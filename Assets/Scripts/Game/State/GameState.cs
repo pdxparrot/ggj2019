@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Scenes;
 
@@ -6,22 +6,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.State
 {
-    public interface IGameState
-    {
-        string Name { get; }
-
-        void OnEnter();
-
-        void OnExit();
-
-        void OnResume();
-
-        void OnPause();
-
-        void OnUpdate(float dt);
-    }
-
-    public abstract class GameState : MonoBehaviour, IGameState
+    public abstract class GameState : MonoBehaviour
     {
         public string Name => name;
 
@@ -41,36 +26,44 @@ namespace pdxpartyparrot.Game.State
 
         public bool MakeSceneActive => _makeSceneActive;
 
-        public void LoadScene(Action callback)
+        public IEnumerator<float> LoadSceneRoutine()
         {
             if(!HasScene) {
-                callback?.Invoke();
-                return;
+                yield break;
             }
 
-            SceneManager.Instance.LoadScene(SceneName, callback, MakeSceneActive);
+            IEnumerator<float> runner = SceneManager.Instance.LoadSceneRoutine(SceneName, MakeSceneActive);
+            while(runner.MoveNext()) {
+                yield return runner.Current;
+            }
         }
 
-        public void UnloadScene(Action callback)
+        public IEnumerator<float> UnloadSceneRoutine()
         {
             if(!HasScene) {
-                callback?.Invoke();
-                return;
+                yield break;
             }
 
             if(SceneManager.HasInstance) {
-                SceneManager.Instance.UnloadScene(SceneName, callback);
+                IEnumerator<float> runner = SceneManager.Instance.UnloadSceneRoutine(SceneName);
+                while(runner.MoveNext()) {
+                    yield return runner.Current;
+                }
             }
         }
 
-        public virtual void OnEnter()
+        public virtual IEnumerator<GameStateLoadStatus> OnEnterRoutine()
         {
             Debug.Log($"Enter State: {Name}");
+
+            yield break;
         }
 
-        public virtual void OnExit()
+        public virtual IEnumerator<GameStateLoadStatus> OnExitRoutine()
         {
             Debug.Log($"Exit State: {Name}");
+
+            yield break;
         }
 
         public virtual void OnResume()

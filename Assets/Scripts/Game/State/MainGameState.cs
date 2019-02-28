@@ -1,6 +1,7 @@
 #pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
+using System.Collections.Generic;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Audio;
@@ -11,6 +12,7 @@ using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.UI;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 namespace pdxpartyparrot.Game.State
@@ -25,19 +27,23 @@ namespace pdxpartyparrot.Game.State
 
         private ServerSpectator _serverSpectator;
 
-        public override void OnEnter()
+        public override IEnumerator<GameStateLoadStatus> OnEnterRoutine()
         {
-            base.OnEnter();
+            yield return new GameStateLoadStatus(0.0f, "Initializing...");
+
+            IEnumerator<GameStateLoadStatus> runner = base.OnEnterRoutine();
+            while(runner.MoveNext()) {
+                yield return runner.Current;
+            }
+
+            yield return new GameStateLoadStatus(0.5f, "Initializing...");
 
             Initialize();
 
             Core.Network.NetworkManager.Instance.ServerDisconnectEvent += ServerDisconnectEventHandler;
             Core.Network.NetworkManager.Instance.ClientDisconnectEvent += ClientDisconnectEventHandler;
 
-            if(NetworkClient.active) {
-                AudioManager.Instance.PlayMusic(_music);
-                UIManager.Instance.Initialize();
-            }
+            yield return new GameStateLoadStatus(1.0f, "Done!");
         }
 
         public override void OnUpdate(float dt)
@@ -49,37 +55,35 @@ namespace pdxpartyparrot.Game.State
             }
         }
 
-        public override void OnExit()
+        public override IEnumerator<GameStateLoadStatus> OnExitRoutine()
         {
-            ViewerManager.Instance.FreeAllViewers();
-
-            if(null != _serverSpectator) {
-                Destroy(_serverSpectator);
-            }
-            _serverSpectator = null;
+            yield return new GameStateLoadStatus(0.0f, "Shutting down...");
 
             if(Core.Network.NetworkManager.HasInstance) {
                 Core.Network.NetworkManager.Instance.ServerDisconnectEvent -= ServerDisconnectEventHandler;
                 Core.Network.NetworkManager.Instance.ClientDisconnectEvent -= ClientDisconnectEventHandler;
             }
 
-            if(UIManager.HasInstance) {
-                UIManager.Instance.Shutdown();
+            Shutdown();
+
+            yield return new GameStateLoadStatus(0.5f, "Shutting down...");
+
+            IEnumerator<GameStateLoadStatus> runner = base.OnExitRoutine();
+            while(runner.MoveNext()) {
+                yield return runner.Current;
             }
 
-            if(GameStateManager.HasInstance) {
-                GameStateManager.Instance.ShutdownNetwork();
-            }
-
-            base.OnExit();
+            yield return new GameStateLoadStatus(1.0f, "Done!");
         }
 
+#region Initialize
         private void Initialize()
         {
             PartyParrotManager.Instance.IsPaused = false;
 
             DebugMenuManager.Instance.ResetFrameStats();
 
+            Assert.IsNotNull(GameStateManager.Instance.GameManager);
             GameStateManager.Instance.GameManager.Initialize();
 
             InitializeServer();
@@ -109,6 +113,10 @@ namespace pdxpartyparrot.Game.State
                 return false;
             }
 
+            AudioManager.Instance.PlayMusic(_music);
+
+            UIManager.Instance.Initialize();
+
             Core.Network.NetworkManager.Instance.LocalClientReady(GameStateManager.Instance.NetworkClient?.connection);
 
             if(GameStateManager.Instance.GameManager.GameData.GamepadsArePlayers) {
@@ -124,6 +132,48 @@ namespace pdxpartyparrot.Game.State
 
             return true;
         }
+#endregion
+
+#region Shutdown
+        private void Shutdown()
+        {
+            ShutdownClient();
+            ShutdownServer();
+
+            if(GameStateManager.HasInstance) {
+                if(null != GameStateManager.Instance.GameManager) {
+                    GameStateManager.Instance.GameManager.Shutdown();
+                }
+
+                GameStateManager.Instance.ShutdownNetwork();
+            }
+
+            PartyParrotManager.Instance.IsPaused = false;
+        }
+
+        protected virtual void ShutdownServer()
+        {
+            if(null != _serverSpectator) {
+                Destroy(_serverSpectator.gameObject);
+            }
+            _serverSpectator = null;
+        }
+
+        protected virtual void ShutdownClient()
+        {
+            if(ViewerManager.HasInstance) {
+                ViewerManager.Instance.FreeAllViewers();
+            }
+
+            if(UIManager.HasInstance) {
+                UIManager.Instance.Shutdown();
+            }
+
+            if(AudioManager.HasInstance) {
+                AudioManager.Instance.StopAllMusic();
+            }
+        }
+#endregion
 
 #region Event Handlers
         private void ServerDisconnectEventHandler(object sender, EventArgs args)

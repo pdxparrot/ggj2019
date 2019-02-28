@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 using pdxpartyparrot.Core.DebugMenu;
@@ -24,27 +23,14 @@ namespace pdxpartyparrot.Core.Scenes
         }
 #endregion
 
-#region Load Scene
-        public void SetScene(string sceneName)
+#region Load Scenes
+        public IEnumerator<float> LoadSceneRoutine(string sceneName, bool setActive=false)
         {
-            Debug.Log($"Setting scene '{sceneName}'");
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-        }
-
-        public void LoadScene(string sceneName, Action callback, bool setActive=false)
-        {
-            StartCoroutine(LoadSceneRoutine(sceneName, () => {
-                callback?.Invoke();
-            }, setActive));
-        }
-
-        public IEnumerator LoadSceneRoutine(string sceneName, Action callback, bool setActive=false)
-        {
-            Debug.Log($"Loading scene '{sceneName}'");
+            Debug.Log($"Loading scene '{sceneName}'...");
 
             AsyncOperation asyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             while(!asyncOp.isDone) {
-                yield return null;
+                yield return asyncOp.progress;
             }
 
             if(setActive) {
@@ -52,46 +38,28 @@ namespace pdxpartyparrot.Core.Scenes
             }
 
             _loadedScenes.Add(sceneName);
-
-            callback?.Invoke();
         }
 #endregion
 
-#region Unload Scene
-        public void UnloadScene(string sceneName, Action callback)
+#region Unload Scenes
+        public IEnumerator<float> UnloadSceneRoutine(string sceneName)
         {
-            StartCoroutine(UnloadSceneRoutine(sceneName, () => {
-                callback?.Invoke();
-            }));
-        }
-
-        public IEnumerator UnloadSceneRoutine(string sceneName, Action callback)
-        {
-            IEnumerator runner = DoUnloadSceneRoutine(sceneName, callback);
-            while(runner.MoveNext()) {
-                yield return null;
-            }
-            _loadedScenes.Remove(sceneName);
-        }
-
-        private IEnumerator DoUnloadSceneRoutine(string sceneName, Action callback)
-        {
-            Debug.Log($"Unloading scene '{sceneName}'");
+            Debug.Log($"Unloading scene '{sceneName}'...");
 
             AsyncOperation asyncOp = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
             while(!asyncOp.isDone) {
-                yield return null;
+                yield return asyncOp.progress;
             }
 
-            callback?.Invoke();
+            _loadedScenes.Remove(sceneName);
         }
 
-        public IEnumerator UnloadAllScenesRoutine(Action callback)
+        public IEnumerator UnloadAllScenesRoutine()
         {
-            Debug.Log("Unloading all scenes");
+            Debug.Log("Unloading all scenes...");
 
             foreach(string sceneName in _loadedScenes) {
-                IEnumerator runner = DoUnloadSceneRoutine(sceneName, null);
+                IEnumerator<float> runner = UnloadSceneRoutine(sceneName);
                 while(runner.MoveNext()) {
                     yield return null;
                 }
@@ -99,28 +67,37 @@ namespace pdxpartyparrot.Core.Scenes
             _loadedScenes.Clear();
 
             UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(_mainSceneName));
-
-            callback?.Invoke();
         }
 #endregion
 
 #region Reload Scene
-        public void ReloadMainScene()
+        public IEnumerator ReloadMainSceneRoutine()
         {
             Debug.Log("Reloading...");
-            StartCoroutine(UnloadAllScenesRoutine(() => {
-                Debug.Log($"Loading main scene '{_mainSceneName}'");
-                UnityEngine.SceneManagement.SceneManager.LoadScene(_mainSceneName);
-            }));
+
+            IEnumerator runner = UnloadAllScenesRoutine();
+            while(runner.MoveNext()) {
+                yield return null;
+            }
+
+            Debug.Log($"Loading main scene '{_mainSceneName}'");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(_mainSceneName);
         }
 
-        public void ReloadScene(string sceneName, Action callback)
+        public IEnumerator ReloadSceneRoutine(string sceneName)
         {
             Debug.Log($"Reloading scene '{sceneName}'");
 
-            UnloadScene(sceneName, () => {
-                LoadScene(sceneName, callback);
-            });
+            IEnumerator<float> runner = UnloadSceneRoutine(sceneName);
+            while(runner.MoveNext()) {
+                yield return null;
+            }
+
+            // TODO: set active?
+            runner = LoadSceneRoutine(sceneName);
+            while(runner.MoveNext()) {
+                yield return null;
+            }
         }
 #endregion
 

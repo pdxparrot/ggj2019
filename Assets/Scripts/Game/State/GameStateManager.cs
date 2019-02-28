@@ -1,13 +1,12 @@
 #pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
-using pdxpartyparrot.Core.Audio;
-using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
@@ -36,12 +35,19 @@ namespace pdxpartyparrot.Game.State
 
         [SerializeField]
         [ReadOnly]
-        private IGameState _currentGameState;
+        private GameState _currentGameState;
 
         [CanBeNull]
-        public IGameState CurrentState => _currentGameState;
+        public GameState CurrentState => _currentGameState;
 
-        private readonly Stack<IGameState> _stateStack = new Stack<IGameState>();
+        [SerializeField]
+        [ReadOnly]
+        private SubGameState _currentSubGameState;
+
+        [CanBeNull]
+        public SubGameState CurrentSubState => _currentSubGameState;
+
+        private readonly Stack<SubGameState> _subStateStack = new Stack<SubGameState>();
 #endregion
 
         [Space(10)]
@@ -91,7 +97,12 @@ namespace pdxpartyparrot.Game.State
 
         protected override void OnDestroy()
         {
-            ExitCurrentState(null);
+            // OnDestroy() can't be a coroutine and this doesn't really need to happen
+            // really we should just straight up destroy everything
+            /*IEnumerator runner = ExitCurrentStateRoutine();
+            while(runner.MoveNext()) {
+                yield return null;
+            }*/
 
 // TODO: destroy all game states
 
@@ -102,7 +113,11 @@ namespace pdxpartyparrot.Game.State
         {
             float dt = Time.deltaTime;
 
-            _currentGameState?.OnUpdate(dt);
+            if(null != _currentSubGameState) {
+                _currentSubGameState.OnUpdate(dt);
+            } else if(null != _currentGameState) {
+                _currentGameState.OnUpdate(dt);
+            }
         }
 #endregion
 
@@ -139,70 +154,110 @@ namespace pdxpartyparrot.Game.State
 #region State Management
         public void TransitionToInitialState(Action<GameState> initializeState=null, Action onStateLoaded=null)
         {
-            if(null != GameManager) {
-                GameManager.Shutdown();
-            }
-
-            AudioManager.Instance.StopAllMusic();
-
-            Debug.Log("Transition to initial state");
+            Debug.Log("Transition to initial state...");
             TransitionState(_mainMenuStatePrefab, initializeState, onStateLoaded);
         }
 
         public void TransitionState<TV>(TV gameStatePrefab, Action<TV> initializeState=null, Action onStateLoaded=null) where TV: GameState
         {
-            PartyParrotManager.Instance.LoadingManager.ShowLoadingScreen(true);
-
-            ExitCurrentState(() => {
-                // TODO: this should enable the state from the set rather than allocating
-                TV gameState = Instantiate(gameStatePrefab, transform);
-                initializeState?.Invoke(gameState);
-
-                PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f, "Loading scene...");
-                gameState.LoadScene(() => {
-                    _currentGameState = gameState;
-                    _currentGameState.OnEnter();
-
-                    PartyParrotManager.Instance.LoadingManager.ShowLoadingScreen(false);
-
-                    onStateLoaded?.Invoke();
-                });
-            });
+            StartCoroutine(TransitionStateRoutine(gameStatePrefab, initializeState, onStateLoaded));
         }
 
-        private void ExitCurrentState(Action callback)
+        private IEnumerator TransitionStateRoutine<TV>(TV gameStatePrefab, Action<TV> initializeState=null, Action onStateLoaded=null) where TV: GameState
         {
-            if(null == _currentGameState) {
-                callback?.Invoke();
-                return;
+            PartyParrotManager.Instance.LoadingManager.ShowLoadingScreen(true);
+
+            IEnumerator exitRunner = ExitCurrentStateRoutine();
+            while(exitRunner.MoveNext()) {
+                yield return null;
             }
 
-            while(_stateStack.Count > 0 && !(_currentGameState is GameState)) {
+            // TODO: this should enable the state from the set rather than allocating
+            TV gameState = Instantiate(gameStatePrefab, transform);
+            initializeState?.Invoke(gameState);
+
+            PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.0f, "Loading scene...");
+            yield return null;
+
+            IEnumerator<float> runner = gameState.LoadSceneRoutine();
+            while(runner.MoveNext()) {
+                PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(runner.Current * 0.5f, "Loading scene...");
+                yield return null;
+            }
+
+            PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f, "Scene loaded!");
+            yield return null;
+
+            _currentGameState = gameState;
+            IEnumerator<GameStateLoadStatus> enterRunner = _currentGameState.OnEnterRoutine();
+            while(enterRunner.MoveNext()) {
+                GameStateLoadStatus status = enterRunner.Current;
+                if(null != status) {
+                    PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f + status.LoadPercent * 0.5f, status.Status);
+                }
+                yield return null;
+            }
+
+            PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(1.0f, "Done!");
+            yield return null;
+
+            PartyParrotManager.Instance.LoadingManager.ShowLoadingScreen(false);
+
+            onStateLoaded?.Invoke();
+        }
+
+        private IEnumerator ExitCurrentStateRoutine()
+        {
+            while(null != _currentSubGameState || _subStateStack.Count > 0) {
                 PopSubState();
             }
 
-            GameState gameState = (GameState)_currentGameState;
+            if(null == _currentGameState) {
+                yield break;
+            }
+
+            GameState gameState = _currentGameState;
             _currentGameState = null;
 
-            gameState.UnloadScene(() => {
-                if(null != gameState) {
-                    gameState.OnExit();
+            PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.0f, "Unloading scene...");
+            yield return null;
 
-                    // TODO: disable the state, don't destroy it
-                    Destroy(gameState.gameObject);
+            IEnumerator<float> runner = gameState.UnloadSceneRoutine();
+            while(runner.MoveNext()) {
+                PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(runner.Current * 0.5f, "Unloading scene...");
+                yield return null;
+            }
+
+            PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f, "Unloading scene...");
+            yield return null;
+
+            IEnumerator<GameStateLoadStatus> exitRunner = gameState.OnExitRoutine();
+            while(exitRunner.MoveNext()) {
+                GameStateLoadStatus status = exitRunner.Current;
+                if(null != status) {
+                    PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f + status.LoadPercent * 0.5f, status.Status);
                 }
+                yield return null;
+            }
 
-                callback?.Invoke();
-            });
+            PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(1.0f, "Done!");
+            yield return null;
+
+            // TODO: disable the state, don't destroy it
+            Destroy(gameState.gameObject);
         }
 
         public void PushSubState<TV>(TV gameStatePrefab, Action<TV> initializeState=null) where TV: SubGameState
         {
-            _currentGameState?.OnPause();
+            if(null != _currentSubGameState) {
+                _currentSubGameState.OnPause();
+            } else if(null != _currentGameState) {
+                _currentGameState.OnPause();
+            }
 
             // enqueue the current state if we have one
-            if(null != _currentGameState) {
-                _stateStack.Push(_currentGameState);
+            if(null != _currentSubGameState) {
+                _subStateStack.Push(_currentSubGameState);
             }
 
             // new state is now the current state
@@ -210,22 +265,29 @@ namespace pdxpartyparrot.Game.State
             TV gameState = Instantiate(gameStatePrefab, transform);
             initializeState?.Invoke(gameState);
 
-            _currentGameState = gameState;
-            _currentGameState.OnEnter();
+            _currentSubGameState = gameState;
+            _currentSubGameState.OnEnter();
         }
 
         public void PopSubState()
         {
-            SubGameState previousState = (SubGameState)_currentGameState;
-            _currentGameState = null;
+            SubGameState previousState = _currentSubGameState;
+            _currentSubGameState = null;
 
             if(null != previousState) {
                 previousState.OnExit();
+
+                // TODO: this should disable the state rather than destroying it
                 Destroy(previousState.gameObject);
             }
 
-            _currentGameState = _stateStack.Count > 0 ? _stateStack.Pop() : null;
-            _currentGameState?.OnResume();
+            _currentSubGameState = _subStateStack.Count > 0 ? _subStateStack.Pop() : null;
+
+            if(null != _currentSubGameState) {
+                _currentSubGameState.OnResume();
+            } else if(null != _currentGameState) {
+                _currentGameState.OnResume();
+            }
         }
 #endregion
 
@@ -256,10 +318,12 @@ namespace pdxpartyparrot.Game.State
         {
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Game.GameStateManager");
             debugMenuNode.RenderContentsAction = () => {
-                GUILayout.Label($"Current Game State: {CurrentState?.Name}");
+                GUILayout.Label($"Current Game State: {(null == CurrentState ? "" : CurrentState.Name)}");
+                GUILayout.Label($"Current Sub Game State: {(null == CurrentSubState ? "" : CurrentSubState.Name)}");
 
                 if(GUIUtils.LayoutButton("Reset")) {
                     TransitionToInitialState();
+                    return;
                 }
 
                 if(null != NetworkClient) {
@@ -300,11 +364,11 @@ namespace pdxpartyparrot.Game.State
                         if(GUIUtils.LayoutButton($"Load Test Scene {sceneName}")) {
                             TransitionToInitialState(null, () => {
                                 PushSubState(_networkConnectStatePrefab, connectState => {
-                                    connectState.Initialize(NetworkConnectState.ConnectType.Local, _sceneTesterStatePrefab, state => {
-                                        SceneTester sceneTester = (SceneTester)state;
-                                        sceneTester.SetScene(sceneName);
+                                        connectState.Initialize(NetworkConnectState.ConnectType.Local, _sceneTesterStatePrefab, state => {
+                                            SceneTester sceneTester = (SceneTester)state;
+                                            sceneTester.SetScene(sceneName);
+                                        });
                                     });
-                                });
                             });
                             break;
                         }

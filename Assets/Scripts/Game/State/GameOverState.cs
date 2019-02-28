@@ -29,11 +29,9 @@ namespace pdxpartyparrot.Game.State
             });
         }
 
-        public sealed override void OnExit()
+        public override void OnExit()
         {
-            // NOTE: be careful doing game-related cleanup in here
-            // because if the game is restarted from the pause menu
-            // it won't get cleaned up
+            AudioManager.Instance.StopAllMusic();
 
             base.OnExit();
         }
