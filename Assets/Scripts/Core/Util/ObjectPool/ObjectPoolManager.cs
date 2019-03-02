@@ -200,7 +200,7 @@ namespace pdxpartyparrot.Core.Util.ObjectPool
             return _objectPools.ContainsKey(poolTag);
         }
 
-        public void InitializePool(string poolTag, PooledObject prefab, int size, bool allowExpand=true)
+        public void InitializePoolAsync(string poolTag, PooledObject prefab, int size, bool allowExpand=true)
         {
             Assert.IsNotNull(prefab);
 

@@ -57,7 +57,7 @@ namespace pdxpartyparrot.Game.State
                 break;
             }
 
-            GameStateManager.Instance.TransitionToInitialState();
+            GameStateManager.Instance.TransitionToInitialStateAsync();
         }
 
         public override void OnEnter()
@@ -148,7 +148,7 @@ namespace pdxpartyparrot.Game.State
 
             Core.Network.NetworkManager.Instance.ServerChangeScene(_gameStatePrefab.SceneName);
 
-            GameStateManager.Instance.TransitionState(_gameStatePrefab, _gameStateInit);
+            GameStateManager.Instance.TransitionStateAsync(_gameStatePrefab, _gameStateInit);
         }
 
         private void ClientConnectEventHandler(object sender, EventArgs args)
@@ -164,7 +164,7 @@ namespace pdxpartyparrot.Game.State
         {
             _networkConnectUI.SetStatus("Server ready, loading scene...");
 
-            GameStateManager.Instance.TransitionState(_gameStatePrefab, _gameStateInit);
+            GameStateManager.Instance.TransitionStateAsync(_gameStatePrefab, _gameStateInit);
         }
 
         private void ReceivedBroadcastEventHandler(object sender, ReceivedBroadcastEventArgs args)

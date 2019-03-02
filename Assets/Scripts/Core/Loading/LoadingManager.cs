@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 using DG.Tweening;
 
@@ -106,21 +107,32 @@ namespace pdxpartyparrot.Core.Loading
             CreateManagers();
             yield return null;
 
-            UpdateLoadingScreen(0.5f, "Initializing managers...");
+            UpdateLoadingScreen(0.25f, "Initializing managers...");
             yield return null;
 
-            IEnumerator runner = InitializeManagersRoutine();
+            IEnumerator<LoadStatus> runner = InitializeManagersRoutine();
             while(runner.MoveNext()) {
+                LoadStatus status = runner.Current;
+                if(null != status) {
+                    UpdateLoadingScreen(0.25f + (status.LoadPercent * 0.25f), status.Status);
+                }
                 yield return null;
             }
 
-            UpdateLoadingScreen(1.0f, "Manager loading complete!");
+            UpdateLoadingScreen(0.75f, "Loading managers...");
             yield return null;
 
             runner = OnLoadRoutine();
             while(runner.MoveNext()) {
+                LoadStatus status = runner.Current;
+                if(null != status) {
+                    UpdateLoadingScreen(0.75f + (status.LoadPercent * 0.25f), status.Status);
+                }
                 yield return null;
             }
+
+            UpdateLoadingScreen(1.0f, "Loading complete!");
+            yield return null;
 
             ShowLoadingScreen(false);
             yield return null;
@@ -161,12 +173,12 @@ namespace pdxpartyparrot.Core.Loading
             SpawnManager.CreateFromPrefab(_spawnManagerPrefab, ManagersContainer);
         }
 
-        protected virtual IEnumerator InitializeManagersRoutine()
+        protected virtual IEnumerator<LoadStatus> InitializeManagersRoutine()
         {
             yield break;
         }
 
-        protected virtual IEnumerator OnLoadRoutine()
+        protected virtual IEnumerator<LoadStatus> OnLoadRoutine()
         {
             yield break;
         }
@@ -178,8 +190,14 @@ namespace pdxpartyparrot.Core.Loading
             _loadingScreen.gameObject.SetActive(show);
 
             if(show) {
-                UpdateLoadingScreen(0.0f, "Loading...");
+                ResetLoadingScreen();
             }
+        }
+
+        public void ResetLoadingScreen()
+        {
+            SetLoadingScreenPercent(0.0f);
+            SetLoadingScreenText("Loading...");
         }
 
         public void UpdateLoadingScreen(float percent, string text)

@@ -2,6 +2,7 @@
 
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Input;
+using pdxpartyparrot.Core.Loading;
 using pdxpartyparrot.Game.Menu;
 using pdxpartyparrot.Game.UI;
 
@@ -19,16 +20,16 @@ namespace pdxpartyparrot.Game.State
         [SerializeField]
         private AudioClip _music;
 
-        public override IEnumerator<GameStateLoadStatus> OnEnterRoutine()
+        public override IEnumerator<LoadStatus> OnEnterRoutine()
         {
-            yield return new GameStateLoadStatus(0.0f, "Initializing...");
+            yield return new LoadStatus(0.0f, "Initializing...");
 
-            IEnumerator<GameStateLoadStatus> runner = base.OnEnterRoutine();
+            IEnumerator<LoadStatus> runner = base.OnEnterRoutine();
             while(runner.MoveNext()) {
                 yield return runner.Current;
             }
 
-            yield return new GameStateLoadStatus(0.5f, "Initializing...");
+            yield return new LoadStatus(0.5f, "Initializing...");
 
             InputManager.Instance.EventSystem.UIModule.EnableAllActions();
 
@@ -36,12 +37,12 @@ namespace pdxpartyparrot.Game.State
 
             _menu = UIManager.Instance.InstantiateUIPrefab(_menuPrefab);
 
-            yield return new GameStateLoadStatus(1.0f, "Done!");
+            yield return new LoadStatus(1.0f, "Done!");
         }
 
-        public override IEnumerator<GameStateLoadStatus> OnExitRoutine()
+        public override IEnumerator<LoadStatus> OnExitRoutine()
         {
-            yield return new GameStateLoadStatus(0.0f, "Shutting down...");
+            yield return new LoadStatus(0.0f, "Shutting down...");
 
             if(AudioManager.HasInstance) {
                 AudioManager.Instance.StopAllMusic();
@@ -54,14 +55,14 @@ namespace pdxpartyparrot.Game.State
             Destroy(_menu.gameObject);
             _menu = null;
 
-            yield return new GameStateLoadStatus(0.5f, "Shutting down...");
+            yield return new LoadStatus(0.5f, "Shutting down...");
 
-            IEnumerator<GameStateLoadStatus> runner = base.OnExitRoutine();
+            IEnumerator<LoadStatus> runner = base.OnExitRoutine();
             while(runner.MoveNext()) {
                 yield return runner.Current;
             }
 
-            yield return new GameStateLoadStatus(1.0f, "Done!");
+            yield return new LoadStatus(1.0f, "Done!");
         }
 
         public override void OnResume()

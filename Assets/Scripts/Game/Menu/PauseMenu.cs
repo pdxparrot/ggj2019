@@ -47,7 +47,7 @@ namespace pdxpartyparrot.Game.Menu
         public void OnExitMainMenu()
         {
             PartyParrotManager.Instance.TogglePause();
-            GameStateManager.Instance.TransitionToInitialState();
+            GameStateManager.Instance.TransitionToInitialStateAsync();
         }
 
         public void OnQuitGame()

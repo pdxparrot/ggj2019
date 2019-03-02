@@ -25,7 +25,7 @@ namespace pdxpartyparrot.Game.State
             AudioManager.Instance.PlayMusic(_endGameMusic);
 
             _completeTimer.Start(_completeWaitTimeSeconds, () => {
-                GameStateManager.Instance.TransitionToInitialState();
+                GameStateManager.Instance.TransitionToInitialStateAsync();
             });
         }
 

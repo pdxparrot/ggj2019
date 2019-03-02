@@ -57,7 +57,7 @@ namespace pdxpartyparrot.Game.World
                         if(ObjectPoolManager.Instance.HasPool(PoolTag)) {
                             ObjectPoolManager.Instance.EnsurePoolSize(PoolTag, count);
                         } else {
-                            ObjectPoolManager.Instance.InitializePool(PoolTag, pooledObject, count);
+                            ObjectPoolManager.Instance.InitializePoolAsync(PoolTag, pooledObject, count);
                         }
                     }
                 }
@@ -173,7 +173,7 @@ namespace pdxpartyparrot.Game.World
                 foreach(SpawnGroup spawnGroup in _spawnGroups) {
                     spawnGroup.Start();
                 }
-                AudioManager.Instance.TransitionMusic(_spawnWaveData.WaveMusic, _owner.WaveSpawnData.MusicTransitionSeconds);
+                AudioManager.Instance.TransitionMusicAsync(_spawnWaveData.WaveMusic, _owner.WaveSpawnData.MusicTransitionSeconds);
             }
 
             public void Update(float dt)

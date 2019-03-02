@@ -1,5 +1,6 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
+using pdxpartyparrot.Core.Loading;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
 
@@ -26,14 +27,14 @@ namespace pdxpartyparrot.Game.Loading
             HighScoreManager.Create(ManagersContainer);
         }
 
-        protected override IEnumerator OnLoadRoutine()
+        protected override IEnumerator<LoadStatus> OnLoadRoutine()
         {
-            IEnumerator runner = base.OnLoadRoutine();
+            IEnumerator<LoadStatus> runner = base.OnLoadRoutine();
             while(runner.MoveNext()) {
-                yield return null;
+                yield return runner.Current;
             }
 
-            GameStateManager.Instance.TransitionToInitialState();
+            GameStateManager.Instance.TransitionToInitialStateAsync();
         }
     }
 }

@@ -187,7 +187,7 @@ namespace pdxpartyparrot.Core.Audio
 
         private void Start()
         {
-            StartCoroutine(UpdateMusicCrossfade());
+            StartCoroutine(UpdateMusicCrossfadeRoutine());
         }
 
         protected override void OnDestroy()
@@ -264,7 +264,7 @@ namespace pdxpartyparrot.Core.Audio
         }
 
         // if stopOnComplete is true, will stop the clip being transitioned away from
-        public void TransitionMusic(AudioClip musicAudioClip, float seconds, bool stopOnComplete=true)
+        public void TransitionMusicAsync(AudioClip musicAudioClip, float seconds, bool stopOnComplete=true)
         {
             if(null == musicAudioClip) {
                 return;
@@ -317,7 +317,7 @@ namespace pdxpartyparrot.Core.Audio
             StopMusic2();
         }
 
-        private IEnumerator UpdateMusicCrossfade()
+        private IEnumerator UpdateMusicCrossfadeRoutine()
         {
             WaitForSeconds wait = new WaitForSeconds(_audioData.UpdateCrossfadeUpdateSeconds);
             while(true) {

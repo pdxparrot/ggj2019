@@ -54,17 +54,22 @@ namespace pdxpartyparrot.Core.Scenes
             _loadedScenes.Remove(sceneName);
         }
 
-        public IEnumerator UnloadAllScenesRoutine()
+        public IEnumerator<float> UnloadAllScenesRoutine()
         {
             Debug.Log("Unloading all scenes...");
 
-            foreach(string sceneName in _loadedScenes) {
-                IEnumerator<float> runner = UnloadSceneRoutine(sceneName);
-                while(runner.MoveNext()) {
-                    yield return null;
+            if(_loadedScenes.Count > 0) {
+                float pct = 1.0f / _loadedScenes.Count;
+
+                int completed = 0;
+                foreach(string sceneName in _loadedScenes) {
+                    IEnumerator<float> runner = UnloadSceneRoutine(sceneName);
+                    while(runner.MoveNext()) {
+                        yield return (completed * pct) + runner.Current * pct;
+                    }
+                    completed++;
                 }
             }
-            _loadedScenes.Clear();
 
             UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(_mainSceneName));
         }
@@ -84,7 +89,7 @@ namespace pdxpartyparrot.Core.Scenes
             UnityEngine.SceneManagement.SceneManager.LoadScene(_mainSceneName);
         }
 
-        public IEnumerator ReloadSceneRoutine(string sceneName)
+        public IEnumerator ReloadSceneRoutine(string sceneName, bool setActive)
         {
             Debug.Log($"Reloading scene '{sceneName}'");
 
@@ -93,8 +98,7 @@ namespace pdxpartyparrot.Core.Scenes
                 yield return null;
             }
 
-            // TODO: set active?
-            runner = LoadSceneRoutine(sceneName);
+            runner = LoadSceneRoutine(sceneName, setActive);
             while(runner.MoveNext()) {
                 yield return null;
             }

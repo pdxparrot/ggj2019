@@ -1,12 +1,12 @@
-﻿namespace pdxpartyparrot.Game.State
+﻿namespace pdxpartyparrot.Core.Loading
 {
-    public class GameStateLoadStatus
+    public class LoadStatus
     {
         public float LoadPercent { get; }
 
         public string Status { get; }
 
-        public GameStateLoadStatus(float loadPercent, string status)
+        public LoadStatus(float loadPercent, string status)
         {
             LoadPercent = loadPercent;
             Status = status;

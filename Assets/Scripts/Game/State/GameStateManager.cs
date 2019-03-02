@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Core.Loading;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors;
@@ -152,13 +153,13 @@ namespace pdxpartyparrot.Game.State
         }
 
 #region State Management
-        public void TransitionToInitialState(Action<GameState> initializeState=null, Action onStateLoaded=null)
+        public void TransitionToInitialStateAsync(Action<GameState> initializeState=null, Action onStateLoaded=null)
         {
             Debug.Log("Transition to initial state...");
-            TransitionState(_mainMenuStatePrefab, initializeState, onStateLoaded);
+            TransitionStateAsync(_mainMenuStatePrefab, initializeState, onStateLoaded);
         }
 
-        public void TransitionState<TV>(TV gameStatePrefab, Action<TV> initializeState=null, Action onStateLoaded=null) where TV: GameState
+        public void TransitionStateAsync<TV>(TV gameStatePrefab, Action<TV> initializeState=null, Action onStateLoaded=null) where TV: GameState
         {
             StartCoroutine(TransitionStateRoutine(gameStatePrefab, initializeState, onStateLoaded));
         }
@@ -189,9 +190,9 @@ namespace pdxpartyparrot.Game.State
             yield return null;
 
             _currentGameState = gameState;
-            IEnumerator<GameStateLoadStatus> enterRunner = _currentGameState.OnEnterRoutine();
+            IEnumerator<LoadStatus> enterRunner = _currentGameState.OnEnterRoutine();
             while(enterRunner.MoveNext()) {
-                GameStateLoadStatus status = enterRunner.Current;
+                LoadStatus status = enterRunner.Current;
                 if(null != status) {
                     PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f + status.LoadPercent * 0.5f, status.Status);
                 }
@@ -231,9 +232,9 @@ namespace pdxpartyparrot.Game.State
             PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f, "Unloading scene...");
             yield return null;
 
-            IEnumerator<GameStateLoadStatus> exitRunner = gameState.OnExitRoutine();
+            IEnumerator<LoadStatus> exitRunner = gameState.OnExitRoutine();
             while(exitRunner.MoveNext()) {
-                GameStateLoadStatus status = exitRunner.Current;
+                LoadStatus status = exitRunner.Current;
                 if(null != status) {
                     PartyParrotManager.Instance.LoadingManager.UpdateLoadingScreen(0.5f + status.LoadPercent * 0.5f, status.Status);
                 }
@@ -322,7 +323,7 @@ namespace pdxpartyparrot.Game.State
                 GUILayout.Label($"Current Sub Game State: {(null == CurrentSubState ? "" : CurrentSubState.Name)}");
 
                 if(GUIUtils.LayoutButton("Reset")) {
-                    TransitionToInitialState();
+                    TransitionToInitialStateAsync();
                     return;
                 }
 
@@ -362,7 +363,7 @@ namespace pdxpartyparrot.Game.State
                 GUILayout.BeginVertical("Test Scenes", GUI.skin.box);
                     foreach(string sceneName in _sceneTesterStatePrefab.TestScenes) {
                         if(GUIUtils.LayoutButton($"Load Test Scene {sceneName}")) {
-                            TransitionToInitialState(null, () => {
+                            TransitionToInitialStateAsync(null, () => {
                                 PushSubState(_networkConnectStatePrefab, connectState => {
                                         connectState.Initialize(NetworkConnectState.ConnectType.Local, _sceneTesterStatePrefab, state => {
                                             SceneTester sceneTester = (SceneTester)state;

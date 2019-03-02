@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using pdxpartyparrot.Core.Loading;
 using pdxpartyparrot.Core.Scenes;
 
 using UnityEngine;
@@ -52,14 +53,14 @@ namespace pdxpartyparrot.Game.State
             }
         }
 
-        public virtual IEnumerator<GameStateLoadStatus> OnEnterRoutine()
+        public virtual IEnumerator<LoadStatus> OnEnterRoutine()
         {
             Debug.Log($"Enter State: {Name}");
 
             yield break;
         }
 
-        public virtual IEnumerator<GameStateLoadStatus> OnExitRoutine()
+        public virtual IEnumerator<LoadStatus> OnExitRoutine()
         {
             Debug.Log($"Exit State: {Name}");
 

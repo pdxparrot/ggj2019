@@ -106,6 +106,7 @@ namespace pdxpartyparrot.ggj2019
         public override void Shutdown()
         {
             _gameTimer.Stop();
+            IsGameOver = false;
 
             Destroy(PollenContainer);
             PollenContainer = null;
@@ -123,13 +124,13 @@ namespace pdxpartyparrot.ggj2019
         private void InitObjectPools()
         {
             PooledObject pooledObject = GameGameData.BeePrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("bees", pooledObject, GameGameData.BeePoolSize);
+            ObjectPoolManager.Instance.InitializePoolAsync("bees", pooledObject, GameGameData.BeePoolSize);
 
             pooledObject = GameGameData.PollenPrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool("pollen", pooledObject, GameGameData.PollenPoolSize);
+            ObjectPoolManager.Instance.InitializePoolAsync("pollen", pooledObject, GameGameData.PollenPoolSize);
 
             pooledObject = GameGameData.FloatingTextPrefab.GetComponent<PooledObject>();
-            ObjectPoolManager.Instance.InitializePool(UIManager.Instance.DefaultFloatingTextPoolName, pooledObject, GameGameData.FloatingTextPoolSize);
+            ObjectPoolManager.Instance.InitializePoolAsync(UIManager.Instance.DefaultFloatingTextPoolName, pooledObject, GameGameData.FloatingTextPoolSize);
         }
 
         private void DestroyObjectPools()
