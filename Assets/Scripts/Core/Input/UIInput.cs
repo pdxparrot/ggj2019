@@ -58,6 +58,20 @@ namespace pdxpartyparrot.Core.Input
                 m_ui_leftclick.performed += m_uiLeftclickActionPerformed.Invoke;
             if (m_uiLeftclickActionCancelled != null)
                 m_ui_leftclick.cancelled += m_uiLeftclickActionCancelled.Invoke;
+            m_ui_rightclick = m_ui.GetAction("right click");
+            if (m_uiRightclickActionStarted != null)
+                m_ui_rightclick.started += m_uiRightclickActionStarted.Invoke;
+            if (m_uiRightclickActionPerformed != null)
+                m_ui_rightclick.performed += m_uiRightclickActionPerformed.Invoke;
+            if (m_uiRightclickActionCancelled != null)
+                m_ui_rightclick.cancelled += m_uiRightclickActionCancelled.Invoke;
+            m_ui_middleclick = m_ui.GetAction("middle click");
+            if (m_uiMiddleclickActionStarted != null)
+                m_ui_middleclick.started += m_uiMiddleclickActionStarted.Invoke;
+            if (m_uiMiddleclickActionPerformed != null)
+                m_ui_middleclick.performed += m_uiMiddleclickActionPerformed.Invoke;
+            if (m_uiMiddleclickActionCancelled != null)
+                m_ui_middleclick.cancelled += m_uiMiddleclickActionCancelled.Invoke;
             m_Initialized = true;
         }
         private void Uninitialize()
@@ -98,6 +112,20 @@ namespace pdxpartyparrot.Core.Input
                 m_ui_leftclick.performed -= m_uiLeftclickActionPerformed.Invoke;
             if (m_uiLeftclickActionCancelled != null)
                 m_ui_leftclick.cancelled -= m_uiLeftclickActionCancelled.Invoke;
+            m_ui_rightclick = null;
+            if (m_uiRightclickActionStarted != null)
+                m_ui_rightclick.started -= m_uiRightclickActionStarted.Invoke;
+            if (m_uiRightclickActionPerformed != null)
+                m_ui_rightclick.performed -= m_uiRightclickActionPerformed.Invoke;
+            if (m_uiRightclickActionCancelled != null)
+                m_ui_rightclick.cancelled -= m_uiRightclickActionCancelled.Invoke;
+            m_ui_middleclick = null;
+            if (m_uiMiddleclickActionStarted != null)
+                m_ui_middleclick.started -= m_uiMiddleclickActionStarted.Invoke;
+            if (m_uiMiddleclickActionPerformed != null)
+                m_ui_middleclick.performed -= m_uiMiddleclickActionPerformed.Invoke;
+            if (m_uiMiddleclickActionCancelled != null)
+                m_ui_middleclick.cancelled -= m_uiMiddleclickActionCancelled.Invoke;
             m_Initialized = false;
         }
         public void SetAsset(InputActionAsset newAsset)
@@ -132,6 +160,14 @@ namespace pdxpartyparrot.Core.Input
         [SerializeField] private ActionEvent m_uiLeftclickActionStarted;
         [SerializeField] private ActionEvent m_uiLeftclickActionPerformed;
         [SerializeField] private ActionEvent m_uiLeftclickActionCancelled;
+        private InputAction m_ui_rightclick;
+        [SerializeField] private ActionEvent m_uiRightclickActionStarted;
+        [SerializeField] private ActionEvent m_uiRightclickActionPerformed;
+        [SerializeField] private ActionEvent m_uiRightclickActionCancelled;
+        private InputAction m_ui_middleclick;
+        [SerializeField] private ActionEvent m_uiMiddleclickActionStarted;
+        [SerializeField] private ActionEvent m_uiMiddleclickActionPerformed;
+        [SerializeField] private ActionEvent m_uiMiddleclickActionCancelled;
         public struct UiActions
         {
             private UIInput m_Wrapper;
@@ -156,6 +192,14 @@ namespace pdxpartyparrot.Core.Input
             public ActionEvent leftclickStarted { get { return m_Wrapper.m_uiLeftclickActionStarted; } }
             public ActionEvent leftclickPerformed { get { return m_Wrapper.m_uiLeftclickActionPerformed; } }
             public ActionEvent leftclickCancelled { get { return m_Wrapper.m_uiLeftclickActionCancelled; } }
+            public InputAction @rightclick { get { return m_Wrapper.m_ui_rightclick; } }
+            public ActionEvent rightclickStarted { get { return m_Wrapper.m_uiRightclickActionStarted; } }
+            public ActionEvent rightclickPerformed { get { return m_Wrapper.m_uiRightclickActionPerformed; } }
+            public ActionEvent rightclickCancelled { get { return m_Wrapper.m_uiRightclickActionCancelled; } }
+            public InputAction @middleclick { get { return m_Wrapper.m_ui_middleclick; } }
+            public ActionEvent middleclickStarted { get { return m_Wrapper.m_uiMiddleclickActionStarted; } }
+            public ActionEvent middleclickPerformed { get { return m_Wrapper.m_uiMiddleclickActionPerformed; } }
+            public ActionEvent middleclickCancelled { get { return m_Wrapper.m_uiMiddleclickActionCancelled; } }
             public InputActionMap Get() { return m_Wrapper.m_ui; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }

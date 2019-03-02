@@ -91,13 +91,20 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            if(context.cancelled) {
-                LastControllerMove = Vector3.zero;
-                Behavior.LastMoveAxes = Vector3.zero;
-            } else {
-                Vector2 axes = context.ReadValue<Vector2>();
-                LastControllerMove = new Vector3(axes.x, axes.y, 0.0f);
+            // relying in input system binding set to continuous for this
+            Vector2 axes = context.ReadValue<Vector2>();
+            LastControllerMove = new Vector3(axes.x, axes.y, 0.0f);
+        }
+
+        public void OnMovedpad(InputAction.CallbackContext context)
+        {
+            if(!IsOurDevice(context) || !CanDrive) {
+                return;
             }
+
+            // relying in input system binding set to continuous for this
+            Vector2 axes = context.ReadValue<Vector2>();
+            LastControllerMove = new Vector3(axes.x, axes.y, 0.0f);
         }
 
 #region Keyboard controls
@@ -107,7 +114,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            LastControllerMove = new Vector3(LastControllerMove.x, context.started ? 1.0f : 0.0f, 0.0f);
+            LastControllerMove = new Vector3(LastControllerMove.x, context.performed ? 1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
                 Behavior.LastMoveAxes = LastControllerMove;
             }
@@ -119,7 +126,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            LastControllerMove = new Vector3(LastControllerMove.x, context.started ? -1.0f : 0.0f, 0.0f);
+            LastControllerMove = new Vector3(LastControllerMove.x, context.performed ? -1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
                 Behavior.LastMoveAxes = LastControllerMove;
             }
@@ -131,7 +138,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            LastControllerMove = new Vector3(context.started ? -1.0f : 0.0f, LastControllerMove.y, 0.0f);
+            LastControllerMove = new Vector3(context.performed ? -1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
                 Behavior.LastMoveAxes = LastControllerMove;
             }
@@ -143,7 +150,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            LastControllerMove = new Vector3(context.started ? 1.0f : 0.0f, LastControllerMove.y, 0.0f);
+            LastControllerMove = new Vector3(context.performed ? 1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
                 Behavior.LastMoveAxes = LastControllerMove;
             }
@@ -156,8 +163,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            if(context.started) {
-                GamePlayerBehavior.CharacterController.ActionStarted(GatherControllerComponent.GatherAction.Default);
+            // action on release
+            if(context.cancelled) {
+                GamePlayerBehavior.CharacterController.ActionPerformed(GatherControllerComponent.GatherAction.Default);
             }
         }
 
@@ -167,8 +175,9 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            if(context.started) {
-                GamePlayerBehavior.CharacterController.ActionStarted(ContextControllerComponent.ContextAction.Default);
+            // action on release
+            if(context.cancelled) {
+                GamePlayerBehavior.CharacterController.ActionPerformed(ContextControllerComponent.ContextAction.Default);
             }
         }
 #endregion

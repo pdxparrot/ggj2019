@@ -109,7 +109,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.started ? 1.0f : 0.0f);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.performed ? 1.0f : 0.0f);
         }
 
         public void OnMovebackward(InputAction.CallbackContext context)
@@ -118,7 +118,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.started ? -1.0f : 0.0f);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, _lastControllerMove.y, context.performed ? -1.0f : 0.0f);
         }
 
         public void OnMoveleft(InputAction.CallbackContext context)
@@ -127,7 +127,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            _lastControllerMove = new Vector3(context.started ? -1.0f : 0.0f, _lastControllerMove.y, _lastControllerMove.z);
+            _lastControllerMove = new Vector3(context.performed ? -1.0f : 0.0f, _lastControllerMove.y, _lastControllerMove.z);
         }
 
         public void OnMoveright(InputAction.CallbackContext context)
@@ -136,7 +136,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            _lastControllerMove = new Vector3(context.started ? 1.0f : 0.0f, _lastControllerMove.y, _lastControllerMove.z);
+            _lastControllerMove = new Vector3(context.performed ? 1.0f : 0.0f, _lastControllerMove.y, _lastControllerMove.z);
         }
 
         public void OnMoveup(InputAction.CallbackContext context)
@@ -145,7 +145,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, context.started ? 1.0f : 0.0f, _lastControllerMove.z);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, context.performed ? 1.0f : 0.0f, _lastControllerMove.z);
         }
 
         public void OnMovedown(InputAction.CallbackContext context)
@@ -154,7 +154,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            _lastControllerMove = new Vector3(_lastControllerMove.x, context.started ? -1.0f : 0.0f, _lastControllerMove.z);
+            _lastControllerMove = new Vector3(_lastControllerMove.x, context.performed ? -1.0f : 0.0f, _lastControllerMove.z);
         }
 
         public void OnLook(InputAction.CallbackContext context)

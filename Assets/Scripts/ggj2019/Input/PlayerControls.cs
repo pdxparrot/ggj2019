@@ -79,6 +79,13 @@ namespace pdxpartyparrot.ggj2019.Input
                 m_Player_context.performed += m_PlayerContextActionPerformed.Invoke;
             if (m_PlayerContextActionCancelled != null)
                 m_Player_context.cancelled += m_PlayerContextActionCancelled.Invoke;
+            m_Player_movedpad = m_Player.GetAction("movedpad");
+            if (m_PlayerMovedpadActionStarted != null)
+                m_Player_movedpad.started += m_PlayerMovedpadActionStarted.Invoke;
+            if (m_PlayerMovedpadActionPerformed != null)
+                m_Player_movedpad.performed += m_PlayerMovedpadActionPerformed.Invoke;
+            if (m_PlayerMovedpadActionCancelled != null)
+                m_Player_movedpad.cancelled += m_PlayerMovedpadActionCancelled.Invoke;
             m_Initialized = true;
         }
         private void Uninitialize()
@@ -144,6 +151,13 @@ namespace pdxpartyparrot.ggj2019.Input
                 m_Player_context.performed -= m_PlayerContextActionPerformed.Invoke;
             if (m_PlayerContextActionCancelled != null)
                 m_Player_context.cancelled -= m_PlayerContextActionCancelled.Invoke;
+            m_Player_movedpad = null;
+            if (m_PlayerMovedpadActionStarted != null)
+                m_Player_movedpad.started -= m_PlayerMovedpadActionStarted.Invoke;
+            if (m_PlayerMovedpadActionPerformed != null)
+                m_Player_movedpad.performed -= m_PlayerMovedpadActionPerformed.Invoke;
+            if (m_PlayerMovedpadActionCancelled != null)
+                m_Player_movedpad.cancelled -= m_PlayerMovedpadActionCancelled.Invoke;
             m_Initialized = false;
         }
         public void SetAsset(InputActionAsset newAsset)
@@ -193,6 +207,10 @@ namespace pdxpartyparrot.ggj2019.Input
         [SerializeField] private ActionEvent m_PlayerContextActionStarted;
         [SerializeField] private ActionEvent m_PlayerContextActionPerformed;
         [SerializeField] private ActionEvent m_PlayerContextActionCancelled;
+        private InputAction m_Player_movedpad;
+        [SerializeField] private ActionEvent m_PlayerMovedpadActionStarted;
+        [SerializeField] private ActionEvent m_PlayerMovedpadActionPerformed;
+        [SerializeField] private ActionEvent m_PlayerMovedpadActionCancelled;
         public struct PlayerActions
         {
             private PlayerControls m_Wrapper;
@@ -229,6 +247,10 @@ namespace pdxpartyparrot.ggj2019.Input
             public ActionEvent contextStarted { get { return m_Wrapper.m_PlayerContextActionStarted; } }
             public ActionEvent contextPerformed { get { return m_Wrapper.m_PlayerContextActionPerformed; } }
             public ActionEvent contextCancelled { get { return m_Wrapper.m_PlayerContextActionCancelled; } }
+            public InputAction @movedpad { get { return m_Wrapper.m_Player_movedpad; } }
+            public ActionEvent movedpadStarted { get { return m_Wrapper.m_PlayerMovedpadActionStarted; } }
+            public ActionEvent movedpadPerformed { get { return m_Wrapper.m_PlayerMovedpadActionPerformed; } }
+            public ActionEvent movedpadCancelled { get { return m_Wrapper.m_PlayerMovedpadActionCancelled; } }
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -263,6 +285,9 @@ namespace pdxpartyparrot.ggj2019.Input
                     context.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnContext;
                     context.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnContext;
                     context.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnContext;
+                    movedpad.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovedpad;
+                    movedpad.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovedpad;
+                    movedpad.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovedpad;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -291,6 +316,9 @@ namespace pdxpartyparrot.ggj2019.Input
                     context.started += instance.OnContext;
                     context.performed += instance.OnContext;
                     context.cancelled += instance.OnContext;
+                    movedpad.started += instance.OnMovedpad;
+                    movedpad.performed += instance.OnMovedpad;
+                    movedpad.cancelled += instance.OnMovedpad;
                 }
             }
         }
@@ -317,5 +345,6 @@ namespace pdxpartyparrot.ggj2019.Input
         void OnMoveright(InputAction.CallbackContext context);
         void OnGather(InputAction.CallbackContext context);
         void OnContext(InputAction.CallbackContext context);
+        void OnMovedpad(InputAction.CallbackContext context);
     }
 }

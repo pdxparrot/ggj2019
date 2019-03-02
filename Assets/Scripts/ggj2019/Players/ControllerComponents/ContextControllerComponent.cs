@@ -11,7 +11,7 @@ namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
         }
 #endregion
 
-        public override bool OnStarted(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterActorControllerAction action)
         {
             if(!(action is ContextAction)) {
                 return false;
