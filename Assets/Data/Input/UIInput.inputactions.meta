@@ -5,9 +5,11 @@ ScriptedImporter:
     11400000: <root>
     11400002: ui/submit
     11400004: ui/cancel
+    11400006: ui/right click
     11400008: ui/point
     11400010: ui/left click
     11400012: ui/navigate
+    11400014: ui/middle click
   externalObjects: {}
   userData: 
   assetBundleName: 

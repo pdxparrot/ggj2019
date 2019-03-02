@@ -8,49 +8,91 @@
                 {
                     "name": "move",
                     "id": "28e9668b-c2ab-4765-9c01-0e223f59a602",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Stick",
+                    "continuous": true,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "",
                     "bindings": []
                 },
                 {
                     "name": "Pause",
                     "id": "cd3f0036-5277-4d0a-8437-1fc31195d39c",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Button",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "bindings": []
                 },
                 {
                     "name": "move up",
                     "id": "5a814028-acec-4506-a2f0-80a948e20861",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Key",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "bindings": []
                 },
                 {
                     "name": "move down",
                     "id": "68e65cea-0ad5-44fe-976e-c615d0c3ca38",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Key",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "bindings": []
                 },
                 {
                     "name": "move left",
                     "id": "5e473936-00f1-461c-8a3b-d25e014fcf10",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Key",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "bindings": []
                 },
                 {
                     "name": "move right",
                     "id": "728c72d4-35c0-40a8-ad7a-a063b63d9ed2",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Key",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "bindings": []
                 },
                 {
                     "name": "gather",
                     "id": "35df6f66-304c-434d-8bf4-c790b692e261",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Button",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "bindings": []
                 },
                 {
                     "name": "context",
                     "id": "bb0c3b7e-2f68-4586-84c5-b2442ffcde2a",
-                    "expectedControlLayout": "",
+                    "expectedControlLayout": "Button",
+                    "continuous": false,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "bindings": []
+                },
+                {
+                    "name": "movedpad",
+                    "id": "9cc5316b-1a69-4dc1-966f-f2bb1164e765",
+                    "expectedControlLayout": "Dpad",
+                    "continuous": true,
+                    "passThrough": false,
+                    "processors": "",
+                    "interactions": "",
                     "bindings": []
                 }
             ],
@@ -69,20 +111,8 @@
                 },
                 {
                     "name": "",
-                    "path": "<Gamepad>/dpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "move",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "",
                     "path": "<Gamepad>/start",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
@@ -94,7 +124,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/escape",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
@@ -106,7 +136,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/w",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move up",
@@ -118,7 +148,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/s",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move down",
@@ -130,7 +160,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/a",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move left",
@@ -142,7 +172,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/d",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "move right",
@@ -154,7 +184,7 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "gather",
@@ -166,7 +196,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/space",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "gather",
@@ -178,7 +208,7 @@
                 {
                     "name": "",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "gather",
@@ -190,7 +220,7 @@
                 {
                     "name": "",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "context",
@@ -202,7 +232,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/leftShift",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "context",
@@ -214,7 +244,7 @@
                 {
                     "name": "",
                     "path": "<Keyboard>/rightShift",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "context",
@@ -226,10 +256,22 @@
                 {
                     "name": "",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "PressAndRelease",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "context",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movedpad",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
