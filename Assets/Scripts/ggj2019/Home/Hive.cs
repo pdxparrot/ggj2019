@@ -121,7 +121,11 @@ namespace pdxpartyparrot.ggj2019.Home
             GameManager.Instance.PollenCollected(player);
 
             Bee bee = DoSpawnBee();
-            if(null != bee && null != player) {
+            if(null == bee) {
+                return;
+            }
+
+            if(null != player && !player.IsDead) {
                 player.AddBeeToSwarm(bee);
             }
         }
@@ -135,9 +139,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
             int activeBeeCount = ActorManager.Instance.ActorCount<Bee>();
             if(activeBeeCount < GameManager.Instance.GameGameData.MinBees * PlayerManager.Instance.PlayerCount) {
-                Bee bee = DoSpawnBee();
-                //bee.SetRandomSkin();
-                bee.SetDefaultSkin();
+                DoSpawnBee();
             } else if(_logBeeSpawn) {
                 Debug.Log($"not spawning bees {activeBeeCount} of {GameManager.Instance.GameGameData.MinBees} active");
             }
@@ -153,6 +155,9 @@ namespace pdxpartyparrot.ggj2019.Home
             spawnPoint.Spawn(bee, Guid.NewGuid());
             bee.transform.SetParent(_beeContainer.transform);
             bee.Initialize(GameManager.Instance.GameGameData.BeeData);
+
+            bee.SetDefaultSkin();
+            //bee.SetRandomSkin();
 
             return bee;
         }
