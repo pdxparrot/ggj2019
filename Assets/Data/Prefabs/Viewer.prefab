@@ -89,8 +89,8 @@ Camera:
   m_GameObject: {fileID: 6961062614899350472}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -178,8 +178,8 @@ Camera:
   m_GameObject: {fileID: 7278880765250310912}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -335,4 +335,5 @@ MonoBehaviour:
   _camera: {fileID: 2779097547885376191}
   _uiCamera: {fileID: 3473508580517442035}
   _globalPostProcessVolume: {fileID: 2918448500653730605}
+  _owner: {fileID: 0}
   _defaultCameraPosition: {x: 0, y: 0, z: 0}

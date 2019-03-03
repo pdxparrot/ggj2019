@@ -22,5 +22,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         public virtual void OnReset()
         {
         }
+
+        public virtual void OnUpdate(float dt)
+        {
+        }
     }
 }

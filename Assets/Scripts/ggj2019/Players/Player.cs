@@ -18,7 +18,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.Players
 {
     [RequireComponent(typeof(Swarm))]
-    [RequireComponent(typeof(SpineSkinSwapper))]
+    [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Player : Player2D
     {
         public PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
@@ -76,7 +76,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private Swarm _swarm;
 
-        private SpineSkinSwapper _skinSwapper;
+        private SpineSkinHelper _skinHelper;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -84,7 +84,7 @@ namespace pdxpartyparrot.ggj2019.Players
             base.Awake();
 
             _swarm = GetComponent<Swarm>();
-            _skinSwapper = GetComponent<SpineSkinSwapper>();
+            _skinHelper = GetComponent<SpineSkinHelper>();
 
             Assert.IsTrue(PlayerBehavior is PlayerController);
         }
@@ -120,7 +120,7 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             PlayerViewer = GameManager.Instance.Viewer;
-            _skinSwapper.SetSkin(SkinIndex);
+            _skinHelper.SetSkin(SkinIndex);
 
             RumbleEffectTriggerComponent rumbleEffect = _respawnEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
             rumbleEffect.GamepadListener = GamePlayerDriver.GamepadListener;

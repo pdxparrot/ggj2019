@@ -27,6 +27,17 @@ namespace pdxpartyparrot.Core.Effects
 
             RunOnComponents(c => c.Initialize());
         }
+
+        private void Update()
+        {
+            float dt = Time.deltaTime;
+
+            RunOnComponents(c => {
+                if(!c.IsDone) {
+                    c.OnUpdate(dt);
+                }
+            });
+        }
 #endregion
 
 #region Components

@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
-    [RequireComponent(typeof(SpineSkinSwapper))]
+    [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Flower : NPC2D
     {
 #region Spawn Points
@@ -50,14 +50,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private FlowerData FlowerData => (FlowerData)NPCData;
 
-        private SpineSkinSwapper _skinSwapper;
+        private SpineSkinHelper _skinHelper;
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
-            _skinSwapper = GetComponent<SpineSkinSwapper>();
+            _skinHelper = GetComponent<SpineSkinHelper>();
         }
 
         protected override void Update()
@@ -82,7 +82,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
             _spawnpoint = spawnpoint;
 
-             _skinSwapper.SetRandomSkin();
+             _skinHelper.SetRandomSkin();
 
             // acquire our spawnpoints while we spawn
             _beetleSpawn.Acquire(this, null);

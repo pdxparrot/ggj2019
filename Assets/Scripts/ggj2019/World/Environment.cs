@@ -1,6 +1,7 @@
 using System;
 
 using pdxpartyparrot.Core.Animation;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.World;
 
@@ -10,21 +11,27 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.World
 {
-    [RequireComponent(typeof(SpineSkinSwapper))]
+    [RequireComponent(typeof(SpineSkinHelper))]
     [RequireComponent(typeof(SpineAnimationHelper))]
     public class Environment : MonoBehaviour
     {
         [SerializeField]
         private WaveEnvironmentSwapper[] _environmentSwappers;
 
-        private SpineSkinSwapper _skinSwapper;
+        [SerializeField]
+        private EffectTrigger _fadeOutEffectTrigger;
+
+        [SerializeField]
+        private EffectTrigger _fadeInEffectTrigger;
+
+        private SpineSkinHelper _skinHelper;
 
         private SpineAnimationHelper _spineAnimationHelper;
 
 #region Unity Lifecycle
         private void Awake()
         {
-            _skinSwapper = GetComponent<SpineSkinSwapper>();
+            _skinHelper = GetComponent<SpineSkinHelper>();
             _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
 
             GameManager.Instance.GameStartEvent += GameStartEventHandler;
@@ -39,6 +46,14 @@ namespace pdxpartyparrot.ggj2019.World
             }
         }
 #endregion
+
+        private void SwapSkin(WaveEnvironmentSwapper swapper, int waveIndex)
+        {
+            _skinHelper.SetSkin(swapper.Skin);
+
+            TrackEntry trackEntry = _spineAnimationHelper.SetAnimation(swapper.Animation, true);
+            OnWaveAnimationSet(waveIndex, trackEntry);
+        }
 
 #region Event Handlers
         private void GameStartEventHandler(object sender, EventArgs args)
@@ -55,9 +70,14 @@ namespace pdxpartyparrot.ggj2019.World
         {
             foreach(WaveEnvironmentSwapper swapper in _environmentSwappers) {
                 if(args.WaveIndex == swapper.Wave) {
-                    _skinSwapper.SetSkin(swapper.Skin);
-                    TrackEntry trackEntry = _spineAnimationHelper.SetAnimation(swapper.Animation, true);
-                    OnWaveAnimationSet(args.WaveIndex, trackEntry);
+                    if(swapper.Fade && null != _fadeOutEffectTrigger && null != _fadeInEffectTrigger) {
+                        _fadeOutEffectTrigger.Trigger(() => {
+                            SwapSkin(swapper, args.WaveIndex);
+                            _fadeInEffectTrigger.Trigger();
+                        });
+                    } else {
+                        SwapSkin(swapper, args.WaveIndex);
+                    }
                 }
             }
         }

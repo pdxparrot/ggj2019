@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using UnityEngine;
 
@@ -21,5 +21,10 @@ namespace pdxpartyparrot.ggj2019.World
         private string _animation;
 
         public string Animation => _animation;
+
+        [SerializeField]
+        private bool _fade;
+
+        public bool Fade => _fade;
     }
 }

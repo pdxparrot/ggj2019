@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7709342158582463071}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4352220818728083460
 MonoBehaviour:
@@ -60,6 +60,128 @@ MonoBehaviour:
   _audioClip: {fileID: 8300000, guid: ce98948c4fbbf9748b387793b9f77abf, type: 3}
   _audioSource: {fileID: 0}
   _waitForComplete: 0
+--- !u!1 &6401085957577699083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7580075900676510319}
+  - component: {fileID: 6739124905685173843}
+  - component: {fileID: 4261292998570215331}
+  m_Layer: 0
+  m_Name: FadeOutEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7580075900676510319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401085957577699083}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7709342158582463071}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6739124905685173843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401085957577699083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerOnComplete: []
+--- !u!114 &4261292998570215331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401085957577699083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7563fbc5df49c4997dd710c2f8bb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinHelper: {fileID: 7709342158582463069}
+  _fadeTo: {r: 0, g: 0, b: 0, a: 1}
+  _transitionTime: 1
+  _timeRemaining: 0
+--- !u!1 &7452945614412910806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8243548696442921132}
+  - component: {fileID: 7678967140709917641}
+  - component: {fileID: 3635727610257587229}
+  m_Layer: 0
+  m_Name: FadeInEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8243548696442921132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452945614412910806}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7709342158582463071}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7678967140709917641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452945614412910806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5c72ccb05688646866b4c5291c09aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerOnComplete: []
+--- !u!114 &3635727610257587229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452945614412910806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7563fbc5df49c4997dd710c2f8bb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinHelper: {fileID: 7709342158582463069}
+  _fadeTo: {r: 1, g: 1, b: 1, a: 1}
+  _transitionTime: 1
+  _timeRemaining: 0
 --- !u!1 &7709342158582463070
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,8 +212,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2982394549318013096}
   - {fileID: 8232828413614319073}
+  - {fileID: 7580075900676510319}
+  - {fileID: 8243548696442921132}
+  - {fileID: 2982394549318013096}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -142,30 +266,41 @@ MonoBehaviour:
   - _wave: 0
     _skin: 0
     _animation: environment_default
+    _fade: 0
   - _wave: 3
     _skin: 1
     _animation: environment_thunder
+    _fade: 1
   - _wave: 6
     _skin: 2
     _animation: environment_thunder
+    _fade: 0
   - _wave: 9
     _skin: 3
     _animation: environment_default
+    _fade: 1
   - _wave: 11
     _skin: 0
     _animation: environment_default
+    _fade: 1
   - _wave: 13
     _skin: 1
     _animation: environment_thunder
+    _fade: 1
   - _wave: 15
     _skin: 2
     _animation: environment_thunder
+    _fade: 0
   - _wave: 17
     _skin: 3
     _animation: environment_windy
+    _fade: 1
   - _wave: 19
     _skin: 0
     _animation: environment_windy
+    _fade: 0
+  _fadeOutEffectTrigger: {fileID: 6739124905685173843}
+  _fadeInEffectTrigger: {fileID: 7678967140709917641}
   _thunderEffect: {fileID: 4352220818728083460}
   _thunderEventName: thunder
 --- !u!1001 &5931587962420986033
@@ -218,7 +353,7 @@ PrefabInstance:
     - target: {fileID: 2310867783999513936, guid: ab389e66e7a222e44b88c522f202868f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2310867783999513936, guid: ab389e66e7a222e44b88c522f202868f,
         type: 3}

@@ -19,7 +19,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
-    [RequireComponent(typeof(SpineSkinSwapper))]
+    [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Bee : NPC2D, ISwarmable, IInteractable
     {
         private enum State
@@ -65,7 +65,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private BeeData BeeData => (BeeData)NPCData;
 
-        private SpineSkinSwapper _skinSwapper;
+        private SpineSkinHelper _skinHelper;
 
 #region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
@@ -74,7 +74,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return false;
             }
 
-            _skinSwapper = GetComponent<SpineSkinSwapper>();
+            _skinHelper = GetComponent<SpineSkinHelper>();
 
             _spineAnimationHelper.SetFacing(Vector3.zero - transform.position);
 
@@ -148,17 +148,17 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Animation / Skin
         public void SetDefaultSkin()
         {
-            _skinSwapper.SetSkin(0);
+            _skinHelper.SetSkin(0);
         }
 
         public void SetRandomSkin()
         {
-            _skinSwapper.SetRandomSkin();
+            _skinHelper.SetRandomSkin();
         }
 
         public void SetPlayerSkin(Players.Player player)
         {
-            _skinSwapper.SetSkin(player.SkinIndex);
+            _skinHelper.SetSkin(player.SkinIndex);
         }
 
         private void SetIdleAnimation()
