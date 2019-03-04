@@ -23,8 +23,6 @@ namespace pdxpartyparrot.Core.Input
         [CanBeNull]
         public Gamepad Gamepad => _gamepad;
 
-        public bool HasGamepad => null != _gamepad;
-
 #region Unity Lifecycle
         private void Awake()
         {
@@ -49,7 +47,7 @@ namespace pdxpartyparrot.Core.Input
 
         public void Rumble(RumbleConfig config)
         {
-            if(!InputManager.Instance.EnableVibration || !HasGamepad || _isRumbling) {
+            if(!InputManager.Instance.EnableVibration || null == Gamepad || _isRumbling) {
                 return;
             }
 
@@ -58,7 +56,7 @@ namespace pdxpartyparrot.Core.Input
             _isRumbling = true;
 
             TimeManager.Instance.RunAfterDelay(config.Seconds, () => {
-                if(HasGamepad) {
+                if(null != Gamepad) {
                     Gamepad.SetMotorSpeeds(0.0f, 0.0f);
                 }
                 _isRumbling = false;

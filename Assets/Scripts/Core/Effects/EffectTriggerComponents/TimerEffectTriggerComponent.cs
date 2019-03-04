@@ -17,15 +17,6 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         public override bool IsDone => !_timer.IsRunning;
 
-#region Unity Lifecycle
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            _timer.Update(dt);
-        }
-#endregion
-
         public override void OnStart()
         {
             _timer.Start(_seconds);
@@ -34,6 +25,11 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         public override void OnStop()
         {
             _timer.Stop();
+        }
+
+        public override void OnUpdate(float dt)
+        {
+            _timer.Update(dt);
         }
     }
 }
