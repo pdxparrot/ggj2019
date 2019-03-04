@@ -5,6 +5,7 @@ using pdxpartyparrot.Core.Math;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Core.Camera
@@ -108,9 +109,11 @@ namespace pdxpartyparrot.Core.Camera
         [CanBeNull]
         public FollowTarget3D Target3D => (FollowTarget3D)Target;
 
-        public void SetTarget(FollowTarget3D target)
+        public override void SetTarget(FollowTarget target)
         {
-            Target = target;
+            Assert.IsTrue(Target is FollowTarget3D);
+
+            base.SetTarget(target);
             _orbitRotation = _defaultOrbitRotation;
         }
 
@@ -122,11 +125,12 @@ namespace pdxpartyparrot.Core.Camera
 
             Profiler.BeginSample("FollowCamera3D.HandleInput");
             try {
-                _isLooking = Target.LastLookAxes.sqrMagnitude > ActorBehavior.AxesDeadZone;
+                Vector3 lastLookAxes = Target.LastLookAxes;
+                _isLooking = lastLookAxes.sqrMagnitude > ActorBehavior.AxesDeadZone;
 
-                Orbit(Target.LastLookAxes, dt);
-                Zoom(Target.LastLookAxes, dt);
-                Look(Target.LastLookAxes, dt);
+                Orbit(lastLookAxes, dt);
+                Zoom(lastLookAxes, dt);
+                Look(lastLookAxes, dt);
             } finally {
                 Profiler.EndSample();
             }

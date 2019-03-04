@@ -33,23 +33,5 @@ namespace pdxpartyparrot.Core.Effects
         private bool _fadeOut = true;
 
         public bool FadeOut => _fadeOut;
-
-        public ShakeConfig(float duration, Vector3 strength, int vibrato, float randomness, bool fadeOut=true)
-        {
-            _duration = duration;
-            _strength = strength;
-            _vibrato = vibrato;
-            _randomness = randomness;
-            _fadeOut = fadeOut;
-        }
-
-        public ShakeConfig(float duration, float strength, int vibrato, float randomness, bool fadeOut=true)
-        {
-            _duration = duration;
-            _strength = new Vector3(strength, strength, strength);
-            _vibrato = vibrato;
-            _randomness = randomness;
-            _fadeOut = fadeOut;
-        }
     }
 }

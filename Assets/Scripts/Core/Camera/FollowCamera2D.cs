@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 
+using UnityEngine.Assertions;
 using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Core.Camera
@@ -9,9 +10,11 @@ namespace pdxpartyparrot.Core.Camera
         [CanBeNull]
         public FollowTarget2D Target2D => (FollowTarget2D)Target;
 
-        public void SetTarget(FollowTarget2D target)
+        public override void SetTarget(FollowTarget target)
         {
-            Target = target;
+            Assert.IsTrue(Target is FollowTarget2D);
+
+            base.SetTarget(target);
         }
 
         protected override void HandleInput(float dt)

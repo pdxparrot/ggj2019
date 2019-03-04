@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Camera
 {
+    //[RequireComponent(typeof(Viewer))]
     public abstract class FollowCamera : MonoBehaviour
     {
 #region Zoom
@@ -73,11 +74,7 @@ namespace pdxpartyparrot.Core.Camera
         private FollowTarget _target;
 
         [CanBeNull]
-        public FollowTarget Target
-        {
-            get => _target;
-            protected set => _target = value;
-        }
+        public FollowTarget Target => _target;
 
         [SerializeField]
         [ReadOnly]
@@ -120,6 +117,11 @@ namespace pdxpartyparrot.Core.Camera
             FollowTarget(dt);
         }
 #endregion
+
+        public virtual void SetTarget(FollowTarget target)
+        {
+            _target = target;
+        }
 
         protected abstract void HandleInput(float dt);
 

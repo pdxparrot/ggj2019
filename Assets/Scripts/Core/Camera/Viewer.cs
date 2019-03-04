@@ -46,7 +46,7 @@ namespace pdxpartyparrot.Core.Camera
         [CanBeNull]
         public PostProcessProfile GlobalPostProcessProfile { get; private set; }
 
-        // disabled until keijiro makes a package for this
+        // TODO: disabled until keijiro makes a package for this
         /*[SerializeField]
         private Bokeh _bokehEffect;*/
 #endregion
