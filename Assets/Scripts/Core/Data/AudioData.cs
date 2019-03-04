@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+
+using pdxpartyparrot.Core.Audio;
 
 using UnityEngine;
 using UnityEngine.Audio;
@@ -75,6 +78,11 @@ namespace pdxpartyparrot.Core.Data
         private string _pausedSnapshotName = "Paused";
 
         public string PausedSnapshotName => _pausedSnapshotName;
+
+        [SerializeField]
+        private AudioMixerSnapshotsConfig[] _snapshots;
+
+        public IReadOnlyCollection<AudioMixerSnapshotsConfig> Snapshots => _snapshots;
 #endregion
 
         [Space(10)]

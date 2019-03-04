@@ -22,5 +22,6 @@ MonoBehaviour:
   _ambientVolumeParameter: AmbientVolume
   _unpausedSnapshotName: Unpaused
   _pausedSnapshotName: Paused
-  _updateCrossfadeUpdateMs: 100
+  _snapshots: []
+  _updateCrossfadeUpdateMs: 50
   _updateMusicTransitionMs: 100

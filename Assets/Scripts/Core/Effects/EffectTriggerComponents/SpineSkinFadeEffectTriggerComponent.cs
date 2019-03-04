@@ -18,6 +18,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
 
         [SerializeField]
         [ReadOnly]
+        private Color _difference;
+
+        [SerializeField]
+        [ReadOnly]
         private float _timeRemaining;
 
         public override bool WaitForComplete => true;
@@ -27,6 +31,10 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         public override void OnStart()
         {
             _timeRemaining = _transitionTime;
+            _difference = new Color(Mathf.Abs(_fadeTo.r - _skinHelper.Color.r),
+                              Mathf.Abs(_fadeTo.g - _skinHelper.Color.g),
+                              Mathf.Abs(_fadeTo.b - _skinHelper.Color.b),
+                              Mathf.Abs(_fadeTo.a - _skinHelper.Color.a));
         }
 
         public override void OnStop()
@@ -38,12 +46,13 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         public override void OnUpdate(float dt)
         {
             float pct = Mathf.Clamp01(dt / _transitionTime);
+            Color step = pct * _difference;
 
             Color currentColor = _skinHelper.Color;
-            Color newColor = new Color(Mathf.MoveTowards(currentColor.r, _fadeTo.r, pct),
-                                       Mathf.MoveTowards(currentColor.g, _fadeTo.g, pct),
-                                       Mathf.MoveTowards(currentColor.b, _fadeTo.b, pct),
-                                       Mathf.MoveTowards(currentColor.a, _fadeTo.a, pct));
+            Color newColor = new Color(Mathf.MoveTowards(currentColor.r, _fadeTo.r, step.r),
+                                       Mathf.MoveTowards(currentColor.g, _fadeTo.g, step.g),
+                                       Mathf.MoveTowards(currentColor.b, _fadeTo.b, step.b),
+                                       Mathf.MoveTowards(currentColor.a, _fadeTo.a, step.a));
             _skinHelper.Color = newColor;
 
             _timeRemaining -= dt;

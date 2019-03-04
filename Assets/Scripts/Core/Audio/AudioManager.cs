@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.DebugMenu;
@@ -17,6 +19,12 @@ namespace pdxpartyparrot.Core.Audio
         private const string MusicVolumeKey = "audio.volume.music";
         private const string SFXVolumeKey = "audio.volume.sfx";
         private const string AmbientVolumeKey = "audio.volume.ambient";
+
+        private struct InternalAudioMixerSnapshotConfig
+        {
+            public AudioMixerSnapshot[] snapshots;
+            public float[] weights;
+        }
 
         [SerializeField]
         private AudioData _audioData;
@@ -145,22 +153,34 @@ namespace pdxpartyparrot.Core.Audio
 
         private AudioMixer _mixer;
 
-        private AudioMixerSnapshot[] _unpausedSnapshots;
-        private float[] _unpausedSnapshotsWeights = { 1.0f };
-
-        private AudioMixerSnapshot[] _pausedSnapshots;
-        private float[] _pausedSnapshotsWeights = { 1.0f };
+        private readonly Dictionary<string, InternalAudioMixerSnapshotConfig> _snapshotConfigs = new Dictionary<string, InternalAudioMixerSnapshotConfig>();
 
         private Coroutine _musicTransitionRoutine;
 
 #region Unity Lifecycle
         private void Awake()
         {
+            Debug.Assert(_audioData.UpdateCrossfadeUpdateSeconds < _audioData.UpdateMusicTransitionSeconds);
+
             _mixer = _audioData.Mixer;
 
             // load our snapshots
-            _unpausedSnapshots = new[] { _mixer.FindSnapshot(_audioData.UnpausedSnapshotName) };
-            _pausedSnapshots = new[] { _mixer.FindSnapshot(_audioData.PausedSnapshotName) };
+            foreach(AudioMixerSnapshotsConfig snapshotsConfig in _audioData.Snapshots) {
+                AddSnapshotConfig(snapshotsConfig);
+            }
+
+            // add in the paused / unpaused config
+            AddSnapshotConfig("unpaused", new InternalAudioMixerSnapshotConfig
+            {
+                snapshots = new[] { _mixer.FindSnapshot(_audioData.UnpausedSnapshotName) },
+                weights = new[] { 1.0f }
+            });
+
+            AddSnapshotConfig("paused", new InternalAudioMixerSnapshotConfig
+            {
+                snapshots = new[] { _mixer.FindSnapshot(_audioData.PausedSnapshotName) },
+                weights = new[] { 1.0f }
+            });
 
             // init our audio sources
             InitSFXAudioMixerGroup(_oneShotAudioSource);
@@ -330,16 +350,20 @@ namespace pdxpartyparrot.Core.Audio
 
         private IEnumerator MusicTransitionRoutine(float targetCrossfade, float seconds, Action onComplete)
         {
-            float pct = 0.0f;
-            float startCrossfade = MusicCrossFade;
+            if(seconds <= 0.0f) {
+                yield break;
+            }
+
+            float timeRemaining = seconds;
+            float step = Mathf.Clamp01(_audioData.UpdateMusicTransitionSeconds / seconds) * Mathf.Abs(targetCrossfade - MusicCrossFade);
 
             WaitForSeconds wait = new WaitForSeconds(_audioData.UpdateMusicTransitionSeconds);
             while(true) {
-                MusicCrossFade = Mathf.Lerp(startCrossfade, targetCrossfade, pct);
+                MusicCrossFade = Mathf.MoveTowards(MusicCrossFade, targetCrossfade, step);
                 yield return wait;
 
-                pct += _audioData.UpdateMusicTransitionSeconds / seconds;
-                if(pct >= 1.0f) {
+                timeRemaining -= _audioData.UpdateMusicTransitionSeconds;
+                if(timeRemaining <= 0.0f) {
                     MusicCrossFade = targetCrossfade;
                     break;
                 }
@@ -365,14 +389,43 @@ namespace pdxpartyparrot.Core.Audio
         }
 #endregion
 
+#region  Snapshots
+        private void AddSnapshotConfig(AudioMixerSnapshotsConfig snapshotsConfig)
+        {
+            InternalAudioMixerSnapshotConfig snapshotConfig = new InternalAudioMixerSnapshotConfig
+            {
+                snapshots = new AudioMixerSnapshot[snapshotsConfig.Snapshots.Count],
+                weights = new float[snapshotsConfig.Snapshots.Count]
+            };
+
+            for(int i=0; i<snapshotsConfig.Snapshots.Count; ++i) {
+                snapshotConfig.snapshots[i] = _mixer.FindSnapshot(snapshotsConfig.Snapshots.ElementAt(i).Name);
+                snapshotConfig.weights[i] = snapshotsConfig.Snapshots.ElementAt(i).Weight;
+            }
+
+            AddSnapshotConfig(snapshotsConfig.Id, snapshotConfig);
+        }
+
+        private void AddSnapshotConfig(string id, InternalAudioMixerSnapshotConfig snapshotConfig)
+        {
+            if(_snapshotConfigs.ContainsKey(id)) {
+                Debug.LogWarning($"Overwriting snapshot config {id}!");
+            }
+            _snapshotConfigs.Add(id, snapshotConfig);
+        }
+
+        public void SetSnapshots(string snapshotId)
+        {
+            if(_snapshotConfigs.TryGetValue(snapshotId, out var snapshotConfig)) {
+                _mixer.TransitionToSnapshots(snapshotConfig.snapshots, snapshotConfig.weights, 0.1f);
+            }
+        }
+#endregion
+
 #region Event Handlers
         private void PauseEventHandler(object sender, EventArgs args)
         {
-            if(PartyParrotManager.Instance.IsPaused) {
-                _mixer.TransitionToSnapshots(_pausedSnapshots, _pausedSnapshotsWeights, 0.1f);
-            } else {
-                _mixer.TransitionToSnapshots(_unpausedSnapshots, _unpausedSnapshotsWeights, 0.1f);
-            }
+            SetSnapshots(PartyParrotManager.Instance.IsPaused ? "paused" : "unpaused");
         }
 #endregion
 

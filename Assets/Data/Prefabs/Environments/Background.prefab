@@ -120,6 +120,7 @@ MonoBehaviour:
   _skinHelper: {fileID: 7709342158582463069}
   _fadeTo: {r: 0, g: 0, b: 0, a: 1}
   _transitionTime: 1
+  _difference: {r: 0, g: 0, b: 0, a: 0}
   _timeRemaining: 0
 --- !u!1 &7452945614412910806
 GameObject:
@@ -181,6 +182,7 @@ MonoBehaviour:
   _skinHelper: {fileID: 7709342158582463069}
   _fadeTo: {r: 1, g: 1, b: 1, a: 1}
   _transitionTime: 1
+  _difference: {r: 0, g: 0, b: 0, a: 0}
   _timeRemaining: 0
 --- !u!1 &7709342158582463070
 GameObject:
@@ -298,7 +300,7 @@ MonoBehaviour:
   - _wave: 19
     _skin: 0
     _animation: environment_windy
-    _fade: 0
+    _fade: 1
   _fadeOutEffectTrigger: {fileID: 6739124905685173843}
   _fadeInEffectTrigger: {fileID: 7678967140709917641}
   _thunderEffect: {fileID: 4352220818728083460}
