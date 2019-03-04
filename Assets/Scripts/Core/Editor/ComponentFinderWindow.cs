@@ -16,6 +16,7 @@ using UnityEngine.AI;
 
 namespace pdxpartyparrot.Core.Editor
 {
+    // TODO: how do we get Game / game components in here?
     public class ComponentFinderWindow : Window.EditorWindow
     {
         public enum ComponentType
