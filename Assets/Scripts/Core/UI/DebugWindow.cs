@@ -1,7 +1,5 @@
 ﻿using System;
 
-using pdxpartyparrot.Core.Util;
-
 using UnityEngine;
 using UnityEngine.Experimental.Input;
 using UnityEngine.Profiling;
@@ -19,26 +17,15 @@ namespace pdxpartyparrot.Core.UI
 
         private static int NextId => ++_windowIdGenerator;
 
-        [SerializeField]
-        [ReadOnly]
-        private int _id = NextId;
+        public int Id { get; } = NextId;
 
-        public int Id => _id;
-
-        [SerializeField]
         private Rect _rect;
 
 #region Resizing
-        [SerializeField]
-        [ReadOnly]
         private bool _isResizing;
 
-        [SerializeField]
-        [ReadOnly]
         private Rect _resizeOriginalRect;
 
-        [SerializeField]
-        [ReadOnly]
         private Vector2 _resizeStartPosition;
 #endregion
 
@@ -66,7 +53,7 @@ namespace pdxpartyparrot.Core.UI
         {
             Profiler.BeginSample("DebugWindow.Render");
             try {
-                _rect = GUILayout.Window(_id, _rect, id => {
+                _rect = GUILayout.Window(Id, _rect, id => {
                     _renderContents();
 
                     // TODO: we should limit dragging only to when it's done from the title bar
