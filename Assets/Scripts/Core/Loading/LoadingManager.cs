@@ -114,7 +114,7 @@ namespace pdxpartyparrot.Core.Loading
             while(runner.MoveNext()) {
                 LoadStatus status = runner.Current;
                 if(null != status) {
-                    UpdateLoadingScreen(0.25f + (status.LoadPercent * 0.25f), status.Status);
+                    UpdateLoadingScreen(0.25f + status.LoadPercent * 0.25f, status.Status);
                 }
                 yield return null;
             }
@@ -126,7 +126,7 @@ namespace pdxpartyparrot.Core.Loading
             while(runner.MoveNext()) {
                 LoadStatus status = runner.Current;
                 if(null != status) {
-                    UpdateLoadingScreen(0.75f + (status.LoadPercent * 0.25f), status.Status);
+                    UpdateLoadingScreen(0.75f + status.LoadPercent * 0.25f, status.Status);
                 }
                 yield return null;
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -7,13 +6,17 @@ using UnityEngine.Networking;
 
 namespace pdxpartyparrot.Core.Network
 {
+    // TODO: this is totally untested
     public static class HttpHelper
     {
 #region GET
-        public static IEnumerator GetText(string url, Action<string> success, Action<string> failure)
+        public static IEnumerator<float> GetText(string url, Action<string> success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Get(url);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -22,10 +25,13 @@ namespace pdxpartyparrot.Core.Network
             }
         }
 
-        public static IEnumerator GetBytes(string url, Action<byte[]> success, Action<string> failure)
+        public static IEnumerator<float> GetBytes(string url, Action<byte[]> success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Get(url);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -34,10 +40,13 @@ namespace pdxpartyparrot.Core.Network
             }
         }
 
-        public static IEnumerator GetAssetBundle(string url, Action<AssetBundle> success, Action<string> failure)
+        public static IEnumerator<float> GetAssetBundle(string url, Action<AssetBundle> success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Get(url);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -46,10 +55,13 @@ namespace pdxpartyparrot.Core.Network
             }
         }
 
-        public static IEnumerator GetTexture(string url, Action<Texture> success, Action<string> failure)
+        public static IEnumerator<float> GetTexture(string url, Action<Texture> success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Get(url);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -58,10 +70,13 @@ namespace pdxpartyparrot.Core.Network
             }
         }
 
-        public static IEnumerator GetAudioClip(string url, Action<AudioClip> success, Action<string> failure)
+        public static IEnumerator<float> GetAudioClip(string url, Action<AudioClip> success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Get(url);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -72,10 +87,13 @@ namespace pdxpartyparrot.Core.Network
 #endregion
 
 #region POST
-        public static IEnumerator Post(string url, List<IMultipartFormSection> formData, Action success, Action<string> failure)
+        public static IEnumerator<float> Post(string url, List<IMultipartFormSection> formData, Action success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Post(url, formData);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -86,10 +104,13 @@ namespace pdxpartyparrot.Core.Network
 #endregion
 
 #region PUT
-        public static IEnumerator Put(string url, byte[] data, Action success, Action<string> failure)
+        public static IEnumerator<float> Put(string url, byte[] data, Action success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Put(url, data);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);
@@ -100,10 +121,13 @@ namespace pdxpartyparrot.Core.Network
 #endregion
 
 #region DELETE
-        public static IEnumerator Delete(string url, Action success, Action<string> failure)
+        public static IEnumerator<float> Delete(string url, Action success, Action<string> failure)
         {
             UnityWebRequest www = UnityWebRequest.Delete(url);
-            yield return www.SendWebRequest();
+            AsyncOperation asyncOp =  www.SendWebRequest();
+            while(!asyncOp.isDone) {
+                yield return asyncOp.progress;
+            }
      
             if(www.isNetworkError || www.isHttpError) {
                 failure?.Invoke(www.error);

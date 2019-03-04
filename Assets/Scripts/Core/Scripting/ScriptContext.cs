@@ -8,7 +8,7 @@ namespace pdxpartyparrot.Core.Scripting
 {
     public sealed class ScriptContext
     {
-        private readonly Dictionary<string, object> _contextData;
+        private readonly Dictionary<string, object> _contextData = new Dictionary<string, object>();
 
         private readonly ScriptRunner _runner;
 

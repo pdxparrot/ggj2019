@@ -17,8 +17,10 @@ namespace pdxpartyparrot.Core.Scripting
         /*[SerializeField]
         private ScriptData _data;*/
 
-        [field: SerializeField]
-        public RuntimeType Runtime { get; } = RuntimeType.Update;
+        [SerializeField]
+        private RuntimeType _runtime = RuntimeType.Update;
+
+        public RuntimeType Runtime => _runtime;
 
         [SerializeField]
         [ReadOnly]

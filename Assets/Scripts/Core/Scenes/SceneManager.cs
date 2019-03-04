@@ -59,13 +59,13 @@ namespace pdxpartyparrot.Core.Scenes
             Debug.Log("Unloading all scenes...");
 
             if(_loadedScenes.Count > 0) {
-                float pct = 1.0f / _loadedScenes.Count;
+                float step = 1.0f / _loadedScenes.Count;
 
                 int completed = 0;
                 foreach(string sceneName in _loadedScenes) {
                     IEnumerator<float> runner = UnloadSceneRoutine(sceneName);
                     while(runner.MoveNext()) {
-                        yield return (completed * pct) + runner.Current * pct;
+                        yield return (completed * step) + runner.Current * step;
                     }
                     completed++;
                 }

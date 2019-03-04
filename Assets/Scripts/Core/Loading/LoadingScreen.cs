@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Loading
 {
-// TODO: move to UI
     public sealed class LoadingScreen : MonoBehaviour
     {
         [SerializeField]
