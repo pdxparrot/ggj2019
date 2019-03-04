@@ -13,6 +13,7 @@ namespace pdxpartyparrot.Core.Util
     {
     }
 
+    // this class allows a coroutine to return a value
     public class Coroutine<T>
     {
 #region Result

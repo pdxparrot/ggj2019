@@ -34,9 +34,19 @@ namespace pdxpartyparrot.Core.Util
         }
 #endregion
 
+        public static int CoinFlip(this Random random)
+        {
+            return random.NextBool() ? 1 : 0;
+        }
+
         public static float NextSign(this Random random)
         {
-            return random.Next(0, 1) == 0 ? -1 : 1;
+            return random.NextBool() ? 1 : -1;
+        }
+
+        public static bool NextBool(this Random random)
+        {
+            return random.Next(2) != 0;
         }
 
         public static float NextSingle(this Random random)
@@ -44,14 +54,14 @@ namespace pdxpartyparrot.Core.Util
             return (float)random.NextDouble();
         }
 
-        public static double NextDouble(this Random random, double minValue, double maxValue)
-        {
-            return minValue + random.NextDouble() * (maxValue - minValue);
-        }
-
         public static float NextSingle(this Random random, float minValue, float maxValue)
         {
             return (float)random.NextDouble(minValue, maxValue);
+        }
+
+        public static double NextDouble(this Random random, double minValue, double maxValue)
+        {
+            return minValue + random.NextDouble() * (maxValue - minValue);
         }
     }
 }

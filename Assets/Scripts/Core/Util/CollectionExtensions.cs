@@ -21,6 +21,13 @@ namespace pdxpartyparrot.Core.Util
             return PartyParrotManager.Instance.Random.RemoveRandomEntry(collection);
         }
 
+        public static T RemoveFront<T>(this IList<T> list)
+        {
+            T element = list[0];
+            list.RemoveAt(0);
+            return element;
+        }
+
         [CanBeNull]
         public static T Nearest<T>(this IReadOnlyCollection<T> collection, Vector3 position) where T: Component
         {

@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-// TODO: is this actually necessary with .NET 4.6+?
-
 namespace pdxpartyparrot.Core.Util
 {
     /// <summary>

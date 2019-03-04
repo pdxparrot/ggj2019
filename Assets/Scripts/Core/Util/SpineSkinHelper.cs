@@ -19,6 +19,24 @@ namespace pdxpartyparrot.Core.Util
             set => _skeletonAnimation.Skeleton.SetColor(value);
         }
 
+        public float Red
+        {
+            get => _skeletonAnimation.Skeleton.R;
+            set => _skeletonAnimation.Skeleton.R = value;
+        }
+
+        public float Green
+        {
+            get => _skeletonAnimation.Skeleton.G;
+            set => _skeletonAnimation.Skeleton.G = value;
+        }
+
+        public float Blue
+        {
+            get => _skeletonAnimation.Skeleton.B;
+            set => _skeletonAnimation.Skeleton.B = value;
+        }
+
         public float Alpha
         {
             get => _skeletonAnimation.Skeleton.A;
