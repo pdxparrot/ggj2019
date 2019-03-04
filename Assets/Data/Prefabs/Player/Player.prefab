@@ -358,7 +358,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
+  _animationHelper: {fileID: 5515133998358140594}
   _actorAnimator: {fileID: 0}
+  _pauseAnimationOnPause: 0
   _owner: {fileID: 2603974987608069630}
   _lastVelocity: {x: 0, y: 0, z: 0}
   _lastAngularVelocity: 0
@@ -505,6 +507,21 @@ MonoBehaviour:
       m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     m_PlayerContextActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedpadActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedpadActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedpadActionCancelled:
       m_PersistentCalls:
         m_Calls: []
       m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,

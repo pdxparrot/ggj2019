@@ -194,6 +194,8 @@ namespace pdxpartyparrot.Core.Actors
 #region Event Handlers
         protected override void PauseEventHandler(object sender, EventArgs args)
         {
+            base.PauseEventHandler(sender, args);
+
             if(PartyParrotManager.Instance.IsPaused) {
                 _pauseState.Save(_rigidbody);
             } else {

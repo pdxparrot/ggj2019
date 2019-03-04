@@ -2,6 +2,7 @@ using System;
 
 using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -35,7 +36,14 @@ namespace pdxpartyparrot.Core.Actors
 #endregion
 
 #region Animation
-#if !USE_SPINE
+#if USE_SPINE
+        [SerializeField]
+        [CanBeNull]
+        private SpineAnimationHelper _animationHelper;
+
+        [CanBeNull]
+        public SpineAnimationHelper AnimationHelper => _animationHelper;
+#else
         [SerializeField]
         [CanBeNull]
         private Animator _animator;
@@ -50,6 +58,9 @@ namespace pdxpartyparrot.Core.Actors
 
         [CanBeNull]
         public ActorAnimator ActorAnimator => _actorAnimator;
+
+        [SerializeField]
+        private bool _pauseAnimationOnPause = true;
 #endregion
 
         [SerializeField]
@@ -64,14 +75,14 @@ namespace pdxpartyparrot.Core.Actors
             set
             {
                 Debug.Log($"Teleporting actor {Owner.Id} to {value}");
-                transform.position = value;
+                Owner.transform.position = value;
             }
         }
 
         public virtual Quaternion Rotation3D
         {
-            get => transform.rotation;
-            set => transform.rotation = value;
+            get => Owner.transform.rotation;
+            set => Owner.transform.rotation = value;
         }
 
         public virtual float Rotation2D
@@ -172,11 +183,17 @@ namespace pdxpartyparrot.Core.Actors
 #region Event Handlers
         protected virtual void PauseEventHandler(object sender, EventArgs args)
         {
-#if !USE_SPINE
-            if(Animator != null) {
-                Animator.enabled = !PartyParrotManager.Instance.IsPaused;
-            }
+            if(_pauseAnimationOnPause) {
+#if USE_SPINE
+                if(AnimationHelper != null) {
+                    AnimationHelper.Pause(PartyParrotManager.Instance.IsPaused);
+                }
+#else
+                if(Animator != null) {
+                    Animator.enabled = !PartyParrotManager.Instance.IsPaused;
+                }
 #endif
+            }
         }
 #endregion
     }

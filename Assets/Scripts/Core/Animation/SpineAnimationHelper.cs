@@ -11,6 +11,11 @@ namespace pdxpartyparrot.Core.Animation
         [SerializeField]
         private SkeletonAnimation _animation;
 
+        public void Pause(bool pause)
+        {
+            _animation.timeScale = pause ? 0.0f : 1.0f;
+        }
+
         public void ResetAnimation()
         {
             _animation.ClearState();
