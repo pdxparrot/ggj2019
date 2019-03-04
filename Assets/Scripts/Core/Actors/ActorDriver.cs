@@ -7,9 +7,9 @@ namespace pdxpartyparrot.Core.Actors
     {
         [SerializeField]
         [FormerlySerializedAs("_controller")]
-        private ActorController _behavior;
+        private ActorBehavior _behavior;
 
-        protected ActorController Behavior => _behavior;
+        protected ActorBehavior Behavior => _behavior;
 
         protected virtual bool CanDrive => !PartyParrotManager.Instance.IsPaused;
     }

@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Actors
 {
-    [RequireComponent(typeof(ActorController))]
+    [RequireComponent(typeof(ActorBehavior))]
     public abstract class ActorAnimator : MonoBehaviour
     {
         public abstract bool IsAnimating { get; }
 
-        protected ActorController Behavior { get; private set; }
+        protected ActorBehavior Behavior { get; private set; }
 
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            Behavior = GetComponent<ActorController>();
+            Behavior = GetComponent<ActorBehavior>();
         }
 
         private void Update()

@@ -8,8 +8,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.Core.Actors
 {
     // TODO: reduce the copy paste in this
-    // TODO: rename ActorBehavior3D
-    public class ActorController3D : ActorController
+    public class ActorBehavior2D : ActorBehavior
     {
         [Serializable]
         protected struct InternalPauseState
@@ -17,7 +16,7 @@ namespace pdxpartyparrot.Core.Actors
             public bool IsKinematic;
             public Vector3 Velocity;
 
-            public void Save(Rigidbody rigidbody)
+            public void Save(Rigidbody2D rigidbody)
             {
                 IsKinematic = rigidbody.isKinematic;
                 rigidbody.isKinematic = true;
@@ -26,14 +25,14 @@ namespace pdxpartyparrot.Core.Actors
                 rigidbody.velocity = Vector3.zero;
             }
 
-            public void Restore(Rigidbody rigidbody)
+            public void Restore(Rigidbody2D rigidbody)
             {
                 rigidbody.isKinematic = IsKinematic;
                 rigidbody.velocity = Velocity;
             }
         }
 
-        public Actor3D Owner3D => (Actor3D)Owner;
+        public Actor2D Owner2D => (Actor2D)Owner;
 
         [Space(10)]
 
@@ -46,10 +45,10 @@ namespace pdxpartyparrot.Core.Actors
 
         [SerializeField]
         [ReadOnly]
-        private Vector3 _lastAngularVelocity;
+        private float _lastAngularVelocity;
 
         [SerializeField]
-        private Rigidbody _rigidbody;
+        private Rigidbody2D _rigidbody;
 
         public override Vector3 Position
         {
@@ -63,14 +62,14 @@ namespace pdxpartyparrot.Core.Actors
 
         public override Quaternion Rotation3D
         {
-            get => _rigidbody.rotation;
-            set => _rigidbody.rotation = value;
+            get => Quaternion.identity;
+            set {}
         }
 
         public override float Rotation2D
         {
-            get => 0.0f;
-            set {}
+            get => _rigidbody.rotation;
+            set => _rigidbody.rotation = value;
         }
 
         public override Vector3 Velocity
@@ -81,14 +80,14 @@ namespace pdxpartyparrot.Core.Actors
 
         public override Vector3 AngularVelocity3D
         {
-            get => _rigidbody.angularVelocity;
-            set => _rigidbody.angularVelocity = value;
+            get => Vector3.zero;
+            set {}
         }
 
         public override float AngularVelocity2D
         {
-            get => 0.0f;
-            set {}
+            get => _rigidbody.angularVelocity;
+            set => _rigidbody.angularVelocity = value;
         }
 
         public override float Mass
@@ -133,7 +132,7 @@ namespace pdxpartyparrot.Core.Actors
         {
             base.Awake();
 
-            Assert.IsTrue(Owner is Actor3D);
+            Assert.IsTrue(Owner is Actor2D);
 
             InitRigidbody(_rigidbody);
         }
@@ -145,13 +144,13 @@ namespace pdxpartyparrot.Core.Actors
         }
 #endregion
 
-        protected virtual void InitRigidbody(Rigidbody rb)
+        protected virtual void InitRigidbody(Rigidbody2D rb)
         {
         }
 
         protected void SetUseGravity(bool useGravity)
         {
-            _rigidbody.useGravity = useGravity;
+            _rigidbody.gravityScale = useGravity ? 1.0f : 0.0f;
         }
 
         public void MovePosition(Vector3 position)
@@ -161,35 +160,30 @@ namespace pdxpartyparrot.Core.Actors
             _rigidbody.MovePosition(position);
         }
 
-        public void MoveRotation(Quaternion rot)
+        public void MoveRotation(float angle)
         {
-            _rigidbody.MoveRotation(rot);
+            _rigidbody.MoveRotation(angle);
         }
 
         // TODO: this can go away when ICharacterActorController goes away
         public void AddForce(Vector3 force)
         {
-            _rigidbody.AddForce(force, ForceMode.Force);
+            AddForce(force, ForceMode2D.Force);
         }
 
-        public void AddForce(Vector3 force, ForceMode mode)
+        public void AddForce(Vector3 force, ForceMode2D mode)
         {
             _rigidbody.AddForce(force, mode);
         }
 
-        public void AddRelativeForce(Vector3 force, ForceMode mode=ForceMode.Force)
+        public void AddRelativeForce(Vector3 force, ForceMode2D mode)
         {
             _rigidbody.AddRelativeForce(force, mode);
         }
 
-        public void AddTorque(Vector3 torque, ForceMode mode=ForceMode.Force)
+        public void AddTorque(float torque, ForceMode2D mode=ForceMode2D.Force)
         {
             _rigidbody.AddTorque(torque, mode);
-        }
-
-        public void AddRelativeTorque(Vector3 torque, ForceMode mode=ForceMode.Force)
-        {
-            _rigidbody.AddRelativeTorque(torque, mode);
         }
 
 #region Event Handlers

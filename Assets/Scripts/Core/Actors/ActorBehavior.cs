@@ -8,10 +8,9 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Actors
 {
-    // TODO: rename: ActorBehavior
-    public abstract class ActorController : MonoBehaviour
+    public abstract class ActorBehavior : MonoBehaviour
     {
-        public static float AxesDeadZone = 0.001f;
+        public const float AxesDeadZone = 0.001f;
 
 #region Movement
         [Header("Movement")]

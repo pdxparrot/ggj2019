@@ -8,7 +8,7 @@ using UnityEngine.Experimental.Input;
 namespace pdxpartyparrot.Game.Players
 {
     // TODO: create a FlightControllerData, similar to CharacterControllerData
-    public class FlightController : ActorController3D
+    public class FlightController : ActorBehavior3D
     {
 #region Physics
         [SerializeField]

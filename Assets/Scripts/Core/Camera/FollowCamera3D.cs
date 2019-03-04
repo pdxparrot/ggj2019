@@ -122,7 +122,7 @@ namespace pdxpartyparrot.Core.Camera
 
             Profiler.BeginSample("FollowCamera3D.HandleInput");
             try {
-                _isLooking = Target.LastLookAxes.sqrMagnitude > ActorController.AxesDeadZone;
+                _isLooking = Target.LastLookAxes.sqrMagnitude > ActorBehavior.AxesDeadZone;
 
                 Orbit(Target.LastLookAxes, dt);
                 Zoom(Target.LastLookAxes, dt);

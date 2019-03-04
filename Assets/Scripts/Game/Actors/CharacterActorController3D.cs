@@ -11,7 +11,7 @@ namespace pdxpartyparrot.Game.Actors
     // TODO: this shouldn't care about USE_SPINE being set
     [RequireComponent(typeof(CharacterActorController))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class CharacterActorController3D : ActorController3D, ICharacterActorController
+    public class CharacterActorController3D : ActorBehavior3D, ICharacterActorController
     {
         public CharacterActorControllerData ControllerData => _characterController.ControllerData;
 

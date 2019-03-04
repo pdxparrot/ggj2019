@@ -9,7 +9,7 @@ using UnityEngine.Profiling;
 namespace pdxpartyparrot.Core.Actors
 {
     // TODO: reduce the copy paste in this
-    [RequireComponent(typeof(ActorController2D))]
+    [RequireComponent(typeof(ActorBehavior2D))]
     public class ActorAnimator2D : ActorAnimator
     {
         [Serializable]
@@ -41,14 +41,14 @@ namespace pdxpartyparrot.Core.Actors
 
         public override bool IsAnimating => _animationState.IsAnimating;
 
-        private ActorController2D Behavior2D => (ActorController2D)Behavior;
+        private ActorBehavior2D Behavior2D => (ActorBehavior2D)Behavior;
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
-            Assert.IsTrue(Behavior is ActorController2D);
+            Assert.IsTrue(Behavior is ActorBehavior2D);
         }
 #endregion
 

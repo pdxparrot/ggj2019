@@ -11,7 +11,7 @@ namespace pdxpartyparrot.Game.Actors
     // TODO: reduce the copy paste in this
     [RequireComponent(typeof(CharacterActorController))]
     [RequireComponent(typeof(Collider2D))]
-    public class CharacterActorController2D : ActorController2D, ICharacterActorController
+    public class CharacterActorController2D : ActorBehavior2D, ICharacterActorController
     {
         public CharacterActorControllerData ControllerData => _characterController.ControllerData;
 

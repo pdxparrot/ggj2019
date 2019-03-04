@@ -44,10 +44,10 @@ namespace pdxpartyparrot.Core.Actors
         [SerializeField]
         [FormerlySerializedAs("_controller")]
         [CanBeNull]
-        private ActorController _behavior;
+        private ActorBehavior _behavior;
 
         [CanBeNull]
-        public ActorController Behavior => _behavior;
+        public ActorBehavior Behavior => _behavior;
 #endregion
 
         public abstract bool IsLocalActor { get; }

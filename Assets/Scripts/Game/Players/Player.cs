@@ -17,7 +17,7 @@ namespace pdxpartyparrot.Game.Players
 
         NetworkPlayer NetworkPlayer { get; }
 
-        ActorController Behavior { get; }
+        ActorBehavior Behavior { get; }
 
         Viewer Viewer { get; }
 
