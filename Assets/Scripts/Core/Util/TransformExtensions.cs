@@ -23,6 +23,7 @@ namespace pdxpartyparrot.Core.Util
 
         // LookAt2D except localScale.x will flip to face backwards
         // when rotating to look behind
+        // TODO: except negative localScale.x causes all kinds of problems
         public static void LookAt2DFlipX(this Transform transform, Vector3 target)
         {
             Vector3 dir = (target - transform.position).normalized;
@@ -42,6 +43,7 @@ namespace pdxpartyparrot.Core.Util
 
         // LookAt2D except localScale.x will flip to face backwards
         // when rotating to look behind
+        // TODO: except negative localScale.x causes all kinds of problems
         public static void LookAt2DFlipX(this Transform transform, Transform target)
         {
             if(null == target) {

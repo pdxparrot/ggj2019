@@ -45,8 +45,10 @@ namespace pdxpartyparrot.Game.World
         private void OnDrawGizmos()
         {
             if(null != _collider) {
+                Bounds bounds = _collider.bounds;
+
                 Gizmos.color = Color.green;
-                Gizmos.DrawCube(_collider.bounds.center, _collider.bounds.size);
+                Gizmos.DrawCube(bounds.center, bounds.size);
             }
         }
 #endregion
