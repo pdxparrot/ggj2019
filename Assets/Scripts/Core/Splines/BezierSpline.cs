@@ -1,5 +1,7 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Math;
+
 using UnityEngine;
 using UnityEngine.Serialization;
 

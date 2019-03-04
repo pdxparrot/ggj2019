@@ -1,12 +1,11 @@
-using pdxpartyparrot.Core.Splines;
+using pdxpartyparrot.Core.Math;
 
 using UnityEditor;
 using UnityEngine;
 
 // https://catlikecoding.com/unity/tutorials/curves-and-splines/
 
-// TODO: move to Core.Editor.Math
-namespace pdxpartyparrot.Core.Editor
+namespace pdxpartyparrot.Core.Editor.Math
 {
     [CustomEditor(typeof(BezierCurve))]
     public class BezierCurveInspector : UnityEditor.Editor

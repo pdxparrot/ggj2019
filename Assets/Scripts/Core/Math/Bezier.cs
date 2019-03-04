@@ -2,8 +2,7 @@
 
 // https://catlikecoding.com/unity/tutorials/curves-and-splines/
 
-// TODO: move to Core.Math
-namespace pdxpartyparrot.Core.Splines
+namespace pdxpartyparrot.Core.Math
 {
     public static class Bezier
     {
@@ -12,10 +11,9 @@ namespace pdxpartyparrot.Core.Splines
 		    t = Mathf.Clamp01(t);
 
 		    float oneMinusT = 1.0f - t;
-		    return
-                   oneMinusT * oneMinusT * p0 +
-            2.0f * oneMinusT * t         * p1 + 
-                   t         * t         * p2;
+		    return        oneMinusT * oneMinusT * p0 +
+                   2.0f * oneMinusT * t         * p1 + 
+                          t         * t         * p2;
 	    }
 
 	    public static Vector3 GetFirstDerivative(Vector3 p0, Vector3 p1, Vector3 p2, float t)
@@ -29,11 +27,10 @@ namespace pdxpartyparrot.Core.Splines
 		    t = Mathf.Clamp01(t);
 
 		    float oneMinusT = 1.0f - t;
-		    return
-                   oneMinusT * oneMinusT * oneMinusT * p0 +
-			3.0f * oneMinusT * oneMinusT * t         * p1 +
-			3.0f * oneMinusT * t         * t         * p2 +
-			       t         * t         * t         * p3;
+		    return        oneMinusT * oneMinusT * oneMinusT * p0 +
+			       3.0f * oneMinusT * oneMinusT * t         * p1 +
+			       3.0f * oneMinusT * t         * t         * p2 +
+			              t         * t         * t         * p3;
 	    }
 
 	    public static Vector3 GetFirstDerivative(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)

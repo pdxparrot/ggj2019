@@ -3,8 +3,7 @@ using UnityEngine.Serialization;
 
 // https://catlikecoding.com/unity/tutorials/curves-and-splines/
 
-// TODO: move to Core.Math
-namespace pdxpartyparrot.Core.Splines
+namespace pdxpartyparrot.Core.Math
 {
     public class BezierCurve : MonoBehaviour
     {

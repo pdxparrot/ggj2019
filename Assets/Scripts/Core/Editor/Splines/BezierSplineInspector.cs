@@ -5,8 +5,7 @@ using UnityEngine;
 
 // https://catlikecoding.com/unity/tutorials/curves-and-splines/
 
-// TODO: move to Core.Editor.Splines
-namespace pdxpartyparrot.Core.Editor
+namespace pdxpartyparrot.Core.Editor.Splines
 {
     [CustomEditor(typeof(BezierSpline))]
     public class BezierSplineInspector : UnityEditor.Editor
