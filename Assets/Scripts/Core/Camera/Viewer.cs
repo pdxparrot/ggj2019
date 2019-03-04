@@ -183,7 +183,7 @@ namespace pdxpartyparrot.Core.Camera
             Camera.rect = viewport;
             UICamera.rect = viewport;
 
-            AspectRatio aspectRatio = UICamera.GetComponent<AspectRatio>();
+            UICameraAspectRatio aspectRatio = UICamera.GetComponent<UICameraAspectRatio>();
             if(null != aspectRatio) {
                 aspectRatio.UpdateAspectRatio();
             }

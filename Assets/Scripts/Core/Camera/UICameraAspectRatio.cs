@@ -1,13 +1,13 @@
 ﻿using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Core.Camera
 {
     // http://2sa-studio.blogspot.com/2015/01/handling-aspect-ratio-in-unity2d.html
-    // TODO: rename this to UICameraAspectRatio or something to make it clear what it's for
     [RequireComponent(typeof(UnityEngine.Camera))]
-    public sealed class AspectRatio : MonoBehaviour
+    public sealed class UICameraAspectRatio : MonoBehaviour
     {
         [SerializeField]
         private int _aspectWidth = 16;
@@ -25,21 +25,22 @@ namespace pdxpartyparrot.Core.Camera
         private void Awake()
         {
             _camera = GetComponent<UnityEngine.Camera>();
+            Assert.IsTrue(_camera.orthographic);
 
             _targetAspectRatio = _aspectWidth / (float)_aspectHeight;
         }
 
         private void Start()
         {
-            // TODO: should we assert that it's an orthographic camera?
-
             UpdateAspectRatio();
         }
 #endregion
 
         public void UpdateAspectRatio()
         {
-            float viewportAspectRatio = (Screen.width * _camera.rect.width) / (Screen.height * _camera.rect.height);
+            Rect cameraRect = _camera.rect;
+
+            float viewportAspectRatio = (Screen.width * cameraRect.width) / (Screen.height * cameraRect.height);
             if(viewportAspectRatio >= _targetAspectRatio) {
                 _camera.orthographicSize = _aspectHeight / 2.0f;
             }  else {
