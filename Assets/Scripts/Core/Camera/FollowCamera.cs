@@ -90,7 +90,7 @@ namespace pdxpartyparrot.Core.Camera
 #region Unity Lifecycle
         protected virtual void Update()
         {
-            float dt = Time.deltaTime;
+            float dt = UnityEngine.Time.deltaTime;
 
             HandleInput(dt);
         }
@@ -101,7 +101,7 @@ namespace pdxpartyparrot.Core.Camera
                 return;
             }
 
-            float dt = Time.deltaTime;
+            float dt = UnityEngine.Time.deltaTime;
 
             FollowTarget(dt);
         }
@@ -112,7 +112,7 @@ namespace pdxpartyparrot.Core.Camera
                 return;
             }
 
-            float dt = Time.fixedDeltaTime;
+            float dt = UnityEngine.Time.fixedDeltaTime;
 
             FollowTarget(dt);
         }

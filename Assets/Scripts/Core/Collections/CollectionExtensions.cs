@@ -3,9 +3,11 @@ using System.Linq;
 
 using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Util;
+
 using UnityEngine;
 
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.Collections
 {
     public static class CollectionExtensions
     {

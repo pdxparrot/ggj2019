@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.FileSystem
 {
     public static class DirectoryExtensions
     {

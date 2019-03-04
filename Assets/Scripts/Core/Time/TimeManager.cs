@@ -2,11 +2,11 @@
 using System.Collections;
 
 using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
-// TODO: move to Core.Time
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.Time
 {
     public sealed class TimeManager : SingletonBehavior<TimeManager>
     {

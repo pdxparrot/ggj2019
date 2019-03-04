@@ -2,12 +2,14 @@
 
 using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Util;
+
 using UnityEngine;
 
 // TODO: move into TimeManager and have the TimeManger manage the timers
 // also having named timers would be good (so they can be shared and what not)
 // which probably means it should use events rather than holding an action
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.Time
 {
     [Serializable]
     public class Timer

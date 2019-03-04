@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.Collections;
 
 namespace pdxpartyparrot.Core.Scripting
 {

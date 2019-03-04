@@ -1,9 +1,10 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Util;
+
 using UnityEngine;
 
-// TODO: move to Core.Time
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.Time
 {
     [Serializable]
     public class Stopwatch

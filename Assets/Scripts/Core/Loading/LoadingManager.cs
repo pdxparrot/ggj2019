@@ -14,6 +14,7 @@ using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Scenes;
 using pdxpartyparrot.Core.Scripting;
 using pdxpartyparrot.Core.Terrain;
+using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
@@ -47,6 +48,9 @@ namespace pdxpartyparrot.Core.Loading
 
         [SerializeField]
         private DebugMenuManager _debugMenuManagerPrefab;
+
+        [SerializeField]
+        private TimeManager _timeManagerPrefab;
 
         [SerializeField]
         private SaveGameManager _saveGameManagerPrefab;
@@ -160,7 +164,7 @@ namespace pdxpartyparrot.Core.Loading
 
         protected virtual void CreateManagers()
         {
-            TimeManager.Create(ManagersContainer);
+            TimeManager.CreateFromPrefab(_timeManagerPrefab, ManagersContainer);
             AudioManager.CreateFromPrefab(_audioManagerPrefab, ManagersContainer);
             EffectsManager.Create(ManagersContainer);
             ObjectPoolManager.CreateFromPrefab(_objectPoolManagerPrefab, ManagersContainer);

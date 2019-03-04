@@ -30,7 +30,7 @@ namespace pdxpartyparrot.Core.Effects
 
         private void Update()
         {
-            float dt = Time.deltaTime;
+            float dt = UnityEngine.Time.deltaTime;
 
             RunOnComponents(c => {
                 if(!c.IsDone) {

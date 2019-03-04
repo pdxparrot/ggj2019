@@ -144,14 +144,14 @@ namespace pdxpartyparrot.Core.Actors
         {
             _isMoving = LastMoveAxes.sqrMagnitude > AxesDeadZone;
 
-            float dt = Time.deltaTime;
+            float dt = UnityEngine.Time.deltaTime;
 
             AnimationMove(LastMoveAxes, dt);
         }
 
         protected virtual void FixedUpdate()
         {
-            float dt = Time.fixedDeltaTime;
+            float dt = UnityEngine.Time.fixedDeltaTime;
 
             PhysicsMove(LastMoveAxes, dt);
         }

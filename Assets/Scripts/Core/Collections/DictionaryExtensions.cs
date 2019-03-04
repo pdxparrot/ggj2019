@@ -2,7 +2,7 @@
 
 using JetBrains.Annotations;
 
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.Collections
 {
     public static class DictionaryExtensions
     {

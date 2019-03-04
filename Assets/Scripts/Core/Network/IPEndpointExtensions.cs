@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace pdxpartyparrot.Core.Util
+namespace pdxpartyparrot.Core.Network
 {
     public static class IPEndPointExtensions
     {

@@ -118,7 +118,7 @@ namespace pdxpartyparrot.Core.DebugMenu
                 Profiler.EndSample();
             }
 
-            UpdateFrameStats(Time.unscaledDeltaTime);
+            UpdateFrameStats(UnityEngine.Time.unscaledDeltaTime);
 
 #if UNITY_EDITOR
             if(_frameStepping) {

@@ -569,6 +569,8 @@ MonoBehaviour:
     type: 3}
   _debugMenuManagerPrefab: {fileID: 7812979617479560367, guid: 01f244cfab2135044bcd17bba0ad8dbc,
     type: 3}
+  _timeManagerPrefab: {fileID: 8286773383977329268, guid: 55661228c068ea24ea28f9d4f1780803,
+    type: 3}
   _saveGameManagerPrefab: {fileID: 4833360945638835468, guid: dc8a994c04576c443b942249d74db276,
     type: 3}
   _localizationManagerPrefab: {fileID: 7237645413708916831, guid: 020c6bfa53d03404484c7ee1e1371d6f,

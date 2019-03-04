@@ -16,7 +16,7 @@ namespace pdxpartyparrot.Core.Actors
 #region Unity Lifecycle
         private void Update()
         {
-            float dt = Time.deltaTime;
+            float dt = UnityEngine.Time.deltaTime;
 
             UpdateAnimation(dt);
         }
