@@ -5,8 +5,8 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Audio;
+using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.NPCs;

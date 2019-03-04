@@ -5,8 +5,8 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.UI;
-using pdxpartyparrot.Core.Util.ObjectPool;
 
 using TMPro;
 

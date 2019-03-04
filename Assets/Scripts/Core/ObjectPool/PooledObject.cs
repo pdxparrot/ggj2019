@@ -1,8 +1,10 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Util;
+
 using UnityEngine;
 
-namespace pdxpartyparrot.Core.Util.ObjectPool
+namespace pdxpartyparrot.Core.ObjectPool
 {
     public sealed class PooledObject : MonoBehaviour
     {

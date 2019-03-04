@@ -10,12 +10,12 @@ using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.Core.Network;
+using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Scenes;
 using pdxpartyparrot.Core.Scripting;
 using pdxpartyparrot.Core.Terrain;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 
 using UnityEngine;

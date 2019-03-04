@@ -7,9 +7,9 @@ using JetBrains.Annotations;
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Input;
+using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.UI;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Game.Menu;
 
 using UnityEngine;

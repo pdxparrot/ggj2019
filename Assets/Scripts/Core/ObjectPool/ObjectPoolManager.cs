@@ -7,12 +7,13 @@ using System.Linq;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.DebugMenu;
+using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
-namespace pdxpartyparrot.Core.Util.ObjectPool
+namespace pdxpartyparrot.Core.ObjectPool
 {
     public sealed class ObjectPoolManager : SingletonBehavior<ObjectPoolManager>
     {

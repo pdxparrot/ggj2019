@@ -1,8 +1,8 @@
 ﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Splines;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.Util.ObjectPool;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Players;
