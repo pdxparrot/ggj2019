@@ -2,17 +2,17 @@
 
 namespace pdxpartyparrot.Game.Actors.ControllerComponents
 {
-    [RequireComponent(typeof(CharacterActorController2D))]
+    [RequireComponent(typeof(CharacterBehavior2D))]
     public abstract class CharacterActorControllerComponent2D : CharacterActorControllerComponent
     {
-        protected CharacterActorController2D Controller { get; private set; }
+        protected CharacterBehavior2D Behavior { get; private set; }
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
-            Controller = GetComponent<CharacterActorController2D>();
+            Behavior = GetComponent<CharacterBehavior2D>();
         }
 #endregion
     }

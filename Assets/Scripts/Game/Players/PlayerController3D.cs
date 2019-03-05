@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.Game.Players
 {
     // TODO: reduce the copy paste in this
-    public abstract class PlayerController3D : CharacterActorController3D, IPlayerController
+    public abstract class PlayerController3D : CharacterBehavior3D, IPlayerController
     {
         [SerializeField]
         private PlayerControllerData _playerControllerData;

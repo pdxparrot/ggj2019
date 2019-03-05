@@ -24,13 +24,13 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         [ReadOnly]
         private float _heldSeconds;
 
-        private bool CanHover => _heldSeconds >= Controller.ControllerData.HoverHoldSeconds;
+        private bool CanHover => _heldSeconds >= Behavior.ControllerData.HoverHoldSeconds;
 
         [SerializeField]
         [ReadOnly]
         private float _hoverTimeSeconds;
 
-        public float RemainingPercent => 1.0f - (_hoverTimeSeconds / Controller.ControllerData.HoverTimeSeconds);
+        public float RemainingPercent => 1.0f - (_hoverTimeSeconds / Behavior.ControllerData.HoverTimeSeconds);
 
         [SerializeField]
         [ReadOnly]
@@ -55,7 +55,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _cooldownTimer.Update(dt);
 
-            if(Controller.IsGrounded) {
+            if(Behavior.IsGrounded) {
                 _isHeld = false;
                 _heldSeconds = 0;
 
@@ -68,14 +68,14 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             if(IsHovering) {
                 _hoverTimeSeconds += dt;
-                if(_hoverTimeSeconds >= Controller.ControllerData.HoverTimeSeconds) {
-                    _hoverTimeSeconds = Controller.ControllerData.HoverTimeSeconds;
+                if(_hoverTimeSeconds >= Behavior.ControllerData.HoverTimeSeconds) {
+                    _hoverTimeSeconds = Behavior.ControllerData.HoverTimeSeconds;
                     StopHovering();
                 }
             } else if(CanHover) {
                 StartHovering();
             } else if(_hoverTimeSeconds > 0.0f) {
-                _hoverTimeSeconds -= dt * Controller.ControllerData.HoverRechargeRate;
+                _hoverTimeSeconds -= dt * Behavior.ControllerData.HoverRechargeRate;
                 if(_hoverTimeSeconds < 0.0f) {
                     _hoverTimeSeconds = 0.0f;
                 }
@@ -89,11 +89,11 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 return false;
             }
 
-            Vector3 acceleration = (Controller.ControllerData.HoverAcceleration + Controller.ControllerData.FallSpeedAdjustment) * Vector3.up;
+            Vector3 acceleration = (Behavior.ControllerData.HoverAcceleration + Behavior.ControllerData.FallSpeedAdjustment) * Vector3.up;
             // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
-            Controller.AddForce(acceleration);
+            Behavior.AddForce(acceleration);
 
-            Controller.DefaultPhysicsMove(axes, Controller.ControllerData.HoverMoveSpeed, dt);
+            Behavior.DefaultPhysicsMove(axes, Behavior.ControllerData.HoverMoveSpeed, dt);
 
             return true;
         }
@@ -104,7 +104,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 return false;
             }
 
-            if(Controller.IsGrounded && !Controller.ControllerData.HoverWhenGrounded) {
+            if(Behavior.IsGrounded && !Behavior.ControllerData.HoverWhenGrounded) {
                 return false;
             }
 
@@ -154,7 +154,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 #endif
 
             // stop all vertical movement immediately
-            Controller.Velocity = new Vector3(Controller.Velocity.x, 0.0f, Controller.Velocity.z);
+            Behavior.Velocity = new Vector3(Behavior.Velocity.x, 0.0f, Behavior.Velocity.z);
         }
 
         public void StopHovering()
@@ -169,7 +169,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 #endif
 
             if(wasHovering) {
-                _cooldownTimer.Start(Controller.ControllerData.HoverCooldownSeconds);
+                _cooldownTimer.Start(Behavior.ControllerData.HoverCooldownSeconds);
             }
         }
     }

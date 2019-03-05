@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors.ControllerComponents;
@@ -16,9 +17,9 @@ using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    // TODO: merge this into ActorBehavior3D
-    [RequireComponent(typeof(CapsuleCollider))]
-    public class CharacterActorController3D : ActorBehavior3D
+    // TODO: merge this into ActorBehavior2D
+    [RequireComponent(typeof(Collider2D))]
+    public class CharacterBehavior2D : ActorBehavior2D
     {
         [SerializeField]
         private CharacterActorControllerData _controllerData;
@@ -102,6 +103,19 @@ namespace pdxpartyparrot.Game.Actors
 
         [Space(10)]
 
+#region Animation
+        [Header("Animation")]
+
+#if USE_SPINE
+        [SerializeField]
+        private SpineAnimationHelper _spineAnimation;
+
+        protected SpineAnimationHelper SpineAnimation => _spineAnimation;
+#endif
+#endregion
+
+        [Space(10)]
+
 #region Physics
         [Header("Physics")]
 
@@ -115,27 +129,25 @@ namespace pdxpartyparrot.Game.Actors
             set
             {
                 _useGravity = value;
-                if(!_useGravity) {
-                    Velocity = Vector3.zero;
-                }
+                Velocity = Vector3.zero;
             }
         }
 
         public bool IsFalling => UseGravity && (!IsGrounded && !IsSliding && Velocity.y < 0.0f);
 #endregion
 
-        public CapsuleCollider Capsule => (CapsuleCollider)Owner3D.Collider;
+        public Collider2D Collider => Owner2D.Collider;
 
         public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
 
-        private CharacterActorControllerComponent3D[] _components;
+        private CharacterActorControllerComponent2D[] _components;
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
-            _components = GetComponents<CharacterActorControllerComponent3D>();
+            _components = GetComponents<CharacterActorControllerComponent2D>();
             //Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
 
             if(!GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic) {
@@ -174,8 +186,8 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(Position, Position + AngularVelocity3D);
+            /*Gizmos.color = Color.green;
+            Gizmos.DrawLine(Position, Position + AngularVelocity2D);*/
 
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(Position, Position + Velocity);
@@ -188,18 +200,15 @@ namespace pdxpartyparrot.Game.Actors
         }
 #endregion
 
-        protected override void InitRigidbody(Rigidbody rb)
+        protected override void InitRigidbody(Rigidbody2D rb)
         {
             base.InitRigidbody(rb);
 
             rb.isKinematic = GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
-            rb.useGravity = !GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic;
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            rb.detectCollisions = true;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
             // we run the follow cam in FixedUpdate() and interpolation interferes with that
-            rb.interpolation = RigidbodyInterpolation.None;
+            rb.interpolation = RigidbodyInterpolation2D.None;
         }
 
 #region Components
@@ -273,19 +282,10 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Vector3 forward = new Vector3(axes.x, 0.0f, axes.y);
-
-            // align the movement with the camera
-            if(null != Owner.Viewer) {
-                forward = (Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) * forward).normalized;
-            }
-
-            // align the player with the movement
-            if(forward.sqrMagnitude > float.Epsilon) {
-                Owner.transform.forward = forward;
-            }
-
-#if !USE_SPINE
+#if USE_SPINE
+            SpineAnimation.SetFacing(LastMoveAxes);
+#else
+            // TODO: set facing (set localScale.x)
             if(null != Animator) {
                 Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
                 Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
@@ -318,20 +318,12 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            Vector3 fixedAxes = new Vector3(axes.x, 0.0f, axes.y);
+            // TODO: handle slopes
 
-            // prevent moving up slopes we can't move up
-            if(GroundSlope >= ControllerData.SlopeLimit) {
-                float dp = Vector3.Dot(Owner.transform.forward, GroundCheckNormal);
-                if(dp < 0.0f) {
-                    fixedAxes.z = 0.0f;
-                }
+            Vector3 velocity = axes * speed;
+            if(!IsKinematic) {
+                velocity.y = Velocity.y;
             }
-
-            Vector3 velocity = fixedAxes * speed;
-            Quaternion rotation = null != Owner.Viewer ? Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) : Owner.transform.rotation;
-            velocity = rotation * velocity;
-            velocity.y = Velocity.y;
 
             if(IsKinematic) {
                 MovePosition(Position + velocity * dt);
@@ -430,7 +422,7 @@ namespace pdxpartyparrot.Game.Actors
 
         private void UpdateIsGrounded()
         {
-            Profiler.BeginSample("CharacterBehavior3D.UpdateIsGrounded");
+            Profiler.BeginSample("CharacterBehavior2D.UpdateIsGrounded");
             try {
                 bool wasGrounded = IsGrounded;
 

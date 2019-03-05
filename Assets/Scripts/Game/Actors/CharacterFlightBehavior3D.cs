@@ -8,7 +8,7 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Game.Players
 {
-    public class CharacterFlightBehavior : ActorBehavior3D
+    public class CharacterFlightBehavior3D : ActorBehavior3D
     {
         [SerializeField]
         private CharacterFlightBehaviorData _data;

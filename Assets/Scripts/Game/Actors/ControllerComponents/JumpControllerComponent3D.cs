@@ -15,11 +15,11 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 return false;
             }
 
-            if(!Controller.IsGrounded || Controller.IsSliding) {
+            if(!Behavior.IsGrounded || Behavior.IsSliding) {
                 return false;
             }
 
-            Controller.Jump(Controller.ControllerData.JumpHeight, Controller.ControllerData.JumpParam);
+            Behavior.Jump(Behavior.ControllerData.JumpHeight, Behavior.ControllerData.JumpParam);
 
             return true;
         }

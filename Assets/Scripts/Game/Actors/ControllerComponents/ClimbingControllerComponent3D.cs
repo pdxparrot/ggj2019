@@ -156,7 +156,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             base.Awake();
 
-            Assert.IsNotNull(Controller.ActorAnimator, "ClimbingControllerComponent requires an actor animator");
+            Assert.IsNotNull(Behavior.ActorAnimator, "ClimbingControllerComponent requires an actor animator");
             Assert.IsTrue(Mathf.Approximately(_leftHandTransform.position.y, _rightHandTransform.position.y), "Character hands are at different heights!");
             Assert.IsTrue(_headTransform.position.y > _leftHandTransform.position.y, "Character head should be above player hands!");
             Assert.IsTrue(_chestTransform.position.y < _leftHandTransform.position.y, "Character chest should be below player hands!");
@@ -184,62 +184,62 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             // left hand
             if(_didLeftHandRaycast) {
                 Gizmos.color = null != _leftHandHitResult ? Color.red : Color.yellow;
-                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + transform.forward * Controller.ControllerData.ArmRayLength);
+                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + transform.forward * Behavior.ControllerData.ArmRayLength);
             }
 
             if(_didLeftHandHangRaycast) {
                 Gizmos.color = null != _leftHandHangHitResult ? Color.red : Color.yellow;
-                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + (transform.up) * Controller.ControllerData.HangRayLength);
+                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + (transform.up) * Behavior.ControllerData.HangRayLength);
             }
 
             if(_didWrapLeftRaycast) {
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + (Quaternion.AngleAxis(Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward) * Controller.ControllerData.ArmRayLength * 2.0f);
+                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + (Quaternion.AngleAxis(Behavior.ControllerData.WrapAroundAngle, transform.up) * transform.forward) * Behavior.ControllerData.ArmRayLength * 2.0f);
             }
 
             if(_didRotateLeftRaycast) {
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + (Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward) * Controller.ControllerData.ArmRayLength * 0.5f);
+                Gizmos.DrawLine(_leftHandTransform.position, _leftHandTransform.position + (Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward) * Behavior.ControllerData.ArmRayLength * 0.5f);
             }
 
             // right hand
             if(_didRightHandRaycast) {
                 Gizmos.color = null != _rightHandHitResult ? Color.red : Color.yellow;
-                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + transform.forward * Controller.ControllerData.ArmRayLength);
+                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + transform.forward * Behavior.ControllerData.ArmRayLength);
             }
 
             if(_didRightHandHangRaycast) {
                 Gizmos.color = null != _rightHandHangHitResult ? Color.red : Color.yellow;
-                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + (transform.up) * Controller.ControllerData.HangRayLength);
+                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + (transform.up) * Behavior.ControllerData.HangRayLength);
             }
 
             if(_didWrapRightRaycast) {
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + (Quaternion.AngleAxis(-Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward) * Controller.ControllerData.ArmRayLength * 2.0f);
+                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + (Quaternion.AngleAxis(-Behavior.ControllerData.WrapAroundAngle, transform.up) * transform.forward) * Behavior.ControllerData.ArmRayLength * 2.0f);
             }
 
             if(_didRotateRightRaycast) {
                 Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + (Quaternion.AngleAxis(90.0f, transform.up) * transform.forward) * Controller.ControllerData.ArmRayLength * 0.5f);
+                Gizmos.DrawLine(_rightHandTransform.position, _rightHandTransform.position + (Quaternion.AngleAxis(90.0f, transform.up) * transform.forward) * Behavior.ControllerData.ArmRayLength * 0.5f);
             }
 
             // head
             if(_didHeadRaycast) {
                 Gizmos.color = null != _headHitResult ? Color.red : Color.yellow;
-                Gizmos.DrawLine(_headTransform.position, _headTransform.position + (Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Controller.ControllerData.HeadRayLength);
+                Gizmos.DrawLine(_headTransform.position, _headTransform.position + (Quaternion.AngleAxis(-Behavior.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Behavior.ControllerData.HeadRayLength);
             }
 
             if(_didClimbUpRaycast) {
                 Gizmos.color = Color.white;
-                Vector3 start = _headTransform.position + (Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Controller.ControllerData.HeadRayLength;
-                Vector3 end = start + Controller.Owner.Height * -Vector3.up;
+                Vector3 start = _headTransform.position + (Quaternion.AngleAxis(-Behavior.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Behavior.ControllerData.HeadRayLength;
+                Vector3 end = start + Behavior.Owner.Height * -Vector3.up;
                 Gizmos.DrawLine(start, end);
             }
 
             // chest
             if(_didChestRaycast) {
                 Gizmos.color = null != _chestHitResult ? Color.red : Color.yellow;
-                Gizmos.DrawLine(_chestTransform.position, _chestTransform.position + transform.forward * Controller.ControllerData.ChestRayLength);
+                Gizmos.DrawLine(_chestTransform.position, _chestTransform.position + transform.forward * Behavior.ControllerData.ChestRayLength);
             }
         }
 #endregion
@@ -253,14 +253,14 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             case ClimbMode.Climbing:
                 break;
             case ClimbMode.Hanging:
-                Controller.DefaultAnimationMove(axes, dt);
+                Behavior.DefaultAnimationMove(axes, dt);
                 break;
             }
 
 #if !USE_SPINE
-            if(null != Controller.Animator) {
-                Controller.Animator.SetFloat(Controller.ControllerData.MoveXAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.x) : 0.0f);
-                Controller.Animator.SetFloat(Controller.ControllerData.MoveZAxisParam, Controller.CanMove ? Mathf.Abs(Controller.LastMoveAxes.y) : 0.0f);
+            if(null != Behavior.Animator) {
+                Behavior.Animator.SetFloat(Behavior.ControllerData.MoveXAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.x) : 0.0f);
+                Behavior.Animator.SetFloat(Behavior.ControllerData.MoveZAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.y) : 0.0f);
             }
 #endif
             return true;
@@ -275,14 +275,14 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             switch(_climbMode)
             {
             case ClimbMode.Climbing:
-                Vector3 velocity = Controller.Rotation3D * (axes * Controller.ControllerData.ClimbSpeed);
-                if(Controller.DidGroundCheckCollide && velocity.y < 0.0f) {
+                Vector3 velocity = Behavior.Rotation3D * (axes * Behavior.ControllerData.ClimbSpeed);
+                if(Behavior.DidGroundCheckCollide && velocity.y < 0.0f) {
                     velocity.y = 0.0f;
                 }
-                Controller.MovePosition(Controller.Position + velocity * dt);
+                Behavior.MovePosition(Behavior.Position + velocity * dt);
                 break;
             case ClimbMode.Hanging:
-                Controller.DefaultPhysicsMove(axes, Controller.ControllerData.HangSpeed, dt);
+                Behavior.DefaultPhysicsMove(axes, Behavior.ControllerData.HangSpeed, dt);
                 break;
             }
 
@@ -333,12 +333,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         private void StartClimbing()
         {
             _climbMode = ClimbMode.Climbing;
-            Controller.UseGravity = false;
+            Behavior.UseGravity = false;
 
 #if !USE_SPINE
-            if(null != Controller.Animator) {
-                Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, true);
-                Controller.Animator.SetBool(Controller.ControllerData.HangingParam, false);
+            if(null != Behavior.Animator) {
+                Behavior.Animator.SetBool(Behavior.ControllerData.ClimbingParam, true);
+                Behavior.Animator.SetBool(Behavior.ControllerData.HangingParam, false);
             }
 #endif
         }
@@ -346,12 +346,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         private void StartHanging()
         {
             _climbMode = ClimbMode.Hanging;
-            Controller.UseGravity = false;
+            Behavior.UseGravity = false;
 
 #if !USE_SPINE
-            if(null != Controller.Animator) {
-                Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
-                Controller.Animator.SetBool(Controller.ControllerData.HangingParam, true);
+            if(null != Behavior.Animator) {
+                Behavior.Animator.SetBool(Behavior.ControllerData.ClimbingParam, false);
+                Behavior.Animator.SetBool(Behavior.ControllerData.HangingParam, true);
             }
 #endif
         }
@@ -360,12 +360,12 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         public void StopClimbing()
         {
             _climbMode = ClimbMode.None;
-            Controller.UseGravity = true;
+            Behavior.UseGravity = true;
 
 #if !USE_SPINE
-            if(null != Controller.Animator) {
-                Controller.Animator.SetBool(Controller.ControllerData.ClimbingParam, false);
-                Controller.Animator.SetBool(Controller.ControllerData.HangingParam, false);
+            if(null != Behavior.Animator) {
+                Behavior.Animator.SetBool(Behavior.ControllerData.ClimbingParam, false);
+                Behavior.Animator.SetBool(Behavior.ControllerData.HangingParam, false);
             }
 #endif
 
@@ -377,7 +377,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private IEnumerator RaycastRoutine()
         {
-            WaitForSeconds wait = new WaitForSeconds(Controller.RaycastRoutineRate);
+            WaitForSeconds wait = new WaitForSeconds(Behavior.RaycastRoutineRate);
             while(true) {
                 UpdateRaycasts();
 
@@ -391,11 +391,11 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         {
             ResetRaycastDebug();
 
-            if(Controller.ActorAnimator.IsAnimating) {
+            if(Behavior.ActorAnimator.IsAnimating) {
                 return;
             }
 
-            Profiler.BeginSample("PlayerController.UpdateRaycasts");
+            Profiler.BeginSample("PlayerBehavior.UpdateRaycasts");
             try {
                 UpdateHandRaycasts();
                 UpdateHeadRaycasts();
@@ -441,7 +441,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             _leftHandHitResult = null;
 
             RaycastHit hit;
-            if(Physics.Raycast(_leftHandTransform.position, transform.forward, out hit, Controller.ControllerData.ArmRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_leftHandTransform.position, transform.forward, out hit, Behavior.ControllerData.ArmRayLength, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _leftHandHitResult = hit;
@@ -452,7 +452,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _leftHandHangHitResult = null;
 
-            if(Physics.Raycast(_leftHandTransform.position, transform.up, out hit, Controller.ControllerData.HangRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_leftHandTransform.position, transform.up, out hit, Behavior.ControllerData.HangRayLength, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _leftHandHangHitResult = hit;
@@ -466,7 +466,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _rightHandHitResult = null;
 
-            if(Physics.Raycast(_rightHandTransform.position, transform.forward, out var hit, Controller.ControllerData.ArmRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_rightHandTransform.position, transform.forward, out var hit, Behavior.ControllerData.ArmRayLength, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _rightHandHitResult = hit;
@@ -477,7 +477,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _rightHandHangHitResult = null;
 
-            if(Physics.Raycast(_rightHandTransform.position, transform.up, out hit, Controller.ControllerData.HangRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_rightHandTransform.position, transform.up, out hit, Behavior.ControllerData.HangRayLength, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _rightHandHangHitResult = hit;
@@ -497,7 +497,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _headHitResult = null;
 
-            if(Physics.Raycast(_headTransform.position, Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward, out var hit, Controller.ControllerData.HeadRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_headTransform.position, Quaternion.AngleAxis(-Behavior.ControllerData.HeadRayAngle, transform.right) * transform.forward, out var hit, Behavior.ControllerData.HeadRayLength, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _headHitResult = hit;
@@ -517,7 +517,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _chestHitResult = null;
 
-            if(Physics.Raycast(_chestTransform.position, transform.forward, out var hit, Controller.ControllerData.ChestRayLength, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_chestTransform.position, transform.forward, out var hit, Behavior.ControllerData.ChestRayLength, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _chestHitResult = hit;
@@ -528,7 +528,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private void HandleRaycasts()
         {
-            Profiler.BeginSample("PlayerController.HandleRaycasts");
+            Profiler.BeginSample("PlayerBehavior.HandleRaycasts");
             try {
                 if(IsClimbing) {
                     HandleClimbingRaycasts();
@@ -540,7 +540,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private void HandleClimbingRaycasts()
         {
-            if(Controller.ActorAnimator.IsAnimating) {
+            if(Behavior.ActorAnimator.IsAnimating) {
                 return;
             }
 
@@ -598,13 +598,13 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private bool CheckWrapLeft()
         {
-            if(null == _rightHandHitResult || Controller.LastMoveAxes.x >= 0.0f) {
+            if(null == _rightHandHitResult || Behavior.LastMoveAxes.x >= 0.0f) {
                 return false;
             }
 
             _didWrapLeftRaycast = true;
 
-            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 2.0f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(Behavior.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out var hit, Behavior.ControllerData.ArmRayLength * 2.0f, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -619,21 +619,21 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _leftHandHitResult = hit;
 
-            Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Behavior.ControllerData.WrapTimeSeconds);
 
             return true;
         }
 
         private bool CheckRotateLeft()
         {
-            if(null == _rightHandHitResult || Controller.LastMoveAxes.x >= 0.0f) {
+            if(null == _rightHandHitResult || Behavior.LastMoveAxes.x >= 0.0f) {
                 return false;
             }
 
             _didRotateLeftRaycast = true;
 
-            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 0.5f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward, out var hit, Behavior.ControllerData.ArmRayLength * 0.5f, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -648,21 +648,21 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _leftHandHitResult = hit;
 
-            Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Behavior.ControllerData.WrapTimeSeconds);
 
             return true;
         }
 
         private bool CheckWrapRight()
         {
-            if(null == _leftHandHitResult || Controller.LastMoveAxes.x <= 0.0f) {
+            if(null == _leftHandHitResult || Behavior.LastMoveAxes.x <= 0.0f) {
                 return false;
             }
 
             _didWrapRightRaycast = true;
 
-            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(-Controller.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 2.0f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(-Behavior.ControllerData.WrapAroundAngle, transform.up) * transform.forward, out var hit, Behavior.ControllerData.ArmRayLength * 2.0f, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -677,8 +677,8 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _rightHandHitResult = hit;
 
-            Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), Behavior.ControllerData.WrapTimeSeconds);
 
             return true;
 
@@ -686,13 +686,13 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private bool CheckRotateRight()
         {
-            if(null == _leftHandHitResult || Controller.LastMoveAxes.x <= 0.0f) {
+            if(null == _leftHandHitResult || Behavior.LastMoveAxes.x <= 0.0f) {
                 return false;
             }
 
             _didRotateRightRaycast = true;
 
-            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(90.0f, transform.up) * transform.forward, out var hit, Controller.ControllerData.ArmRayLength * 0.5f, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(90.0f, transform.up) * transform.forward, out var hit, Behavior.ControllerData.ArmRayLength * 0.5f, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -707,8 +707,8 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             _rightHandHitResult = hit;
 
-            Vector3 offset = (Controller.Owner.Radius * 2.0f) * transform.forward;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Controller.ControllerData.WrapTimeSeconds);
+            Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), Behavior.ControllerData.WrapTimeSeconds);
 
             return true;
 
@@ -716,22 +716,22 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private bool CheckClimbUp()
         {
-            if(Controller.LastMoveAxes.y <= 0.0f) {
+            if(Behavior.LastMoveAxes.y <= 0.0f) {
                 return false;
             }
 
             _didClimbUpRaycast = true;
 
             // cast a ray from the end of our rotated head check straight down to see if we can stand here
-            Vector3 start = _headTransform.position + (Quaternion.AngleAxis(-Controller.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Controller.ControllerData.HeadRayLength;
-            float length = Controller.Owner.Height;
+            Vector3 start = _headTransform.position + (Quaternion.AngleAxis(-Behavior.ControllerData.HeadRayAngle, transform.right) * transform.forward) * Behavior.ControllerData.HeadRayLength;
+            float length = Behavior.Owner.Height;
 
-            if(!Physics.Raycast(start, -Vector3.up, out var hit, length, Controller.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(start, -Vector3.up, out var hit, length, Behavior.ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
-            Vector3 offset = Controller.Owner.Radius * 2.0f * transform.forward;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, offset), Controller.Rotation3D, Controller.ControllerData.ClimbUpTimeSeconds, () => {
+            Vector3 offset = Behavior.Owner.Radius * 2.0f * transform.forward;
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, offset), Behavior.Rotation3D, Behavior.ControllerData.ClimbUpTimeSeconds, () => {
                 StopClimbing();
             });
 
@@ -740,14 +740,14 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private bool CheckHang()
         {
-            if((!CanHangLeft && !CanHangRight) || Controller.LastMoveAxes.y <= 0.0f) {
+            if((!CanHangLeft && !CanHangRight) || Behavior.LastMoveAxes.y <= 0.0f) {
                 return false;
             }
 
             RaycastHit hit = (_leftHandHangHitResult ?? _rightHandHangHitResult).Value;
 
             Vector3 offset = -_hangTransform.localPosition;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, offset), Controller.Rotation3D, Controller.ControllerData.HangTimeSeconds, () => {
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, offset), Behavior.Rotation3D, Behavior.ControllerData.HangTimeSeconds, () => {
                 StartHanging();
             });
 
@@ -756,14 +756,14 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
         private bool CheckClimb()
         {
-            if((!CanGrabLeft && !CanGrabRight) || !Controller.IsMoving) {
+            if((!CanGrabLeft && !CanGrabRight) || !Behavior.IsMoving) {
                 return false;
             }
 
             RaycastHit hit = (_leftHandHitResult ?? _rightHandHitResult).Value;
 
-            Vector3 offset = Controller.Owner.Radius * transform.up;
-            Controller.ActorAnimator.StartAnimation3D(Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal) - offset, Controller.Rotation3D, Controller.ControllerData.ClimbDownTimeSeconds, () => {
+            Vector3 offset = Behavior.Owner.Radius * transform.up;
+            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Behavior.Rotation3D, Behavior.ControllerData.ClimbDownTimeSeconds, () => {
                 StartClimbing();
             });
 
@@ -774,8 +774,8 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         private Vector3 GetSurfaceAttachmentPosition(RaycastHit hit, Vector3 offset)
         {
             // keep a set distance away from the surface
-            Vector3 targetPoint = hit.point + (hit.normal * Controller.ControllerData.AttachDistance);
-            Vector3 a = targetPoint - Controller.Position;
+            Vector3 targetPoint = hit.point + (hit.normal * Behavior.ControllerData.AttachDistance);
+            Vector3 a = targetPoint - Behavior.Position;
             Vector3 p = Vector3.Project(a, hit.normal);
 
             return p + offset;
@@ -787,16 +787,16 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
 
             // TODO: we can probably infer this using the dot product
             if(isHang) {
-                Controller.Position = Controller.Position + GetSurfaceAttachmentPosition(hit, -_hangTransform.localPosition);
+                Behavior.Position = Behavior.Position + GetSurfaceAttachmentPosition(hit, -_hangTransform.localPosition);
             } else {
                 transform.forward = -hit.normal;
-                Controller.Position = Controller.Position + GetSurfaceAttachmentPosition(hit, Controller.Owner.Radius * hit.normal);
+                Behavior.Position = Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal);
             }
         }
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Controller.Owner.Id} Climbing Component");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => $"Game.Player {Behavior.Owner.Id} Climbing Component");
             _debugMenuNode.RenderContentsAction = () => {
                 _breakOnFall = GUILayout.Toggle(_breakOnFall, "Break on fall");
             };

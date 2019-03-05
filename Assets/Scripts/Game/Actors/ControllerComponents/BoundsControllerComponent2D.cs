@@ -12,17 +12,17 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
             float aspectRatio = (Screen.width / (float)Screen.height);
             Vector2 gameSize = new Vector2(GameStateManager.Instance.GameManager.GameData.GameSize2D * aspectRatio,
                                            GameStateManager.Instance.GameManager.GameData.GameSize2D);
-            Vector2 halfSize = new Vector2(Controller.Owner.Radius, Controller.Owner.Height / 2.0f);
+            Vector2 halfSize = new Vector2(Behavior.Owner.Radius, Behavior.Owner.Height / 2.0f);
 
             // TODO: this was originally copied from DefaultPhysicsMove() and probably should be smarter than that
             // TODO: this should have acceleration and momentum
 
             Vector3 velocity = axes * speed;
-            if(!Controller.IsKinematic) {
-                velocity.y = Controller.Velocity.y;
+            if(!Behavior.IsKinematic) {
+                velocity.y = Behavior.Velocity.y;
             }
 
-            Vector2 updatedPosition = Controller.Position + velocity * dt;
+            Vector2 updatedPosition = Behavior.Position + velocity * dt;
             if(updatedPosition.x + halfSize.x > gameSize.x) {
                 updatedPosition.x = gameSize.x - halfSize.x;
             } else if(updatedPosition.x - halfSize.x < -gameSize.x) {
@@ -35,7 +35,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 updatedPosition.y = -gameSize.y + halfSize.y;
             }
 
-            Controller.MovePosition(updatedPosition);
+            Behavior.MovePosition(updatedPosition);
 
             return true;
         }
