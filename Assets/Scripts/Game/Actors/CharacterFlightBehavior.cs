@@ -1,15 +1,18 @@
 ﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Game.Players
 {
-    // TODO: create a FlightControllerData, similar to CharacterControllerData
-    public class FlightController : ActorBehavior3D
+    public class CharacterFlightBehavior : ActorBehavior3D
     {
+        [SerializeField]
+        private CharacterFlightBehaviorData _data;
+
 #region Physics
         [SerializeField]
         [ReadOnly]
@@ -19,39 +22,7 @@ namespace pdxpartyparrot.Game.Players
 
         public float Speed => CanMove ? 0.0f : (PartyParrotManager.Instance.IsPaused ? PauseState.Velocity.magnitude : Velocity.magnitude);
 
-        public float Altitude => Owner.gameObject.transform.position.y;
-#endregion
-
-#region Movement Params
-        [SerializeField]
-        private float _maxAttackAngle = 45.0f;
-
-        public float MaxAttackAngle => _maxAttackAngle;
-
-        [SerializeField]
-        private float _maxBankAngle = 45.0f;
-
-        public float MaxBankAngle => _maxBankAngle;
-
-        [SerializeField]
-        private float _rotationAnimationSpeed = 5.0f;
-
-        public float RotationAnimationSpeed => _rotationAnimationSpeed;
-
-        [SerializeField]
-        private float _linearThrust = 10.0f;
-
-        public float LinearThrust => _linearThrust;
-
-        [SerializeField]
-        private float _turnSpeed = 10.0f;
-
-        public float TurnSpeed => _turnSpeed;
-
-        [SerializeField]
-        private float _terminalVelocity = 10.0f;
-
-        public float TerminalVelocity => _terminalVelocity;
+        public float Altitude => Owner.transform.position.y;
 #endregion
 
 #region Unity Lifecycle
@@ -103,7 +74,7 @@ namespace pdxpartyparrot.Game.Players
             if(null != Owner.Model) {
                 Owner.Model.transform.localRotation = Quaternion.Euler(0.0f, Owner.Model.transform.localEulerAngles.y, 0.0f);
             }
-            Rotation3D = Quaternion.Euler(0.0f, transform.eulerAngles.y, 0.0f);
+            Rotation3D = Quaternion.Euler(0.0f, Owner.transform.eulerAngles.y, 0.0f);
 
             // stop moving
             Velocity = Vector3.zero;
@@ -134,12 +105,12 @@ namespace pdxpartyparrot.Game.Players
             Quaternion rotation = Owner.Model.transform.localRotation;
             Vector3 targetEuler = new Vector3
             {
-                z = axes.x * -MaxBankAngle,
-                x = axes.y * -MaxAttackAngle
+                z = axes.x * -_data.MaxBankAngle,
+                x = axes.y * -_data.MaxAttackAngle
             };
 
             Quaternion targetRotation = Quaternion.Euler(targetEuler);
-            rotation = Quaternion.Lerp(rotation, targetRotation, RotationAnimationSpeed * dt);
+            rotation = Quaternion.Lerp(rotation, targetRotation, _data.RotationAnimationSpeed * dt);
 
             Owner.Model.transform.localRotation = rotation;
         }
@@ -147,7 +118,7 @@ namespace pdxpartyparrot.Game.Players
         private void Turn(Vector3 axes, float dt)
         {
 #if true
-            float turnSpeed = TurnSpeed * axes.x;
+            float turnSpeed = _data.TurnSpeed * axes.x;
             Quaternion rotation = Quaternion.AngleAxis(turnSpeed * dt, Vector3.up);
             MoveRotation(Rotation3D * rotation);
 #else
@@ -157,9 +128,11 @@ namespace pdxpartyparrot.Game.Players
             AddRelativeTorque(Vector3.up * AngularThrust * axes.x);
 #endif
 
+            Transform ownerTransform = Owner.transform;
+
             // adding a force opposite our current x velocity should help stop us drifting
-            Vector3 relativeVelocity = transform.InverseTransformDirection(Velocity);
-            _bankForce = -relativeVelocity.x * AngularDrag * transform.right;
+            Vector3 relativeVelocity = ownerTransform.InverseTransformDirection(Velocity);
+            _bankForce = -relativeVelocity.x * AngularDrag * ownerTransform.right;
             AddForce(_bankForce);
         }
 
@@ -171,9 +144,9 @@ namespace pdxpartyparrot.Game.Players
 
             Turn(axes, dt);
 
-            float attackAngle = axes.y * -MaxAttackAngle;
+            float attackAngle = axes.y * -_data.MaxAttackAngle;
             Vector3 attackVector = Quaternion.AngleAxis(attackAngle, Vector3.right) * Vector3.forward;
-            AddRelativeForce(attackVector * LinearThrust);
+            AddRelativeForce(attackVector * _data.LinearThrust);
 
             // lift if we're not falling
             if(axes.y >= 0.0f) {
@@ -182,8 +155,8 @@ namespace pdxpartyparrot.Game.Players
 
             // cap our fall speed
             Vector3 velocity = Velocity;
-            if(velocity.y < -TerminalVelocity) {
-                Velocity = new Vector3(velocity.x, -TerminalVelocity, velocity.z);
+            if(velocity.y < -_data.TerminalVelocity) {
+                Velocity = new Vector3(velocity.x, -_data.TerminalVelocity, velocity.z);
             }
         }
     }
