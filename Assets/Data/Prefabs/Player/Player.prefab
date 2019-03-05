@@ -105,7 +105,6 @@ GameObject:
   - component: {fileID: 7579413692694895314}
   - component: {fileID: 7377174901373575}
   - component: {fileID: 2603974987608069630}
-  - component: {fileID: 5129411227740885415}
   - component: {fileID: 7566827058745012155}
   - component: {fileID: 4359218613803387002}
   - component: {fileID: 6318285324892847177}
@@ -300,29 +299,6 @@ MonoBehaviour:
     _timerSeconds: 0
     _secondsRemaining: 0
     _isRunning: 0
---- !u!114 &5129411227740885415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2228405151768162015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad27d957fd9a86d49b55bcd0f043ba31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controllerData: {fileID: 11400000, guid: 1dc5a7a67dba6df4caec3ac998e2ff24, type: 2}
-  _owner: {fileID: 2603974987608069630}
-  _raycastRoutineRate: 0.1
-  _didGroundCheckCollide: 0
-  _groundCheckNormal: {x: 0, y: 0, z: 0}
-  _groundCheckMinDistance: 0
-  _isGrounded: 0
-  _groundSlope: 0
-  _isSliding: 0
-  _groundedEffect: {fileID: 0}
-  _isKinematic: 0
 --- !u!50 &7566827058745012155
 Rigidbody2D:
   serializedVersion: 4
@@ -368,6 +344,15 @@ MonoBehaviour:
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
+  _controllerData: {fileID: 11400000, guid: 1dc5a7a67dba6df4caec3ac998e2ff24, type: 2}
+  _raycastRoutineRate: 0.1
+  _didGroundCheckCollide: 0
+  _groundCheckNormal: {x: 0, y: 0, z: 0}
+  _groundCheckMinDistance: 0
+  _isGrounded: 0
+  _groundSlope: 0
+  _isSliding: 0
+  _groundedEffect: {fileID: 0}
   _spineAnimation: {fileID: 5515133998358140594}
   _useGravity: 0
   _playerControllerData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,

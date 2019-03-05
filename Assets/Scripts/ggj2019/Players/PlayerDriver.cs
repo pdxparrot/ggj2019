@@ -165,7 +165,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // action on release
             if(context.cancelled) {
-                GamePlayerBehavior.CharacterController.ActionPerformed(GatherControllerComponent.GatherAction.Default);
+                GamePlayerBehavior.ActionPerformed(GatherControllerComponent.GatherAction.Default);
             }
         }
 
@@ -177,7 +177,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // action on release
             if(context.cancelled) {
-                GamePlayerBehavior.CharacterController.ActionPerformed(ContextControllerComponent.ContextAction.Default);
+                GamePlayerBehavior.ActionPerformed(ContextControllerComponent.ContextAction.Default);
             }
         }
 #endregion

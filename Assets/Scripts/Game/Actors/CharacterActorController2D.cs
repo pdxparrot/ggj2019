@@ -1,35 +1,110 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using JetBrains.Annotations;
+
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Animation;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Actors.ControllerComponents;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.State;
 
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    // TODO: reduce the copy paste in this
-    [RequireComponent(typeof(CharacterActorController))]
+    // TODO: merge this into ActorBehavior2D
     [RequireComponent(typeof(Collider2D))]
-    public class CharacterActorController2D : ActorBehavior2D, ICharacterActorController
+    public class CharacterActorController2D : ActorBehavior2D
     {
-        public CharacterActorControllerData ControllerData => _characterController.ControllerData;
+        [SerializeField]
+        private CharacterActorControllerData _controllerData;
 
-        public Collider2D Collider => Owner2D.Collider;
+        public CharacterActorControllerData ControllerData => _controllerData;
 
-        private CharacterActorController _characterController;
+        [Space(10)]
 
-        public CharacterActorController CharacterController => _characterController;
+        [SerializeField]
+        [Range(0, 1)]
+        [Tooltip("How often to run raycast checks, in seconds")]
+        private float _raycastRoutineRate = 0.1f;
 
-        public float RaycastRoutineRate => _characterController.RaycastRoutineRate;
+        public float RaycastRoutineRate => _raycastRoutineRate;
 
-        public bool IsGrounded => _characterController.IsGrounded;
+        [Space(10)]
 
-        public bool DidGroundCheckCollide => _characterController.DidGroundCheckCollide;
+#region Ground Check
+        [Header("Ground Check")]
 
-        public bool IsSliding => _characterController.IsSliding;
+        private RaycastHit[] _groundCheckHits = new RaycastHit[4];
 
-        public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
+        [SerializeField]
+        [ReadOnly]
+        private bool _didGroundCheckCollide;
+
+        public bool DidGroundCheckCollide => _didGroundCheckCollide;
+
+        [SerializeField]
+        [ReadOnly]
+        private Vector3 _groundCheckNormal;
+
+        public Vector3 GroundCheckNormal => _groundCheckNormal;
+
+        [SerializeField]
+        [ReadOnly]
+        private float _groundCheckMinDistance;
+
+        [SerializeField]
+        [ReadOnly]
+        private bool _isGrounded;
+
+        public bool IsGrounded
+        {
+            get => _isGrounded;
+            protected set => _isGrounded = value;
+        }
+
+        private float GroundCheckRadius => Owner.Height - 0.1f;
+
+        protected Vector3 GroundCheckCenter => Owner.transform.position + (GroundCheckRadius * Vector3.up);
+#endregion
+
+        [Space(10)]
+
+#region Slope Check
+        [Header("Slope Check")]
+
+        [SerializeField]
+        [ReadOnly]
+        private float _groundSlope;
+
+        public float GroundSlope => _groundSlope;
+
+        [SerializeField]
+        [ReadOnly]
+        private bool _isSliding;
+
+        public bool IsSliding => _isSliding;
+#endregion
+
+        [Space(10)]
+
+#region Effects
+        [Header("Effects")]
+
+        [SerializeField]
+        [CanBeNull]
+        private EffectTrigger _groundedEffect;
+#endregion
+
+        [Space(10)]
+
+#region Animation
+        [Header("Animation")]
 
 #if USE_SPINE
         [SerializeField]
@@ -37,6 +112,9 @@ namespace pdxpartyparrot.Game.Actors
 
         protected SpineAnimationHelper SpineAnimation => _spineAnimation;
 #endif
+#endregion
+
+        [Space(10)]
 
 #region Physics
         [Header("Physics")]
@@ -55,15 +133,26 @@ namespace pdxpartyparrot.Game.Actors
             }
         }
 
-        public bool IsFalling => UseGravity && (!_characterController.IsGrounded && !_characterController.IsSliding && Velocity.y < 0.0f);
+        public bool IsFalling => UseGravity && (!IsGrounded && !IsSliding && Velocity.y < 0.0f);
 #endregion
+
+        public Collider2D Collider => Owner2D.Collider;
+
+        public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
+
+        private CharacterActorControllerComponent2D[] _components;
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
-            _characterController = GetComponent<CharacterActorController>();
+            _components = GetComponents<CharacterActorControllerComponent2D>();
+            //Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
+
+            if(!GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic) {
+                StartCoroutine(RaycastRoutine());
+            }
         }
 
         protected override void Update()
@@ -87,8 +176,8 @@ namespace pdxpartyparrot.Game.Actors
 
             // turn off gravity if we're grounded and not moving and not sliding
             // this should stop us sliding down slopes we shouldn't slide down
-            SetUseGravity(UseGravity && (!_characterController.IsGrounded || IsMoving || _characterController.IsSliding));
-            _characterController.IsKinematic = IsKinematic;
+            SetUseGravity(UseGravity && (!IsGrounded || IsMoving || IsSliding));
+            IsKinematic = IsKinematic;
         }
 
         protected virtual void OnDrawGizmos()
@@ -102,6 +191,12 @@ namespace pdxpartyparrot.Game.Actors
 
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(Position, Position + Velocity);
+
+            Gizmos.color = IsGrounded ? Color.red : Color.yellow;
+            Gizmos.DrawWireSphere(GroundCheckCenter + (ControllerData.GroundedEpsilon * Vector3.down), GroundCheckRadius);
+
+            Gizmos.color = DidGroundCheckCollide ? Color.red : Color.yellow;
+            Gizmos.DrawWireSphere(GroundCheckCenter + (ControllerData.GroundCheckLength * Vector3.down), GroundCheckRadius);
         }
 #endregion
 
@@ -116,13 +211,65 @@ namespace pdxpartyparrot.Game.Actors
             rb.interpolation = RigidbodyInterpolation2D.None;
         }
 
+#region Components
+        [CanBeNull]
+        public T GetControllerComponent<T>() where T: CharacterActorControllerComponent
+        {
+            foreach(var component in _components) {
+                T tc = component as T;
+                if(tc != null) {
+                    return tc;
+                }
+            }
+            return null;
+        }
+
+        public void GetControllerComponents<T>(ICollection<T> components) where T: CharacterActorControllerComponent
+        {
+            components.Clear();
+            foreach(var component in _components) {
+                T tc = component as T;
+                if(tc != null) {
+                    components.Add(tc);
+                }
+            }
+        }
+
+        public bool RunOnComponents(Func<CharacterActorControllerComponent, bool> f)
+        {
+            foreach(var component in _components) {
+                if(f(component)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+#endregion
+
+#region Actions
+        public virtual void ActionStarted(CharacterActorControllerComponent.CharacterActorControllerAction action)
+        {
+            RunOnComponents(c => c.OnStarted(action));
+        }
+
+        public virtual void ActionPerformed(CharacterActorControllerComponent.CharacterActorControllerAction action)
+        {
+            RunOnComponents(c => c.OnPerformed(action));
+        }
+
+        public virtual void ActionCancelled(CharacterActorControllerComponent.CharacterActorControllerAction action)
+        {
+            RunOnComponents(c => c.OnCancelled(action));
+        }
+#endregion
+
         public override void AnimationMove(Vector3 axes, float dt)
         {
             if(!CanMove) {
                 return;
             }
 
-            if(_characterController.RunOnComponents(c => c.OnAnimationMove(axes, dt))) {
+            if(RunOnComponents(c => c.OnAnimationMove(axes, dt))) {
                 return;
             }
 
@@ -154,7 +301,7 @@ namespace pdxpartyparrot.Game.Actors
 
             float speed = ControllerData.MoveSpeed;
 
-            if(_characterController.RunOnComponents(c => c.OnPhysicsMove(axes, speed, dt))) {
+            if(RunOnComponents(c => c.OnPhysicsMove(axes, speed, dt))) {
                 return;
             }
 
@@ -193,7 +340,7 @@ namespace pdxpartyparrot.Game.Actors
 
             // force physics to a sane state for the first frame of the jump
             _useGravity = true;
-            _characterController.ResetGroundCheck();
+            ResetGroundCheck();
 
             // factor in fall speed adjust
             float gravity = -Physics.gravity.y + ControllerData.FallSpeedAdjustment;
@@ -201,6 +348,7 @@ namespace pdxpartyparrot.Game.Actors
             // v = sqrt(2gh)
             Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
+            // TODO: move to an EffectTrigger
 #if !USE_SPINE
             if(null != Animator) {
                 Animator.SetTrigger(animationParam);
@@ -208,10 +356,15 @@ namespace pdxpartyparrot.Game.Actors
 #endif
         }
 
+        public void ResetGroundCheck()
+        {
+            _didGroundCheckCollide = _isGrounded = false;
+        }
+
         private void FudgeVelocity(float dt)
         {
             Vector3 adjustedVelocity = Velocity;
-            if(_characterController.IsGrounded && !IsMoving) {
+            if(IsGrounded && !IsMoving) {
                 // prevent any weird ground adjustment shenanigans
                 // when we're grounded and not moving
                 adjustedVelocity.y = 0.0f;
@@ -227,5 +380,72 @@ namespace pdxpartyparrot.Game.Actors
             }
             Velocity = adjustedVelocity;
         }
+
+        private IEnumerator RaycastRoutine()
+        {
+            Debug.Log("Starting character raycast routine");
+
+            WaitForSeconds wait = new WaitForSeconds(RaycastRoutineRate);
+            while(true) {
+                UpdateIsGrounded();
+
+                yield return wait;
+            }
+        }
+
+#region Grounded Check
+        protected bool CheckIsGrounded(out float minDistance)
+        {
+            minDistance = float.MaxValue;
+
+            Vector3 origin = GroundCheckCenter;
+
+            int hitCount = Physics.SphereCastNonAlloc(origin, GroundCheckRadius, Vector3.down, _groundCheckHits, ControllerData.GroundCheckLength, ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore);
+            if(hitCount < 1) {
+                // no slope if not grounded
+                _groundSlope = 0;
+                return false;
+            }
+
+            // figure out the slope of whatever we hit
+            _groundCheckNormal = Vector3.zero;
+            for(int i=0; i<hitCount; ++i) {
+                _groundCheckNormal += _groundCheckHits[i].normal;
+                minDistance = Mathf.Min(minDistance, _groundCheckHits[i].distance);
+            }
+            _groundCheckNormal /= hitCount;
+
+            _groundSlope = Vector3.Angle(Vector3.up, _groundCheckNormal);
+
+            return true;
+        }
+
+        private void UpdateIsGrounded()
+        {
+            Profiler.BeginSample("CharacterBehavior2D.UpdateIsGrounded");
+            try {
+                bool wasGrounded = IsGrounded;
+
+                _didGroundCheckCollide = CheckIsGrounded(out _groundCheckMinDistance);
+
+                if(IsKinematic) {
+                    // something else is handling this case?
+                } else {
+                    _isGrounded = _didGroundCheckCollide && _groundCheckMinDistance < ControllerData.GroundedEpsilon;
+                }
+
+                // if we're on a slope, we're sliding down it
+                _isSliding = _groundSlope >= ControllerData.SlopeLimit;
+
+                if(!wasGrounded && IsGrounded) {
+                    if(null != _groundedEffect) {
+                        _groundedEffect.Trigger();
+                    }
+                }
+            } finally {
+                Profiler.EndSample();
+            }
+        }
+#endregion
     }
 }

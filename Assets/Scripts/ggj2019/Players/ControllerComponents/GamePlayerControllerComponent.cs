@@ -1,9 +1,9 @@
 ﻿using pdxpartyparrot.Game.Players;
 
-namespace pdxpartyparrot.ggj2019.Player.ControllerComponents
+namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
 {
-    public abstract class GamePlayerControllerComponent : PlayerControllerComponent
+    public abstract class GamePlayerControllerComponent : PlayerControllerComponent2D
     {
-        protected Players.Player GamePlayer => (Players.Player)PlayerController.Player;
+        protected Player GamePlayer => (Player)PlayerController.Player;
     }
 }

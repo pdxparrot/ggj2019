@@ -1,6 +1,4 @@
-﻿using pdxpartyparrot.ggj2019.Player.ControllerComponents;
-
-namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
+﻿namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
 {
     public sealed class GatherControllerComponent : GamePlayerControllerComponent
     {

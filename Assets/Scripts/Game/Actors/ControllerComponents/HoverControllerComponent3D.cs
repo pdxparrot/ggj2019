@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.ControllerComponents
 {
-    [RequireComponent(typeof(JumpControllerComponent))]
-    public sealed class HoverControllerComponent : CharacterActorControllerComponent
+    [RequireComponent(typeof(JumpControllerComponent3D))]
+    public sealed class HoverControllerComponent3D : CharacterActorControllerComponent3D
     {
 #region Actions
         public class HoverAction : CharacterActorControllerAction
@@ -117,7 +117,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         // NOTE: we want to consume jump actions if we're hovering
         public override bool OnPerformed(CharacterActorControllerAction action)
         {
-            if(!(action is JumpControllerComponent.JumpAction)) {
+            if(!(action is JumpControllerComponent3D.JumpAction)) {
                 return false;
             }
 

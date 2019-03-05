@@ -2,7 +2,6 @@
 
 namespace pdxpartyparrot.Game.Actors.ControllerComponents
 {
-    [RequireComponent(typeof(CharacterActorController))]
     public abstract class CharacterActorControllerComponent : MonoBehaviour
     {
 // TODO: if subclasses could register for specific action types (and we keep a dictionary ActionType => Listener)
@@ -14,12 +13,9 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         }
 #endregion
 
-        protected ICharacterActorController Controller { get; private set; }
-
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            Controller = GetComponent<ICharacterActorController>();
         }
 
         protected virtual void OnDestroy()

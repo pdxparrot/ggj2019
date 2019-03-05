@@ -10,8 +10,7 @@ using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Game.Actors.ControllerComponents
 {
-    // TODO: rename this ClimbingControllerComponent3D
-    public sealed class ClimbingControllerComponent : CharacterActorControllerComponent
+    public sealed class ClimbingControllerComponent3D : CharacterActorControllerComponent3D
     {
 #region Actions
         public class GrabAction : CharacterActorControllerAction
