@@ -114,7 +114,7 @@ namespace pdxpartyparrot.Game.State
             Core.Network.NetworkManager.Instance.ServerChangedScene();
 
             if(!NetworkClient.active && !PartyParrotManager.Instance.IsHeadless) {
-                ViewerManager.Instance.AllocateViewers(1, GameStateManager.Instance.ServerSpectatorViewer);
+                ViewerManager.Instance.AllocateViewers(1, GameStateManager.Instance.ServerSpectatorViewerPrefab);
 
                 _serverSpectator = Instantiate(GameStateManager.Instance.ServerSpectatorPrefab);
             }

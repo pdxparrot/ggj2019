@@ -17,6 +17,7 @@ using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.State
 {
@@ -62,9 +63,10 @@ namespace pdxpartyparrot.Game.State
         public  ServerSpectator ServerSpectatorPrefab => _serverSpectatorPrefab;
 
         [SerializeField]
-        private ServerSpectatorViewer _serverSpectatorViewer;
+        [FormerlySerializedAs("_serverSpectatorViewer")]
+        private ServerSpectatorViewer _serverSpectatorViewerPrefab;
 
-        public ServerSpectatorViewer ServerSpectatorViewer => _serverSpectatorViewer;
+        public ServerSpectatorViewer ServerSpectatorViewerPrefab => _serverSpectatorViewerPrefab;
 #endregion
 
 #region Network
