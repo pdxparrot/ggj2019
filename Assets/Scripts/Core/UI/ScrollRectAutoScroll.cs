@@ -15,10 +15,6 @@ Add a ContentSizeFitter to Content
     Set Horizontal Fit to Unconstrained
     Set Vertical Fit to Preferred Size
 Delete the ScrollBars completely to get them to not show up
-
-
-TODO: for some reason the first time this is enabled, the size of the container is wrong
-and setting the scroll position to the top isn't working
 */
 
     [RequireComponent(typeof(ScrollRect))]
@@ -62,6 +58,20 @@ and setting the scroll position to the top isn't working
 
         private void OnEnable()
         {
+            // make sure we have the right content size before we begin
+            // TODO: none of these seem to do the trick :(
+/*Debug.Log($"height a: {_scrollRect.content.rect.height}");
+            Canvas.ForceUpdateCanvases();
+
+            LayoutGroup layoutGroup = _scrollRect.content.GetComponent<LayoutGroup>();
+            layoutGroup.CalculateLayoutInputVertical();
+            layoutGroup.SetLayoutVertical();
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_scrollRect.content);
+
+            _scrollRect.Rebuild(CanvasUpdate.PostLayout);
+Debug.Log($"height b: {_scrollRect.content.rect.height}");*/
+
             _step = Mathf.Clamp01(_scrollRate / _scrollRect.content.rect.height);
             if(_resetOnEnable) {
                 _scrollRect.verticalNormalizedPosition = 1.0f;

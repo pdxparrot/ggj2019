@@ -49,10 +49,10 @@ namespace pdxpartyparrot.Core.Camera
         private Vector2 _orbitRotation;
 
         // TODO: use this
-        [SerializeField]
+        /*[SerializeField]
         [Range(0, 50)]
         [Tooltip("The minimum distance the camera should be from the follow target")]
-        private float _orbitMinRadius = 15.0f;
+        private float _orbitMinRadius = 15.0f;*/
 
         [SerializeField]
         [Range(0, 50)]

@@ -65,10 +65,10 @@ namespace pdxpartyparrot.Core.DebugMenu
         private readonly StringBuilder _logMessageBuffer = new StringBuilder();
 #else
         private readonly Queue<LogMessage> _logMessages = new Queue<LogMessage>();
-#endif
 
         [SerializeField]
         private int _maxLogMessages = 1000;
+#endif
 
 #region Unity Lifecycle
         private void Awake()
