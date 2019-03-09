@@ -35,7 +35,7 @@ namespace pdxpartyparrot.Game.Players
         [SerializeField]
         private PlayerDriver _driver;
 
-        protected PlayerDriver PlayerDriver => _driver;
+        public PlayerDriver PlayerDriver => _driver;
 
         [CanBeNull]
         public IPlayerBehavior PlayerBehavior => (PlayerBehavior3D)Behavior;
@@ -78,6 +78,9 @@ namespace pdxpartyparrot.Game.Players
             base.Initialize(id);
 
             InitializeLocalPlayer(id);
+            if(null != PlayerBehavior) {
+                PlayerBehavior.Initialize();
+            }
         }
 
         protected virtual bool InitializeLocalPlayer(Guid id)
