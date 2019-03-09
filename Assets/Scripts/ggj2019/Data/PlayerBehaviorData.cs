@@ -10,5 +10,18 @@ namespace pdxpartyparrot.ggj2019.Data
     [Serializable]
     public sealed class PlayerBehaviorData : Game.Data.PlayerBehaviorData
     {
+#region Animation
+        [Header("Player Animations")]
+
+        [SerializeField]
+        private string _idleAnimationName = "bee_hover";
+
+        public string IdleAnimationName => _idleAnimationName;  
+
+        [SerializeField]
+        private string _flyingAnimationName = "bee-flight";
+
+        public string FlyingAnimationName => _flyingAnimationName;
+#endregion
     }
 }

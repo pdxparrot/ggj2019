@@ -62,7 +62,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            if(player.Damage() && !IsImmune) {
+            player.Damage();
+            if(!IsImmune) {
                 Kill(player);
             }
         }

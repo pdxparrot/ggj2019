@@ -282,19 +282,7 @@ MonoBehaviour:
   _pollenTarget: {fileID: 8417827668764443029}
   _interactables: {fileID: 5023084697306132187}
   _isDead: 0
-  _spawnEffect: {fileID: 3164533851950656107}
-  _respawnEffect: {fileID: 6172685723017044385}
-  _damageEffect: {fileID: 7674856831482742360}
-  _deathEffect: {fileID: 1971960604629102527}
-  _gameOverEffect: {fileID: 8821035005184857451}
-  _respawnTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
-  _immunityTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
+  _pollen: []
 --- !u!50 &7566827058745012155
 Rigidbody2D:
   serializedVersion: 4
@@ -562,7 +550,20 @@ MonoBehaviour:
   _isSliding: 0
   _playerBehaviorData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,
     type: 2}
+  _spawnEffect: {fileID: 3164533851950656107}
+  _respawnEffect: {fileID: 6172685723017044385}
+  _damageEffect: {fileID: 7674856831482742360}
+  _deathEffect: {fileID: 1971960604629102527}
+  _gameOverEffect: {fileID: 8821035005184857451}
   _isFlying: 1
+  _respawnTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+  _immunityTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!114 &1148204457330811759
 MonoBehaviour:
   m_ObjectHideFlags: 0

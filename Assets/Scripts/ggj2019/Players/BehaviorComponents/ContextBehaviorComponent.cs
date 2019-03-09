@@ -15,7 +15,7 @@
                 return false;
             }
 
-            //GamePlayer.DoContext();
+            //GamePlayer.GamePlayerBehavior.OnContext();
 
             return true;
         }

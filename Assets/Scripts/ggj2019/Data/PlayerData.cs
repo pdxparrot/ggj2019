@@ -26,21 +26,5 @@ namespace pdxpartyparrot.ggj2019.Data
         private int _maxPollen = -1;
 
         public int MaxPollen => _maxPollen;
-
-        [Space(10)]
-
-#region Animation
-        [Header("Animations")]
-
-        [SerializeField]
-        private string _idleAnimationName = "bee_hover";
-
-        public string IdleAnimationName => _idleAnimationName;  
-
-        [SerializeField]
-        private string _flyingAnimationName = "bee-flight";
-
-        public string FlyingAnimationName => _flyingAnimationName;
-#endregion
     }
 }

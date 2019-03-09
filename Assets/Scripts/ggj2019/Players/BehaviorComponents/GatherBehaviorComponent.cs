@@ -15,7 +15,7 @@
                 return false;
             }
 
-            GamePlayer.DoGather();
+            GamePlayer.GamePlayerBehavior.OnGather();
 
             return true;
         }
