@@ -7,9 +7,10 @@ using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Players
 {
-    // TODO: reduce the copy paste in this
     public abstract class PlayerBehavior3D : CharacterBehavior3D, IPlayerBehavior
     {
+        [Space(10)]
+
         [SerializeField]
         [FormerlySerializedAs("_playerControllerData")]
         private PlayerBehaviorData _behaviorData;
