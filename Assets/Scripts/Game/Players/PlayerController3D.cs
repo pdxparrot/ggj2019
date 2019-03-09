@@ -3,6 +3,7 @@ using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Players
 {
@@ -10,9 +11,10 @@ namespace pdxpartyparrot.Game.Players
     public abstract class PlayerController3D : CharacterBehavior3D, IPlayerController
     {
         [SerializeField]
-        private PlayerControllerData _playerControllerData;
+        [FormerlySerializedAs("_playerControllerData")]
+        private PlayerBehaviorData _behaviorData;
 
-        public PlayerControllerData PlayerControllerData => _playerControllerData;
+        public PlayerBehaviorData PlayerBehaviorData => _behaviorData;
 
         public IPlayer Player => (IPlayer)Owner;
 

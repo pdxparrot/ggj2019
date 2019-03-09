@@ -4,7 +4,7 @@ namespace pdxpartyparrot.Game.Players
 {
     public interface IPlayerController
     {
-        PlayerControllerData PlayerControllerData { get; }
+        PlayerBehaviorData PlayerBehaviorData { get; }
 
         IPlayer Player { get; }
     }

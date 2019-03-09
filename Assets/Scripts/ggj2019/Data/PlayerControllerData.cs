@@ -8,7 +8,7 @@ namespace pdxpartyparrot.ggj2019.Data
 {
     [CreateAssetMenu(fileName="PlayerControllerData", menuName="pdxpartyparrot/ggj2019/Data/PlayerController Data")]
     [Serializable]
-    public sealed class PlayerControllerData : Game.Data.PlayerControllerData
+    public sealed class PlayerControllerData : Game.Data.PlayerBehaviorData
     {
     }
 }
