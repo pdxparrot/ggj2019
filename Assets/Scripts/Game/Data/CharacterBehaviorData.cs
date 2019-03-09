@@ -39,11 +39,6 @@ namespace pdxpartyparrot.Game.Data
         public string FallingParam => _fallingParam;
 
         [SerializeField]
-        private string _jumpParam = "Jump";
-
-        public string JumpParam => _jumpParam;
-
-        [SerializeField]
         private string _longJumpParam = "LongJump";
 
         public string LongJumpParam => _longJumpParam;
@@ -100,19 +95,6 @@ namespace pdxpartyparrot.Game.Data
         private float _slopeLimit = 30.0f;
 
         public float SlopeLimit => _slopeLimit;
-#endregion
-
-        [Space(10)]
-
-#region Jumping
-        [Header("Jumping")]
-
-        [SerializeField]
-        [Range(0, 100)]
-        [Tooltip("How high does the character jump")]
-        private float _jumpHeight = 30.0f;
-
-        public float JumpHeight => _jumpHeight;
 #endregion
 
         [Space(10)]

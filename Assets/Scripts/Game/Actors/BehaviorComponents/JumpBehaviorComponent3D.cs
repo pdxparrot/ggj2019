@@ -1,3 +1,7 @@
+using pdxpartyparrot.Game.Data;
+
+using UnityEngine;
+
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     public sealed class JumpBehaviorComponent3D : CharacterBehaviorComponent3D
@@ -9,6 +13,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
+        [SerializeField]
+        private JumpBehaviorComponentData _data;
+
         public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(!(action is JumpAction)) {
@@ -19,7 +26,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 return false;
             }
 
-            Behavior.Jump(Behavior.BehaviorData.JumpHeight, Behavior.BehaviorData.JumpParam);
+            Behavior.Jump(_data.JumpHeight, _data.JumpParam);
 
             return true;
         }
