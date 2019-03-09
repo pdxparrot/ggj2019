@@ -1,8 +1,3 @@
-using System;
-
-using JetBrains.Annotations;
-
-using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -32,35 +27,7 @@ namespace pdxpartyparrot.Core.Actors
 
         public bool IsMoving => _isMoving;
 
-        public virtual bool CanMove => null == _actorAnimator || !_actorAnimator.IsAnimating;
-#endregion
-
-#region Animation
-#if USE_SPINE
-        [SerializeField]
-        [CanBeNull]
-        private SpineAnimationHelper _animationHelper;
-
-        [CanBeNull]
-        public SpineAnimationHelper AnimationHelper => _animationHelper;
-#else
-        [SerializeField]
-        [CanBeNull]
-        private Animator _animator;
-
-        [CanBeNull]
-        public Animator Animator => _animator;
-#endif
-
-        [SerializeField]
-        [CanBeNull]
-        private ActorAnimator _actorAnimator;
-
-        [CanBeNull]
-        public ActorAnimator ActorAnimator => _actorAnimator;
-
-        [SerializeField]
-        private bool _pauseAnimationOnPause = true;
+        public abstract bool CanMove { get; }
 #endregion
 
         [SerializeField]
@@ -135,11 +102,6 @@ namespace pdxpartyparrot.Core.Actors
 #endregion
 
 #region Unity Lifecycle
-        protected virtual void Awake()
-        {
-            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
-        }
-
         protected virtual void Update()
         {
             _isMoving = LastMoveAxes.sqrMagnitude > AxesDeadZone;
@@ -154,13 +116,6 @@ namespace pdxpartyparrot.Core.Actors
             float dt = UnityEngine.Time.fixedDeltaTime;
 
             PhysicsMove(LastMoveAxes, dt);
-        }
-
-        protected virtual void OnDestroy()
-        {
-            if(PartyParrotManager.HasInstance) {
-                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
-            }
         }
 #endregion
 
@@ -177,23 +132,6 @@ namespace pdxpartyparrot.Core.Actors
         // NOTE: axes are (x, y, 0)
         public virtual void PhysicsMove(Vector3 axes, float dt)
         {
-        }
-#endregion
-
-#region Event Handlers
-        protected virtual void PauseEventHandler(object sender, EventArgs args)
-        {
-            if(_pauseAnimationOnPause) {
-#if USE_SPINE
-                if(AnimationHelper != null) {
-                    AnimationHelper.Pause(PartyParrotManager.Instance.IsPaused);
-                }
-#else
-                if(Animator != null) {
-                    Animator.enabled = !PartyParrotManager.Instance.IsPaused;
-                }
-#endif
-            }
         }
 #endregion
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 
+using JetBrains.Annotations;
+
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -117,6 +119,29 @@ namespace pdxpartyparrot.Core.Actors
 
         [Space(10)]
 
+#region Animation
+        [Header("Animation")]
+
+        [SerializeField]
+        [CanBeNull]
+        private Animator _animator;
+
+        [CanBeNull]
+        public Animator Animator => _animator;
+
+        [SerializeField]
+        [CanBeNull]
+        private ActorAnimator _actorAnimator;
+
+        [CanBeNull]
+        public ActorAnimator ActorAnimator => _actorAnimator;
+
+        [SerializeField]
+        private bool _pauseAnimationOnPause = true;
+#endregion
+
+        [Space(10)]
+
 #region Pause State
         [Header("Pause State")]
 
@@ -127,14 +152,23 @@ namespace pdxpartyparrot.Core.Actors
         protected InternalPauseState PauseState => _pauseState;
 #endregion
 
-#region Unity Lifecycle
-        protected override void Awake()
-        {
-            base.Awake();
+        public override bool CanMove => null == _actorAnimator || !_actorAnimator.IsAnimating;
 
+#region Unity Lifecycle
+        protected virtual void Awake()
+        {
             Assert.IsTrue(Owner is Actor3D);
 
+            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
+
             InitRigidbody(_rigidbody);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if(PartyParrotManager.HasInstance) {
+                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
+            }
         }
 
         protected virtual void LateUpdate()
@@ -192,9 +226,13 @@ namespace pdxpartyparrot.Core.Actors
         }
 
 #region Event Handlers
-        protected override void PauseEventHandler(object sender, EventArgs args)
+        private void PauseEventHandler(object sender, EventArgs args)
         {
-            base.PauseEventHandler(sender, args);
+            if(_pauseAnimationOnPause) {
+                if(Animator != null) {
+                    Animator.enabled = !PartyParrotManager.Instance.IsPaused;
+                }
+            }
 
             if(PartyParrotManager.Instance.IsPaused) {
                 _pauseState.Save(_rigidbody);

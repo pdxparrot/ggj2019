@@ -18,7 +18,6 @@ using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    // TODO: merge this into ActorBehavior2D
     [RequireComponent(typeof(Collider2D))]
     public class CharacterBehavior2D : ActorBehavior2D
     {

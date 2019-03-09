@@ -17,7 +17,6 @@ using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    // TODO: merge this into ActorBehavior3D
     [RequireComponent(typeof(CapsuleCollider))]
     public class CharacterBehavior3D : ActorBehavior3D
     {
@@ -149,11 +148,9 @@ namespace pdxpartyparrot.Game.Actors
         {
             base.Update();
 
-#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetBool(BehaviorData.FallingParam, IsFalling);
             }
-#endif
         }
 
         protected override void FixedUpdate()
@@ -287,12 +284,10 @@ namespace pdxpartyparrot.Game.Actors
                 Owner.transform.forward = forward;
             }
 
-#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetFloat(BehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
                 Animator.SetFloat(BehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
             }
-#endif
         }
 
         public override void PhysicsMove(Vector3 axes, float dt)
@@ -359,11 +354,9 @@ namespace pdxpartyparrot.Game.Actors
             Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
 
             // TODO: move to an EffectTrigger
-#if !USE_SPINE
             if(null != Animator) {
                 Animator.SetTrigger(animationParam);
             }
-#endif
         }
 
         public void ResetGroundCheck()

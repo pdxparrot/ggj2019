@@ -261,12 +261,11 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 break;
             }
 
-#if !USE_SPINE
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetFloat(Behavior.BehaviorData.MoveXAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.x) : 0.0f);
                 Behavior.Animator.SetFloat(Behavior.BehaviorData.MoveZAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.y) : 0.0f);
             }
-#endif
+
             return true;
         }
 
@@ -339,12 +338,10 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             _climbMode = ClimbMode.Climbing;
             Behavior.UseGravity = false;
 
-#if !USE_SPINE
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetBool(_data.ClimbingParam, true);
                 Behavior.Animator.SetBool(_data.HangingParam, false);
             }
-#endif
         }
 
         private void StartHanging()
@@ -352,26 +349,21 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             _climbMode = ClimbMode.Hanging;
             Behavior.UseGravity = false;
 
-#if !USE_SPINE
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetBool(_data.ClimbingParam, false);
                 Behavior.Animator.SetBool(_data.HangingParam, true);
             }
-#endif
         }
-
 
         public void StopClimbing()
         {
             _climbMode = ClimbMode.None;
             Behavior.UseGravity = true;
 
-#if !USE_SPINE
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetBool(_data.ClimbingParam, false);
                 Behavior.Animator.SetBool(_data.HangingParam, false);
             }
-#endif
 
             // fix our orientation, just in case
             Vector3 rotation = transform.eulerAngles;
