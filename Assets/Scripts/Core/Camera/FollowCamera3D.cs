@@ -11,9 +11,6 @@ namespace pdxpartyparrot.Core.Camera
 {
     public class FollowCamera3D : FollowCamera
     {
-        [SerializeField]
-        private float _lookAxesDeadZone = 0.001f;
-
         [Space(10)]
 
 #region Orbit
@@ -88,6 +85,9 @@ namespace pdxpartyparrot.Core.Camera
         [SerializeField]
         [Tooltip("Enable rotating the camera around its local axes")]
         private bool _enableLook;
+
+        [SerializeField]
+        private float _lookAxesDeadZone = 0.001f;
 
         [SerializeField]
         [Range(0, 100)]
