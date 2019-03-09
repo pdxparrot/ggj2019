@@ -1,4 +1,5 @@
 ﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
@@ -8,10 +9,13 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
     public sealed class DoubleJumpBehaviorComponent3D : CharacterBehaviorComponent3D
     {
         [SerializeField]
+        private DoubleJumpBehaviorComponentData _data;
+
+        [SerializeField]
         [ReadOnly]
         private int _doubleJumpCount;
 
-        private bool CanDoubleJump => !Behavior.IsGrounded && (Behavior.BehaviorData.DoubleJumpCount < 0 || _doubleJumpCount < Behavior.BehaviorData.DoubleJumpCount);
+        private bool CanDoubleJump => !Behavior.IsGrounded && (_data.DoubleJumpCount < 0 || _doubleJumpCount < _data.DoubleJumpCount);
 
 #region Unity Lifecycle
         private void Update()
@@ -37,7 +41,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 return false;
             }
 
-            Behavior.Jump(Behavior.BehaviorData.DoubleJumpHeight, Behavior.BehaviorData.DoubleJumpParam);
+            Behavior.Jump(_data.DoubleJumpHeight, _data.DoubleJumpParam);
 
             _doubleJumpCount++;
             return true;

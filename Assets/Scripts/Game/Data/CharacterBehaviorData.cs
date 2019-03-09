@@ -49,11 +49,6 @@ namespace pdxpartyparrot.Game.Data
         public string LongJumpParam => _longJumpParam;
 
         [SerializeField]
-        private string _doubleJumpParam = "DoubleJump";
-
-        public string DoubleJumpParam => _doubleJumpParam;
-
-        [SerializeField]
         private string _hoverParam = "Hover";
 
         public string HoverParam => _hoverParam;
@@ -143,25 +138,6 @@ namespace pdxpartyparrot.Game.Data
         private float _longJumpHeight = 50.0f;
 
         public float LongJumpHeight => _longJumpHeight;
-#endregion
-
-        [Space(10)]
-
-#region Double Jump
-        [Header("Double Jumping")]
-
-        [SerializeField]
-        [Range(0, 100)]
-        [Tooltip("How high does the character jump when double jumping")]
-        private float _doubleJumpHeight = 25.0f;
-
-        public float DoubleJumpHeight => _doubleJumpHeight;
-
-        [SerializeField]
-        [Tooltip("How many times is the player able to double jump (-1 is infinite)")]
-        private int _doubleJumpCount = 1;
-
-        public int DoubleJumpCount => _doubleJumpCount;
 #endregion
 
         [Space(10)]
