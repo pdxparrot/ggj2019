@@ -13,7 +13,7 @@ namespace pdxpartyparrot.Core.Data
         public LayerMask ActorLayer => _actorLayer;
 
 #region Physics
-        [Header("Physics")]
+        [Header("Actor Physics")]
 
         [SerializeField]
         private float _mass = 45.0f;

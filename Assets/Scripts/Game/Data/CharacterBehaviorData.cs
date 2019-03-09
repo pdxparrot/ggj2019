@@ -20,7 +20,7 @@ namespace pdxpartyparrot.Game.Data
         [Space(10)]
 
 #region Animations
-        [Header("Animations")]
+        [Header("Character Animations")]
 
         [SerializeField]
         private string _moveXAxisParam = "InputX";
@@ -46,7 +46,7 @@ namespace pdxpartyparrot.Game.Data
         [Space(10)]
 
 #region Physics
-        [Header("Physics")]
+        [Header("Character Physics")]
 
         [SerializeField]
         [Range(0, 50)]

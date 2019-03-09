@@ -22,7 +22,16 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public float SpawnImmunitySeconds => _spawnImmunitySeconds;
 
+        [SerializeField]
+        private int _maxPollen = -1;
+
+        public int MaxPollen => _maxPollen;
+
+        [Space(10)]
+
 #region Animation
+        [Header("Animations")]
+
         [SerializeField]
         private string _idleAnimationName = "bee_hover";
 
@@ -33,10 +42,5 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public string FlyingAnimationName => _flyingAnimationName;
 #endregion
-
-        [SerializeField]
-        private int _maxPollen = -1;
-
-        public int MaxPollen => _maxPollen;
     }
 }
