@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace pdxpartyparrot.Game.Actors.ControllerComponents
+namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     public abstract class CharacterActorControllerComponent : MonoBehaviour
     {

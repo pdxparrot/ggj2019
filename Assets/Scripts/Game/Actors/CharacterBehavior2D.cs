@@ -8,7 +8,7 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Game.Actors.ControllerComponents;
+using pdxpartyparrot.Game.Actors.BehaviorComponents;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.State;
 

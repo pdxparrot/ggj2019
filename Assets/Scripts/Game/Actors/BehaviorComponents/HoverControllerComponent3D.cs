@@ -4,7 +4,7 @@ using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.Game.Actors.ControllerComponents
+namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     [RequireComponent(typeof(JumpControllerComponent3D))]
     public sealed class HoverControllerComponent3D : CharacterActorControllerComponent3D

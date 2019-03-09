@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Profiling;
 
-namespace pdxpartyparrot.Game.Actors.ControllerComponents
+namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     public sealed class ClimbingControllerComponent3D : CharacterActorControllerComponent3D
     {

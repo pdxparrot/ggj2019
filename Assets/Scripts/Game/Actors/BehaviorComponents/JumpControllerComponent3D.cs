@@ -1,4 +1,4 @@
-namespace pdxpartyparrot.Game.Actors.ControllerComponents
+namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     public sealed class JumpControllerComponent3D : CharacterActorControllerComponent3D
     {

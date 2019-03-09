@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Game.Actors.ControllerComponents;
+﻿using pdxpartyparrot.Game.Actors.BehaviorComponents;
 
 using UnityEngine;
 using UnityEngine.Assertions;

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace pdxpartyparrot.Game.Actors.ControllerComponents
+namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     [RequireComponent(typeof(JumpControllerComponent3D))]
     public sealed class DoubleJumpControllerComponent3D : CharacterActorControllerComponent3D

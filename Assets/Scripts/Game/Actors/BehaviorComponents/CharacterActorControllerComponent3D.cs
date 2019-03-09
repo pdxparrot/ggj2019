@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace pdxpartyparrot.Game.Actors.ControllerComponents
+namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     [RequireComponent(typeof(CharacterBehavior3D))]
     public abstract class CharacterActorControllerComponent3D : CharacterActorControllerComponent
