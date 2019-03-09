@@ -38,7 +38,7 @@ namespace pdxpartyparrot.Game.Players
         protected PlayerDriver PlayerDriver => _driver;
 
         [CanBeNull]
-        public IPlayerController PlayerBehavior => (PlayerController3D)Behavior;
+        public IPlayerBehavior PlayerBehavior => (PlayerBehavior3D)Behavior;
 #endregion
 
 #region Viewer
@@ -59,7 +59,7 @@ namespace pdxpartyparrot.Game.Players
         {
             base.Awake();
 
-            Assert.IsTrue(Behavior is PlayerController3D);
+            Assert.IsTrue(Behavior is PlayerBehavior3D);
         }
 
         protected override void OnDestroy()

@@ -1,15 +1,14 @@
-using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Players
 {
-    public abstract class PlayerDriver : ActorDriver
+    public abstract class PlayerDriver : CharacterDriver
     {
         [SerializeField]
         private PlayerDriverData _data;
@@ -39,7 +38,7 @@ namespace pdxpartyparrot.Game.Players
             set => _lastControllerLook = value;
         }
 
-        protected IPlayerController PlayerBehavior => (IPlayerController)Behavior;
+        protected IPlayerBehavior PlayerBehavior => (IPlayerBehavior)CharacterBehavior;
 
         protected IPlayer Player => PlayerBehavior.Player;
 
@@ -50,9 +49,11 @@ namespace pdxpartyparrot.Game.Players
         private DebugMenuNode _debugMenuNode;
 
 #region Unity Lifecycle
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            Assert.IsTrue(Behavior is IPlayerController);
+            base.Awake();
+
+            Assert.IsTrue(CharacterBehavior is IPlayerBehavior);
         }
 
         protected virtual void Update()

@@ -2,7 +2,7 @@
 
 namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
 {
-    public abstract class GamePlayerControllerComponent : PlayerControllerComponent2D
+    public abstract class GamePlayerControllerComponent : PlayerBehaviorComponent2D
     {
         protected Player GamePlayer => (Player)PlayerBehavior.Player;
     }

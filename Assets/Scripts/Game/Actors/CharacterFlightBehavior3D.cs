@@ -6,10 +6,10 @@ using pdxpartyparrot.Game.Data;
 using UnityEngine;
 using UnityEngine.Experimental.Input;
 
-namespace pdxpartyparrot.Game.Players
+namespace pdxpartyparrot.Game.Actors
 {
     // TODO: can this be a component?
-    public class CharacterFlightBehavior3D : ActorBehavior3D
+    public class CharacterFlightBehavior3D : ActorBehavior3D, ICharacterBehavior
     {
         [SerializeField]
         private CharacterFlightBehaviorData _data;

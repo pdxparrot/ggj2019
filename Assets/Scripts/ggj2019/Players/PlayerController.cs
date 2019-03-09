@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class PlayerController : Game.Players.PlayerController2D
+    public sealed class PlayerController : Game.Players.PlayerBehavior2D
     {
         public Data.PlayerControllerData GamePlayerControllerData => (Data.PlayerControllerData)PlayerBehaviorData;
 

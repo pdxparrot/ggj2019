@@ -8,13 +8,13 @@ using UnityEngine.Serialization;
 namespace pdxpartyparrot.Game.Players
 {
     // TODO: reduce the copy paste in this
-    public abstract class PlayerController3D : CharacterBehavior3D, IPlayerController
+    public abstract class PlayerBehavior2D : CharacterBehavior2D, IPlayerBehavior
     {
         [SerializeField]
         [FormerlySerializedAs("_playerControllerData")]
-        private PlayerBehaviorData _behaviorData;
+        private PlayerBehaviorData _playerBehaviorData;
 
-        public PlayerBehaviorData PlayerBehaviorData => _behaviorData;
+        public PlayerBehaviorData PlayerBehaviorData => _playerBehaviorData;
 
         public IPlayer Player => (IPlayer)Owner;
 
@@ -31,7 +31,7 @@ namespace pdxpartyparrot.Game.Players
             base.FixedUpdate();
 
             // fixes sketchy rigidbody angular momentum shit
-            AngularVelocity3D = Vector3.zero;
+            AngularVelocity2D = 0;
         }
 #endregion
     }

@@ -19,7 +19,7 @@ using UnityEngine.Profiling;
 namespace pdxpartyparrot.Game.Actors
 {
     [RequireComponent(typeof(Collider2D))]
-    public class CharacterBehavior2D : ActorBehavior2D
+    public class CharacterBehavior2D : ActorBehavior2D, ICharacterBehavior
     {
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
 

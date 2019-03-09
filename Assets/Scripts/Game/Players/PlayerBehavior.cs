@@ -2,7 +2,7 @@
 
 namespace pdxpartyparrot.Game.Players
 {
-    public interface IPlayerController
+    public interface IPlayerBehavior
     {
         PlayerBehaviorData PlayerBehaviorData { get; }
 
