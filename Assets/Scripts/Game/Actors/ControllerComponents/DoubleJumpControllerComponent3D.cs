@@ -11,7 +11,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         [ReadOnly]
         private int _doubleJumpCount;
 
-        private bool CanDoubleJump => !Behavior.IsGrounded && (Behavior.ControllerData.DoubleJumpCount < 0 || _doubleJumpCount < Behavior.ControllerData.DoubleJumpCount);
+        private bool CanDoubleJump => !Behavior.IsGrounded && (Behavior.BehaviorData.DoubleJumpCount < 0 || _doubleJumpCount < Behavior.BehaviorData.DoubleJumpCount);
 
 #region Unity Lifecycle
         private void Update()
@@ -37,7 +37,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 return false;
             }
 
-            Behavior.Jump(Behavior.ControllerData.DoubleJumpHeight, Behavior.ControllerData.DoubleJumpParam);
+            Behavior.Jump(Behavior.BehaviorData.DoubleJumpHeight, Behavior.BehaviorData.DoubleJumpParam);
 
             _doubleJumpCount++;
             return true;

@@ -16,7 +16,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
         [ReadOnly]
         private float _heldSeconds;
 
-        private bool CanLongJump => !_didLongJump && _heldSeconds >= Behavior.ControllerData.LongJumpHoldSeconds;
+        private bool CanLongJump => !_didLongJump && _heldSeconds >= Behavior.BehaviorData.LongJumpHoldSeconds;
 
         [SerializeField]
         [ReadOnly]
@@ -40,7 +40,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 _heldSeconds += dt;
 
                 if(CanLongJump) {
-                    Behavior.Jump(Behavior.ControllerData.LongJumpHeight, Behavior.ControllerData.LongJumpParam);
+                    Behavior.Jump(Behavior.BehaviorData.LongJumpHeight, Behavior.BehaviorData.LongJumpParam);
                     _didLongJump = true;
                 }
             }

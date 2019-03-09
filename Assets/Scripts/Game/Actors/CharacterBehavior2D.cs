@@ -14,6 +14,7 @@ using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Actors
 {
@@ -22,9 +23,10 @@ namespace pdxpartyparrot.Game.Actors
     public class CharacterBehavior2D : ActorBehavior2D
     {
         [SerializeField]
-        private CharacterActorControllerData _controllerData;
+        [FormerlySerializedAs("_controllerData")]
+        private CharacterBehaviorData _behaviorData;
 
-        public CharacterActorControllerData ControllerData => _controllerData;
+        public CharacterBehaviorData BehaviorData => _behaviorData;
 
         [Space(10)]
 
@@ -161,7 +163,7 @@ namespace pdxpartyparrot.Game.Actors
 
 #if !USE_SPINE
             if(null != Animator) {
-                Animator.SetBool(ControllerData.FallingParam, IsFalling);
+                Animator.SetBool(BehaviorData.FallingParam, IsFalling);
             }
 #endif
         }
@@ -193,10 +195,10 @@ namespace pdxpartyparrot.Game.Actors
             Gizmos.DrawLine(Position, Position + Velocity);
 
             Gizmos.color = IsGrounded ? Color.red : Color.yellow;
-            Gizmos.DrawWireSphere(GroundCheckCenter + (ControllerData.GroundedEpsilon * Vector3.down), GroundCheckRadius);
+            Gizmos.DrawWireSphere(GroundCheckCenter + (BehaviorData.GroundedEpsilon * Vector3.down), GroundCheckRadius);
 
             Gizmos.color = DidGroundCheckCollide ? Color.red : Color.yellow;
-            Gizmos.DrawWireSphere(GroundCheckCenter + (ControllerData.GroundCheckLength * Vector3.down), GroundCheckRadius);
+            Gizmos.DrawWireSphere(GroundCheckCenter + (BehaviorData.GroundCheckLength * Vector3.down), GroundCheckRadius);
         }
 #endregion
 
@@ -287,8 +289,8 @@ namespace pdxpartyparrot.Game.Actors
 #else
             // TODO: set facing (set localScale.x)
             if(null != Animator) {
-                Animator.SetFloat(ControllerData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
-                Animator.SetFloat(ControllerData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
+                Animator.SetFloat(BehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
+                Animator.SetFloat(BehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
             }
 #endif
         }
@@ -299,13 +301,13 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            float speed = ControllerData.MoveSpeed;
+            float speed = BehaviorData.MoveSpeed;
 
             if(RunOnComponents(c => c.OnPhysicsMove(axes, speed, dt))) {
                 return;
             }
 
-            if(!ControllerData.AllowAirControl && IsFalling) {
+            if(!BehaviorData.AllowAirControl && IsFalling) {
                 return;
             }
 
@@ -343,7 +345,7 @@ namespace pdxpartyparrot.Game.Actors
             ResetGroundCheck();
 
             // factor in fall speed adjust
-            float gravity = -Physics.gravity.y + ControllerData.FallSpeedAdjustment;
+            float gravity = -Physics.gravity.y + BehaviorData.FallSpeedAdjustment;
 
             // v = sqrt(2gh)
             Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
@@ -370,12 +372,12 @@ namespace pdxpartyparrot.Game.Actors
                 adjustedVelocity.y = 0.0f;
             } else if(UseGravity) {
                 // do some fudging to jumping/falling so it feels better
-                float adjustment = ControllerData.FallSpeedAdjustment * dt;
+                float adjustment = BehaviorData.FallSpeedAdjustment * dt;
                 adjustedVelocity.y -= adjustment;
 
                 // apply terminal velocity
-                if(adjustedVelocity.y < -ControllerData.TerminalVelocity) {
-                    adjustedVelocity.y = -ControllerData.TerminalVelocity;
+                if(adjustedVelocity.y < -BehaviorData.TerminalVelocity) {
+                    adjustedVelocity.y = -BehaviorData.TerminalVelocity;
                 }
             }
             Velocity = adjustedVelocity;
@@ -400,7 +402,7 @@ namespace pdxpartyparrot.Game.Actors
 
             Vector3 origin = GroundCheckCenter;
 
-            int hitCount = Physics.SphereCastNonAlloc(origin, GroundCheckRadius, Vector3.down, _groundCheckHits, ControllerData.GroundCheckLength, ControllerData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore);
+            int hitCount = Physics.SphereCastNonAlloc(origin, GroundCheckRadius, Vector3.down, _groundCheckHits, BehaviorData.GroundCheckLength, BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore);
             if(hitCount < 1) {
                 // no slope if not grounded
                 _groundSlope = 0;
@@ -431,11 +433,11 @@ namespace pdxpartyparrot.Game.Actors
                 if(IsKinematic) {
                     // something else is handling this case?
                 } else {
-                    _isGrounded = _didGroundCheckCollide && _groundCheckMinDistance < ControllerData.GroundedEpsilon;
+                    _isGrounded = _didGroundCheckCollide && _groundCheckMinDistance < BehaviorData.GroundedEpsilon;
                 }
 
                 // if we're on a slope, we're sliding down it
-                _isSliding = _groundSlope >= ControllerData.SlopeLimit;
+                _isSliding = _groundSlope >= BehaviorData.SlopeLimit;
 
                 if(!wasGrounded && IsGrounded) {
                     if(null != _groundedEffect) {

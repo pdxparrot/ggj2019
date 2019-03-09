@@ -19,7 +19,7 @@ namespace pdxpartyparrot.Game.Actors.ControllerComponents
                 return false;
             }
 
-            Behavior.Jump(Behavior.ControllerData.JumpHeight, Behavior.ControllerData.JumpParam);
+            Behavior.Jump(Behavior.BehaviorData.JumpHeight, Behavior.BehaviorData.JumpParam);
 
             return true;
         }

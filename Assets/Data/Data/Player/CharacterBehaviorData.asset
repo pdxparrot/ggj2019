@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72b89a37734c1b04d9c2bcdc89df762b, type: 3}
-  m_Name: CharacterActorControllerData
+  m_Name: CharacterBehaviorData
   m_EditorClassIdentifier: 
   _collisionCheckLayerMask:
     serializedVersion: 2

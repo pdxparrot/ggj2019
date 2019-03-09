@@ -17,9 +17,9 @@ namespace pdxpartyparrot.Game.Data
 // TODO: this could probably go into an Actor/Character data object
 
         [SerializeField]
-        private CharacterActorControllerData _playerControllerData;
+        private CharacterBehaviorData _playerControllerData;
 
-        public CharacterActorControllerData PlayerControllerData => _playerControllerData;
+        public CharacterBehaviorData PlayerControllerData => _playerControllerData;
 
 #region Physics
         [Header("Physics")]

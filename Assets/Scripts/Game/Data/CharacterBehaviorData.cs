@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Data
 {
-    // TODO: this could probably be split into separate data objects for each controller component
-    [CreateAssetMenu(fileName="CharacterActorControllerData", menuName="pdxpartyparrot/Game/Data/CharacterActorController Data")]
+    // TODO: this could probably be split into separate data objects for each behavior component
+    [CreateAssetMenu(fileName="CharacterBehaviorData", menuName="pdxpartyparrot/Game/Data/CharacterBehavior Data")]
     [Serializable]
-    public class CharacterActorControllerData : ScriptableObject
+    public class CharacterBehaviorData : ScriptableObject
     {
         [SerializeField]
         private LayerMask _collisionCheckLayerMask;
