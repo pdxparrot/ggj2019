@@ -1,6 +1,7 @@
 ﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
@@ -17,6 +18,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 #endregion
 
         [SerializeField]
+        private HoverBehaviorComponentData _data;
+
+        [SerializeField]
         [ReadOnly]
         private bool _isHeld;
 
@@ -24,13 +28,13 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         [ReadOnly]
         private float _heldSeconds;
 
-        private bool CanHover => _heldSeconds >= Behavior.BehaviorData.HoverHoldSeconds;
+        private bool CanHover => _heldSeconds >= _data.HoverHoldSeconds;
 
         [SerializeField]
         [ReadOnly]
         private float _hoverTimeSeconds;
 
-        public float RemainingPercent => 1.0f - (_hoverTimeSeconds / Behavior.BehaviorData.HoverTimeSeconds);
+        public float RemainingPercent => 1.0f - (_hoverTimeSeconds / _data.HoverTimeSeconds);
 
         [SerializeField]
         [ReadOnly]
@@ -68,14 +72,14 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             if(IsHovering) {
                 _hoverTimeSeconds += dt;
-                if(_hoverTimeSeconds >= Behavior.BehaviorData.HoverTimeSeconds) {
-                    _hoverTimeSeconds = Behavior.BehaviorData.HoverTimeSeconds;
+                if(_hoverTimeSeconds >= _data.HoverTimeSeconds) {
+                    _hoverTimeSeconds = _data.HoverTimeSeconds;
                     StopHovering();
                 }
             } else if(CanHover) {
                 StartHovering();
             } else if(_hoverTimeSeconds > 0.0f) {
-                _hoverTimeSeconds -= dt * Behavior.BehaviorData.HoverRechargeRate;
+                _hoverTimeSeconds -= dt * _data.HoverRechargeRate;
                 if(_hoverTimeSeconds < 0.0f) {
                     _hoverTimeSeconds = 0.0f;
                 }
@@ -89,11 +93,11 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 return false;
             }
 
-            Vector3 acceleration = (Behavior.BehaviorData.HoverAcceleration + Behavior.BehaviorData.FallSpeedAdjustment) * Vector3.up;
+            Vector3 acceleration = (_data.HoverAcceleration + Behavior.BehaviorData.FallSpeedAdjustment) * Vector3.up;
             // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
             Behavior.AddForce(acceleration);
 
-            Behavior.DefaultPhysicsMove(axes, Behavior.BehaviorData.HoverMoveSpeed, dt);
+            Behavior.DefaultPhysicsMove(axes, _data.HoverMoveSpeed, dt);
 
             return true;
         }
@@ -104,7 +108,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 return false;
             }
 
-            if(Behavior.IsGrounded && !Behavior.BehaviorData.HoverWhenGrounded) {
+            if(Behavior.IsGrounded && !_data.HoverWhenGrounded) {
                 return false;
             }
 
@@ -149,7 +153,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
 #if !USE_SPINE
             if(null != Behavior.Animator) {
-                Behavior.Animator.SetBool(Behavior.BehaviorData.HoverParam, true);
+                Behavior.Animator.SetBool(_data.HoverParam, true);
             }
 #endif
 
@@ -164,12 +168,12 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
 #if !USE_SPINE
             if(null != Behavior.Animator) {
-                Behavior.Animator.SetBool(Behavior.BehaviorData.HoverParam, false);
+                Behavior.Animator.SetBool(_data.HoverParam, false);
             }
 #endif
 
             if(wasHovering) {
-                _cooldownTimer.Start(Behavior.BehaviorData.HoverCooldownSeconds);
+                _cooldownTimer.Start(_data.HoverCooldownSeconds);
             }
         }
     }
