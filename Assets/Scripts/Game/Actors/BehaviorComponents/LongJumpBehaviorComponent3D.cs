@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    [RequireComponent(typeof(JumpControllerComponent3D))]
-    public sealed class LongJumpControllerComponent3D : CharacterActorControllerComponent3D
+    [RequireComponent(typeof(JumpBehaviorComponent3D))]
+    public sealed class LongJumpBehaviorComponent3D : CharacterBehaviorComponent3D
     {
         [SerializeField]
         [ReadOnly]
@@ -47,9 +47,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public override bool OnStarted(CharacterActorControllerAction action)
+        public override bool OnStarted(CharacterBehaviorAction action)
         {
-            if(!(action is JumpControllerComponent3D.JumpAction)) {
+            if(!(action is JumpBehaviorComponent3D.JumpAction)) {
                 return false;
             }
 
@@ -64,9 +64,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             return true;
         }
 
-        public override bool OnPerformed(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterBehaviorAction action)
         {
-            if(!(action is JumpControllerComponent3D.JumpAction)) {
+            if(!(action is JumpBehaviorComponent3D.JumpAction)) {
                 return false;
             }
 

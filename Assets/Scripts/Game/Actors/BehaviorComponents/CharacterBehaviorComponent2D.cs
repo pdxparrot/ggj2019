@@ -3,7 +3,7 @@
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     [RequireComponent(typeof(CharacterBehavior2D))]
-    public abstract class CharacterActorControllerComponent2D : CharacterActorControllerComponent
+    public abstract class CharacterBehaviorComponent2D : CharacterBehaviorComponent
     {
         protected CharacterBehavior2D Behavior { get; private set; }
 

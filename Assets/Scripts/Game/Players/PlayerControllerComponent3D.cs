@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.Game.Players
 {
     [RequireComponent(typeof(PlayerController3D))]
-    public abstract class PlayerControllerComponent3D : CharacterActorControllerComponent3D
+    public abstract class PlayerControllerComponent3D : CharacterBehaviorComponent3D
     {
         protected PlayerController3D PlayerBehavior => (PlayerController3D)Behavior;
 

@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    [RequireComponent(typeof(JumpControllerComponent3D))]
-    public sealed class HoverControllerComponent3D : CharacterActorControllerComponent3D
+    [RequireComponent(typeof(JumpBehaviorComponent3D))]
+    public sealed class HoverBehaviorComponent3D : CharacterBehaviorComponent3D
     {
 #region Actions
-        public class HoverAction : CharacterActorControllerAction
+        public class HoverAction : CharacterBehaviorAction
         {
             public static HoverAction Default = new HoverAction();
         }
@@ -98,7 +98,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             return true;
         }
 
-        public override bool OnStarted(CharacterActorControllerAction action)
+        public override bool OnStarted(CharacterBehaviorAction action)
         {
             if(!(action is HoverAction)) {
                 return false;
@@ -115,16 +115,16 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 
         // NOTE: we want to consume jump actions if we're hovering
-        public override bool OnPerformed(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterBehaviorAction action)
         {
-            if(!(action is JumpControllerComponent3D.JumpAction)) {
+            if(!(action is JumpBehaviorComponent3D.JumpAction)) {
                 return false;
             }
 
             return _isHovering;
         }
 
-        public override bool OnCancelled(CharacterActorControllerAction action)
+        public override bool OnCancelled(CharacterBehaviorAction action)
         {
             if(!(action is HoverAction)) {
                 return false;

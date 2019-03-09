@@ -142,15 +142,15 @@ namespace pdxpartyparrot.Game.Actors
 
         public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
 
-        private CharacterActorControllerComponent2D[] _components;
+        private CharacterBehaviorComponent2D[] _components;
 
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
 
-            _components = GetComponents<CharacterActorControllerComponent2D>();
-            //Debug.Log($"Found {_components.Length} CharacterActorControllerComponents");
+            _components = GetComponents<CharacterBehaviorComponent2D>();
+            //Debug.Log($"Found {_components.Length} CharacterBehaviorComponent2Ds");
 
             if(!GameStateManager.Instance.PlayerManager.PlayerData.IsKinematic) {
                 StartCoroutine(RaycastRoutine());
@@ -215,7 +215,7 @@ namespace pdxpartyparrot.Game.Actors
 
 #region Components
         [CanBeNull]
-        public T GetControllerComponent<T>() where T: CharacterActorControllerComponent
+        public T GetBehaviorComponent<T>() where T: CharacterBehaviorComponent
         {
             foreach(var component in _components) {
                 T tc = component as T;
@@ -226,7 +226,7 @@ namespace pdxpartyparrot.Game.Actors
             return null;
         }
 
-        public void GetControllerComponents<T>(ICollection<T> components) where T: CharacterActorControllerComponent
+        public void GetBehaviorComponents<T>(ICollection<T> components) where T: CharacterBehaviorComponent
         {
             components.Clear();
             foreach(var component in _components) {
@@ -237,7 +237,7 @@ namespace pdxpartyparrot.Game.Actors
             }
         }
 
-        public bool RunOnComponents(Func<CharacterActorControllerComponent, bool> f)
+        public bool RunOnComponents(Func<CharacterBehaviorComponent, bool> f)
         {
             foreach(var component in _components) {
                 if(f(component)) {
@@ -249,17 +249,17 @@ namespace pdxpartyparrot.Game.Actors
 #endregion
 
 #region Actions
-        public virtual void ActionStarted(CharacterActorControllerComponent.CharacterActorControllerAction action)
+        public virtual void ActionStarted(CharacterBehaviorComponent.CharacterBehaviorAction action)
         {
             RunOnComponents(c => c.OnStarted(action));
         }
 
-        public virtual void ActionPerformed(CharacterActorControllerComponent.CharacterActorControllerAction action)
+        public virtual void ActionPerformed(CharacterBehaviorComponent.CharacterBehaviorAction action)
         {
             RunOnComponents(c => c.OnPerformed(action));
         }
 
-        public virtual void ActionCancelled(CharacterActorControllerComponent.CharacterActorControllerAction action)
+        public virtual void ActionCancelled(CharacterBehaviorComponent.CharacterBehaviorAction action)
         {
             RunOnComponents(c => c.OnCancelled(action));
         }

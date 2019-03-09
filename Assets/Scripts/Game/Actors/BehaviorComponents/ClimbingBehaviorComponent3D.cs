@@ -10,15 +10,15 @@ using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    public sealed class ClimbingControllerComponent3D : CharacterActorControllerComponent3D
+    public sealed class ClimbingBehaviorComponent3D : CharacterBehaviorComponent3D
     {
 #region Actions
-        public class GrabAction : CharacterActorControllerAction
+        public class GrabAction : CharacterBehaviorAction
         {
             public static GrabAction Default = new GrabAction();
         }
 
-        public class ReleaseAction : CharacterActorControllerAction
+        public class ReleaseAction : CharacterBehaviorAction
         {
             public static ReleaseAction Default = new ReleaseAction();
         }
@@ -156,7 +156,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         {
             base.Awake();
 
-            Assert.IsNotNull(Behavior.ActorAnimator, "ClimbingControllerComponent requires an actor animator");
+            Assert.IsNotNull(Behavior.ActorAnimator, "ClimbingBehaviorComponent requires an actor animator");
             Assert.IsTrue(Mathf.Approximately(_leftHandTransform.position.y, _rightHandTransform.position.y), "Character hands are at different heights!");
             Assert.IsTrue(_headTransform.position.y > _leftHandTransform.position.y, "Character head should be above player hands!");
             Assert.IsTrue(_chestTransform.position.y < _leftHandTransform.position.y, "Character chest should be below player hands!");
@@ -289,7 +289,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             return true;
         }
 
-        public override bool OnPerformed(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(action is GrabAction) {
                 if(IsClimbing) {

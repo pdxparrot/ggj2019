@@ -8,6 +8,7 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Game.Players
 {
+    // TODO: can this be a component?
     public class CharacterFlightBehavior3D : ActorBehavior3D
     {
         [SerializeField]

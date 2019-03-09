@@ -2,13 +2,13 @@
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    public abstract class CharacterActorControllerComponent : MonoBehaviour
+    public abstract class CharacterBehaviorComponent : MonoBehaviour
     {
 // TODO: if subclasses could register for specific action types (and we keep a dictionary ActionType => Listener)
 // then that would work out a lot faster and cleaner than how this is currently done
 
 #region Actions
-        public abstract class CharacterActorControllerAction
+        public abstract class CharacterBehaviorAction
         {
         }
 #endregion
@@ -35,17 +35,17 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             return false;
         }
 
-        public virtual bool OnStarted(CharacterActorControllerAction action)
+        public virtual bool OnStarted(CharacterBehaviorAction action)
         {
             return false;
         }
 
-        public virtual bool OnPerformed(CharacterActorControllerAction action)
+        public virtual bool OnPerformed(CharacterBehaviorAction action)
         {
             return false;
         }
 
-        public virtual bool OnCancelled(CharacterActorControllerAction action)
+        public virtual bool OnCancelled(CharacterBehaviorAction action)
         {
             return false;
         }

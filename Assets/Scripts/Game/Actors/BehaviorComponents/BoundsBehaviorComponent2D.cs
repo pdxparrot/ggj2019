@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    public sealed class BoundsControllerComponent2D : CharacterActorControllerComponent2D
+    public sealed class BoundsBehaviorComponent2D : CharacterBehaviorComponent2D
     {
         public override bool OnPhysicsMove(Vector3 axes, float speed, float dt)
         {

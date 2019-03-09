@@ -104,7 +104,7 @@ namespace pdxpartyparrot.Game.Data
 
         [SerializeField]
         [Range(0, 1)]
-        [Tooltip("The controller-based threshold that we consider the character to be running")]
+        [Tooltip("The animator-based threshold that we consider the character to be running")]
         private float _runThreshold = 0.75f;
 
         public float RunThreshold => _runThreshold;

@@ -3,13 +3,13 @@
     public sealed class GatherControllerComponent : GamePlayerControllerComponent
     {
 #region Actions
-        public class GatherAction : CharacterActorControllerAction
+        public class GatherAction : CharacterBehaviorAction
         {
             public static GatherAction Default = new GatherAction();
         }
 #endregion
 
-        public override bool OnPerformed(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(!(action is GatherAction)) {
                 return false;

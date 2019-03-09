@@ -1,15 +1,15 @@
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    public sealed class JumpControllerComponent3D : CharacterActorControllerComponent3D
+    public sealed class JumpBehaviorComponent3D : CharacterBehaviorComponent3D
     {
 #region Actions
-        public class JumpAction : CharacterActorControllerAction
+        public class JumpAction : CharacterBehaviorAction
         {
             public static JumpAction Default = new JumpAction();
         }
 #endregion
 
-        public override bool OnPerformed(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(!(action is JumpAction)) {
                 return false;

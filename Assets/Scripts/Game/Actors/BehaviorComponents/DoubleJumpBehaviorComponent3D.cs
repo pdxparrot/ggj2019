@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
-    [RequireComponent(typeof(JumpControllerComponent3D))]
-    public sealed class DoubleJumpControllerComponent3D : CharacterActorControllerComponent3D
+    [RequireComponent(typeof(JumpBehaviorComponent3D))]
+    public sealed class DoubleJumpBehaviorComponent3D : CharacterBehaviorComponent3D
     {
         [SerializeField]
         [ReadOnly]
@@ -27,9 +27,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             _doubleJumpCount = 0;
         }
 
-        public override bool OnPerformed(CharacterActorControllerAction action)
+        public override bool OnPerformed(CharacterBehaviorAction action)
         {
-            if(!(action is JumpControllerComponent3D.JumpAction)) {
+            if(!(action is JumpBehaviorComponent3D.JumpAction)) {
                 return false;
             }
 
