@@ -1,5 +1,6 @@
 ﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
@@ -9,6 +10,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
     public sealed class LongJumpBehaviorComponent3D : CharacterBehaviorComponent3D
     {
         [SerializeField]
+        private LongJumpBehaviorComponentData _data;
+
+        [SerializeField]
         [ReadOnly]
         private bool _isHeld;
 
@@ -16,7 +20,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         [ReadOnly]
         private float _heldSeconds;
 
-        private bool CanLongJump => !_didLongJump && _heldSeconds >= Behavior.BehaviorData.LongJumpHoldSeconds;
+        private bool CanLongJump => !_didLongJump && _heldSeconds >= _data.LongJumpHoldSeconds;
 
         [SerializeField]
         [ReadOnly]
@@ -40,7 +44,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 _heldSeconds += dt;
 
                 if(CanLongJump) {
-                    Behavior.Jump(Behavior.BehaviorData.LongJumpHeight, Behavior.BehaviorData.LongJumpParam);
+                    Behavior.Jump(_data.LongJumpHeight, _data.LongJumpParam);
                     _didLongJump = true;
                 }
             }
