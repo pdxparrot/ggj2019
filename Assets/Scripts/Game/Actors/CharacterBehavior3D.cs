@@ -198,14 +198,8 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
+            // align with the movement
             Vector3 forward = new Vector3(axes.x, 0.0f, axes.y);
-
-            // align the movement with the camera
-            if(null != Owner.Viewer) {
-                forward = (Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) * forward).normalized;
-            }
-
-            // align the player with the movement
             if(forward.sqrMagnitude > float.Epsilon) {
                 Owner.transform.forward = forward;
             }
@@ -242,7 +236,7 @@ namespace pdxpartyparrot.Game.Actors
             }
 
             Vector3 velocity = axes * speed;
-            Quaternion rotation = null != Owner.Viewer ? Quaternion.AngleAxis(Owner.Viewer.transform.localEulerAngles.y, Vector3.up) : Owner.transform.rotation;
+            Quaternion rotation = Owner.transform.rotation;
             velocity = rotation * velocity;
             velocity.y = Velocity.y;
 

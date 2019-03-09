@@ -47,7 +47,7 @@ namespace pdxpartyparrot.Game.Players
         public IPlayerViewer PlayerViewer { get; protected set; }
 
         [CanBeNull]
-        public override Viewer Viewer
+        public Viewer Viewer
         {
             get => null == PlayerViewer ? null : PlayerViewer.Viewer;
             set {}

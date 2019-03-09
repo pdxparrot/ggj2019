@@ -3,7 +3,6 @@
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace pdxpartyparrot.Game.Menu
 {

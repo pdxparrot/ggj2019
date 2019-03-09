@@ -208,6 +208,7 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
+            // align with the movement
 #if USE_SPINE
             SpineAnimation.SetFacing(LastMoveAxes);
 #else

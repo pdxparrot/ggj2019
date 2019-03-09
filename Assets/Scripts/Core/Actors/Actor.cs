@@ -23,10 +23,6 @@ namespace pdxpartyparrot.Core.Actors
 
         public abstract float Radius { get; }
 
-        // TODO: this probably should go on the Player classes
-        [CanBeNull]
-        public virtual Viewer Viewer { get; set; }
-
 #region Model
         [CanBeNull]
         [SerializeField]
