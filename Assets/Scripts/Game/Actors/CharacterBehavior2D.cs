@@ -111,22 +111,16 @@ namespace pdxpartyparrot.Game.Actors
 #endif
 #endregion
 
-        [Space(10)]
-
 #region Physics
-        [Header("Physics")]
-
-        [SerializeField]
-        [ReadOnly]
-        private bool _useGravity = true;
-
-        public virtual bool UseGravity
+        public override bool UseGravity
         {
-            get => _useGravity;
+            get => base.UseGravity;
             set
             {
-                _useGravity = value;
-                Velocity = Vector3.zero;
+                base.UseGravity = value;
+                if(!value) {
+                    Velocity = Vector3.zero;
+                }
             }
         }
 
@@ -175,7 +169,7 @@ namespace pdxpartyparrot.Game.Actors
 
             // turn off gravity if we're grounded and not moving and not sliding
             // this should stop us sliding down slopes we shouldn't slide down
-            SetUseGravity(UseGravity && (!IsGrounded || IsMoving || IsSliding));
+            UseGravity = !IsGrounded || IsMoving || IsSliding;
             IsKinematic = IsKinematic;
         }
 
@@ -338,7 +332,7 @@ namespace pdxpartyparrot.Game.Actors
             }
 
             // force physics to a sane state for the first frame of the jump
-            _useGravity = true;
+            UseGravity = true;
             ResetGroundCheck();
 
             // factor in fall speed adjust

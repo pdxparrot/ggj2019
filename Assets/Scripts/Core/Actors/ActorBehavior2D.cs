@@ -18,6 +18,7 @@ namespace pdxpartyparrot.Core.Actors
         {
             public bool IsKinematic;
             public Vector3 Velocity;
+            public float AngularVelocity;
 
             public void Save(Rigidbody2D rigidbody)
             {
@@ -26,12 +27,16 @@ namespace pdxpartyparrot.Core.Actors
 
                 Velocity = rigidbody.velocity;
                 rigidbody.velocity = Vector3.zero;
+
+                AngularVelocity = rigidbody.angularVelocity;
+                rigidbody.angularVelocity = 0.0f;
             }
 
             public void Restore(Rigidbody2D rigidbody)
             {
                 rigidbody.isKinematic = IsKinematic;
                 rigidbody.velocity = Velocity;
+                rigidbody.angularVelocity = AngularVelocity;
             }
         }
 
@@ -42,15 +47,6 @@ namespace pdxpartyparrot.Core.Actors
 #region Physics
         [Header("Physics")]
 
-        [SerializeField]
-        [ReadOnly]
-        private Vector3 _lastVelocity;
-
-        [SerializeField]
-        [ReadOnly]
-        private float _lastAngularVelocity;
-
-        [SerializeField]
         private Rigidbody2D _rigidbody;
 
         public override Vector3 Position
@@ -116,6 +112,12 @@ namespace pdxpartyparrot.Core.Actors
             get => _rigidbody.isKinematic;
             set => _rigidbody.isKinematic = value;
         }
+
+        public override bool UseGravity
+        {
+            get => _rigidbody.gravityScale > 0.0f;
+            set => _rigidbody.gravityScale = value ? 1.0f : 0.0f;
+        }
 #endregion
 
         [Space(10)]
@@ -171,7 +173,8 @@ namespace pdxpartyparrot.Core.Actors
 
             PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
 
-            InitRigidbody(_rigidbody);
+            _rigidbody = Owner2D.GetComponent<Rigidbody2D>();
+            Assert.IsNotNull(_rigidbody, "ActorBehavior Owner requires a Rigidbody!");
         }
 
         protected virtual void OnDestroy()
@@ -180,21 +183,17 @@ namespace pdxpartyparrot.Core.Actors
                 PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
             }
         }
-
-        protected virtual void LateUpdate()
-        {
-            _lastVelocity = _rigidbody.velocity;
-            _lastAngularVelocity = _rigidbody.angularVelocity;
-        }
 #endregion
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            InitRigidbody(_rigidbody);
+        }
 
         protected virtual void InitRigidbody(Rigidbody2D rb)
         {
-        }
-
-        protected void SetUseGravity(bool useGravity)
-        {
-            _rigidbody.gravityScale = useGravity ? 1.0f : 0.0f;
         }
 
         public void MovePosition(Vector3 position)

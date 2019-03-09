@@ -13,7 +13,6 @@ namespace pdxpartyparrot.Core.Actors
     {
         private readonly Dictionary<Type, HashSet<Actor>> _actors = new Dictionary<Type, HashSet<Actor>>();
 
-
 #region Unity Lifecycle
         private void Awake()
         {

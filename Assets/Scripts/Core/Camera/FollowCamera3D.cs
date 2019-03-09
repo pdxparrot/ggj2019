@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 
-using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Math;
 using pdxpartyparrot.Core.Util;
 
@@ -12,6 +11,9 @@ namespace pdxpartyparrot.Core.Camera
 {
     public class FollowCamera3D : FollowCamera
     {
+        [SerializeField]
+        private float _lookAxesDeadZone = 0.001f;
+
         [Space(10)]
 
 #region Orbit
@@ -100,6 +102,8 @@ namespace pdxpartyparrot.Core.Camera
         private Vector2 _lookRotation;
 #endregion
 
+        [Space(10)]
+
         [SerializeField]
         [ReadOnly]
         private bool _isLooking;
@@ -126,7 +130,7 @@ namespace pdxpartyparrot.Core.Camera
             Profiler.BeginSample("FollowCamera3D.HandleInput");
             try {
                 Vector3 lastLookAxes = Target.LastLookAxes;
-                _isLooking = lastLookAxes.sqrMagnitude > ActorBehavior.AxesDeadZone;
+                _isLooking = lastLookAxes.sqrMagnitude > _lookAxesDeadZone;
 
                 Orbit(lastLookAxes, dt);
                 Zoom(lastLookAxes, dt);

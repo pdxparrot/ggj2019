@@ -48,9 +48,13 @@ namespace pdxpartyparrot.Core.Actors
 
         [CanBeNull]
         public ActorBehavior Behavior => _behavior;
+
+        public virtual bool IsStatic => null == _behavior;
 #endregion
 
+#region Network
         public abstract bool IsLocalActor { get; }
+#endregion
 
 #region Unity Lifecycle
         protected virtual void OnDestroy()

@@ -17,6 +17,7 @@ namespace pdxpartyparrot.Core.Actors
         {
             public bool IsKinematic;
             public Vector3 Velocity;
+            public Vector3 AngularVelocity;
 
             public void Save(Rigidbody rigidbody)
             {
@@ -25,12 +26,16 @@ namespace pdxpartyparrot.Core.Actors
 
                 Velocity = rigidbody.velocity;
                 rigidbody.velocity = Vector3.zero;
+
+                AngularVelocity = rigidbody.angularVelocity;
+                rigidbody.angularVelocity = Vector3.zero;
             }
 
             public void Restore(Rigidbody rigidbody)
             {
                 rigidbody.isKinematic = IsKinematic;
                 rigidbody.velocity = Velocity;
+                rigidbody.angularVelocity = AngularVelocity;
             }
         }
 
@@ -49,7 +54,6 @@ namespace pdxpartyparrot.Core.Actors
         [ReadOnly]
         private Vector3 _lastAngularVelocity;
 
-        [SerializeField]
         private Rigidbody _rigidbody;
 
         public override Vector3 Position
@@ -115,6 +119,12 @@ namespace pdxpartyparrot.Core.Actors
             get => _rigidbody.isKinematic;
             set => _rigidbody.isKinematic = value;
         }
+
+        public override bool UseGravity
+        {
+            get => _rigidbody.useGravity;
+            set => _rigidbody.useGravity = value;
+        }
 #endregion
 
         [Space(10)]
@@ -161,7 +171,8 @@ namespace pdxpartyparrot.Core.Actors
 
             PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
 
-            InitRigidbody(_rigidbody);
+            _rigidbody = Owner3D.GetComponent<Rigidbody>();
+            Assert.IsNotNull(_rigidbody, "ActorBehavior Owner requires a Rigidbody!");
         }
 
         protected virtual void OnDestroy()
@@ -178,13 +189,15 @@ namespace pdxpartyparrot.Core.Actors
         }
 #endregion
 
-        protected virtual void InitRigidbody(Rigidbody rb)
+        public override void Initialize()
         {
+            base.Initialize();
+
+            InitRigidbody(_rigidbody);
         }
 
-        protected void SetUseGravity(bool useGravity)
+        protected virtual void InitRigidbody(Rigidbody rb)
         {
-            _rigidbody.useGravity = useGravity;
         }
 
         public void MovePosition(Vector3 position)

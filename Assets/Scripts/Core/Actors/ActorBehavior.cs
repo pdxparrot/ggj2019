@@ -7,12 +7,15 @@ namespace pdxpartyparrot.Core.Actors
 {
     public abstract class ActorBehavior : MonoBehaviour
     {
-        public const float AxesDeadZone = 0.001f;
-
         [SerializeField]
         private ActorBehaviorData _behaviorData;
 
         public ActorBehaviorData BehaviorData => _behaviorData;
+
+        [SerializeField]
+        private Actor _owner;
+
+        public Actor Owner => _owner;
 
 #region Movement
         [Header("Movement")]
@@ -36,15 +39,10 @@ namespace pdxpartyparrot.Core.Actors
         public abstract bool CanMove { get; }
 #endregion
 
-        [SerializeField]
-        private Actor _owner;
-
-        public Actor Owner => _owner;
-
 #region Physics
         public virtual Vector3 Position
         {
-            get => transform.position;
+            get => Owner.transform.position;
             set
             {
                 Debug.Log($"Teleporting actor {Owner.Id} to {value}");
@@ -105,12 +103,18 @@ namespace pdxpartyparrot.Core.Actors
             get => true;
             set {}
         }
+
+        public virtual bool UseGravity
+        {
+            get => false;
+            set {}
+        }
 #endregion
 
 #region Unity Lifecycle
         protected virtual void Update()
         {
-            _isMoving = LastMoveAxes.sqrMagnitude > AxesDeadZone;
+            _isMoving = LastMoveAxes.sqrMagnitude > BehaviorData.MoveAxesDeadzone;
 
             float dt = UnityEngine.Time.deltaTime;
 
@@ -127,9 +131,25 @@ namespace pdxpartyparrot.Core.Actors
 
         public virtual void Initialize()
         {
+            ResetFromData();
+
+            LastMoveAxes = Vector3.zero;
+            _isMoving = false;
+
+            Position = Vector3.zero;
+            Rotation3D = Quaternion.identity;;
+            Rotation2D = 0.0f;
+            Velocity = Vector3.zero;
+            AngularVelocity3D = Vector3.zero;
+            AngularVelocity2D = 0.0f;
+        }
+
+        protected virtual void ResetFromData()
+        {
             Mass = BehaviorData.Mass;
             LinearDrag = BehaviorData.Drag;
             AngularDrag = BehaviorData.AngularDrag;
+            IsKinematic = BehaviorData.IsKinematic;
         }
 
 #region Movement

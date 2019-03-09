@@ -8,7 +8,6 @@ using UnityEngine.Profiling;
 
 namespace pdxpartyparrot.Core.Actors
 {
-    // TODO: reduce the copy paste in this
     public class ActorAnimator3D : ActorAnimator
     {
         [Serializable]
