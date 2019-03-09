@@ -1,4 +1,7 @@
-﻿using pdxpartyparrot.Core;
+﻿using JetBrains.Annotations;
+
+using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
 
@@ -11,6 +14,16 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
     {
         [SerializeField]
         private LongJumpBehaviorComponentData _data;
+
+        [Space(10)]
+
+#region Effects
+        [Header("Effects")]
+
+        [SerializeField]
+        [CanBeNull]
+        private EffectTrigger _longJumpEffect;
+#endregion
 
         [SerializeField]
         [ReadOnly]
@@ -44,7 +57,11 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 _heldSeconds += dt;
 
                 if(CanLongJump) {
-                    Behavior.Jump(_data.LongJumpHeight, _data.LongJumpParam);
+                    Behavior.Jump(_data.LongJumpHeight);
+                    if(null != _longJumpEffect) {
+                        _longJumpEffect.Trigger();
+                    }
+
                     _didLongJump = true;
                 }
             }

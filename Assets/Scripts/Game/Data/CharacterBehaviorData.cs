@@ -33,11 +33,6 @@ namespace pdxpartyparrot.Game.Data
         public string MoveZAxisParam => _moveZAxisParam;
 
         [SerializeField]
-        private string _groundedParam = "Landed";
-
-        public string GroundedParam => _groundedParam;
-
-        [SerializeField]
         private string _fallingParam = "Falling";
 
         public string FallingParam => _fallingParam;
@@ -77,23 +72,6 @@ namespace pdxpartyparrot.Game.Data
         private float _terminalVelocity = 50.0f;
 
         public float TerminalVelocity => _terminalVelocity;
-
-        [SerializeField]
-        [Tooltip("Max distance from the ground that the character is considered grounded")]
-        private float _GroundedEpsilon = 0.1f;
-
-        public float GroundedEpsilon => _GroundedEpsilon;
-
-        [SerializeField]
-        [Tooltip("The length of the ground check sphere cast (useful for checking actual slope below the character)")]
-        private float _groundCheckLength = 1.0f;
-
-        public float GroundCheckLength => _groundCheckLength;
-
-        [SerializeField]
-        private float _slopeLimit = 30.0f;
-
-        public float SlopeLimit => _slopeLimit;
 
         [SerializeField]
         [Tooltip("Allow movement while not grounded")]

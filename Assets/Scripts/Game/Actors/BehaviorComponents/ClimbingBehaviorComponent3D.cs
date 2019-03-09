@@ -143,6 +143,10 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CanClimbUp => IsClimbing && (null == _headHitResult && null != _chestHitResult);
 
+        private GroundCheckBehaviorComponent3D _groundChecker;
+
+        private Coroutine _raycastCoroutine;
+
         [Space(10)]
 
 #region Debug
@@ -165,7 +169,8 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             Assert.IsTrue(_headTransform.position.y > _leftHandTransform.position.y, "Character head should be above player hands!");
             Assert.IsTrue(_chestTransform.position.y < _leftHandTransform.position.y, "Character chest should be below player hands!");
 
-            StartCoroutine(RaycastRoutine());
+            _groundChecker = Behavior.GetBehaviorComponent<GroundCheckBehaviorComponent3D>();
+            Assert.IsNotNull(_groundChecker, "ClimbingBehaviorComponent requires a ground checker");
 
             InitDebugMenu();
         }
@@ -175,6 +180,19 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             DestroyDebugMenu();
 
             base.OnDestroy();
+        }
+
+        private void OnEnable()
+        {
+            _raycastCoroutine = StartCoroutine(RaycastRoutine());
+        }
+
+        private void OnDisable()
+        {
+            if(null != _raycastCoroutine) {
+                StopCoroutine(_raycastCoroutine);
+                _raycastCoroutine = null;
+            }
         }
 
         private void OnDrawGizmos()
@@ -279,7 +297,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             {
             case ClimbMode.Climbing:
                 Vector3 velocity = Behavior.Rotation3D * (axes * _data.ClimbSpeed);
-                if(Behavior.DidGroundCheckCollide && velocity.y < 0.0f) {
+                if(_groundChecker.DidGroundCheckCollide && velocity.y < 0.0f) {
                     velocity.y = 0.0f;
                 }
                 Behavior.MovePosition(Behavior.Position + velocity * dt);
@@ -373,7 +391,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private IEnumerator RaycastRoutine()
         {
-            WaitForSeconds wait = new WaitForSeconds(Behavior.RaycastRoutineRate);
+            Debug.Log($"Starting climbing raycast routine for {Behavior.Owner.Id}");
+
+            WaitForSeconds wait = new WaitForSeconds(_data.RaycastRoutineRate);
             while(true) {
                 UpdateRaycasts();
 

@@ -1,3 +1,6 @@
+using JetBrains.Annotations;
+
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
@@ -16,6 +19,16 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         [SerializeField]
         private JumpBehaviorComponentData _data;
 
+        [Space(10)]
+
+#region Effects
+        [Header("Effects")]
+
+        [SerializeField]
+        [CanBeNull]
+        private EffectTrigger _jumpEffect;
+#endregion
+
         public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(!(action is JumpAction)) {
@@ -26,7 +39,10 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 return false;
             }
 
-            Behavior.Jump(_data.JumpHeight, _data.JumpParam);
+            Behavior.Jump(_data.JumpHeight);
+            if(null != _jumpEffect) {
+                _jumpEffect.Trigger();
+            }
 
             return true;
         }

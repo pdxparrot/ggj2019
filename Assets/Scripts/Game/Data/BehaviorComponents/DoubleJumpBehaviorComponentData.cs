@@ -20,16 +20,5 @@ namespace pdxpartyparrot.Game.Data
         private int _doubleJumpCount = 1;
 
         public int DoubleJumpCount => _doubleJumpCount;
-
-        [Space(10)]
-
-#region Animations
-        [Header("Animations")]
-
-        [SerializeField]
-        private string _doubleJumpParam = "DoubleJump";
-
-        public string DoubleJumpParam => _doubleJumpParam;
-#endregion
     }
 }

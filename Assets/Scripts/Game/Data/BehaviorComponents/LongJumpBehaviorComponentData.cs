@@ -21,16 +21,5 @@ namespace pdxpartyparrot.Game.Data
         private float _longJumpHeight = 50.0f;
 
         public float LongJumpHeight => _longJumpHeight;
-
-        [Space(10)]
-
-#region Animations
-        [Header("Animations")]
-
-        [SerializeField]
-        private string _longJumpParam = "LongJump";
-
-        public string LongJumpParam => _longJumpParam;
-#endregion
     }
 }

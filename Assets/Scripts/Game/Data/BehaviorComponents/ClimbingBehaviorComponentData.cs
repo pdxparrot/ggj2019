@@ -9,6 +9,15 @@ namespace pdxpartyparrot.Game.Data
     public class ClimbingBehaviorComponentData : ScriptableObject
     {
         [SerializeField]
+        [Range(0, 1)]
+        [Tooltip("How often to run raycast checks, in seconds")]
+        private float _raycastRoutineRate = 0.1f;
+
+        public float RaycastRoutineRate => _raycastRoutineRate;
+
+        [Space(10)]
+
+        [SerializeField]
         private float _attachDistance = 0.1f;
 
         public float AttachDistance => _attachDistance;

@@ -11,6 +11,8 @@ namespace pdxpartyparrot.Game.Actors
     // TODO: can this be a component?
     public class CharacterFlightBehavior3D : ActorBehavior3D, ICharacterBehavior
     {
+        public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
+
         [SerializeField]
         private CharacterFlightBehaviorData _data;
 

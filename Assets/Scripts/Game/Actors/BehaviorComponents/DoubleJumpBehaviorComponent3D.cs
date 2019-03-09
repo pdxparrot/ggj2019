@@ -1,4 +1,7 @@
-﻿using pdxpartyparrot.Core.Util;
+﻿using JetBrains.Annotations;
+
+using pdxpartyparrot.Core.Effects;
+using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
@@ -10,6 +13,16 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
     {
         [SerializeField]
         private DoubleJumpBehaviorComponentData _data;
+
+        [Space(10)]
+
+#region Effects
+        [Header("Effects")]
+
+        [SerializeField]
+        [CanBeNull]
+        private EffectTrigger _doubleJumpEffect;
+#endregion
 
         [SerializeField]
         [ReadOnly]
@@ -41,7 +54,10 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 return false;
             }
 
-            Behavior.Jump(_data.DoubleJumpHeight, _data.DoubleJumpParam);
+            Behavior.Jump(_data.DoubleJumpHeight);
+            if(null != _doubleJumpEffect) {
+                _doubleJumpEffect.Trigger();
+            }
 
             _doubleJumpCount++;
             return true;

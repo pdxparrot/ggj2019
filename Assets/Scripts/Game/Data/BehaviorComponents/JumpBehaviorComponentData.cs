@@ -14,16 +14,5 @@ namespace pdxpartyparrot.Game.Data
         private float _jumpHeight = 30.0f;
 
         public float JumpHeight => _jumpHeight;
-
-        [Space(10)]
-
-#region Animations
-        [Header("Animations")]
-
-        [SerializeField]
-        private string _jumpParam = "Jump";
-
-        public string JumpParam => _jumpParam;
-#endregion
     }
 }
