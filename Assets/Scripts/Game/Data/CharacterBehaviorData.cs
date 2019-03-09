@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Game.Data
 {
-    // TODO: this could probably be split into separate data objects for each behavior component
     [CreateAssetMenu(fileName="CharacterBehaviorData", menuName="pdxpartyparrot/Game/Data/CharacterBehavior Data")]
     [Serializable]
     public class CharacterBehaviorData : ScriptableObject
@@ -58,36 +57,6 @@ namespace pdxpartyparrot.Game.Data
         private string _hoverParam = "Hover";
 
         public string HoverParam => _hoverParam;
-
-        [SerializeField]
-        private string _climbingParam = "Climbing";
-
-        public string ClimbingParam => _climbingParam;
-
-        [SerializeField]
-        private string _hangingParam = "Hanging";
-
-        public string HangingParam => _hangingParam;
-
-        [SerializeField]
-        private float _wrapTimeSeconds = 1.0f;
-
-        public float WrapTimeSeconds => _wrapTimeSeconds;
-
-        [SerializeField]
-        private float _climbUpTimeSeconds = 1.0f;
-
-        public float ClimbUpTimeSeconds => _climbUpTimeSeconds;
-
-        [SerializeField]
-        private float _climbDownTimeSeconds = 1.0f;
-
-        public float ClimbDownTimeSeconds => _climbDownTimeSeconds;
-
-        [SerializeField]
-        private float _hangTimeSeconds = 1.0f;
-
-        public float HangTimeSeconds => _hangTimeSeconds;
 #endregion
 
         [Space(10)]
@@ -244,65 +213,6 @@ namespace pdxpartyparrot.Game.Data
         private bool _hoverWhenGrounded;
 
         public bool HoverWhenGrounded => _hoverWhenGrounded;
-#endregion
-
-        [Space(10)]
-
-#region Climbing
-        [Header("Climbing")]
-
-        [SerializeField]
-        private float _attachDistance = 0.1f;
-
-        public float AttachDistance => _attachDistance;
-
-        [SerializeField]
-        [Range(0, 10)]
-        private float _armRayLength = 1.0f;
-
-        public float ArmRayLength => _armRayLength;
-
-        [SerializeField]
-        [Range(0, 90)]
-        private float _wrapAroundAngle = 45.0f;
-
-        public float WrapAroundAngle => _wrapAroundAngle;
-
-        [SerializeField]
-        [Range(0, 10)]
-        private float _headRayLength = 1.0f;
-
-        public float HeadRayLength => _headRayLength;
-
-        [SerializeField]
-        [Range(0, 90)]
-        private float _headRayAngle = 45.0f;
-
-        public float HeadRayAngle => _headRayAngle;
-
-        [SerializeField]
-        [Range(0, 10)]
-        private float _hangRayLength = 1.0f;
-
-        public float HangRayLength => _hangRayLength;
-
-        [SerializeField]
-        [Range(0, 10)]
-        private float _chestRayLength = 1.0f;
-
-        public float ChestRayLength => _chestRayLength;
-
-        [SerializeField]
-        [Range(0, 50)]
-        private float _climbSpeed = 1.0f;
-
-        public float ClimbSpeed => _climbSpeed;
-
-        [SerializeField]
-        [Range(0, 50)]
-        private float _hangSpeed = 1.0f;
-
-        public float HangSpeed => _hangSpeed;
 #endregion
 
         [Space(10)]
