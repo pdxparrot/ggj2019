@@ -21,8 +21,6 @@ namespace pdxpartyparrot.Game.Players
         PlayerData PlayerData { get; }
 
         IReadOnlyCollection<IPlayer> Players { get; }
-
-        int PlayerCount { get; }
     }
 
     public abstract class PlayerManager<T, TV> : SingletonBehavior<T>, IPlayerManager where T: PlayerManager<T, TV> where TV: Actor, IPlayer
@@ -44,8 +42,6 @@ namespace pdxpartyparrot.Game.Players
         private readonly HashSet<IPlayer> _players = new HashSet<IPlayer>();
 
         public IReadOnlyCollection<IPlayer> Players => _players;
-
-        public int PlayerCount => Players.Count;
 
         private GameObject _playerContainer;
 

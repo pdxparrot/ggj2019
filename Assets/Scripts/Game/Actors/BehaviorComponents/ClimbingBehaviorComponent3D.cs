@@ -262,8 +262,8 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             }
 
             if(null != Behavior.Animator) {
-                Behavior.Animator.SetFloat(Behavior.BehaviorData.MoveXAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.x) : 0.0f);
-                Behavior.Animator.SetFloat(Behavior.BehaviorData.MoveZAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.y) : 0.0f);
+                Behavior.Animator.SetFloat(Behavior.CharacterBehaviorData.MoveXAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.x) : 0.0f);
+                Behavior.Animator.SetFloat(Behavior.CharacterBehaviorData.MoveZAxisParam, Behavior.CanMove ? Mathf.Abs(Behavior.LastMoveAxes.y) : 0.0f);
             }
 
             return true;
@@ -437,7 +437,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             _leftHandHitResult = null;
 
             RaycastHit hit;
-            if(Physics.Raycast(_leftHandTransform.position, transform.forward, out hit, _data.ArmRayLength, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_leftHandTransform.position, transform.forward, out hit, _data.ArmRayLength, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _leftHandHitResult = hit;
@@ -448,7 +448,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _leftHandHangHitResult = null;
 
-            if(Physics.Raycast(_leftHandTransform.position, transform.up, out hit, _data.HangRayLength, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_leftHandTransform.position, transform.up, out hit, _data.HangRayLength, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _leftHandHangHitResult = hit;
@@ -462,7 +462,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _rightHandHitResult = null;
 
-            if(Physics.Raycast(_rightHandTransform.position, transform.forward, out var hit, _data.ArmRayLength, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_rightHandTransform.position, transform.forward, out var hit, _data.ArmRayLength, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _rightHandHitResult = hit;
@@ -473,7 +473,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _rightHandHangHitResult = null;
 
-            if(Physics.Raycast(_rightHandTransform.position, transform.up, out hit, _data.HangRayLength, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_rightHandTransform.position, transform.up, out hit, _data.HangRayLength, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _rightHandHangHitResult = hit;
@@ -493,7 +493,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _headHitResult = null;
 
-            if(Physics.Raycast(_headTransform.position, Quaternion.AngleAxis(-_data.HeadRayAngle, transform.right) * transform.forward, out var hit, _data.HeadRayLength, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_headTransform.position, Quaternion.AngleAxis(-_data.HeadRayAngle, transform.right) * transform.forward, out var hit, _data.HeadRayLength, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _headHitResult = hit;
@@ -513,7 +513,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _chestHitResult = null;
 
-            if(Physics.Raycast(_chestTransform.position, transform.forward, out var hit, _data.ChestRayLength, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(Physics.Raycast(_chestTransform.position, transform.forward, out var hit, _data.ChestRayLength, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 IGrabbable grabbable = hit.transform.GetComponent<IGrabbable>();
                 if(null != grabbable) {
                     _chestHitResult = hit;
@@ -600,7 +600,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _didWrapLeftRaycast = true;
 
-            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(_data.WrapAroundAngle, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 2.0f, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(_data.WrapAroundAngle, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 2.0f, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -629,7 +629,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _didRotateLeftRaycast = true;
 
-            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 0.5f, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_leftHandTransform.position, Quaternion.AngleAxis(-90.0f, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 0.5f, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -658,7 +658,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _didWrapRightRaycast = true;
 
-            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(-_data.WrapAroundAngle, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 2.0f, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(-_data.WrapAroundAngle, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 2.0f, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -688,7 +688,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             _didRotateRightRaycast = true;
 
-            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(90.0f, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 0.5f, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(_rightHandTransform.position, Quaternion.AngleAxis(90.0f, transform.up) * transform.forward, out var hit, _data.ArmRayLength * 0.5f, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 
@@ -722,7 +722,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             Vector3 start = _headTransform.position + (Quaternion.AngleAxis(-_data.HeadRayAngle, transform.right) * transform.forward) * _data.HeadRayLength;
             float length = Behavior.Owner.Height;
 
-            if(!Physics.Raycast(start, -Vector3.up, out var hit, length, Behavior.BehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
+            if(!Physics.Raycast(start, -Vector3.up, out var hit, length, Behavior.CharacterBehaviorData.CollisionCheckLayerMask, QueryTriggerInteraction.Ignore)) {
                 return false;
             }
 

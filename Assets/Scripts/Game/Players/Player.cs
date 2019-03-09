@@ -19,6 +19,8 @@ namespace pdxpartyparrot.Game.Players
 
         ActorBehavior Behavior { get; }
 
+        IPlayerController PlayerBehavior { get; }
+
         Viewer Viewer { get; }
 
         void Initialize(Guid id);

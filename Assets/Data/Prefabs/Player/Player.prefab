@@ -332,19 +332,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fcb716d7c83274b8d5f6764e211807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _behaviorData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2, type: 2}
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
-  _animationHelper: {fileID: 5515133998358140594}
-  _actorAnimator: {fileID: 0}
-  _pauseAnimationOnPause: 0
   _owner: {fileID: 2603974987608069630}
   _lastVelocity: {x: 0, y: 0, z: 0}
   _lastAngularVelocity: 0
   _rigidbody: {fileID: 7566827058745012155}
+  _animationHelper: {fileID: 5515133998358140594}
+  _actorAnimator: {fileID: 0}
+  _pauseAnimationOnPause: 0
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
-  _controllerData: {fileID: 11400000, guid: 1dc5a7a67dba6df4caec3ac998e2ff24, type: 2}
   _raycastRoutineRate: 0.1
   _didGroundCheckCollide: 0
   _groundCheckNormal: {x: 0, y: 0, z: 0}
@@ -355,7 +355,7 @@ MonoBehaviour:
   _groundedEffect: {fileID: 0}
   _spineAnimation: {fileID: 5515133998358140594}
   _useGravity: 0
-  _playerControllerData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,
+  _playerBehaviorData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2,
     type: 2}
   _isFlying: 1
 --- !u!114 &6318285324892847177
@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _behavior: {fileID: 4359218613803387002}
+  _data: {fileID: 11400000, guid: 5d7b1df225831fe43a27dfb239c21cb4, type: 2}
   _mouseSensitivity: 0.5
   _lastControllerMove: {x: 0, y: 0, z: 0}
   _lastControllerLook: {x: 0, y: 0, z: 0}

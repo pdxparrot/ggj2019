@@ -28,16 +28,6 @@ namespace pdxpartyparrot.Game.Players
         }
 #endregion
 
-        [Server]
-        public virtual void ResetPlayer(PlayerData playerData)
-        {
-            if(null != Player && null != Player.Behavior) {
-                Player.Behavior.Mass = playerData.Mass;
-                Player.Behavior.LinearDrag = playerData.Drag;
-                Player.Behavior.AngularDrag = playerData.AngularDrag;
-            }
-        }
-
 // TODO: we could make better use of NetworkBehaviour callbacks in here (and in other NetworkBehaviour types)
 
 #region Callbacks

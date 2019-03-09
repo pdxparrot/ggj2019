@@ -1,3 +1,4 @@
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -7,6 +8,11 @@ namespace pdxpartyparrot.Core.Actors
     public abstract class ActorBehavior : MonoBehaviour
     {
         public const float AxesDeadZone = 0.001f;
+
+        [SerializeField]
+        private ActorBehaviorData _behaviorData;
+
+        public ActorBehaviorData BehaviorData => _behaviorData;
 
 #region Movement
         [Header("Movement")]
@@ -121,6 +127,9 @@ namespace pdxpartyparrot.Core.Actors
 
         public virtual void Initialize()
         {
+            Mass = BehaviorData.Mass;
+            LinearDrag = BehaviorData.Drag;
+            AngularDrag = BehaviorData.AngularDrag;
         }
 
 #region Movement

@@ -1,12 +1,14 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Data;
+
 using UnityEngine;
 
 namespace pdxpartyparrot.Game.Data
 {
     [CreateAssetMenu(fileName="CharacterBehaviorData", menuName="pdxpartyparrot/Game/Data/CharacterBehavior Data")]
     [Serializable]
-    public class CharacterBehaviorData : ScriptableObject
+    public class CharacterBehaviorData : ActorBehaviorData
     {
         [SerializeField]
         private LayerMask _collisionCheckLayerMask;

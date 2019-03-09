@@ -139,7 +139,7 @@ namespace pdxpartyparrot.ggj2019.Home
             }
 
             int activeBeeCount = ActorManager.Instance.ActorCount<Bee>();
-            if(activeBeeCount < GameManager.Instance.GameGameData.MinBees * PlayerManager.Instance.PlayerCount) {
+            if(activeBeeCount < GameManager.Instance.GameGameData.MinBees * PlayerManager.Instance.Players.Count) {
                 DoSpawnBee();
             } else if(_logBeeSpawn) {
                 Debug.Log($"not spawning bees {activeBeeCount} of {GameManager.Instance.GameGameData.MinBees} active");

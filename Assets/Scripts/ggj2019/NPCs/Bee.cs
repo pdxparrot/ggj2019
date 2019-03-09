@@ -208,7 +208,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Actions
         private void Swarm(float dt)
         {
-            float speed = PlayerManager.Instance.PlayerData.PlayerControllerData.MoveSpeed * BeeData.SwarmSpeedModifier;
+            // TODO: don't do this every frame :(
+            IPlayer player = _targetSwarm.GetComponent<IPlayer>();
+            float speed = player.PlayerBehavior.PlayerBehaviorData.MoveSpeed * BeeData.SwarmSpeedModifier;
 
             Vector3 swarmPosition = _targetSwarm.transform.position;
             Vector3 targetPosition = swarmPosition + _offsetPosition;

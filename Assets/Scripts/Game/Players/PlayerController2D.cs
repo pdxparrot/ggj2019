@@ -12,9 +12,9 @@ namespace pdxpartyparrot.Game.Players
     {
         [SerializeField]
         [FormerlySerializedAs("_playerControllerData")]
-        private PlayerBehaviorData _behaviorData;
+        private PlayerBehaviorData _playerBehaviorData;
 
-        public PlayerBehaviorData PlayerBehaviorData => _behaviorData;
+        public PlayerBehaviorData PlayerBehaviorData => _playerBehaviorData;
 
         public IPlayer Player => (IPlayer)Owner;
 

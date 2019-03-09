@@ -12,16 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450ed53797732cd4f9517f45839c66f8, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  _playerControllerData: {fileID: 11400000, guid: 1dc5a7a67dba6df4caec3ac998e2ff24,
-    type: 2}
-  _mass: 1
-  _drag: 0
-  _angularDrag: 0
-  _isKinematic: 1
-  _movementLerpSpeed: 5
-  _lookLerpSpeed: 10
   _respawnSeconds: 3
   _spawnImmunitySeconds: 0.5
+  _idleAnimationName: bee_hover
+  _flyingAnimationName: bee-flight
+  _maxPollen: -1

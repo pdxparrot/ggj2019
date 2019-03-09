@@ -1,6 +1,7 @@
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.State;
 
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace pdxpartyparrot.Game.Players
 {
     public abstract class PlayerDriver : ActorDriver
     {
+        [SerializeField]
+        private PlayerDriverData _data;
+
         [SerializeField]
         private float _mouseSensitivity = 0.5f;
 
@@ -68,7 +72,7 @@ namespace pdxpartyparrot.Game.Players
 
             float dt = Time.deltaTime;
 
-            Behavior.LastMoveAxes = Vector3.Lerp(Behavior.LastMoveAxes, _lastControllerMove, dt * GameStateManager.Instance.PlayerManager.PlayerData.MovementLerpSpeed);
+            Behavior.LastMoveAxes = Vector3.Lerp(Behavior.LastMoveAxes, _lastControllerMove, dt * _data.MovementLerpSpeed);
         }
 
         protected virtual void OnDestroy()

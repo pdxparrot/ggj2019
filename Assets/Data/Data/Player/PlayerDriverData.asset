@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 747c2c087d8ab9f42aac91a730e5c97e, type: 3}
-  m_Name: PlayerControllerData
+  m_Script: {fileID: 11500000, guid: 5cb0a8709e897304e87c3b434b5d4237, type: 3}
+  m_Name: PlayerDriverData
   m_EditorClassIdentifier: 
+  _movementLerpSpeed: 5
+  _lookLerpSpeed: 10

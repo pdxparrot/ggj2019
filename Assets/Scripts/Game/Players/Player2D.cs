@@ -8,7 +8,6 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Camera;
-using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -38,7 +37,8 @@ namespace pdxpartyparrot.Game.Players
 
         protected PlayerDriver PlayerDriver => _driver;
 
-        public virtual PlayerController2D PlayerBehavior => (PlayerController2D)Behavior;
+        [CanBeNull]
+        public IPlayerController PlayerBehavior => (PlayerController2D)Behavior;
 #endregion
 
 #region Viewer
@@ -77,7 +77,7 @@ namespace pdxpartyparrot.Game.Players
         {
             base.Initialize(id);
 
-            PlayerBehavior.Initialize();
+            Behavior.Initialize();
             InitializeLocalPlayer(id);
         }
 
@@ -105,10 +105,6 @@ namespace pdxpartyparrot.Game.Players
 
             Debug.Log($"Spawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
-            if(NetworkServer.active) {
-                NetworkPlayer.ResetPlayer(GameStateManager.Instance.PlayerManager.PlayerData);
-            }
-
             Initialize(Guid.NewGuid());
             if(!NetworkClient.active) {
                 NetworkPlayer.RpcSpawn(Id.ToString());
@@ -124,10 +120,6 @@ namespace pdxpartyparrot.Game.Players
             }
 
             Debug.Log($"Respawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
-
-            if(NetworkServer.active) {
-                NetworkPlayer.ResetPlayer(GameStateManager.Instance.PlayerManager.PlayerData);
-            }
 
             return true;
         }

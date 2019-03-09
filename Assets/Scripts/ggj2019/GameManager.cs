@@ -212,7 +212,7 @@ namespace pdxpartyparrot.ggj2019
             }
 
             // save high scores
-            HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.PlayerCount, Score);
+            HighScoreManager.Instance.AddHighScore(PlayerManager.Instance.Players.Count, Score);
         }
 
         //[Client]

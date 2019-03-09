@@ -1,11 +1,9 @@
 ﻿using System;
 
-using UnityEngine;
-
 namespace pdxpartyparrot.Game.Data
 {
     [Serializable]
-    public abstract class PlayerBehaviorData : ScriptableObject
+    public abstract class PlayerBehaviorData : CharacterBehaviorData
     {
     }
 }
