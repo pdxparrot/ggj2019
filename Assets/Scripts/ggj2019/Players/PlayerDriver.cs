@@ -3,7 +3,7 @@ using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Input;
 using pdxpartyparrot.ggj2019.Input;
-using pdxpartyparrot.ggj2019.Players.ControllerComponents;
+using pdxpartyparrot.ggj2019.Players.BehaviorComponents;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,7 +16,7 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         private PlayerControls _controls;
 
-        private PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
+        private PlayerBehavior GamePlayerBehavior => (PlayerBehavior)PlayerBehavior;
 
         private Player GamePlayer => GamePlayerBehavior.GamePlayer;
 
@@ -29,7 +29,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Awake();
 
-            Assert.IsTrue(PlayerBehavior is PlayerController);
+            Assert.IsTrue(PlayerBehavior is PlayerBehavior);
             Assert.IsNull(GetComponent<GamepadListener>());
         }
 
@@ -165,7 +165,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // action on release
             if(context.cancelled) {
-                GamePlayerBehavior.ActionPerformed(GatherControllerComponent.GatherAction.Default);
+                GamePlayerBehavior.ActionPerformed(GatherBehaviorComponent.GatherAction.Default);
             }
         }
 
@@ -177,7 +177,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // action on release
             if(context.cancelled) {
-                GamePlayerBehavior.ActionPerformed(ContextControllerComponent.ContextAction.Default);
+                GamePlayerBehavior.ActionPerformed(ContextBehaviorComponent.ContextAction.Default);
             }
         }
 #endregion

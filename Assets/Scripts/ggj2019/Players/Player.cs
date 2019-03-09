@@ -23,7 +23,7 @@ namespace pdxpartyparrot.ggj2019.Players
     [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Player : Player2D
     {
-        public PlayerController GamePlayerBehavior => (PlayerController)PlayerBehavior;
+        public PlayerBehavior GamePlayerBehavior => (PlayerBehavior)PlayerBehavior;
 
         private PlayerDriver GamePlayerDriver => (PlayerDriver)PlayerDriver;
 
@@ -88,7 +88,7 @@ namespace pdxpartyparrot.ggj2019.Players
             _swarm = GetComponent<Swarm>();
             _skinHelper = GetComponent<SpineSkinHelper>();
 
-            Assert.IsTrue(PlayerBehavior is PlayerController);
+            Assert.IsTrue(PlayerBehavior is PlayerBehavior);
         }
 
         private void Update()

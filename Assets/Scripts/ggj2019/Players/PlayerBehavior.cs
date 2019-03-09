@@ -1,12 +1,13 @@
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class PlayerController : Game.Players.PlayerBehavior2D
+    public sealed class PlayerBehavior : Game.Players.PlayerBehavior2D
     {
-        public Data.PlayerControllerData GamePlayerControllerData => (Data.PlayerControllerData)PlayerBehaviorData;
+        public Data.PlayerBehaviorData GamePlayerBehaviorData => (Data.PlayerBehaviorData)PlayerBehaviorData;
 
         public Player GamePlayer => (Player)Player;
 
@@ -15,6 +16,15 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         [ReadOnly]
         private bool _isFlying = true;
+
+#region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Assert.IsTrue(PlayerBehaviorData is Data.PlayerBehaviorData);
+        }
+#endregion
 
         public override void Initialize()
         {

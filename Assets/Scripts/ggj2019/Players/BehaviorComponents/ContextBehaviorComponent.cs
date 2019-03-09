@@ -1,6 +1,6 @@
-﻿namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
+﻿namespace pdxpartyparrot.ggj2019.Players.BehaviorComponents
 {
-    public sealed class ContextControllerComponent : GamePlayerControllerComponent
+    public sealed class ContextBehaviorComponent : GamePlayerBehaviorComponent
     {
 #region Actions
         public class ContextAction : CharacterBehaviorAction

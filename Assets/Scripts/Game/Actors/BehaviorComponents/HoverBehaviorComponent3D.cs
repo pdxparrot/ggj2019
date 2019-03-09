@@ -95,7 +95,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
             Vector3 acceleration = (_data.HoverAcceleration + Behavior.CharacterBehaviorData.FallSpeedAdjustment) * Vector3.up;
             // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
-            Behavior.AddForce(acceleration);
+            Behavior.AddForce(acceleration, ForceMode.Force);
 
             Behavior.DefaultPhysicsMove(axes, _data.HoverMoveSpeed, dt);
 

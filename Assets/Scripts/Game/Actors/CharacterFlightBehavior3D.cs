@@ -134,7 +134,7 @@ namespace pdxpartyparrot.Game.Actors
             // adding a force opposite our current x velocity should help stop us drifting
             Vector3 relativeVelocity = ownerTransform.InverseTransformDirection(Velocity);
             _bankForce = -relativeVelocity.x * AngularDrag * ownerTransform.right;
-            AddForce(_bankForce);
+            AddForce(_bankForce, ForceMode.Force);
         }
 
         public override void PhysicsMove(Vector3 axes, float dt)
@@ -147,7 +147,7 @@ namespace pdxpartyparrot.Game.Actors
 
             float attackAngle = axes.y * -_data.MaxAttackAngle;
             Vector3 attackVector = Quaternion.AngleAxis(attackAngle, Vector3.right) * Vector3.forward;
-            AddRelativeForce(attackVector * _data.LinearThrust);
+            AddRelativeForce(attackVector * _data.LinearThrust, ForceMode.Force);
 
             // lift if we're not falling
             if(axes.y >= 0.0f) {

@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace pdxpartyparrot.Game.Players
+namespace pdxpartyparrot.Game.Players.BehaviorComponents
 {
     [RequireComponent(typeof(PlayerBehavior3D))]
     public abstract class PlayerBehaviorComponent3D : CharacterBehaviorComponent3D

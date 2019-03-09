@@ -1,6 +1,6 @@
-﻿namespace pdxpartyparrot.ggj2019.Players.ControllerComponents
+﻿namespace pdxpartyparrot.ggj2019.Players.BehaviorComponents
 {
-    public sealed class GatherControllerComponent : GamePlayerControllerComponent
+    public sealed class GatherBehaviorComponent : GamePlayerBehaviorComponent
     {
 #region Actions
         public class GatherAction : CharacterBehaviorAction

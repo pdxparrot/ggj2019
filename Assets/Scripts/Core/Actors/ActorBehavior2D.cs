@@ -209,12 +209,6 @@ namespace pdxpartyparrot.Core.Actors
             _rigidbody.MoveRotation(angle);
         }
 
-        // TODO: this can go away when ICharacterActorController goes away
-        public void AddForce(Vector3 force)
-        {
-            AddForce(force, ForceMode2D.Force);
-        }
-
         public void AddForce(Vector3 force, ForceMode2D mode)
         {
             _rigidbody.AddForce(force, mode);
@@ -225,7 +219,7 @@ namespace pdxpartyparrot.Core.Actors
             _rigidbody.AddRelativeForce(force, mode);
         }
 
-        public void AddTorque(float torque, ForceMode2D mode=ForceMode2D.Force)
+        public void AddTorque(float torque, ForceMode2D mode)
         {
             _rigidbody.AddTorque(torque, mode);
         }

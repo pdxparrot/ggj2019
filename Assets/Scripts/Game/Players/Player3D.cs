@@ -31,7 +31,7 @@ namespace pdxpartyparrot.Game.Players
         public NetworkPlayer NetworkPlayer => _networkPlayer;
 #endregion
 
-#region Controller / Driver
+#region Behavior / Driver
         [SerializeField]
         private PlayerDriver _driver;
 
