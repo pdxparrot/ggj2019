@@ -1,6 +1,7 @@
 ﻿using System;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
@@ -16,6 +17,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
+    [RequireComponent(typeof(SpineAnimationHelper))]
     [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Flower : NPC2D
     {
@@ -39,7 +41,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private bool _isDead = true;
 
-        public override bool IsDead => _isDead;
+        public bool IsDead => _isDead;
 
         [SerializeField]
         [ReadOnly]
@@ -51,6 +53,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private FlowerData FlowerData => (FlowerData)NPCData;
 
+        private SpineAnimationHelper _spineAnimationHelper;
+
         private SpineSkinHelper _skinHelper;
 
 #region Unity Lifecycle
@@ -58,6 +62,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
         {
             base.Awake();
 
+            Assert.IsTrue(NPCBehavior is FlowerBehavior);
+
+            _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
             _skinHelper = GetComponent<SpineSkinHelper>();
         }
 
@@ -122,11 +129,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+        public override void Initialize(Guid id, NPCData data)
         {
             Assert.IsTrue(data is FlowerData);
 
-            base.Initialize(data);
+            base.Initialize(id, data);
 
             _pollen = FlowerData.Pollen;
 

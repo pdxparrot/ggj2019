@@ -18,7 +18,11 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public Player GamePlayer => (Player)Player;
 
+        [Space(10)]
+
 #region Effects
+        [Header("Effects")]
+
         [SerializeField]
         private EffectTrigger _spawnEffect;
 
@@ -34,6 +38,8 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         private EffectTrigger _gameOverEffect;
 #endregion
+
+        [Space(10)]
 
         // start true to force the animation the first time
         // TODO: is this actually necessary?
@@ -76,7 +82,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             InitializeEffects();
 
-            SpineAnimation.SetFacing(Vector3.zero - transform.position);
+            AnimationHelper.SetFacing(Vector3.zero - transform.position);
             SetIdleAnimation();
         }
 
@@ -221,7 +227,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            SpineAnimation.SetAnimation(GamePlayerBehaviorData.IdleAnimationName, true);
+            AnimationHelper.SetAnimation(GamePlayerBehaviorData.IdleAnimationName, true);
             _isFlying = false;
         }
 
@@ -231,7 +237,7 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            SpineAnimation.SetAnimation(GamePlayerBehaviorData.FlyingAnimationName, true);
+            AnimationHelper.SetAnimation(GamePlayerBehaviorData.FlyingAnimationName, true);
             _isFlying = true;
         }
 #endregion

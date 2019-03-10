@@ -8,9 +8,8 @@ namespace pdxpartyparrot.Game.Data
 {
     // TODO: split this into 2D vs 3D so we can have USE_SPINE cut out animation params
     // as well as to allow for better 2D / 3D splitting of values
-    [CreateAssetMenu(fileName="CharacterBehaviorData", menuName="pdxpartyparrot/Game/Data/CharacterBehavior Data")]
     [Serializable]
-    public class CharacterBehaviorData : ActorBehaviorData
+    public abstract class CharacterBehaviorData : ActorBehaviorData
     {
         [SerializeField]
         private LayerMask _collisionCheckLayerMask;

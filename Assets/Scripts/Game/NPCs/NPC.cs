@@ -1,12 +1,22 @@
-﻿using pdxpartyparrot.Game.Data;
+﻿using System;
+
+using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Game.Data;
+
+using UnityEngine;
 
 namespace pdxpartyparrot.Game.NPCs
 {
-    // TODO: this as an interface should be temporary
-    // really what we want is a behavior that also requires an Actor
-    // to marker something as an NPC and to give us hooks into NPC behaviors
     public interface INPC
     {
-        void Initialize(NPCData data);
+        GameObject GameObject { get; }
+
+        Guid Id { get; }
+
+        ActorBehavior Behavior { get; }
+
+        INPCBehavior NPCBehavior { get; }
+
+        void Initialize(Guid id, NPCData data);
     }
 }

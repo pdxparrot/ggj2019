@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using JetBrains.Annotations;
@@ -123,7 +123,7 @@ namespace pdxpartyparrot.Game.World
                             if(null != _spawnGroupData.NPCData) {
                                 INPC npc = actor.GetComponent<INPC>();
                                 if(null != npc) {
-                                    npc.Initialize(_spawnGroupData.NPCData);
+                                    npc.Initialize(Guid.NewGuid(), _spawnGroupData.NPCData);
                                 }
                             }
                         }

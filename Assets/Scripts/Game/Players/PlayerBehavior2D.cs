@@ -1,21 +1,13 @@
 ﻿using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.Data;
 
-using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Players
 {
     public abstract class PlayerBehavior2D : CharacterBehavior2D, IPlayerBehavior
     {
-        [Space(10)]
-
-        [SerializeField]
-        [FormerlySerializedAs("_playerControllerData")]
-        private PlayerBehaviorData _playerBehaviorData;
-
-        public PlayerBehaviorData PlayerBehaviorData => _playerBehaviorData;
+        public PlayerBehaviorData PlayerBehaviorData => (PlayerBehaviorData)BehaviorData;
 
         public IPlayer Player => (IPlayer)Owner;
 
@@ -24,6 +16,7 @@ namespace pdxpartyparrot.Game.Players
         {
             base.Awake();
 
+            Assert.IsTrue(BehaviorData is PlayerBehaviorData);
             Assert.IsTrue(Owner is IPlayer);
         }
 
@@ -32,7 +25,7 @@ namespace pdxpartyparrot.Game.Players
             base.FixedUpdate();
 
             // fixes sketchy rigidbody angular momentum shit
-            AngularVelocity2D = 0;
+            AngularVelocity2D = 0.0f;
         }
 #endregion
     }

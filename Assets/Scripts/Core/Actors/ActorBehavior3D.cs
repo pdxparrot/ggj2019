@@ -196,6 +196,11 @@ namespace pdxpartyparrot.Core.Actors
             InitRigidbody(_rigidbody);
         }
 
+        protected override void ResetPosition()
+        {
+            _rigidbody.position = Vector3.zero;
+        }
+
         protected virtual void InitRigidbody(Rigidbody rb)
         {
         }

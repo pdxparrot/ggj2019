@@ -15,8 +15,8 @@ using UnityEngine.Networking;
 
 namespace pdxpartyparrot.Game.Players
 {
-    // TODO: reduce the copy paste in this
     [RequireComponent(typeof(NetworkPlayer))]
+    [RequireComponent(typeof(Rigidbody))]
     public abstract class Player3D : Actor3D, IPlayer
     {
         public GameObject GameObject => gameObject;
@@ -42,7 +42,6 @@ namespace pdxpartyparrot.Game.Players
 #endregion
 
 #region Viewer
-
         [CanBeNull]
         public IPlayerViewer PlayerViewer { get; protected set; }
 
@@ -99,6 +98,7 @@ namespace pdxpartyparrot.Game.Players
             return true;
         }
 
+#region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
         {
             if(!base.OnSpawn(spawnpoint)) {
@@ -125,5 +125,6 @@ namespace pdxpartyparrot.Game.Players
 
             return true;
         }
+#endregion
     }
 }

@@ -15,8 +15,8 @@ using UnityEngine.Networking;
 
 namespace pdxpartyparrot.Game.Players
 {
-    // TODO: reduce the copy paste in this
     [RequireComponent(typeof(NetworkPlayer))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public abstract class Player2D : Actor2D, IPlayer
     {
         public GameObject GameObject => gameObject;
@@ -99,6 +99,7 @@ namespace pdxpartyparrot.Game.Players
             return true;
         }
 
+#region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
         {
             if(!base.OnSpawn(spawnpoint)) {
@@ -125,5 +126,6 @@ namespace pdxpartyparrot.Game.Players
 
             return true;
         }
+#endregion
     }
 }

@@ -6,7 +6,7 @@ namespace pdxpartyparrot.Game.Data
 {
     [CreateAssetMenu(fileName="HoverBehaviorComponentData", menuName="pdxpartyparrot/Game/Data/Behavior Components/HoverBehaviorComponent Data")]
     [Serializable]
-    public class HoverBehaviorComponentData : ScriptableObject
+    public class HoverBehaviorComponentData : CharacterBehaviorComponentData
     {
         [SerializeField]
         [Range(0, 10)]

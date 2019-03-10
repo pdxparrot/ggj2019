@@ -7,7 +7,7 @@ namespace pdxpartyparrot.Core.Data
 {
     [CreateAssetMenu(fileName="SpawnData", menuName="pdxpartyparrot/Core/Data/Spawn Data")]
     [Serializable]
-    public sealed class SpawnData : ScriptableObject
+    public class SpawnData : ScriptableObject
     {
         public enum SpawnMethod
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Interactables;
@@ -15,6 +16,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.Players
 {
     [RequireComponent(typeof(Swarm))]
+    [RequireComponent(typeof(SpineAnimationHelper))]
     [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Player : Player2D
     {

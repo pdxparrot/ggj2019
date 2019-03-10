@@ -6,7 +6,7 @@ namespace pdxpartyparrot.Game.Data
 {
     [CreateAssetMenu(fileName="DoubleJumpBehaviorComponentData", menuName="pdxpartyparrot/Game/Data/Behavior Components/DoubleJumpBehaviorComponent Data")]
     [Serializable]
-    public class DoubleJumpBehaviorComponentData : ScriptableObject
+    public class DoubleJumpBehaviorComponentData : CharacterBehaviorComponentData
     {
         [SerializeField]
         [Range(0, 100)]

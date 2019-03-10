@@ -56,8 +56,6 @@ namespace pdxpartyparrot.Game.Actors
         }
 
         public bool IsFalling => UseGravity && (!IsGrounded && !IsSliding && Velocity.y < 0.0f);
-
-        public CapsuleCollider Capsule => (CapsuleCollider)Owner3D.Collider;
 #endregion
 
         public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
@@ -70,7 +68,6 @@ namespace pdxpartyparrot.Game.Actors
             base.Awake();
 
             Assert.IsTrue(BehaviorData is CharacterBehaviorData);
-            Assert.IsTrue(Owner3D.Collider is CapsuleCollider, "CharacterBehavior Owner must have a CapsuleCollider!");
 
             _components = GetComponents<CharacterBehaviorComponent3D>();
             //Debug.Log($"Found {_components.Length} CharacterBehaviorComponent3Ds");

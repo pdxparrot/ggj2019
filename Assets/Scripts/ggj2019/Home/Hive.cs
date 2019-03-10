@@ -155,7 +155,7 @@ namespace pdxpartyparrot.ggj2019.Home
             Bee bee = ObjectPoolManager.Instance.GetPooledObject<Bee>("bees");
             spawnPoint.Spawn(bee, Guid.NewGuid());
             bee.transform.SetParent(_beeContainer.transform);
-            bee.Initialize(GameManager.Instance.GameGameData.BeeData);
+            bee.Initialize(Guid.NewGuid(), GameManager.Instance.GameGameData.BeeData);
 
             bee.SetDefaultSkin();
             //bee.SetRandomSkin();

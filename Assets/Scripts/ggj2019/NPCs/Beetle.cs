@@ -1,6 +1,9 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+
+using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
@@ -16,6 +19,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
+    [RequireComponent(typeof(SpineAnimationHelper))]
     public sealed class Beetle : Enemy
     {
         private enum State
@@ -54,7 +58,18 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private BeetleData BeetleData => (BeetleData)NPCData;
 
+        private SpineAnimationHelper _spineAnimationHelper;
+
 #region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Assert.IsTrue(NPCBehavior is BeetleBehavior);
+
+            _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
+        }
+
         protected override void Update()
         {
             float dt = Time.deltaTime;
@@ -106,11 +121,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+        public override void Initialize(Guid id, NPCData data)
         {
             Assert.IsTrue(data is BeetleData);
 
-            base.Initialize(data);
+            base.Initialize(id, data);
 
             _attackCooldownTimer.Start(BeetleData.AttackCooldown);
 

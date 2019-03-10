@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
-using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors.BehaviorComponents;
 using pdxpartyparrot.Game.Data;
@@ -18,19 +17,6 @@ namespace pdxpartyparrot.Game.Actors
     public class CharacterBehavior2D : ActorBehavior2D, ICharacterBehavior
     {
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
-
-        [Space(10)]
-
-#region Animation
-        [Header("Character Animation")]
-
-#if USE_SPINE
-        [SerializeField]
-        private SpineAnimationHelper _spineAnimation;
-
-        protected SpineAnimationHelper SpineAnimation => _spineAnimation;
-#endif
-#endregion
 
         [Space(10)]
 
@@ -210,7 +196,7 @@ namespace pdxpartyparrot.Game.Actors
 
             // align with the movement
 #if USE_SPINE
-            SpineAnimation.SetFacing(LastMoveAxes);
+            AnimationHelper.SetFacing(LastMoveAxes);
 #else
             // TODO: set facing (set localScale.x)
             if(null != Animator) {

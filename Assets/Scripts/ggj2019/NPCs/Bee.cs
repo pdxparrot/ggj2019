@@ -1,6 +1,9 @@
+using System;
+
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
@@ -20,6 +23,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
+    [RequireComponent(typeof(SpineAnimationHelper))]
     [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Bee : NPC2D, ISwarmable, IInteractable
     {
@@ -62,11 +66,24 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private State _state = State.Idle;
 
-        public override bool IsDead => _state == State.Dead;
+        public bool IsDead => _state == State.Dead;
 
         private BeeData BeeData => (BeeData)NPCData;
 
+        private SpineAnimationHelper _spineAnimationHelper;
+
         private SpineSkinHelper _skinHelper;
+
+#region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Assert.IsTrue(NPCBehavior is BeeBehavior);
+
+            _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
+        }
+#endregion
 
 #region Spawn
         public override bool OnSpawn(SpawnPoint spawnpoint)
@@ -90,11 +107,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+        public override void Initialize(Guid id, NPCData data)
         {
             Assert.IsTrue(data is BeeData);
 
-            base.Initialize(data);
+            base.Initialize(id, data);
 
             TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
 

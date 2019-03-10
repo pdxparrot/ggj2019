@@ -6,7 +6,7 @@ namespace pdxpartyparrot.Game.Data
 {
     [CreateAssetMenu(fileName="GroundCheckBehaviorComponentData", menuName="pdxpartyparrot/Game/Data/Behavior Components/GroundCheckBehaviorComponent Data")]
     [Serializable]
-    public class GroundCheckBehaviorComponentData : ScriptableObject
+    public class GroundCheckBehaviorComponentData : CharacterBehaviorComponentData
     {
         [SerializeField]
         [Range(0, 1)]

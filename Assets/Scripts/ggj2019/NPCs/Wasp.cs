@@ -1,4 +1,7 @@
-﻿using pdxpartyparrot.Core;
+﻿using System;
+
+using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Splines;
@@ -17,6 +20,7 @@ using UnityEngine.Assertions;
 namespace pdxpartyparrot.ggj2019.NPCs
 {
     [RequireComponent(typeof(PooledObject))]
+    [RequireComponent(typeof(SpineAnimationHelper))]
     public sealed class Wasp : Enemy
     {
         private enum State
@@ -69,7 +73,18 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private WaspData WaspData => (WaspData)NPCData;
 
+        private SpineAnimationHelper _spineAnimationHelper;
+
 #region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Assert.IsTrue(NPCBehavior is WaspBehavior);
+
+            _spineAnimationHelper = GetComponent<SpineAnimationHelper>();
+        }
+
         protected override void Update()
         {
             float dt = Time.deltaTime;
@@ -115,11 +130,11 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Initialize(NPCData data)
+        public override void Initialize(Guid id, NPCData data)
         {
             Assert.IsTrue(data is WaspData);
 
-            base.Initialize(data);
+            base.Initialize(id, data);
 
             SetState(State.FollowingSpline);
         }

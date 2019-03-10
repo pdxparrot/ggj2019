@@ -136,7 +136,8 @@ namespace pdxpartyparrot.Core.Actors
             LastMoveAxes = Vector3.zero;
             _isMoving = false;
 
-            Position = Vector3.zero;
+            ResetPosition();
+
             Rotation3D = Quaternion.identity;;
             Rotation2D = 0.0f;
             Velocity = Vector3.zero;
@@ -144,12 +145,17 @@ namespace pdxpartyparrot.Core.Actors
             AngularVelocity2D = 0.0f;
         }
 
+        // this should reset the position to (0, 0, 0)
+        // without logging a teleport message
+        protected abstract void ResetPosition();
+
         protected virtual void ResetFromData()
         {
             Mass = BehaviorData.Mass;
             LinearDrag = BehaviorData.Drag;
             AngularDrag = BehaviorData.AngularDrag;
             IsKinematic = BehaviorData.IsKinematic;
+            UseGravity = !BehaviorData.IsKinematic;
         }
 
 #region Movement

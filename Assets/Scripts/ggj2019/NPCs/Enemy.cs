@@ -13,6 +13,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private /*readonly*/ Timer _immunityTimer = new Timer();
 
+        public abstract bool IsDead { get; }
+
         protected bool IsImmune => _immunityTimer.IsRunning;
 
 #region Unity Lifecycle
