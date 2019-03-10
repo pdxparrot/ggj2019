@@ -1,6 +1,7 @@
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.NPCs;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;

@@ -10,6 +10,7 @@ using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
 using pdxpartyparrot.Game.Interactables;
+using pdxpartyparrot.Game.NPCs;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Data;

@@ -8,13 +8,12 @@ using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Data;
-using pdxpartyparrot.Game.NPCs;
 using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace pdxpartyparrot.ggj2019.NPCs
+namespace pdxpartyparrot.Game.NPCs
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class NPC2D : Actor2D, INPC
@@ -29,7 +28,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [CanBeNull]
         public INPCBehavior NPCBehavior => (NPCBehavior2D)Behavior;
 #endregion
-
 
 // TODO: behavior
 #region Effects
