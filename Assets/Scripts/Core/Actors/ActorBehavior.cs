@@ -204,6 +204,12 @@ namespace pdxpartyparrot.Core.Actors
         }
 
 #region Movement
+        public void Teleport(Vector3 position)
+        {
+            Debug.Log($"Teleporting actor {Owner.Id} to {position}");
+            _transform.position = position;
+        }
+
         public virtual void AnimationMove(Vector2 direction, float dt)
         {
         }

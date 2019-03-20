@@ -61,6 +61,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             pollen.transform.SetParent(GameManager.Instance.PollenContainer.transform);
 
             pollen.Initialize(pollenData);
+            pollen.Initialize(GameManager.Instance.GameGameData.PollenBehaviorData);
         }
 
         public void AcquirePollenSpawnpoint(Actor owner)

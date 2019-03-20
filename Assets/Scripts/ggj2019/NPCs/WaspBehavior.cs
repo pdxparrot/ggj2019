@@ -133,7 +133,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             targetPosition.y += _splineYOffset;
 
 SetMoveDirection(targetPosition - Position);
-            base.DefaultPhysicsMove(MoveDirection, WaspData.MoveSpeed, dt);
+            base.DefaultPhysicsMove(MoveDirection, speed, dt);
 
             //transform.LookAt2DFlip(targetPosition);
 
@@ -209,17 +209,23 @@ SetMoveDirection(targetPosition - Position);
 
             _splineYOffset = PartyParrotManager.Instance.Random.NextSingle(-waspSpawnPoint.Offset, waspSpawnPoint.Offset);
 
+            // init our spline state
             _spline = waspSpawnPoint.GetComponent<BezierSpline>();
             _splineLength = _spline.EstimatedLength();
             _splinePosition = 0.0f;
+
+            // teleport to our starting position
+            // setting the behavior's Position doesn't seem to immediately warp
+            // so falling back on just forcing the transform position to move :(
+	        Vector3 targetPosition = _spline.GetPoint(0.0f);
+            targetPosition.y += _splineYOffset;
+            Teleport(targetPosition);
 
             if(null != AnimationHelper) {
                 AnimationHelper.SetFacing(Vector3.zero - transform.position);
             }
 
-            SetState(WaspState.Idle);
-
-            _attackCooldownTimer.Start(WaspData.AttackCooldown);
+            SetState(WaspState.FollowingSpline);
         }
 
         public override void OnDeSpawn()

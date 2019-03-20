@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using JetBrains.Annotations;
 
@@ -170,7 +170,7 @@ namespace pdxpartyparrot.Core.Actors
         protected InternalPauseState PauseState => _pauseState;
 #endregion
 
-        public override bool CanMove => null == _actorAnimator || !_actorAnimator.IsAnimating;
+        public override bool CanMove => !PartyParrotManager.Instance.IsPaused && (null == _actorAnimator || !_actorAnimator.IsAnimating);
 
 #region Unity Lifecycle
         protected override void Awake()
