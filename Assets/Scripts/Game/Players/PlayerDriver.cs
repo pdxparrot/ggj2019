@@ -1,6 +1,7 @@
+using pdxpartyparrot.Core;
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
@@ -8,10 +9,17 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Players
 {
-    public abstract class PlayerDriver : CharacterDriver
+    public abstract class PlayerDriver : MonoBehaviour
     {
         [SerializeField]
+        private Actor _owner;
+
+        public Actor Owner => _owner;
+
+        [SerializeField]
         private PlayerDriverData _data;
+
+        protected IPlayer Player => (IPlayer)Owner;
 
         [SerializeField]
         private float _mouseSensitivity = 0.5f;
@@ -38,11 +46,7 @@ namespace pdxpartyparrot.Game.Players
             set => _lastControllerLook = value;
         }
 
-        protected IPlayerBehavior PlayerBehavior => (IPlayerBehavior)Behavior;
-
-        protected IPlayer Player => PlayerBehavior.Player;
-
-        protected override bool CanDrive => base.CanDrive && Player.IsLocalActor;
+        protected virtual bool CanDrive => !PartyParrotManager.Instance.IsPaused && Player.IsLocalActor;
 
         protected bool EnableMouseLook { get; private set; } = !Application.isEditor;
 
@@ -51,7 +55,7 @@ namespace pdxpartyparrot.Game.Players
 #region Unity Lifecycle
         protected virtual void Awake()
         {
-            Assert.IsTrue(Behavior is IPlayerBehavior);
+            Assert.IsTrue(Owner is IPlayer);
         }
 
         protected virtual void Update()
@@ -64,14 +68,14 @@ namespace pdxpartyparrot.Game.Players
                 // TODO: on pause tho we should maybe store this stuff out
                 // in order to reset it (otherwise we might not get new inputs)
                 LastControllerMove = Vector3.zero;
-                Behavior.SetMoveDirection(Vector3.zero);
+                Player.Behavior.SetMoveDirection(Vector3.zero);
                 return;
             }
 
 
             float dt = Time.deltaTime;
 
-            Behavior.SetMoveDirection(Vector3.Lerp(Behavior.MoveDirection, _lastControllerMove, dt * _data.MovementLerpSpeed));
+            Player.Behavior.SetMoveDirection(Vector3.Lerp(Player.Behavior.MoveDirection, _lastControllerMove, dt * _data.MovementLerpSpeed));
         }
 
         protected virtual void OnDestroy()

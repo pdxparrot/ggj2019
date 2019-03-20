@@ -16,9 +16,7 @@ namespace pdxpartyparrot.ggj2019.Players
         [SerializeField]
         private PlayerControls _controls;
 
-        private PlayerBehavior GamePlayerBehavior => (PlayerBehavior)PlayerBehavior;
-
-        private Player GamePlayer => GamePlayerBehavior.GamePlayer;
+        private Player GamePlayer => (Player)Player;
 
         public GamepadListener GamepadListener { get; private set; }
 
@@ -29,7 +27,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Awake();
 
-            Assert.IsTrue(PlayerBehavior is PlayerBehavior);
+            Assert.IsTrue(Player is Player);
             Assert.IsNull(GetComponent<GamepadListener>());
         }
 
@@ -116,7 +114,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(LastControllerMove.x, context.performed ? 1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
-                GamePlayerBehavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
             }
         }
 
@@ -128,7 +126,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(LastControllerMove.x, context.performed ? -1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
-                GamePlayerBehavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
             }
         }
 
@@ -140,7 +138,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(context.performed ? -1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
-                GamePlayerBehavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
             }
         }
 
@@ -152,7 +150,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(context.performed ? 1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
-                GamePlayerBehavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
             }
         }
 #endregion
@@ -165,7 +163,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // action on release
             if(context.cancelled) {
-                GamePlayerBehavior.ActionPerformed(GatherBehaviorComponent.GatherAction.Default);
+                GamePlayer.GamePlayerBehavior.ActionPerformed(GatherBehaviorComponent.GatherAction.Default);
             }
         }
 
@@ -177,7 +175,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             // action on release
             if(context.cancelled) {
-                GamePlayerBehavior.ActionPerformed(ContextBehaviorComponent.ContextAction.Default);
+                GamePlayer.GamePlayerBehavior.ActionPerformed(ContextBehaviorComponent.ContextAction.Default);
             }
         }
 #endregion
