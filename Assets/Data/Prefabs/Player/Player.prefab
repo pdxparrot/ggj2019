@@ -532,13 +532,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fcb716d7c83274b8d5f6764e211807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behaviorData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2, type: 2}
   _owner: {fileID: 2603974987608069630}
-  _lastMoveAxes: {x: 0, y: 0, z: 0}
+  _behaviorData: {fileID: 11400000, guid: e7316795c7e12df40b25a9434cb2eda2, type: 2}
+  _moveDirection: {x: 0, y: 0}
   _isMoving: 0
   _spawnEffect: {fileID: 3164533851950656107}
   _respawnEffect: {fileID: 6172685723017044385}
   _despawnEffect: {fileID: 0}
+  _lastGravityScale: 0
   _animationHelper: {fileID: 5515133998358140594}
   _actorAnimator: {fileID: 0}
   _pauseAnimationOnPause: 0
@@ -548,12 +549,12 @@ MonoBehaviour:
     AngularVelocity: 0
   _isGrounded: 0
   _isSliding: 0
+  _isDead: 0
+  _isFlying: 1
   _damageEffect: {fileID: 7674856831482742360}
   _deathEffect: {fileID: 1971960604629102527}
   _gameOverEffect: {fileID: 8821035005184857451}
-  _isDead: 0
   _pollen: []
-  _isFlying: 1
   _respawnTimer:
     _timerSeconds: 0
     _secondsRemaining: 0
@@ -574,6 +575,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f581599d3ef44a4c969a05b38d0cebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _viewportSize: {x: 0, y: 0}
+  _ownerHalfSize: {x: 0, y: 0}
+  _lastVelocity: {x: 0, y: 0, z: 0}
+  _lastPosition: {x: 0, y: 0}
 --- !u!114 &9068193015410926201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1030,7 +1035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752e85aa1946bd94596c2949c0a3e149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behavior: {fileID: 5545979805649994365}
+  _owner: {fileID: 2603974987608069630}
   _data: {fileID: 11400000, guid: 5d7b1df225831fe43a27dfb239c21cb4, type: 2}
   _mouseSensitivity: 0.5
   _lastControllerMove: {x: 0, y: 0, z: 0}
