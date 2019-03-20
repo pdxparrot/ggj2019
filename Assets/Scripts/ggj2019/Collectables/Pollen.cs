@@ -16,11 +16,11 @@ using TMPro;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Networking;
 
 namespace pdxpartyparrot.ggj2019.Collectables
 {
     [RequireComponent(typeof(PooledObject))]
-    [RequireComponent(typeof(Rigidbody2D))]
     public class Pollen : Actor2D, ICollectable
     {
         private enum State
@@ -65,7 +65,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
         [ReadOnly]
         private PollenData _pollenData;
 
-        private Rigidbody2D _rigidbody;
+        private PollenBehavior PollenBehavior => (PollenBehavior)Behavior;
 
         private PooledObject _pooledObject;
 
@@ -73,9 +73,6 @@ namespace pdxpartyparrot.ggj2019.Collectables
         protected override void Awake()
         {
             base.Awake();
-
-            _rigidbody = GetComponent<Rigidbody2D>();
-            _rigidbody.gravityScale = 0.0f;
 
             Collider.isTrigger = true;
 
@@ -108,11 +105,15 @@ namespace pdxpartyparrot.ggj2019.Collectables
         }
 #endregion
 
-        public void Initialize(CollectableData data)
+        public void Initialize(CollectableData collectableData)
         {
-            Assert.IsTrue(data is PollenData);
+            Assert.IsTrue(collectableData is PollenData);
+            _pollenData = (PollenData)collectableData;
+        }
 
-            _pollenData = (PollenData)data;
+        public void Initialize(PollenBehaviorData behaviorData)
+        {
+            Behavior.Initialize(behaviorData);
 
             SetState(State.Floating);
         }
@@ -206,13 +207,13 @@ namespace pdxpartyparrot.ggj2019.Collectables
         {
             // recycle if we're off the screen
             Vector3 position = transform.position;
-            if(position.y - Height / 2.0f > GameStateManager.Instance.GameManager.GameData.GameSize2D) {
+            if(position.y - Height / 2.0f > GameStateManager.Instance.GameManager.GameData.ViewportSize) {
                 _pooledObject.Recycle();
                 return;
             }
 
             position.y += _pollenData.FloatSpeed * dt;
-            _rigidbody.MovePosition(position);
+            PollenBehavior.MovePosition(position);
         }
 
         private void FollowPlayer(float dt)
@@ -225,7 +226,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _followPlayer.PollenTarget.position, _pollenData.FollowPlayerSpeed * dt);
-            _rigidbody.MovePosition(position);
+            PollenBehavior.MovePosition(position);
         }
 
         private void GoToHive(float dt)
@@ -237,7 +238,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _hive.transform.position, _pollenData.GoToHiveSpeed * dt);
-            _rigidbody.MovePosition(position);
+            PollenBehavior.MovePosition(position);
         }
 
 #region Event Handlers

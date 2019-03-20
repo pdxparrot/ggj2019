@@ -1,34 +1,38 @@
+using JetBrains.Annotations;
+
 using pdxpartyparrot.Core.Data;
+using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Core.Actors
 {
     public abstract class ActorBehavior : MonoBehaviour
     {
         [SerializeField]
-        private ActorBehaviorData _behaviorData;
-
-        public ActorBehaviorData BehaviorData => _behaviorData;
-
-        [SerializeField]
         private Actor _owner;
 
         public Actor Owner => _owner;
+
+        [SerializeField]
+        [ReadOnly]
+        protected ActorBehaviorData _behaviorData;
+
+        public ActorBehaviorData BehaviorData => _behaviorData;
+
+        [Space(10)]
 
 #region Movement
         [Header("Movement")]
 
         [SerializeField]
         [ReadOnly]
-        private Vector3 _lastMoveAxes;
+        private Vector2 _moveDirection;
 
-        public Vector3 LastMoveAxes
-        {
-            get => _lastMoveAxes;
-            set => _lastMoveAxes = value;
-        }
+        public Vector2 MoveDirection => _moveDirection;
 
         [SerializeField]
         [ReadOnly]
@@ -39,21 +43,45 @@ namespace pdxpartyparrot.Core.Actors
         public abstract bool CanMove { get; }
 #endregion
 
+        [Space(10)]
+
+#region Effects
+        [Header("Actor Effects")]
+
+        [SerializeField]
+        [CanBeNull]
+        protected EffectTrigger _spawnEffect;
+
+        [SerializeField]
+        [CanBeNull]
+        protected EffectTrigger _respawnEffect;
+
+        [SerializeField]
+        [CanBeNull]
+        protected EffectTrigger _despawnEffect;
+#endregion
+
+        //[Space(10)]
+
 #region Physics
+        //[Header("Physics")]
+
+        private Transform _transform;
+
         public virtual Vector3 Position
         {
-            get => Owner.transform.position;
+            get => _transform.position;
             set
             {
                 Debug.Log($"Teleporting actor {Owner.Id} to {value}");
-                Owner.transform.position = value;
+                _transform.position = value;
             }
         }
 
         public virtual Quaternion Rotation3D
         {
-            get => Owner.transform.rotation;
-            set => Owner.transform.rotation = value;
+            get => _transform.rotation;
+            set => _transform.rotation = value;
         }
 
         public virtual float Rotation2D
@@ -112,42 +140,49 @@ namespace pdxpartyparrot.Core.Actors
 #endregion
 
 #region Unity Lifecycle
+        protected virtual void Awake()
+        {
+            Assert.IsNotNull(Owner);
+
+            _transform = Owner.GetComponent<Transform>();
+
+            // always start out kinematic so that we don't
+            // fall while we're loading
+            IsKinematic = true;
+        }
+
         protected virtual void Update()
         {
-            _isMoving = LastMoveAxes.sqrMagnitude > BehaviorData.MoveAxesDeadzone;
+            _isMoving = MoveDirection.sqrMagnitude > 0.001f;
 
             float dt = UnityEngine.Time.deltaTime;
 
-            AnimationMove(LastMoveAxes, dt);
+            AnimationMove(MoveDirection, dt);
         }
 
         protected virtual void FixedUpdate()
         {
             float dt = UnityEngine.Time.fixedDeltaTime;
 
-            PhysicsMove(LastMoveAxes, dt);
+            PhysicsMove(MoveDirection, dt);
         }
 #endregion
 
-        public virtual void Initialize()
+        public virtual void Initialize(ActorBehaviorData behaviorData)
         {
+            _behaviorData = behaviorData;
+
             ResetFromData();
 
-            LastMoveAxes = Vector3.zero;
+            _moveDirection = Vector3.zero;
             _isMoving = false;
 
-            ResetPosition();
-
-            Rotation3D = Quaternion.identity;;
+            Rotation3D = Quaternion.identity;
             Rotation2D = 0.0f;
             Velocity = Vector3.zero;
             AngularVelocity3D = Vector3.zero;
             AngularVelocity2D = 0.0f;
         }
-
-        // this should reset the position to (0, 0, 0)
-        // without logging a teleport message
-        protected abstract void ResetPosition();
 
         protected virtual void ResetFromData()
         {
@@ -158,14 +193,87 @@ namespace pdxpartyparrot.Core.Actors
             UseGravity = !BehaviorData.IsKinematic;
         }
 
-#region Movement
-        // NOTE: axes are (x, y, 0)
-        public virtual void AnimationMove(Vector3 axes, float dt)
+        public void SetMoveDirection(Vector2 moveDirection)
+        {
+            _moveDirection = Vector2.ClampMagnitude(moveDirection, 1.0f);
+        }
+
+        // NOTE: called by the ActorManager
+        public virtual void Think(float dt)
         {
         }
 
-        // NOTE: axes are (x, y, 0)
-        public virtual void PhysicsMove(Vector3 axes, float dt)
+#region Movement
+        public virtual void AnimationMove(Vector2 direction, float dt)
+        {
+        }
+
+        public virtual void PhysicsMove(Vector2 direction, float dt)
+        {
+        }
+#endregion
+
+#region Events
+        public virtual void OnSpawn(SpawnPoint spawnpoint)
+        {
+            if(null != _spawnEffect) {
+                _spawnEffect.Trigger(OnSpawnComplete);
+            } else {
+                OnSpawnComplete();
+            }
+        }
+
+        protected virtual void OnSpawnComplete()
+        {
+        }
+
+        public virtual void OnReSpawn(SpawnPoint spawnpoint)
+        {
+            if(null != _respawnEffect) {
+                _respawnEffect.Trigger(OnReSpawnComplete);
+            } else {
+                OnReSpawnComplete();
+            }
+        }
+
+        protected virtual void OnReSpawnComplete()
+        {
+        }
+
+        public virtual void OnDeSpawn()
+        {
+            if(null != _despawnEffect) {
+                _despawnEffect.Trigger(OnDeSpawnComplete);
+            } else {
+                OnDeSpawnComplete();
+            }
+        }
+
+        protected virtual void OnDeSpawnComplete()
+        {
+        }
+
+        public virtual void CollisionEnter(GameObject collideObject)
+        {
+        }
+
+        public virtual void CollisionStay(GameObject collideObject)
+        {
+        }
+
+        public virtual void CollisionExit(GameObject collideObject)
+        {
+        }
+
+        public virtual void TriggerEnter(GameObject triggerObject)
+        {
+        }
+
+        public virtual void TriggerStay(GameObject triggerObject)
+        {
+        }
+
+        public virtual void TriggerExit(GameObject triggerObject)
         {
         }
 #endregion

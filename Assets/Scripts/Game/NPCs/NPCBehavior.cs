@@ -7,7 +7,5 @@ namespace pdxpartyparrot.Game.NPCs
         NPCBehaviorData NPCBehaviorData { get; }
 
         INPC NPC { get; }
-
-        void Initialize();
     }
 }

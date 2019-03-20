@@ -33,11 +33,14 @@ namespace pdxpartyparrot.Game.UI
 
         public TextMeshPro Text => _text;
 
+        private Transform _transform;
+
         private PooledObject _pooledObject;
 
 #region Unity Lifecycle
         private void Awake()
         {
+            _transform = GetComponent<Transform>();
             _pooledObject = GetComponent<PooledObject>();
         }
 
@@ -51,7 +54,7 @@ namespace pdxpartyparrot.Game.UI
 
         public void Show(Vector3 position)
         {
-            transform.position = position;
+            _transform.position = position;
             TimeManager.Instance.RunAfterDelay(LifeSpanSeconds, () => {
                 _pooledObject.Recycle();
             });
@@ -59,9 +62,9 @@ namespace pdxpartyparrot.Game.UI
 
         private void Float(float dt)
         {
-            Vector3 position = transform.position;
+            Vector3 position = _transform.position;
             position.y += Speed * dt;
-            transform.position = position;
+            _transform.position = position;
         }
     }
 }

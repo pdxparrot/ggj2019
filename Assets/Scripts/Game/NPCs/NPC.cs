@@ -1,7 +1,6 @@
 ﻿using System;
 
 using pdxpartyparrot.Core.Actors;
-using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
@@ -17,6 +16,6 @@ namespace pdxpartyparrot.Game.NPCs
 
         INPCBehavior NPCBehavior { get; }
 
-        void Initialize(Guid id, NPCData data);
+        void Recycle();
     }
 }

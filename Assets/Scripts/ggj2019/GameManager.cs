@@ -182,6 +182,12 @@ namespace pdxpartyparrot.ggj2019
         {
             Assert.IsTrue(NetworkServer.active);
 
+            // hives are built into the scene :(
+            Hive[] hives = FindObjectsOfType<Hive>();
+            foreach(Hive hive in hives) {
+                hive.Initialize(GameGameData.HiveBehaviorData);
+            }
+
             SpawnManager.Instance.Initialize();
 
             IsGameOver = false;
@@ -221,7 +227,7 @@ namespace pdxpartyparrot.ggj2019
             Viewer = ViewerManager.Instance.AcquireViewer<GameViewer>(gameObject);
             if(null != Viewer) {
                 Viewer.Set2D();
-                Viewer.Camera.orthographicSize = GameGameData.GameSize2D;
+                Viewer.Camera.orthographicSize = GameGameData.ViewportSize;
                 Viewer.transform.position = GameGameData.ViewerPosition;
             }
         }

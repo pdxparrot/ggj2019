@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3164533851950656107
 MonoBehaviour:
@@ -87,7 +87,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2228405151768162015
 GameObject:
@@ -129,6 +129,7 @@ Transform:
   m_Children:
   - {fileID: 5821124859676319701}
   - {fileID: 4156913163347639264}
+  - {fileID: 1744525822901186588}
   - {fileID: 6905056932864582174}
   - {fileID: 8417827668764443029}
   - {fileID: 8826170702283531997}
@@ -343,11 +344,9 @@ MonoBehaviour:
   _model: {fileID: 8631349057648979471}
   _behavior: {fileID: 5545979805649994365}
   _networkPlayer: {fileID: 7579413692694895314}
-  _driver: {fileID: 926070517050463104}
+  _driver: {fileID: 1418259758488905344}
   _pollenTarget: {fileID: 8417827668764443029}
   _interactables: {fileID: 5023084697306132187}
-  _isDead: 0
-  _pollen: []
 --- !u!1 &2830612309196927125
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +377,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &4474987391101487538
 CircleCollider2D:
@@ -439,7 +438,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8821035005184857451
 MonoBehaviour:
@@ -500,7 +499,6 @@ GameObject:
   - component: {fileID: 1148204457330811759}
   - component: {fileID: 9068193015410926201}
   - component: {fileID: 7618656605779114579}
-  - component: {fileID: 926070517050463104}
   m_Layer: 0
   m_Name: Behavior
   m_TagString: Untagged
@@ -538,6 +536,9 @@ MonoBehaviour:
   _owner: {fileID: 2603974987608069630}
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
+  _spawnEffect: {fileID: 3164533851950656107}
+  _respawnEffect: {fileID: 6172685723017044385}
+  _despawnEffect: {fileID: 0}
   _animationHelper: {fileID: 5515133998358140594}
   _actorAnimator: {fileID: 0}
   _pauseAnimationOnPause: 0
@@ -547,11 +548,11 @@ MonoBehaviour:
     AngularVelocity: 0
   _isGrounded: 0
   _isSliding: 0
-  _spawnEffect: {fileID: 3164533851950656107}
-  _respawnEffect: {fileID: 6172685723017044385}
   _damageEffect: {fileID: 7674856831482742360}
   _deathEffect: {fileID: 1971960604629102527}
   _gameOverEffect: {fileID: 8821035005184857451}
+  _isDead: 0
+  _pollen: []
   _isFlying: 1
   _respawnTimer:
     _timerSeconds: 0
@@ -597,160 +598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a0d0ec0cdd97e45b4b83fa8d11dd3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &926070517050463104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3316963271515284667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752e85aa1946bd94596c2949c0a3e149, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _behavior: {fileID: 5545979805649994365}
-  _data: {fileID: 11400000, guid: 5d7b1df225831fe43a27dfb239c21cb4, type: 2}
-  _mouseSensitivity: 0.5
-  _lastControllerMove: {x: 0, y: 0, z: 0}
-  _lastControllerLook: {x: 0, y: 0, z: 0}
-  _controls:
-    m_Asset: {fileID: 11400000, guid: 439ee066910ddf94890260a4bc6f9c4d, type: 3}
-    m_PlayerMoveActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerPauseActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerPauseActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerPauseActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveupActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveupActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveupActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMovedownActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMovedownActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMovedownActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveleftActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveleftActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoveleftActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoverightActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoverightActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMoverightActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerGatherActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerGatherActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerGatherActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerContextActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerContextActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerContextActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMovedpadActionStarted:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMovedpadActionPerformed:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_PlayerMovedpadActionCancelled:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &7532839837519197164
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +632,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6172685723017044385
 MonoBehaviour:
@@ -911,7 +758,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1971960604629102527
 MonoBehaviour:
@@ -1085,7 +932,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7620153835371573773}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7674856831482742360
 MonoBehaviour:
@@ -1140,6 +987,191 @@ MonoBehaviour:
     _fadeOut: 1
   _waitForComplete: 0
   _isPlaying: 0
+--- !u!1 &9091950672557877575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1744525822901186588}
+  - component: {fileID: 1418259758488905344}
+  m_Layer: 12
+  m_Name: Driver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1744525822901186588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9091950672557877575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7620153835371573773}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1418259758488905344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9091950672557877575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 752e85aa1946bd94596c2949c0a3e149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _behavior: {fileID: 5545979805649994365}
+  _data: {fileID: 11400000, guid: 5d7b1df225831fe43a27dfb239c21cb4, type: 2}
+  _mouseSensitivity: 0.5
+  _lastControllerMove: {x: 0, y: 0, z: 0}
+  _lastControllerLook: {x: 0, y: 0, z: 0}
+  _controls:
+    m_Asset: {fileID: 11400000, guid: 439ee066910ddf94890260a4bc6f9c4d, type: 3}
+    m_PlayerMoveActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerPauseActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerPauseActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerPauseActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveupActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveupActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveupActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedownActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedownActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedownActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveleftActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveleftActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoveleftActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoverightActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoverightActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMoverightActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerGatherActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerGatherActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerGatherActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerContextActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerContextActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerContextActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedpadActionStarted:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedpadActionPerformed:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_PlayerMovedpadActionCancelled:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: pdxpartyparrot.ggj2019.Input.PlayerControls+ActionEvent, com.pdxpartyparrot.ggj2019.asmdef,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1001 &3061877979847447838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1195,7 +1227,7 @@ PrefabInstance:
     - target: {fileID: 5686466254159099068, guid: 5665262860ee4d044a92b4202cdb0d9e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5686466254159099068, guid: 5665262860ee4d044a92b4202cdb0d9e,
         type: 3}
@@ -1301,7 +1333,7 @@ PrefabInstance:
     - target: {fileID: 3425180358741031906, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3425180358741031906, guid: 45d6ebe4d5a3ee246b7f0b1fe57aef88,
         type: 3}

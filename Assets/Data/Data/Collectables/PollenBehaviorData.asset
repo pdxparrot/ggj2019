@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 450ed53797732cd4f9517f45839c66f8, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: 61dab43e0f9d2e6499d23479198687b4, type: 3}
+  m_Name: PollenBehaviorData
   m_EditorClassIdentifier: 
-  _respawnSeconds: 3
-  _spawnImmunitySeconds: 0.5
-  _idleAnimationName: bee_hover
-  _flyingAnimationName: bee-flight
-  _maxPollen: -1
+  _actorLayer:
+    serializedVersion: 2
+    m_Bits: 262144
+  _mass: 45
+  _drag: 0
+  _angularDrag: 0
+  _isKinematic: 1

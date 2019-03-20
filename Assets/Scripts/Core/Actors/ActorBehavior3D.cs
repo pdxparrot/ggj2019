@@ -2,6 +2,7 @@
 
 using JetBrains.Annotations;
 
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -46,6 +47,7 @@ namespace pdxpartyparrot.Core.Actors
 #region Physics
         [Header("Physics")]
 
+        // expose some useful rigidbody properties that unity doesn't
         [SerializeField]
         [ReadOnly]
         private Vector3 _lastVelocity;
@@ -165,14 +167,17 @@ namespace pdxpartyparrot.Core.Actors
         public override bool CanMove => null == _actorAnimator || !_actorAnimator.IsAnimating;
 
 #region Unity Lifecycle
-        protected virtual void Awake()
+        protected override void Awake()
         {
             Assert.IsTrue(Owner is Actor3D);
 
-            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
-
+            // must have this set before calling base.Awake()
             _rigidbody = Owner3D.GetComponent<Rigidbody>();
             Assert.IsNotNull(_rigidbody, "ActorBehavior Owner requires a Rigidbody!");
+
+            base.Awake();
+
+            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
         }
 
         protected virtual void OnDestroy()
@@ -189,16 +194,11 @@ namespace pdxpartyparrot.Core.Actors
         }
 #endregion
 
-        public override void Initialize()
+        public override void Initialize(ActorBehaviorData behaviorData)
         {
-            base.Initialize();
+            base.Initialize(behaviorData);
 
             InitRigidbody(_rigidbody);
-        }
-
-        protected override void ResetPosition()
-        {
-            _rigidbody.position = Vector3.zero;
         }
 
         protected virtual void InitRigidbody(Rigidbody rb)

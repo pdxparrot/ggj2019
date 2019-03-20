@@ -220,12 +220,11 @@ namespace pdxpartyparrot.Game.UI
 
                 FloatingTextEntry entry = _floatingText.Dequeue();
 
-                FloatingText floatingText = ObjectPoolManager.Instance.GetPooledObject<FloatingText>(entry.poolName);
+                FloatingText floatingText = ObjectPoolManager.Instance.GetPooledObject<FloatingText>(entry.poolName, _floatingTextContainer.transform);
                 if(null == floatingText) {
                     Debug.LogWarning($"Failed to get floating text from pool {entry.poolName}!");
                     continue;
                 }
-                floatingText.transform.SetParent(_floatingTextContainer.transform);
 
                 // offset our starting x (TODO: offset z also ?)
                 Vector3 position = entry.position();

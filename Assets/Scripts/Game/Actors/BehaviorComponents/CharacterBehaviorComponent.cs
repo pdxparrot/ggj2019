@@ -23,14 +23,12 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        // NOTE: axes are (x, y, 0)
-        public virtual bool OnAnimationMove(Vector3 axes, float dt)
+        public virtual bool OnAnimationMove(Vector2 direction, float dt)
         {
             return false;
         }
 
-        // NOTE: axes are (x, y, 0)
-        public virtual bool OnPhysicsMove(Vector3 axes, float speed, float dt)
+        public virtual bool OnPhysicsMove(Vector2 direction, float speed, float dt)
         {
             return false;
         }

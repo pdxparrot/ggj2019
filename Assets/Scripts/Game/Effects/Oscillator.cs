@@ -24,7 +24,14 @@ namespace pdxpartyparrot.Game.Effects
         [ReadOnly]
         private Vector3 _angle;
 
+        private Transform _transform;
+
 #region Unity Lifecycle
+        private void Awake()
+        {
+            _transform = GetComponent<Transform>();
+        }
+
         private void OnEnable()
         {
             if(!_randomizeOnEnable) {
@@ -55,9 +62,9 @@ namespace pdxpartyparrot.Game.Effects
                                             Mathf.Sin(_angle.z) * _distance.z);
 
             if(_localPosition) {
-                transform.localPosition = oscillate;
+                _transform.localPosition = oscillate;
             } else {
-                transform.position = oscillate;
+                _transform.position = oscillate;
             }
         }
     }

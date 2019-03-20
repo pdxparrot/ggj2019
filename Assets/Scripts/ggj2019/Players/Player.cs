@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Interactables;
 using pdxpartyparrot.Game.Players;
 using pdxpartyparrot.Game.Swarm;
@@ -34,29 +32,15 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public Interactables Interactables => _interactables;
 
-        [SerializeField]
-        [ReadOnly]
-        private bool _isDead;
+        public bool IsDead => GamePlayerBehavior.IsDead;
 
-        public bool IsDead
-        {
-            get => _isDead;
-            set => _isDead = value;
-        }
-
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ List<Pollen> _pollen = new List<Pollen>();
-
-        public List<Pollen> Pollen => _pollen;
-
-        public bool CanGather => !IsDead && (PlayerManager.Instance.GamePlayerData.MaxPollen < 0 || Pollen.Count < PlayerManager.Instance.GamePlayerData.MaxPollen);
+        public bool CanGather => !GamePlayerBehavior.IsDead && (GamePlayerBehavior.GamePlayerBehaviorData.MaxPollen < 0 || GamePlayerBehavior.PollenCount < GamePlayerBehavior.GamePlayerBehaviorData.MaxPollen);
 
         public int SkinIndex => NetworkPlayer.playerControllerId;
 
         public Swarm Swarm { get; private set; }
 
-        public SpineSkinHelper SkinHelper { get; private set; }
+        private SpineSkinHelper _skinHelper;
 
 #region Unity Lifecycle
         protected override void Awake()
@@ -67,22 +51,7 @@ namespace pdxpartyparrot.ggj2019.Players
             Assert.IsTrue(PlayerDriver is PlayerDriver);
 
             Swarm = GetComponent<Swarm>();
-            SkinHelper = GetComponent<SpineSkinHelper>();
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            GamePlayerBehavior.OnCollide(other.gameObject);
-        }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            GamePlayerBehavior.OnCollide(other.gameObject);
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            GamePlayerBehavior.OnCollide(other.gameObject);
+            _skinHelper = GetComponent<SpineSkinHelper>();
         }
 #endregion
 
@@ -93,49 +62,16 @@ namespace pdxpartyparrot.ggj2019.Players
             }
 
             PlayerViewer = GameManager.Instance.Viewer;
+            GamePlayerBehavior.InitializeEffects();
 
-            SkinHelper.SetSkin(SkinIndex);
-
-            return true;
-        }
-
-#region Spawn
-        public override bool OnSpawn(SpawnPoint spawnpoint)
-        {
-            if(!base.OnSpawn(spawnpoint)) {
-                return false;
-            }
-
-            GamePlayerBehavior.OnSpawn();
+            _skinHelper.SetSkin(SkinIndex);
 
             return true;
         }
-
-        public override bool OnReSpawn(SpawnPoint spawnpoint)
-        {
-            if(!base.OnReSpawn(spawnpoint)) {
-                return false;
-            }
-
-            GamePlayerBehavior.OnReSpawn();
-
-            return true;
-        }
-
-        public override void OnDeSpawn()
-        {
-            _pollen.Clear();
-            Swarm.RemoveAll();
-
-            GamePlayerBehavior.OnDeSpawn();
-
-            base.OnDeSpawn();
-        }
-#endregion
 
         public void AddPollen(Pollen pollen)
         {
-            _pollen.Add(pollen);
+            GamePlayerBehavior.OnAddPollen(pollen);
         }
 
         public void AddBeeToSwarm(Bee bee)
@@ -155,5 +91,14 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             GamePlayerBehavior.OnGameOver();
         }
+
+#region Spawn
+        public override void OnDeSpawn()
+        {
+            Swarm.RemoveAll();
+
+            base.OnDeSpawn();
+        }
+#endregion
     }
 }

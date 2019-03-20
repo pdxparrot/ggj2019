@@ -18,7 +18,7 @@ MonoBehaviour:
   _worldLayer:
     serializedVersion: 2
     m_Bits: 8192
-  _gameSize2D: 5
+  _viewportSize: 5
   _maxLocalPlayers: 4
   _gamepadsArePlayers: 1
   _mainGameStatePrefab: {fileID: 29742012200218022, guid: 0df0709c42ad34140ac759786c4c2832,
@@ -26,13 +26,13 @@ MonoBehaviour:
   _viewerPrefab: {fileID: 1920754528598710306, guid: 2e9aa2ccb7140aa4e92cf99401d3737f,
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}
-  _hiveArmorHealth: 2
-  _minBees: 1
-  _beePoolSize: 10
-  _beeSpawnCooldown: 5
+  _hiveBehaviorData: {fileID: 11400000, guid: 4df4e3e52ca8fc4479f847fe1e53811d, type: 2}
   _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
     type: 3}
+  _beePoolSize: 10
+  _pollenBehaviorData: {fileID: 11400000, guid: 8e3a438e456e93a43b57978fc765e9a3,
+    type: 2}
   _pollenPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
     type: 3}
   _pollenPoolSize: 10

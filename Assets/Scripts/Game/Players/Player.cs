@@ -22,7 +22,5 @@ namespace pdxpartyparrot.Game.Players
         IPlayerBehavior PlayerBehavior { get; }
 
         Viewer Viewer { get; }
-
-        void Initialize(Guid id);
     }
 }

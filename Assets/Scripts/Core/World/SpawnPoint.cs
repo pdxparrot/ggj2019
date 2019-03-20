@@ -3,6 +3,7 @@
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -66,29 +67,34 @@ namespace pdxpartyparrot.Core.World
             actor.gameObject.SetActive(true);
         }
 
-        private void InitActor(Actor actor, Guid id)
+        private void InitActor(Actor actor, Guid id, ActorBehaviorData behaviorData)
         {
             InitActor(actor);
 
-            actor.Initialize(id);
+            actor.Initialize(id, behaviorData);
         }
 
         [CanBeNull]
-        public virtual Actor SpawnPrefab(Actor prefab, Guid id)
+        public virtual Actor SpawnFromPrefab(Actor prefab, Guid id, ActorBehaviorData behaviorData, Transform parent=null, bool activate=true)
         {
             Debug.LogWarning("You probably meant to use NetworkManager.SpawnNetworkPrefab");
 
             Actor actor = Instantiate(prefab);
-            if(!Spawn(actor, id)) {
+
+            // NOTE: reparent then activate to avoid hierarchy rebuild
+            actor.transform.SetParent(parent);
+            actor.gameObject.SetActive(activate);
+
+            if(!Spawn(actor, id, behaviorData)) {
                 Destroy(actor);
                 return null;
             }
             return actor;
         }
 
-        public virtual bool Spawn(Actor actor, Guid id)
+        public virtual bool Spawn(Actor actor, Guid id, ActorBehaviorData behaviorData)
         {
-            InitActor(actor, id);
+            InitActor(actor, id, behaviorData);
 
             return actor.OnSpawn(this);
         }

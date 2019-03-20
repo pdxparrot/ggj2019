@@ -3,6 +3,7 @@
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Animation;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
@@ -46,6 +47,11 @@ namespace pdxpartyparrot.Core.Actors
 
 #region Physics
         [Header("Physics")]
+
+        // expose some useful rigidbody properties that unity doesn't
+        [SerializeField]
+        [ReadOnly]
+        private float _lastGravityScale;
 
         private Rigidbody2D _rigidbody;
 
@@ -167,14 +173,17 @@ namespace pdxpartyparrot.Core.Actors
         public override bool CanMove => null == _actorAnimator || !_actorAnimator.IsAnimating;
 
 #region Unity Lifecycle
-        protected virtual void Awake()
+        protected override void Awake()
         {
             Assert.IsTrue(Owner is Actor2D);
 
-            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
-
+            // must have this set before calling base.Awake()
             _rigidbody = Owner2D.GetComponent<Rigidbody2D>();
             Assert.IsNotNull(_rigidbody, "ActorBehavior Owner requires a Rigidbody!");
+
+            base.Awake();
+
+            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
         }
 
         protected virtual void OnDestroy()
@@ -183,18 +192,18 @@ namespace pdxpartyparrot.Core.Actors
                 PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
             }
         }
+
+        protected virtual void LateUpdate()
+        {
+            _lastGravityScale = _rigidbody.gravityScale;
+        }
 #endregion
 
-        public override void Initialize()
+        public override void Initialize(ActorBehaviorData behaviorData)
         {
-            base.Initialize();
+            base.Initialize(behaviorData);
 
             InitRigidbody(_rigidbody);
-        }
-
-        protected override void ResetPosition()
-        {
-            _rigidbody.position = Vector3.zero;
         }
 
         protected virtual void InitRigidbody(Rigidbody2D rb)
@@ -250,6 +259,5 @@ namespace pdxpartyparrot.Core.Actors
             }
         }
 #endregion
-
     }
 }

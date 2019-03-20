@@ -1,41 +1,58 @@
-﻿using pdxpartyparrot.Game.State;
+﻿using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 {
     public sealed class BoundsBehaviorComponent2D : CharacterBehaviorComponent2D
     {
-        public override bool OnPhysicsMove(Vector3 axes, float speed, float dt)
+        [SerializeField]
+        [ReadOnly]
+        private Vector2 _viewportSize;
+
+        [SerializeField]
+        [ReadOnly]
+        private Vector2 _ownerHalfSize;
+
+        [SerializeField]
+        [ReadOnly]
+        private Vector3 _lastVelocity;
+
+        [SerializeField]
+        [ReadOnly]
+        private Vector2 _lastPosition;
+
+        public void Initialize(GameData gameData)
         {
-            // TODO: we probably don't need to calculate this every frame...
-            float aspectRatio = (Screen.width / (float)Screen.height);
-            Vector2 gameSize = new Vector2(GameStateManager.Instance.GameManager.GameData.GameSize2D * aspectRatio,
-                                           GameStateManager.Instance.GameManager.GameData.GameSize2D);
-            Vector2 halfSize = new Vector2(Behavior.Owner.Radius, Behavior.Owner.Height / 2.0f);
+            Assert.IsTrue(Behavior.IsKinematic);
 
-            // TODO: this was originally copied from DefaultPhysicsMove() and probably should be smarter than that
-            // TODO: this should have acceleration and momentum
+            float aspectRatio = Screen.width / (float)Screen.height;
+            _viewportSize = new Vector2(gameData.ViewportSize * aspectRatio, gameData.ViewportSize);
+            _ownerHalfSize = new Vector2(Behavior.Owner.Radius, Behavior.Owner.Height / 2.0f);
+        }
 
-            Vector3 velocity = axes * speed;
-            if(!Behavior.IsKinematic) {
-                velocity.y = Behavior.Velocity.y;
+        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
+        {
+            _lastVelocity = direction * speed;
+            _lastPosition = Behavior.Position + _lastVelocity * dt;
+
+            // x-bounds
+            if(_lastPosition.x + _ownerHalfSize.x > _viewportSize.x) {
+                _lastPosition.x = _viewportSize.x - _ownerHalfSize.x;
+            } else if(_lastPosition.x - _ownerHalfSize.x < -_viewportSize.x) {
+                _lastPosition.x = -_viewportSize.x + _ownerHalfSize.x;
             }
 
-            Vector2 updatedPosition = Behavior.Position + velocity * dt;
-            if(updatedPosition.x + halfSize.x > gameSize.x) {
-                updatedPosition.x = gameSize.x - halfSize.x;
-            } else if(updatedPosition.x - halfSize.x < -gameSize.x) {
-                updatedPosition.x = -gameSize.x + halfSize.x;
+            // y-bounds
+            if(_lastPosition.y + _ownerHalfSize.y > _viewportSize.y) {
+                _lastPosition.y = _viewportSize.y - _ownerHalfSize.y;
+            } else if(_lastPosition.y - _ownerHalfSize.y < -_viewportSize.y) {
+                _lastPosition.y = -_viewportSize.y + _ownerHalfSize.y;
             }
 
-            if(updatedPosition.y + halfSize.y > gameSize.y) {
-                updatedPosition.y = gameSize.y - halfSize.y;
-            } else if(updatedPosition.y - halfSize.y < -gameSize.y) {
-                updatedPosition.y = -gameSize.y + halfSize.y;
-            }
-
-            Behavior.MovePosition(updatedPosition);
+            Behavior.MovePosition(_lastPosition);
 
             return true;
         }

@@ -7,7 +7,5 @@ namespace pdxpartyparrot.Game.Players
         PlayerBehaviorData PlayerBehaviorData { get; }
 
         IPlayer Player { get; }
-
-        void Initialize();
     }
 }

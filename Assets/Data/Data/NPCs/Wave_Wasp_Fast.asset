@@ -12,7 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c602481e426b048b759c6735dbb8d1, type: 3}
   m_Name: Wave_Wasp_Fast
   m_EditorClassIdentifier: 
-  _speed: 7
+  _actorLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  _mass: 45
+  _drag: 0
+  _angularDrag: 0
+  _isKinematic: 1
+  _collisionCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  _moveXAxisParam: InputX
+  _moveZAxisParam: InputZ
+  _fallingParam: Falling
+  _moveSpeed: 7
+  _runThreshold: 0.75
+  _fallSpeedAdjustment: 200
+  _terminalVelocity: 50
+  _allowAirControl: 1
   _attackCooldown: 0.5
   _idleAnimationName: wasp_hover
   _flyingAnimationName: wasp_hover

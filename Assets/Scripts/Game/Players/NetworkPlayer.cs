@@ -5,6 +5,7 @@ using System;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Network;
+using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -33,8 +34,8 @@ namespace pdxpartyparrot.Game.Players
         [ClientRpc]
         public virtual void RpcSpawn(string id)
         {
-            if(null != Player) {
-                Player.Initialize(Guid.Parse(id));
+            if(null != Actor) {
+                Actor.Initialize(Guid.Parse(id), GameStateManager.Instance.PlayerManager.PlayerBehaviorData);
             }
         }
 #endregion

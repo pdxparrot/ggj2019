@@ -1,15 +1,19 @@
-﻿using pdxpartyparrot.Core;
+﻿using JetBrains.Annotations;
+
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Game.Actors
 {
     // TODO: can this be a component?
-    public class CharacterFlightBehavior3D : ActorBehavior3D, ICharacterBehavior
+    public class CharacterFlightBehavior3D : ActorBehavior3D
     {
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
 
@@ -25,7 +29,7 @@ namespace pdxpartyparrot.Game.Actors
 
         public float Speed => CanMove ? 0.0f : (PartyParrotManager.Instance.IsPaused ? PauseState.Velocity.magnitude : Velocity.magnitude);
 
-        public float Altitude => Owner.transform.position.y;
+        public float Altitude => Position.y;
 #endregion
 
 #region Unity Lifecycle
@@ -55,6 +59,13 @@ namespace pdxpartyparrot.Game.Actors
         }
 #endregion
 
+        public override void Initialize(ActorBehaviorData behaviorData)
+        {
+            Assert.IsTrue(behaviorData is CharacterFlightBehaviorData);
+
+            base.Initialize(behaviorData);
+        }
+
         protected override void InitRigidbody(Rigidbody rb)
         {
             base.InitRigidbody(rb);
@@ -75,7 +86,8 @@ namespace pdxpartyparrot.Game.Actors
 
             // unwind all of the rotations
             if(null != Owner.Model) {
-                Owner.Model.transform.localRotation = Quaternion.Euler(0.0f, Owner.Model.transform.localEulerAngles.y, 0.0f);
+                Transform modelTransform = Owner.Model.transform;
+                modelTransform.localRotation = Quaternion.Euler(0.0f, modelTransform.localEulerAngles.y, 0.0f);
             }
             Rotation3D = Quaternion.Euler(0.0f, Owner.transform.eulerAngles.y, 0.0f);
 
@@ -99,29 +111,31 @@ namespace pdxpartyparrot.Game.Actors
 #endif
 #endregion
 
-        public override void AnimationMove(Vector3 axes, float dt)
+        public override void AnimationMove(Vector2 direction, float dt)
         {
             if(!CanMove || null == Owner.Model) {
                 return;
             }
 
-            Quaternion rotation = Owner.Model.transform.localRotation;
+            Transform modelTransform = Owner.Model.transform;
+
+            Quaternion rotation = modelTransform.localRotation;
             Vector3 targetEuler = new Vector3
             {
-                z = axes.x * -_data.MaxBankAngle,
-                x = axes.y * -_data.MaxAttackAngle
+                z = direction.x * -_data.MaxBankAngle,
+                x = direction.y * -_data.MaxAttackAngle
             };
 
             Quaternion targetRotation = Quaternion.Euler(targetEuler);
             rotation = Quaternion.Lerp(rotation, targetRotation, _data.RotationAnimationSpeed * dt);
 
-            Owner.Model.transform.localRotation = rotation;
+            modelTransform.localRotation = rotation;
         }
 
-        private void Turn(Vector3 axes, float dt)
+        private void Turn(Vector2 direction, float dt)
         {
 #if true
-            float turnSpeed = _data.TurnSpeed * axes.x;
+            float turnSpeed = _data.TurnSpeed * direction.x;
             Quaternion rotation = Quaternion.AngleAxis(turnSpeed * dt, Vector3.up);
             MoveRotation(Rotation3D * rotation);
 #else
@@ -139,20 +153,20 @@ namespace pdxpartyparrot.Game.Actors
             AddForce(_bankForce, ForceMode.Force);
         }
 
-        public override void PhysicsMove(Vector3 axes, float dt)
+        public override void PhysicsMove(Vector2 direction, float dt)
         {
             if(!CanMove) {
                 return;
             }
 
-            Turn(axes, dt);
+            Turn(direction, dt);
 
-            float attackAngle = axes.y * -_data.MaxAttackAngle;
+            float attackAngle = direction.y * -_data.MaxAttackAngle;
             Vector3 attackVector = Quaternion.AngleAxis(attackAngle, Vector3.right) * Vector3.forward;
             AddRelativeForce(attackVector * _data.LinearThrust, ForceMode.Force);
 
             // lift if we're not falling
-            if(axes.y >= 0.0f) {
+            if(direction.y >= 0.0f) {
                 AddForce(-Physics.gravity, ForceMode.Acceleration);
             }
 

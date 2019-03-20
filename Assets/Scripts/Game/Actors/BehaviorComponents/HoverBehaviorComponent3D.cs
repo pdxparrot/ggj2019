@@ -87,7 +87,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public override bool OnPhysicsMove(Vector3 axes, float speed, float dt)
+        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
         {
             if(!IsHovering) {
                 return false;
@@ -97,7 +97,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
             Behavior.AddForce(acceleration, ForceMode.Force);
 
-            Behavior.DefaultPhysicsMove(axes, _data.HoverMoveSpeed, dt);
+            Behavior.DefaultPhysicsMove(direction, _data.HoverMoveSpeed, dt);
 
             return true;
         }

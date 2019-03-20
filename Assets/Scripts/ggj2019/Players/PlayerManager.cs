@@ -1,6 +1,5 @@
 ﻿using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Game.State;
-using pdxpartyparrot.ggj2019.Data;
 
 using UnityEngine;
 
@@ -8,8 +7,6 @@ namespace pdxpartyparrot.ggj2019.Players
 {
     public sealed class PlayerManager : Game.Players.PlayerManager<PlayerManager, Player>
     {
-        public PlayerData GamePlayerData => (PlayerData)PlayerData;
-
 #region Debug
         [SerializeField]
         private bool _playersImmune;

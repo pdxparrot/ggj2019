@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable 0618    // disable obsolete warning for now
+
+using System;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
@@ -8,10 +10,13 @@ using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
+using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Networking;
 
 namespace pdxpartyparrot.ggj2019.Home
 {
@@ -53,10 +58,14 @@ namespace pdxpartyparrot.ggj2019.Home
         private DebugMenuNode _debugMenuNode;
 #endregion
 
+        public HiveBehavior HiveBehavior => (HiveBehavior)Behavior;
+
 #region Unity Lifecycle
         protected override void Awake()
         {
             base.Awake();
+
+            Assert.IsTrue(Behavior is HiveBehavior);
 
             Collider.isTrigger = true;
 
@@ -91,8 +100,15 @@ namespace pdxpartyparrot.ggj2019.Home
         }
 #endregion
 
+        public void Initialize(HiveBehaviorData behaviorData)
+        {
+            Behavior.Initialize(behaviorData);
+        }
+
         public void InitializeClient()
         {
+            Assert.IsTrue(NetworkClient.active);
+
             ViewerShakeEffectTriggerComponent viewerShakeEffect = _damageEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
             viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
         }
@@ -139,23 +155,21 @@ namespace pdxpartyparrot.ggj2019.Home
             }
 
             int activeBeeCount = ActorManager.Instance.ActorCount<Bee>();
-            if(activeBeeCount < GameManager.Instance.GameGameData.MinBees * PlayerManager.Instance.Players.Count) {
+            if(activeBeeCount < HiveBehavior.HiveBehaviorData.MinBees * PlayerManager.Instance.Players.Count) {
                 DoSpawnBee();
             } else if(_logBeeSpawn) {
-                Debug.Log($"not spawning bees {activeBeeCount} of {GameManager.Instance.GameGameData.MinBees} active");
+                Debug.Log($"not spawning bees {activeBeeCount} of {HiveBehavior.HiveBehaviorData.MinBees} active");
             }
 
-            _beeSpawnTimer.Start(GameManager.Instance.GameGameData.BeeSpawnCooldown, SpawnBee);
+            _beeSpawnTimer.Start(HiveBehavior.HiveBehaviorData.BeeSpawnCooldown, SpawnBee);
         }
 
         private Bee DoSpawnBee()
         {
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
 
-            Bee bee = ObjectPoolManager.Instance.GetPooledObject<Bee>("bees");
-            spawnPoint.Spawn(bee, Guid.NewGuid());
-            bee.transform.SetParent(_beeContainer.transform);
-            bee.Initialize(Guid.NewGuid(), GameManager.Instance.GameGameData.BeeData);
+            Bee bee = ObjectPoolManager.Instance.GetPooledObject<Bee>("bees", _beeContainer.transform);
+            spawnPoint.Spawn(bee, Guid.NewGuid(), GameManager.Instance.GameGameData.BeeData);
 
             bee.SetDefaultSkin();
             //bee.SetRandomSkin();
@@ -173,7 +187,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
             DoSpawnBee();
 
-            _beeSpawnTimer.Start(GameManager.Instance.GameGameData.BeeSpawnCooldown, SpawnBee);
+            _beeSpawnTimer.Start(HiveBehavior.HiveBehaviorData.BeeSpawnCooldown, SpawnBee);
         }
 
         private void GameEndEventHandler(object sender, EventArgs args)

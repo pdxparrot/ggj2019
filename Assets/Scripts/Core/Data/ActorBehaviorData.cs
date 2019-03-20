@@ -12,15 +12,6 @@ namespace pdxpartyparrot.Core.Data
 
         public LayerMask ActorLayer => _actorLayer;
 
-#region Movement
-        [Header("Actor Movement")]
-
-        [SerializeField]
-        private float _moveAxesDeadzone = 0.001f;
-
-        public float MoveAxesDeadzone => _moveAxesDeadzone;
-#endregion
-
 #region Physics
         [Header("Actor Physics")]
 

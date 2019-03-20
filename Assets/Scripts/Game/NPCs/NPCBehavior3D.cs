@@ -17,7 +17,6 @@ namespace pdxpartyparrot.Game.NPCs
         {
             base.Awake();
 
-            Assert.IsTrue(BehaviorData is NPCBehaviorData);
             Assert.IsTrue(Owner is INPC);
         }
 

@@ -2,11 +2,12 @@
 
 using JetBrains.Annotations;
 
-using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Core.Actors
@@ -39,13 +40,9 @@ namespace pdxpartyparrot.Core.Actors
 #region Behavior
         [SerializeField]
         [FormerlySerializedAs("_controller")]
-        [CanBeNull]
         private ActorBehavior _behavior;
 
-        [CanBeNull]
         public ActorBehavior Behavior => _behavior;
-
-        public virtual bool IsStatic => null == _behavior;
 #endregion
 
 #region Network
@@ -53,6 +50,11 @@ namespace pdxpartyparrot.Core.Actors
 #endregion
 
 #region Unity Lifecycle
+        protected virtual void Awake()
+        {
+            Assert.IsNotNull(Behavior);
+        }
+
         protected virtual void OnDestroy()
         {
             if(ActorManager.HasInstance) {
@@ -61,24 +63,29 @@ namespace pdxpartyparrot.Core.Actors
         }
 #endregion
 
-        public virtual void Initialize(Guid id)
+        public virtual void Initialize(Guid id, ActorBehaviorData behaviorData)
         {
             _id = id;
+            name = Id.ToString();
+
+            Behavior.Initialize(behaviorData);
         }
 
         // TODO: would be better if we id radius (x) and height (y) separately
         public bool Collides(Actor other, float distance=float.Epsilon)
         {
-            Vector3 offset = other.transform.position - transform.position;
+            Vector3 offset = other.Behavior.Position - Behavior.Position;
             float r = other.Radius + Radius;
             float d = r * r;
             return offset.sqrMagnitude < d;
         }
 
-#region Callbacks
+#region Events
         public virtual bool OnSpawn(SpawnPoint spawnpoint)
         {
             ActorManager.Instance.Register(this);
+
+            Behavior.OnSpawn(spawnpoint);
 
             return true;
         }
@@ -87,11 +94,15 @@ namespace pdxpartyparrot.Core.Actors
         {
             ActorManager.Instance.Register(this);
 
+            Behavior.OnReSpawn(spawnpoint);
+
             return true;
         }
 
         public virtual void OnDeSpawn()
         {
+            Behavior.OnDeSpawn();
+
             if(ActorManager.HasInstance) {
                 ActorManager.Instance.Unregister(this);
             }

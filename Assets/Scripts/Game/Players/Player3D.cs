@@ -6,8 +6,11 @@ using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Camera;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Camera;
+using pdxpartyparrot.Game.Data;
+using pdxpartyparrot.Game.State;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -72,14 +75,13 @@ namespace pdxpartyparrot.Game.Players
         }
 #endregion
 
-        public override void Initialize(Guid id)
+        public override void Initialize(Guid id, ActorBehaviorData behaviorData)
         {
-            base.Initialize(id);
+            Assert.IsTrue(behaviorData is PlayerBehaviorData);
+
+            base.Initialize(id, behaviorData);
 
             InitializeLocalPlayer(id);
-            if(null != PlayerBehavior) {
-                PlayerBehavior.Initialize();
-            }
         }
 
         protected virtual bool InitializeLocalPlayer(Guid id)
@@ -107,7 +109,7 @@ namespace pdxpartyparrot.Game.Players
 
             Debug.Log($"Spawning player (controller={NetworkPlayer.playerControllerId}, isLocalPlayer={IsLocalActor})");
 
-            Initialize(Guid.NewGuid());
+            Initialize(Guid.NewGuid(), GameStateManager.Instance.PlayerManager.PlayerBehaviorData);
             if(!NetworkClient.active) {
                 NetworkPlayer.RpcSpawn(Id.ToString());
             }

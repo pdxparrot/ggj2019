@@ -15,7 +15,7 @@ MonoBehaviour:
   _actorLayer:
     serializedVersion: 2
     m_Bits: 4096
-  _mass: 1
+  _mass: 45
   _drag: 0
   _angularDrag: 0
   _isKinematic: 1
@@ -24,13 +24,14 @@ MonoBehaviour:
     m_Bits: 8192
   _moveXAxisParam: InputX
   _moveZAxisParam: InputZ
-  _groundedParam: Landed
   _fallingParam: Falling
   _moveSpeed: 7.5
   _runThreshold: 0.75
   _fallSpeedAdjustment: 200
   _terminalVelocity: 50
-  _GroundedEpsilon: 0.1
-  _groundCheckLength: 1
-  _slopeLimit: 30
   _allowAirControl: 1
+  _respawnSeconds: 3
+  _spawnImmunitySeconds: 0.5
+  _maxPollen: -1
+  _idleAnimationName: bee_hover
+  _flyingAnimationName: bee-flight

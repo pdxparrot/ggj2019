@@ -8,17 +8,20 @@ namespace pdxpartyparrot.ggj2019.Data
     [Serializable]
     public sealed class WaspData : EnemyData
     {
-        [SerializeField]
-        private float _speed = 1.0f;
+        [Space(10)]
 
-        public float Speed => _speed;
+        [Header("Wasps")]
 
         [SerializeField]
         private float _attackCooldown = 1.0f;
 
         public float AttackCooldown => _attackCooldown;
 
+        [Space(10)]
+
 #region Animations
+        [Header("Animations")]
+
         [SerializeField]
         private string _idleAnimationName = "wasp_hover";
 

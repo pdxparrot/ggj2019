@@ -310,9 +310,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 7878679967604675}
   _behavior: {fileID: 2858599132453069081}
-  _spawnEffect: {fileID: 2922206198979121348}
-  _deathEffect: {fileID: 4962521947015905426}
-  _npcData: {fileID: 0}
   _beetleSpawn: {fileID: 4261586379689094825}
   _pollenSpawn: {fileID: 2927692061490181078}
   _pollen: 0
@@ -472,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af6e01a734571046a820b401f807794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behaviorData: {fileID: 11400000, guid: 3fd8bcceb256f7741a64d65a37b31afc, type: 2}
+  _behaviorData: {fileID: 0}
   _owner: {fileID: 5512433957614832504}
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
@@ -485,6 +482,10 @@ MonoBehaviour:
     AngularVelocity: 0
   _isGrounded: 0
   _isSliding: 0
+  _spawnEffect: {fileID: 2922206198979121348}
+  _respawnEffect: {fileID: 0}
+  _despawnEffect: {fileID: 0}
+  _deathEffect: {fileID: 4962521947015905426}
 --- !u!1 &8612808877648277100
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,11 +564,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: 57803614091421909, guid: 3d123fa3f85024444b9cb6efa2700489,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
         type: 3}
       propertyPath: _animationName
@@ -642,6 +638,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 57803614091421909, guid: 3d123fa3f85024444b9cb6efa2700489,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d123fa3f85024444b9cb6efa2700489, type: 3}

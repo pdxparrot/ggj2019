@@ -12,5 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09ccc08e6c99b245aa948ad415730f2, type: 3}
   m_Name: Wave_Beetle_Fast
   m_EditorClassIdentifier: 
+  _actorLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  _mass: 45
+  _drag: 0
+  _angularDrag: 0
+  _isKinematic: 1
+  _collisionCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  _moveXAxisParam: InputX
+  _moveZAxisParam: InputZ
+  _fallingParam: Falling
+  _moveSpeed: 30
+  _runThreshold: 0.75
+  _fallSpeedAdjustment: 200
+  _terminalVelocity: 50
+  _allowAirControl: 1
   _attackCooldown: 2.5
   _idleAnimation: beetle_idle

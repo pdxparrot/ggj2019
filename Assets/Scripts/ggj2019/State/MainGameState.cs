@@ -41,6 +41,7 @@ namespace pdxpartyparrot.ggj2019.State
                 return false;
             }
 
+            // hives are built into the scene :(
             Hive[] hives = FindObjectsOfType<Hive>();
             foreach(Hive hive in hives) {
                 hive.InitializeClient();

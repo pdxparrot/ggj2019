@@ -18,21 +18,17 @@ namespace pdxpartyparrot.Game.Players
     // TODO: find a way to kill this
     public interface IPlayerManager
     {
-        PlayerData PlayerData { get; }
+        PlayerBehaviorData PlayerBehaviorData { get; }
 
         IReadOnlyCollection<IPlayer> Players { get; }
     }
 
     public abstract class PlayerManager<T, TV> : SingletonBehavior<T>, IPlayerManager where T: PlayerManager<T, TV> where TV: Actor, IPlayer
     {
-#region Data
         [SerializeField]
-        private PlayerData _playerData;
+        private PlayerBehaviorData _playerBehaviorData;
 
-        public PlayerData PlayerData => _playerData;
-#endregion
-
-        [Space(10)]
+        public PlayerBehaviorData PlayerBehaviorData => _playerBehaviorData;
 
         [SerializeField]
         private TV _playerPrefab;
@@ -153,7 +149,7 @@ namespace pdxpartyparrot.Game.Players
             _debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Players", GUI.skin.box);
                     foreach(IPlayer player in _players) {
-                        GUILayout.Label($"{player.Id} {player.GameObject.transform.position}");
+                        GUILayout.Label($"{player.Id} {player.Behavior.Position}");
                     }
                 GUILayout.EndVertical();
             };

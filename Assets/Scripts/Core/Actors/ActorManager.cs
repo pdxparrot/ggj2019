@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Collections;
@@ -13,10 +14,17 @@ namespace pdxpartyparrot.Core.Actors
     {
         private readonly Dictionary<Type, HashSet<Actor>> _actors = new Dictionary<Type, HashSet<Actor>>();
 
+        [SerializeField]
+        private float _thinkRateMs = 10.0f;
+
+        private float ThinkRateSeconds => _thinkRateMs * 0.001f;
+
 #region Unity Lifecycle
         private void Awake()
         {
             InitDebugMenu();
+
+            StartCoroutine(ThinkRoutine());
         }
 #endregion
 
@@ -49,6 +57,34 @@ namespace pdxpartyparrot.Core.Actors
             return _actors.GetOrDefault(typeof(T));
         }
 
+        private IEnumerator ThinkRoutine()
+        {
+            float lastThinkTime = UnityEngine.Time.time;
+
+            WaitForSeconds wait = new WaitForSeconds(ThinkRateSeconds);
+            while(true) {
+                float now = UnityEngine.Time.time;
+
+                if(PartyParrotManager.Instance.IsPaused) {
+                    lastThinkTime = now;
+                    yield return wait;
+
+                    continue;
+                }
+
+                foreach(var kvp in _actors) {
+                    foreach(Actor actor in kvp.Value) {
+                        if(null != actor.Behavior) {
+                            actor.Behavior.Think(now - lastThinkTime);
+                        }
+                    }
+                }
+
+                lastThinkTime = now;
+                yield return wait;
+            }
+        }
+
         private void InitDebugMenu()
         {
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Core.ActorManager");
@@ -56,7 +92,7 @@ namespace pdxpartyparrot.Core.Actors
                 foreach(var kvp in _actors) {
                     GUILayout.BeginVertical($"{kvp.Key}", GUI.skin.box);
                         foreach(Actor actor in kvp.Value) {
-                            GUILayout.Label($"{actor.Id} {actor.transform.position}");
+                            GUILayout.Label($"{actor.Id} {actor.Behavior.Position}");
                         }
                     GUILayout.EndVertical();
                 }

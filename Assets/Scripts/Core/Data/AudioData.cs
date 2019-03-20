@@ -87,6 +87,8 @@ namespace pdxpartyparrot.Core.Data
 
         [Space(10)]
 
+        [Header("Updates")]
+
         [SerializeField]
         private float _updateCrossfadeUpdateMs = 100.0f;
 

@@ -12,9 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daff5776c39dd74ca0fbb1f512095bd, type: 3}
   m_Name: Bees
   m_EditorClassIdentifier: 
+  _actorLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  _mass: 45
+  _drag: 0
+  _angularDrag: 0
+  _isKinematic: 1
+  _collisionCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  _moveXAxisParam: InputX
+  _moveZAxisParam: InputZ
+  _fallingParam: Falling
+  _moveSpeed: 7.5
+  _runThreshold: 0.75
+  _fallSpeedAdjustment: 200
+  _terminalVelocity: 50
+  _allowAirControl: 1
   _swarmSpeedModifier: 2
   _offsetUpdateRange:
     _min: 0.2
     _max: 0.5
-  _hoverAnimationName: bee_hover
-  _flightAnimationName: bee-flight
+  _idleAnimationName: bee_hover
+  _flyingAnimationName: bee-flight

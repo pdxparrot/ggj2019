@@ -100,30 +100,21 @@ namespace pdxpartyparrot.Game.World
                         } else {
                             Actor actor = null;
                             if(null != _poolContainer) {
-                                actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag);
+                                actor = ObjectPoolManager.Instance.GetPooledObject<Actor>(PoolTag, _poolContainer.transform);
                                 if(null == actor) {
                                     Debug.LogWarning($"Actor for pool {PoolTag} missing its PooledObject!");
                                     continue;
                                 }
 
-                                if(!spawnPoint.Spawn(actor, Guid.NewGuid())) {
+                                if(!spawnPoint.Spawn(actor, Guid.NewGuid(), _spawnGroupData.NPCBehaviorData)) {
                                     actor.GetComponent<PooledObject>().Recycle();
                                     Debug.LogWarning($"Failed to spawn actor for {_spawnGroupData.Tag}");
                                     continue;
                                 }
                             } else {
-                                actor = spawnPoint.SpawnPrefab(_spawnGroupData.ActorPrefab, Guid.NewGuid());
+                                actor = spawnPoint.SpawnFromPrefab(_spawnGroupData.ActorPrefab, Guid.NewGuid(), _spawnGroupData.NPCBehaviorData, _poolContainer.transform);
                                 if(null == actor) {
                                     continue;
-                                }
-                            }
-                            actor.transform.SetParent(_poolContainer.transform);
-
-                            // init the NPC with data if we have it
-                            if(null != _spawnGroupData.NPCData) {
-                                INPC npc = actor.GetComponent<INPC>();
-                                if(null != npc) {
-                                    npc.Initialize(Guid.NewGuid(), _spawnGroupData.NPCData);
                                 }
                             }
                         }

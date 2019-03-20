@@ -218,25 +218,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 3844095989717293335}
   _behavior: {fileID: 6052567686960130795}
-  _spawnEffect: {fileID: 5929246219283272664}
-  _deathEffect: {fileID: 4934757118172737203}
-  _npcData: {fileID: 0}
-  _immunityTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
-  _spline: {fileID: 0}
-  _splineLength: 0
-  _splinePosition: 0
-  _splineYOffset: 0
-  _attackStartEffect: {fileID: 4920309572028489190}
-  _attackEndEffect: {fileID: 4965444763090320094}
-  _state: 0
-  _armorToAttack: {fileID: 0}
-  _attackCooldownTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
 --- !u!1 &2242394050818608027
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,10 +382,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfb557f4b512d248b33aea5f914528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behaviorData: {fileID: 11400000, guid: d6beb7a5840a3f14fa14d2b058dea802, type: 2}
+  _behaviorData: {fileID: 0}
   _owner: {fileID: 3673602363583183421}
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
+  _spawnEffect: {fileID: 5929246219283272664}
+  _respawnEffect: {fileID: 0}
+  _despawnEffect: {fileID: 0}
   _animationHelper: {fileID: 8380525285020896805}
   _actorAnimator: {fileID: 0}
   _pauseAnimationOnPause: 0
@@ -414,6 +398,23 @@ MonoBehaviour:
     AngularVelocity: 0
   _isGrounded: 0
   _isSliding: 0
+  _deathEffect: {fileID: 4934757118172737203}
+  _immunityTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+  _state: 0
+  _attackStartEffect: {fileID: 4920309572028489190}
+  _attackEndEffect: {fileID: 4965444763090320094}
+  _spline: {fileID: 0}
+  _splineLength: 0
+  _splinePosition: 0
+  _splineYOffset: 0
+  _armorToAttack: {fileID: 0}
+  _attackCooldownTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!1 &4930866472083934510
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,15 +839,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6975246937340687512, guid: 937eca50486040f44afb659e07d14b79,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7781590182877121689, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}
       propertyPath: _animationName
       value: wasp_hover
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975246937340687512, guid: 937eca50486040f44afb659e07d14b79,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5663384113424985439, guid: 937eca50486040f44afb659e07d14b79,
         type: 3}

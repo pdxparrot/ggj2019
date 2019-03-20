@@ -1,17 +1,27 @@
+#pragma warning disable 0618    // disable obsolete warning for now
+
+using System.Collections.Generic;
+
 using pdxpartyparrot.Core.Collections;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Core.World;
+using pdxpartyparrot.Game.Actors.BehaviorComponents;
 using pdxpartyparrot.ggj2019.Collectables;
+using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
 using pdxpartyparrot.ggj2019.NPCs;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Networking;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
+    [RequireComponent(typeof(BoundsBehaviorComponent2D))]
     public sealed class PlayerBehavior : Game.Players.PlayerBehavior2D
     {
         public Data.PlayerBehaviorData GamePlayerBehaviorData => (Data.PlayerBehaviorData)PlayerBehaviorData;
@@ -20,14 +30,26 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [Space(10)]
 
+        [Header("Game Player")]
+
+#region State
+        [SerializeField]
+        [ReadOnly]
+        private bool _isDead;
+
+        public bool IsDead => _isDead;
+
+        // start true to force the animation the first time
+        // TODO: is this actually necessary?
+        [SerializeField]
+        [ReadOnly]
+        private bool _isFlying = true;
+#endregion
+
+        [Space(10)]
+
 #region Effects
-        [Header("Effects")]
-
-        [SerializeField]
-        private EffectTrigger _spawnEffect;
-
-        [SerializeField]
-        private EffectTrigger _respawnEffect;
+        [Header("Player Effects")]
 
         [SerializeField]
         private EffectTrigger _damageEffect;
@@ -41,11 +63,11 @@ namespace pdxpartyparrot.ggj2019.Players
 
         [Space(10)]
 
-        // start true to force the animation the first time
-        // TODO: is this actually necessary?
         [SerializeField]
         [ReadOnly]
-        private bool _isFlying = true;
+        private /*readonly*/ List<Pollen> _pollen = new List<Pollen>();
+
+        public int PollenCount => _pollen.Count;
 
         [SerializeField]
         [ReadOnly]
@@ -76,18 +98,23 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
-        public override void Initialize()
+        public override void Initialize(ActorBehaviorData behaviorData)
         {
-            base.Initialize();
+            Assert.IsTrue(behaviorData is PlayerBehaviorData);
 
-            InitializeEffects();
+            base.Initialize(behaviorData);
 
-            AnimationHelper.SetFacing(Vector3.zero - transform.position);
-            SetIdleAnimation();
+            BoundsBehaviorComponent2D boundsBehavior = GetBehaviorComponent<BoundsBehaviorComponent2D>();
+            boundsBehavior.Initialize(GameManager.Instance.GameGameData);
         }
 
         public void InitializeEffects()
         {
+            Assert.IsTrue(NetworkClient.active);
+
+            Assert.IsNotNull(GamePlayer.GamePlayerDriver.GamepadListener);
+            Assert.IsNotNull(GamePlayer.Viewer);
+
             RumbleEffectTriggerComponent rumbleEffect = _respawnEffect.GetEffectTriggerComponent<RumbleEffectTriggerComponent>();
             rumbleEffect.GamepadListener = GamePlayer.GamePlayerDriver.GamepadListener;
 
@@ -101,19 +128,15 @@ namespace pdxpartyparrot.ggj2019.Players
             rumbleEffect.GamepadListener = GamePlayer.GamePlayerDriver.GamepadListener;
 
             ViewerShakeEffectTriggerComponent viewerShakeEffect = _damageEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
-            viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
+            viewerShakeEffect.Viewer = GamePlayer.Viewer;
 
             viewerShakeEffect = _deathEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
-            viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
+            viewerShakeEffect.Viewer = GamePlayer.Viewer;
         }
 
-        public override void DefaultAnimationMove(Vector3 axes, float dt)
+        public override void DefaultAnimationMove(Vector2 direction, float dt)
         {
-            if(!CanMove) {
-                return;
-            }
-
-            base.DefaultAnimationMove(axes, dt);
+            base.DefaultAnimationMove(direction, dt);
 
             if(IsMoving) {
                 SetFlyingAnimation();
@@ -122,38 +145,101 @@ namespace pdxpartyparrot.ggj2019.Players
             }
         }
 
-#region Actions
-        public void OnSpawn()
+#region Animation
+        private void SetIdleAnimation()
         {
-            GamePlayer.IsDead = false;
+            if(!_isFlying) {
+                return;
+            }
 
-            _spawnEffect.Trigger();
+            if(null != AnimationHelper) {
+                AnimationHelper.SetAnimation(GamePlayerBehaviorData.IdleAnimationName, true);
+            }
+            _isFlying = false;
         }
 
-        public void OnReSpawn()
+        private void SetFlyingAnimation()
         {
-            GamePlayer.IsDead = false;
+            if(_isFlying) {
+                return;
+            }
 
-            _respawnEffect.Trigger();
-
-            _immunityTimer.Start(PlayerManager.Instance.GamePlayerData.SpawnImmunitySeconds);
+            if(null != AnimationHelper) {
+                AnimationHelper.SetAnimation(GamePlayerBehaviorData.FlyingAnimationName, true);
+            }
+            _isFlying = true;
         }
+#endregion
 
-        public void OnDeSpawn()
+#region Events
+        public override void OnSpawn(SpawnPoint spawnpoint)
         {
+            base.OnSpawn(spawnpoint);
+
             Velocity = Vector3.zero;
 
-            _respawnTimer.Start(PlayerManager.Instance.GamePlayerData.RespawnSeconds, ReSpawn);
+            _isDead = false;
+
+            if(null != AnimationHelper) {
+                AnimationHelper.SetFacing(Vector3.zero - transform.position);
+            }
+            SetIdleAnimation();
         }
 
-        public void OnCollide(GameObject collideObject)
+        public override void OnReSpawn(SpawnPoint spawnpoint)
         {
-            UnloadPollen(collideObject.GetComponent<Hive>());
+            base.OnReSpawn(spawnpoint);
+
+            _isDead = false;
+
+            _immunityTimer.Start(GamePlayerBehaviorData.SpawnImmunitySeconds);
+
+            if(null != AnimationHelper) {
+                AnimationHelper.SetFacing(Vector3.zero - transform.position);
+            }
+            SetIdleAnimation();
+        }
+
+        public override void OnDeSpawn()
+        {
+            _pollen.Clear();
+
+            Velocity = Vector3.zero;
+
+            _respawnTimer.Start(GamePlayerBehaviorData.RespawnSeconds, ReSpawn);
+
+            base.OnDeSpawn();
+        }
+
+        public override void TriggerEnter(GameObject triggerObject)
+        {
+            base.TriggerEnter(triggerObject);
+
+            UnloadPollen(triggerObject.GetComponent<Hive>());
+        }
+
+        public override void TriggerStay(GameObject triggerObject)
+        {
+            base.TriggerStay(triggerObject);
+
+            UnloadPollen(triggerObject.GetComponent<Hive>());
+        }
+
+        public override void TriggerExit(GameObject triggerObject)
+        {
+            base.TriggerExit(triggerObject);
+
+            UnloadPollen(triggerObject.GetComponent<Hive>());
+        }
+
+        public void OnAddPollen(Pollen pollen)
+        {
+            _pollen.Add(pollen);
         }
 
         public void OnDamage()
         {
-            if(GamePlayer.IsDead) {
+            if(_isDead) {
                 return;
             }
 
@@ -175,7 +261,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public void OnGather()
         {
-            if(GamePlayer.IsDead) {
+            if(_isDead) {
                 return;
             }
 
@@ -187,6 +273,7 @@ namespace pdxpartyparrot.ggj2019.Players
         }
 #endregion
 
+#region Actions
         private void ReSpawn()
         {
             if(GameManager.Instance.IsGameOver) {
@@ -198,7 +285,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void Kill()
         {
-            GamePlayer.IsDead = true;
+            _isDead = true;
 
             GameManager.Instance.PlayerDeath(GamePlayer);
 
@@ -210,35 +297,14 @@ namespace pdxpartyparrot.ggj2019.Players
 
         private void UnloadPollen(Hive hive)
         {
-            if(null == hive || GamePlayer.Pollen.Count < 1) {
+            if(null == hive || _pollen.Count < 1) {
                 return;
             }
 
-            foreach(Pollen pollen in GamePlayer.Pollen) {
+            foreach(Pollen pollen in _pollen) {
                 pollen.Unload(hive);
             }
-            GamePlayer.Pollen.Clear();
-        }
-
-#region Animation
-        private void SetIdleAnimation()
-        {
-            if(!_isFlying) {
-                return;
-            }
-
-            AnimationHelper.SetAnimation(GamePlayerBehaviorData.IdleAnimationName, true);
-            _isFlying = false;
-        }
-
-        private void SetFlyingAnimation()
-        {
-            if(_isFlying) {
-                return;
-            }
-
-            AnimationHelper.SetAnimation(GamePlayerBehaviorData.FlyingAnimationName, true);
-            _isFlying = true;
+            _pollen.Clear();
         }
 #endregion
     }

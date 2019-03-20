@@ -399,22 +399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 176803084997551651}
   _behavior: {fileID: 5783702104628083504}
-  _spawnEffect: {fileID: 2310253430605892186}
-  _deathEffect: {fileID: 4923482113412603472}
-  _npcData: {fileID: 0}
-  _immunityTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
-  _attackStartEffect: {fileID: 1802039788445271293}
-  _attackEndEffect: {fileID: 5954302684267042136}
-  _state: 0
-  _flower: {fileID: 0}
   _spawnpoint: {fileID: 0}
-  _attackCooldownTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
 --- !u!1 &3236068158659811359
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,10 +577,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e294d78132c5d4186bdef14e19e3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behaviorData: {fileID: 11400000, guid: 70ad973e619e3b74990e98483d0804c8, type: 2}
+  _behaviorData: {fileID: 0}
   _owner: {fileID: 3666041006512711152}
   _lastMoveAxes: {x: 0, y: 0, z: 0}
   _isMoving: 0
+  _spawnEffect: {fileID: 2310253430605892186}
+  _respawnEffect: {fileID: 0}
+  _despawnEffect: {fileID: 0}
   _animationHelper: {fileID: 8776328316506336941}
   _actorAnimator: {fileID: 0}
   _pauseAnimationOnPause: 0
@@ -605,6 +593,19 @@ MonoBehaviour:
     AngularVelocity: 0
   _isGrounded: 0
   _isSliding: 0
+  _deathEffect: {fileID: 4923482113412603472}
+  _immunityTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+  _state: 0
+  _attackStartEffect: {fileID: 1802039788445271293}
+  _attackEndEffect: {fileID: 5954302684267042136}
+  _flower: {fileID: 0}
+  _attackCooldownTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!1001 &4003636345367791783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1027,15 +1028,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6748861861976248280, guid: be004cf7de9251744a0e0e13ce51591d,
-        type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9082670083158185988, guid: be004cf7de9251744a0e0e13ce51591d,
         type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6748861861976248280, guid: be004cf7de9251744a0e0e13ce51591d,
+        type: 3}
+      propertyPath: looping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2740546970179692890, guid: be004cf7de9251744a0e0e13ce51591d,
         type: 3}

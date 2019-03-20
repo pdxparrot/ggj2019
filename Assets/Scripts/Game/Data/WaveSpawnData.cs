@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Data
 {
@@ -25,9 +26,10 @@ namespace pdxpartyparrot.Game.Data
             public Actor ActorPrefab => _actorPrefab;
 
             [SerializeField]
-            private NPCData npcData;
+            [FormerlySerializedAs("npcData")]
+            private NPCBehaviorData _npcBehaviorData;
 
-            public NPCData NPCData => npcData;
+            public NPCBehaviorData NPCBehaviorData => _npcBehaviorData;
 
             [SerializeField]
             [Tooltip("The spawnpoint tag")]

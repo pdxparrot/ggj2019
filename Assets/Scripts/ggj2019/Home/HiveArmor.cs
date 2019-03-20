@@ -45,7 +45,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
         public void Initialize()
         {
-            _health = GameManager.Instance.GameGameData.HiveArmorHealth;
+            _health = _owner.HiveBehavior.HiveBehaviorData.HiveArmorHealth;
         }
 
         public bool Damage()
@@ -110,7 +110,7 @@ namespace pdxpartyparrot.ggj2019.Home
 
         private void DamageArmor()
         {
-            float f = Health / (float)GameManager.Instance.GameGameData.HiveArmorHealth;
+            float f = Health / (float)_owner.HiveBehavior.HiveBehaviorData.HiveArmorHealth;
             _model.color = new Color(1.0f, f, f);
 
             _damageEffectTrigger.Trigger();

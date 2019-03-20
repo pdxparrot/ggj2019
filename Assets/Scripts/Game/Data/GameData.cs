@@ -1,6 +1,7 @@
 ﻿using System;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.Game.Data
 {
@@ -19,15 +20,19 @@ namespace pdxpartyparrot.Game.Data
 
         [Space(10)]
 
-        // TODO: this isn't quite the right name for this
-        // and probably also not the right place to store it
-        [SerializeField]
-        [Tooltip("The orthographic size of the 2D camera, which is also the height of the viewport.")]
-        private float _gameSize2D = 10;
+        [Header("Viewport")]
 
-        public float GameSize2D => _gameSize2D;
+        // TODO: this probably isn't the best way to handle this or the best place to put it
+        [SerializeField]
+        [FormerlySerializedAs("_gameSize2D")]
+        [Tooltip("The orthographic size of the 2D camera, which is also the height of the viewport.")]
+        private float _viewportSize = 10;
+
+        public float ViewportSize => _viewportSize;
 
         [Space(10)]
+
+        [Header("Players")]
 
         [SerializeField]
         private int _maxLocalPlayers = 1;

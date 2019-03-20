@@ -30,49 +30,42 @@ namespace pdxpartyparrot.Game.Players
         }
 #endregion
 
-        public override void DefaultAnimationMove(Vector3 axes, float dt)
+        public override void DefaultAnimationMove(Vector2 direction, float dt)
         {
             if(null == Player.Viewer) {
-                base.DefaultAnimationMove(axes, dt);
-                return;
-            }
-
-            if(!CanMove) {
+                base.DefaultAnimationMove(direction, dt);
                 return;
             }
 
             // align with the camera
-            Vector3 fixedAxes = new Vector3(axes.x, 0.0f, axes.y);
-            Vector3 forward = (Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up) * fixedAxes).normalized;
+            Vector3 fixedDirection = new Vector3(direction.x, 0.0f, direction.y);
+            Vector3 forward = (Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up) * fixedDirection).normalized;
             if(forward.sqrMagnitude > float.Epsilon) {
                 Owner.transform.forward = forward;
             }
 
             if(null != Animator) {
-                Animator.SetFloat(CharacterBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
-                Animator.SetFloat(CharacterBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
+                Animator.SetFloat(CharacterBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(direction.x) : 0.0f);
+                Animator.SetFloat(CharacterBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(direction.y) : 0.0f);
             }
         }
 
-        public override void DefaultPhysicsMove(Vector3 axes, float speed, float dt)
+        public override void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
         {
             if(null == Player.Viewer) {
-                base.DefaultPhysicsMove(axes, speed, dt);
+                base.DefaultPhysicsMove(direction, speed, dt);
                 return;
             }
 
-            if(!CanMove) {
-                return;
-            }
-
-            Vector3 velocity = axes * speed;
+            Vector3 fixedDirection = new Vector3(direction.x, 0.0f, direction.y);
+            Vector3 velocity = fixedDirection * speed;
             Quaternion rotation = Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up);
             velocity = rotation * velocity;
-            velocity.y = Velocity.y;
 
             if(IsKinematic) {
                 MovePosition(Position + velocity * dt);
             } else {
+                velocity.y = Velocity.y;
                 Velocity = velocity;
             }
         }

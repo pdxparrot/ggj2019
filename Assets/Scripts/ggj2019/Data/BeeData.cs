@@ -9,19 +9,29 @@ namespace pdxpartyparrot.ggj2019.Data
 {
     [CreateAssetMenu(fileName="BeeData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Bee Data")]
     [Serializable]
-    public sealed class BeeData : NPCData
+    public sealed class BeeData : NPCBehaviorData
     {
+        [Space(10)]
+
+        [Header("Bees")]
+
         [SerializeField]
         private float _swarmSpeedModifier = 2.0f;
 
         public float SwarmSpeedModifier => _swarmSpeedModifier;
+
+        public float SwarmMoveSpeed => MoveSpeed * SwarmSpeedModifier;
 
         [SerializeField]
         private FloatRange _offsetUpdateRange = new FloatRange(0.2f, 0.5f);
 
         public FloatRange OffsetUpdateRange => _offsetUpdateRange;
 
+        [Space(10)]
+
 #region Animations
+        [Header("Animations")]
+
         [SerializeField]
         private string _idleAnimationName = "bee_hover";
 

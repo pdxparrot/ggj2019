@@ -1,15 +1,43 @@
 ﻿using System;
 
+using pdxpartyparrot.Core.Data;
+
 using UnityEngine;
 
 namespace pdxpartyparrot.Game.Data
 {
     [CreateAssetMenu(fileName="CharacterFlightBehaviorData", menuName="pdxpartyparrot/Game/Data/CharacterFlightBehavior Data")]
     [Serializable]
-    public class CharacterFlightBehaviorData : ScriptableObject
+    public class CharacterFlightBehaviorData : ActorBehaviorData
     {
+        [SerializeField]
+        private LayerMask _collisionCheckLayerMask;
+
+        public LayerMask CollisionCheckLayerMask => _collisionCheckLayerMask;
+
+        [Space(10)]
+
+#region Animations
+        [Header("Character Animations")]
+
+        [SerializeField]
+        private string _moveXAxisParam = "InputX";
+
+        public string MoveXAxisParam => _moveXAxisParam;
+
+        [SerializeField]
+        private string _moveZAxisParam = "InputZ";
+
+        public string MoveZAxisParam => _moveZAxisParam;
+
+        [SerializeField]
+        private string _fallingParam = "Falling";
+
+        public string FallingParam => _fallingParam;
+#endregion
+
 #region Movement
-        [Header("Movement")]
+        [Header("Character Flight Movement")]
 
         [SerializeField]
         private float _maxAttackAngle = 45.0f;

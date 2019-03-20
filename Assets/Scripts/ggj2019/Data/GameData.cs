@@ -19,6 +19,8 @@ namespace pdxpartyparrot.ggj2019.Data
     {
         [Space(10)]
 
+        [Header("Game States")]
+
         [SerializeField]
         [FormerlySerializedAs("_ffaGameStatePrefab")]
         private MainGameState _mainGameStatePrefab;
@@ -43,29 +45,12 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [Space(10)]
 
-#region Hive
-        [Header("Hive")]
-
         [SerializeField]
-        private int _hiveArmorHealth = 2;
+        private HiveBehaviorData _hiveBehaviorData;
 
-        public int HiveArmorHealth => _hiveArmorHealth;
+        public HiveBehaviorData HiveBehaviorData => _hiveBehaviorData;
 
-        [SerializeField]
-        [Tooltip("Minimum number of bees to keep in the world, per-player")]
-        private int _minBees = 6;
-
-        public int MinBees => _minBees;
-
-        [SerializeField]
-        private int _beePoolSize = 20;
-
-        public int BeePoolSize => _beePoolSize;
-
-        [SerializeField]
-        private float _beeSpawnCooldown = 10.0f;
-
-        public float BeeSpawnCooldown => _beeSpawnCooldown;
+        [Space(10)]
 
         [SerializeField]
         private BeeData _beeData;
@@ -76,7 +61,18 @@ namespace pdxpartyparrot.ggj2019.Data
         private Bee _beePrefab;
 
         public Bee BeePrefab => _beePrefab;
-#endregion
+
+        [SerializeField]
+        private int _beePoolSize = 20;
+
+        public int BeePoolSize => _beePoolSize;
+
+        [Space(10)]
+
+        [SerializeField]
+        private PollenBehaviorData _pollenBehaviorData;
+
+        public PollenBehaviorData PollenBehaviorData => _pollenBehaviorData;
 
         [Space(10)]
 
@@ -96,6 +92,9 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [Space(10)]
 
+#region NPCS
+        [Header("NPCs")]
+
         [SerializeField]
         private float _enemySpawnImmunitySeconds = 1.0f;
 
@@ -105,10 +104,13 @@ namespace pdxpartyparrot.ggj2019.Data
         private WaveSpawner[] _waveSpawnerPrefabs;
 
         public WaveSpawner[] WaveSpawnerPrefabs => _waveSpawnerPrefabs;
+#endregion
 
         [Space(10)]
 
 #region Floating Text
+        [Header("Floating Text")]
+
         [SerializeField]
         private FloatingText _floatingTextPrefab;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Actors.BehaviorComponents;
 using pdxpartyparrot.Game.Data;
@@ -14,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    public class CharacterBehavior2D : ActorBehavior2D, ICharacterBehavior
+    public class CharacterBehavior2D : ActorBehavior2D
     {
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
 
@@ -67,8 +68,6 @@ namespace pdxpartyparrot.Game.Actors
         {
             base.Awake();
 
-            Assert.IsTrue(BehaviorData is CharacterBehaviorData);
-
             _components = GetComponents<CharacterBehaviorComponent2D>();
             //Debug.Log($"Found {_components.Length} CharacterBehaviorComponent2Ds");
         }
@@ -94,8 +93,7 @@ namespace pdxpartyparrot.Game.Actors
 
             // turn off gravity if we're grounded and not moving and not sliding
             // this should stop us sliding down slopes we shouldn't slide down
-            UseGravity = !IsGrounded || IsMoving || IsSliding;
-            IsKinematic = IsKinematic;
+            UseGravity = !IsKinematic && (!IsGrounded || IsMoving || IsSliding);
         }
 
         protected virtual void OnDrawGizmos()
@@ -111,6 +109,13 @@ namespace pdxpartyparrot.Game.Actors
             Gizmos.DrawLine(Position, Position + Velocity);
         }
 #endregion
+
+        public override void Initialize(ActorBehaviorData behaviorData)
+        {
+            Assert.IsTrue(behaviorData is CharacterBehaviorData);
+
+            base.Initialize(behaviorData);
+        }
 
         protected override void InitRigidbody(Rigidbody2D rb)
         {
@@ -175,38 +180,36 @@ namespace pdxpartyparrot.Game.Actors
         }
 #endregion
 
-        public override void AnimationMove(Vector3 axes, float dt)
+        public override void AnimationMove(Vector2 direction, float dt)
         {
             if(!CanMove) {
                 return;
             }
 
-            if(RunOnComponents(c => c.OnAnimationMove(axes, dt))) {
+            if(RunOnComponents(c => c.OnAnimationMove(direction, dt))) {
                 return;
             }
 
-            DefaultAnimationMove(axes, dt);
+            DefaultAnimationMove(direction, dt);
         }
 
-        public virtual void DefaultAnimationMove(Vector3 axes, float dt)
+        public virtual void DefaultAnimationMove(Vector2 direction, float dt)
         {
-            if(!CanMove) {
-                return;
-            }
-
             // align with the movement
 #if USE_SPINE
-            AnimationHelper.SetFacing(LastMoveAxes);
+            if(null != AnimationHelper) {
+                AnimationHelper.SetFacing(direction);
+            }
 #else
             // TODO: set facing (set localScale.x)
             if(null != Animator) {
-                Animator.SetFloat(CharacterBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.x) : 0.0f);
-                Animator.SetFloat(CharacterBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(LastMoveAxes.y) : 0.0f);
+                Animator.SetFloat(CharacterBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(direction.x) : 0.0f);
+                Animator.SetFloat(CharacterBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(direction.y) : 0.0f);
             }
 #endif
         }
 
-        public override void PhysicsMove(Vector3 axes, float dt)
+        public override void PhysicsMove(Vector2 direction, float dt)
         {
             if(!CanMove) {
                 return;
@@ -214,7 +217,7 @@ namespace pdxpartyparrot.Game.Actors
 
             float speed = CharacterBehaviorData.MoveSpeed;
 
-            if(RunOnComponents(c => c.OnPhysicsMove(axes, speed, dt))) {
+            if(RunOnComponents(c => c.OnPhysicsMove(direction, speed, dt))) {
                 return;
             }
 
@@ -222,23 +225,16 @@ namespace pdxpartyparrot.Game.Actors
                 return;
             }
 
-            DefaultPhysicsMove(axes, speed, dt);
+            DefaultPhysicsMove(direction, speed, dt);
         }
 
-        public virtual void DefaultPhysicsMove(Vector3 axes, float speed, float dt)
+        public virtual void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
         {
-            if(!CanMove) {
-                return;
-            }
-
-            Vector3 velocity = axes * speed;
-            if(!IsKinematic) {
-                velocity.y = Velocity.y;
-            }
-
+            Vector3 velocity = direction * speed;
             if(IsKinematic) {
                 MovePosition(Position + velocity * dt);
             } else {
+                velocity.y = Velocity.y;
                 Velocity = velocity;
             }
         }

@@ -9,8 +9,12 @@ namespace pdxpartyparrot.ggj2019.Data
 {
     [CreateAssetMenu(fileName="NPCFlowerData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Flower Data")]
     [Serializable]
-    public sealed class FlowerData : NPCData
+    public sealed class FlowerData : NPCBehaviorData
     {
+        [Space(10)]
+
+        [Header("Pollen")]
+
         [SerializeField]
         private int _pollen = 5;
 
@@ -31,7 +35,11 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public int MaxPollen => _maxPollen;
 
+        [Space(10)]
+
 #region Animations
+        [Header("Animations")]
+
         [SerializeField]
         private string _idleAnimationName = "flower_idle";
 

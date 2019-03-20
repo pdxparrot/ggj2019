@@ -80,7 +80,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public override bool OnPhysicsMove(Vector3 axes, float speed, float dt)
+        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
         {
             if(!Behavior.IsGrounded || _groundSlope < _data.SlopeLimit) {
                 return false;
@@ -92,7 +92,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             }
 
             // prevent moving up slopes we can't move up
-            Vector3 fixedAxes = new Vector3(axes.x, 0.0f, 0.0f);
+            Vector3 fixedAxes = new Vector3(direction.x, 0.0f, 0.0f);
             Behavior.DefaultPhysicsMove(fixedAxes, speed, dt);
             return true;
         }

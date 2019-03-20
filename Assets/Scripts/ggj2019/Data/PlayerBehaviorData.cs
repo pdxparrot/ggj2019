@@ -10,7 +10,28 @@ namespace pdxpartyparrot.ggj2019.Data
     [Serializable]
     public sealed class PlayerBehaviorData : Game.Data.PlayerBehaviorData
     {
-#region Animation
+        [Space(10)]
+
+        [Header("Players")]
+
+        [SerializeField]
+        private float _respawnSeconds = 1.0f;
+
+        public float RespawnSeconds => _respawnSeconds;
+
+        [SerializeField]
+        private float _spawnImmunitySeconds = 1.0f;
+
+        public float SpawnImmunitySeconds => _spawnImmunitySeconds;
+
+        [SerializeField]
+        private int _maxPollen = -1;
+
+        public int MaxPollen => _maxPollen;
+
+        [Space(10)]
+
+#region Animations
         [Header("Player Animations")]
 
         [SerializeField]

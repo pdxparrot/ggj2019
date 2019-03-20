@@ -38,7 +38,7 @@ namespace pdxpartyparrot.Game.Players
             set => _lastControllerLook = value;
         }
 
-        protected IPlayerBehavior PlayerBehavior => (IPlayerBehavior)CharacterBehavior;
+        protected IPlayerBehavior PlayerBehavior => (IPlayerBehavior)Behavior;
 
         protected IPlayer Player => PlayerBehavior.Player;
 
@@ -49,11 +49,9 @@ namespace pdxpartyparrot.Game.Players
         private DebugMenuNode _debugMenuNode;
 
 #region Unity Lifecycle
-        protected override void Awake()
+        protected virtual void Awake()
         {
-            base.Awake();
-
-            Assert.IsTrue(CharacterBehavior is IPlayerBehavior);
+            Assert.IsTrue(Behavior is IPlayerBehavior);
         }
 
         protected virtual void Update()
@@ -66,14 +64,14 @@ namespace pdxpartyparrot.Game.Players
                 // TODO: on pause tho we should maybe store this stuff out
                 // in order to reset it (otherwise we might not get new inputs)
                 LastControllerMove = Vector3.zero;
-                Behavior.LastMoveAxes = Vector3.zero;
+                Behavior.SetMoveDirection(Vector3.zero);
                 return;
             }
 
 
             float dt = Time.deltaTime;
 
-            Behavior.LastMoveAxes = Vector3.Lerp(Behavior.LastMoveAxes, _lastControllerMove, dt * _data.MovementLerpSpeed);
+            Behavior.SetMoveDirection(Vector3.Lerp(Behavior.MoveDirection, _lastControllerMove, dt * _data.MovementLerpSpeed));
         }
 
         protected virtual void OnDestroy()
