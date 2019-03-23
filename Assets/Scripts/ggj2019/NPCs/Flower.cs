@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Animation;
@@ -57,10 +57,16 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public void SpawnPollen(Pollen pollen, PollenData pollenData)
         {
+// TODO: most of the pollen data right now is actually behavior data
+// so this should swap (we get the behavior data passed in
+// and get the collectable data from the GameManager)
+
             _pollenSpawn.Spawn(pollen, Guid.NewGuid(), GameManager.Instance.GameGameData.PollenBehaviorData);
             pollen.transform.SetParent(GameManager.Instance.PollenContainer.transform);
 
             pollen.Initialize(pollenData);
+
+            // TODO: this goes away once we move over to the behavior
             pollen.Initialize(GameManager.Instance.GameGameData.PollenBehaviorData);
         }
 

@@ -36,6 +36,7 @@ namespace pdxpartyparrot.Core.Tween
         [ReadOnly]
         private bool _firstRun = true;
 
+// TODO: reorderable list
         [SerializeField]
         private TweenRunner[] _tweens;
 

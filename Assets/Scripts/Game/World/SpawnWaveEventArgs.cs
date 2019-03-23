@@ -1,5 +1,6 @@
 ﻿using System;
 
+// TODO: move to NPCs
 namespace pdxpartyparrot.Game.World
 {
     public class SpawnWaveEventArgs : EventArgs

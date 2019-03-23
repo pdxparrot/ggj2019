@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using JetBrains.Annotations;
 
@@ -170,6 +170,7 @@ namespace pdxpartyparrot.Core.Actors
         protected InternalPauseState PauseState => _pauseState;
 #endregion
 
+// TODO: allow bees to override the pause restriction here somehow
         public override bool CanMove => !PartyParrotManager.Instance.IsPaused && (null == _actorAnimator || !_actorAnimator.IsAnimating);
 
 #region Unity Lifecycle

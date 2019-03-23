@@ -12,11 +12,13 @@ namespace pdxpartyparrot.Core.Effects
 {
     public class EffectTrigger : MonoBehaviour
     {
+// TODO: reorderable list
         [SerializeField]
         private EffectTrigger[] _triggerOnComplete;
 
         private Coroutine _effectWaiter;
 
+// TODO: reorderable list (don't use GetComponents())
         private EffectTriggerComponent[] _components;
 
 #region Unity Lifecycle

@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Time;
@@ -65,6 +65,24 @@ namespace pdxpartyparrot.ggj2019.NPCs
             SetState(BeeState.Dead);
         }
 
+        public override void Think(float dt)
+        {
+            base.Think(dt);
+
+            if(null == _targetSwarm) {
+                SetState(BeeState.Idle);
+            }
+
+            switch(_state)
+            {
+            case BeeState.Follow:
+                Vector3 swarmPosition = _targetSwarm.transform.position;
+                Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
+                SetMoveDirection(targetPosition - Position);
+                break;
+            }
+        }
+
         public override void DefaultAnimationMove(Vector2 direction, float dt)
         {
             if(null == _targetSwarm) {
@@ -73,7 +91,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             Vector3 swarmPosition = _targetSwarm.transform.position;
-
             if(null != AnimationHelper) {
                 AnimationHelper.SetFacing(swarmPosition - Position);
             }
@@ -81,26 +98,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
         {
-            if(_state != BeeState.Follow) {
-                return;
-            }
-
-            if(null == _targetSwarm) {
-                SetState(BeeState.Idle);
-                return;
-            }
-
-            Vector3 swarmPosition = _targetSwarm.transform.position;
-            Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
-
-SetMoveDirection(targetPosition - Position);
-            base.DefaultPhysicsMove(MoveDirection, BeeData.SwarmMoveSpeed, dt);
+            base.DefaultPhysicsMove(direction, _state == BeeState.Follow ? BeeData.SwarmSpeedModifier * speed : speed, dt);
         }
 
         private void SetState(BeeState state)
         {
             _state = state;
-            switch(state)
+            switch(_state)
             {
             case BeeState.Idle:
                 BeeNPC.EnableGatherText(true);

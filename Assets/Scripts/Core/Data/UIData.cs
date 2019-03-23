@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using TMPro;
 
@@ -10,6 +10,7 @@ namespace pdxpartyparrot.Core.Data
     [Serializable]
     public class UIData : ScriptableObject
     {
+// TODO: these could be effect triggers and do way more
         [SerializeField]
         private AudioClip _buttonHoverAudioClip;
 

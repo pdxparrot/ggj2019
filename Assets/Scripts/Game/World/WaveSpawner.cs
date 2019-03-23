@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using JetBrains.Annotations;
@@ -13,6 +13,7 @@ using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
+// TODO: move to NPCs
 namespace pdxpartyparrot.Game.World
 {
     public class WaveSpawner : MonoBehaviour

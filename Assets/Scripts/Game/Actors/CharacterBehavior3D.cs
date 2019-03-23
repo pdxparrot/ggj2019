@@ -61,6 +61,7 @@ namespace pdxpartyparrot.Game.Actors
 
         public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
 
+// TODO: reorderable list (don't use GetComponents())
         private CharacterBehaviorComponent3D[] _components;
 
 #region Unity Lifecycle

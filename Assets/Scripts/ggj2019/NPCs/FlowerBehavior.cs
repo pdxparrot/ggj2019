@@ -1,4 +1,4 @@
-using pdxpartyparrot.Core.Actors;
+﻿using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
@@ -18,6 +18,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [Header("Flower")]
 
 #region State
+// TODO: these could merge into a state enum probably
         [SerializeField]
         [ReadOnly]
         private bool _canSpawnPollen;

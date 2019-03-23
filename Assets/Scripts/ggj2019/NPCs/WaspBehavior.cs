@@ -1,4 +1,4 @@
-using pdxpartyparrot.Core;
+﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Splines;
 using pdxpartyparrot.Core.Time;
@@ -116,30 +116,26 @@ namespace pdxpartyparrot.ggj2019.NPCs
             case WaspState.Idle:
                 AttackHive();
                 break;
+            case WaspState.FollowingSpline:
+	            _splinePosition += WaspData.MoveSpeed * dt;
+
+	            float t = _splinePosition / _splineLength;
+
+	            Vector3 targetPosition = _spline.GetPoint(t);
+                targetPosition.y += _splineYOffset;
+                SetMoveDirection(targetPosition - Position);
+
+                if(_splinePosition >= _splineLength) {
+                    SetState(WaspState.Idle);
+                }
+                break;
             }
         }
 
-        public override void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
+        public override void DefaultAnimationMove(Vector2 direction, float dt)
         {
-            if(_state != WaspState.FollowingSpline) {
-                return;
-            }
-
-	        _splinePosition += speed * dt;
-
-	        float t = _splinePosition / _splineLength;
-
-	        Vector3 targetPosition = _spline.GetPoint(t);
-            targetPosition.y += _splineYOffset;
-
-SetMoveDirection(targetPosition - Position);
-            base.DefaultPhysicsMove(MoveDirection, speed, dt);
-
             //transform.LookAt2DFlip(targetPosition);
-
-            if(_splinePosition >= _splineLength) {
-                SetState(WaspState.Idle);
-            }
+            base.DefaultAnimationMove(direction, dt);
         }
 
         private void SetState(WaspState state)

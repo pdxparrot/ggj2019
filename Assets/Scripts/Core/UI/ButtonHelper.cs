@@ -24,6 +24,8 @@ namespace pdxpartyparrot.Core.UI
         }
 #endregion
 
+// TODO: this could use an EffectTrigger and do more than just audio!
+
 #region Event Handlers
         public void OnSelect(BaseEventData eventData)
         {

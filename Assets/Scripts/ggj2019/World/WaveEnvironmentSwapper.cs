@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using UnityEngine;
 
@@ -12,6 +12,8 @@ namespace pdxpartyparrot.ggj2019.World
 
         public int Wave => _wave;
 
+        // TODO: may as well just make this the skin name instead of an index
+        // it'd be a lot easier to work with
         [SerializeField]
         private int _skin;
 
