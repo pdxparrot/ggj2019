@@ -39,6 +39,8 @@ namespace pdxpartyparrot.Core.Scripting
             _updateScripts.Remove(script);
         }
 
+// TODO: need to control init / starting / stopping of scripts
+
 #region Unity Lifecycle
         private void Update()
         {

@@ -1,4 +1,8 @@
-using pdxpartyparrot.Core.Data;
+using System;
+
+using JetBrains.Annotations;
+
+using pdxpartyparrot.Core.Data.Scripting;
 using pdxpartyparrot.Core.Scripting.Nodes;
 
 using Unity.Collections;
@@ -29,7 +33,6 @@ namespace pdxpartyparrot.Core.Scripting
         private readonly ScriptContext _context;
 
         private ScriptNode _start;
-        private ScriptNode _end;
         private ScriptNode _current;
 
         public ScriptRunner()
@@ -37,10 +40,14 @@ namespace pdxpartyparrot.Core.Scripting
             _context = new ScriptContext(this);
         }
 
+// TODO: make initializing scripts more deterministic so it doesn't bog down load
+
 #region Unity Lifecycle
         private void Awake()
         {
             ScriptingManager.Instance.Register(this);
+
+            InitializeNodes();
 
             Reset();
         }
@@ -51,6 +58,13 @@ namespace pdxpartyparrot.Core.Scripting
         }
 #endregion
 
+        private void InitializeNodes()
+        {
+            // TODO: register all of the nodes
+
+            // TODO: init all of the nodes with their data
+        }
+
 #region Script Lifecycle
         public void Reset()
         {
@@ -60,7 +74,6 @@ namespace pdxpartyparrot.Core.Scripting
             _context.Clear();
 
             // TODO: set _start and _current to the start node
-            // and _end to the end node
         }
 
         public void Advance()
@@ -92,5 +105,12 @@ namespace pdxpartyparrot.Core.Scripting
             _complete = true;
         }
 #endregion
+
+        [CanBeNull]
+        public ScriptNode GetNode(Guid id)
+        {
+            // TODO
+            return null;
+        }
     }
 }

@@ -1,9 +1,12 @@
-﻿namespace pdxpartyparrot.Core.Scripting.Nodes
+﻿using pdxpartyparrot.Core.Data.Scripting.Nodes;
+
+namespace pdxpartyparrot.Core.Scripting.Nodes
 {
     public sealed class End : ScriptNode
     {
-        [Input]
-        ScriptNode _prev;
+        public override void Init(ScriptRunner runner, ScriptNodeData data)
+        {
+        }
 
         public override void Run(ScriptContext context)
         {
