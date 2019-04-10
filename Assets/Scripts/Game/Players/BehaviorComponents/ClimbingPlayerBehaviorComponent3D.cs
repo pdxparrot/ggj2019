@@ -143,7 +143,7 @@ namespace pdxpartyparrot.Game.Players.BehaviorComponents
 
         private bool CanClimbUp => IsClimbing && (null == _headHitResult && null != _chestHitResult);
 
-        private GroundCheckBehaviorComponent3D _groundChecker;
+        private GroundCheckPlayerBehaviorComponent3D _groundChecker;
 
         private Coroutine _raycastCoroutine;
 
@@ -169,7 +169,7 @@ namespace pdxpartyparrot.Game.Players.BehaviorComponents
             Assert.IsTrue(_headTransform.position.y > _leftHandTransform.position.y, "Character head should be above player hands!");
             Assert.IsTrue(_chestTransform.position.y < _leftHandTransform.position.y, "Character chest should be below player hands!");
 
-            _groundChecker = Behavior.GetBehaviorComponent<GroundCheckBehaviorComponent3D>();
+            _groundChecker = Behavior.GetBehaviorComponent<GroundCheckPlayerBehaviorComponent3D>();
             Assert.IsNotNull(_groundChecker, "ClimbingBehaviorComponent requires a ground checker");
 
             InitDebugMenu();
