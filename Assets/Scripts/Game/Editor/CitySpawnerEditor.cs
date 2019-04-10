@@ -18,7 +18,7 @@ namespace pdxpartyparrot.ggj2018.Editor
             }
 
             if(GUILayout.Button("Reset")) {
-                spawner.Reset(true);
+                spawner.ResetSpawner(true);
             }
         }
     }

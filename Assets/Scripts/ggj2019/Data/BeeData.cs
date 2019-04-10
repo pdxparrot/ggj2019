@@ -20,6 +20,8 @@ namespace pdxpartyparrot.ggj2019.Data
 
         public float SwarmSpeedModifier => _swarmSpeedModifier;
 
+        public float SwarmSpeed => MoveSpeed * SwarmSpeedModifier;
+
         [SerializeField]
         private FloatRange _offsetUpdateRange = new FloatRange(0.2f, 0.5f);
 

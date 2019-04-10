@@ -4,7 +4,6 @@ using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.NPCs;
 using pdxpartyparrot.Game.Players;
-using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 

@@ -117,14 +117,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 AttackHive();
                 break;
             case WaspState.FollowingSpline:
-	            _splinePosition += WaspData.MoveSpeed * dt;
-
-	            float t = _splinePosition / _splineLength;
-
-	            Vector3 targetPosition = _spline.GetPoint(t);
-                targetPosition.y += _splineYOffset;
-                SetMoveDirection(targetPosition - Position);
-
                 if(_splinePosition >= _splineLength) {
                     SetState(WaspState.Idle);
                 }
@@ -132,10 +124,21 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
         }
 
-        public override void DefaultAnimationMove(Vector2 direction, float dt)
+        protected override void PhysicsUpdate(float dt)
         {
-            //transform.LookAt2DFlip(targetPosition);
-            base.DefaultAnimationMove(direction, dt);
+            if(!CanMove || WaspState.FollowingSpline != _state) {
+                return;
+            }
+
+            _splinePosition += WaspData.MoveSpeed * dt;
+
+            float t = _splinePosition / _splineLength;
+
+            Vector3 targetPosition = _spline.GetPoint(t);
+            targetPosition.y += _splineYOffset;
+            Teleport(targetPosition);
+
+            base.PhysicsUpdate(dt);
         }
 
         private void SetState(WaspState state)
@@ -213,7 +216,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             // teleport to our starting position
             // setting the behavior's Position doesn't seem to immediately warp
             // so falling back on just forcing the transform position to move :(
-	        Vector3 targetPosition = _spline.GetPoint(0.0f);
+            Vector3 targetPosition = _spline.GetPoint(0.0f);
             targetPosition.y += _splineYOffset;
             Teleport(targetPosition);
 

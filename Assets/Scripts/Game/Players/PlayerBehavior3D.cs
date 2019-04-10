@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Game.Actors;
+﻿using pdxpartyparrot.Core.Data;
+using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Actors;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
@@ -8,6 +10,12 @@ namespace pdxpartyparrot.Game.Players
 {
     public abstract class PlayerBehavior3D : CharacterBehavior3D, IPlayerBehavior
     {
+        [SerializeField]
+        [ReadOnly]
+        private Vector2 _moveDirection;
+
+        public Vector2 MoveDirection => _moveDirection;
+
         public PlayerBehaviorData PlayerBehaviorData => (PlayerBehaviorData)BehaviorData;
 
         public IPlayer Player => (IPlayer)Owner;
@@ -21,6 +29,13 @@ namespace pdxpartyparrot.Game.Players
             Assert.IsTrue(Owner is IPlayer);
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            IsMoving = MoveDirection.sqrMagnitude > 0.001f;
+        }
+
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -30,44 +45,81 @@ namespace pdxpartyparrot.Game.Players
         }
 #endregion
 
-        public override void DefaultAnimationMove(Vector2 direction, float dt)
+        public override void Initialize(ActorBehaviorData behaviorData)
         {
-            if(null == Player.Viewer) {
-                base.DefaultAnimationMove(direction, dt);
+            base.Initialize(behaviorData);
+
+            _moveDirection = Vector2.zero;
+        }
+
+        protected override void InitRigidbody(Rigidbody rb)
+        {
+            base.InitRigidbody(rb);
+
+            // we run the follow cam in FixedUpdate() and interpolation interferes with that
+            rb.interpolation = RigidbodyInterpolation.None;
+        }
+
+        public void SetMoveDirection(Vector2 moveDirection)
+        {
+            _moveDirection = Vector2.ClampMagnitude(moveDirection, 1.0f);
+        }
+
+        protected override void AnimationUpdate(float dt)
+        {
+            if(!CanMove) {
                 return;
             }
 
-            // align with the camera
-            Vector3 fixedDirection = new Vector3(direction.x, 0.0f, direction.y);
-            Vector3 forward = (Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up) * fixedDirection).normalized;
+            Vector3 fixedDirection = new Vector3(MoveDirection.x, 0.0f, MoveDirection.y);
+            Vector3 forward = fixedDirection;
+            if(null != Player.Viewer) {
+                // align with the camera instead of the movement
+                forward = (Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up) * fixedDirection).normalized;
+                if(forward.sqrMagnitude > float.Epsilon) {
+                    Owner.transform.forward = forward;
+                }
+            }
+
             if(forward.sqrMagnitude > float.Epsilon) {
                 Owner.transform.forward = forward;
             }
 
             if(null != Animator) {
-                Animator.SetFloat(CharacterBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(direction.x) : 0.0f);
-                Animator.SetFloat(CharacterBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(direction.y) : 0.0f);
+                Animator.SetFloat(PlayerBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(MoveDirection.x) : 0.0f);
+                Animator.SetFloat(PlayerBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(MoveDirection.y) : 0.0f);
             }
+
+            base.AnimationUpdate(dt);
         }
 
-        public override void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
+        protected override void PhysicsUpdate(float dt)
         {
-            if(null == Player.Viewer) {
-                base.DefaultPhysicsMove(direction, speed, dt);
+            if(!CanMove) {
                 return;
             }
 
-            Vector3 fixedDirection = new Vector3(direction.x, 0.0f, direction.y);
-            Vector3 velocity = fixedDirection * speed;
-            Quaternion rotation = Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up);
+            if(!PlayerBehaviorData.AllowAirControl && IsFalling) {
+                return;
+            }
+
+            Vector3 fixedDirection = new Vector3(MoveDirection.x, 0.0f, MoveDirection.y);
+            Vector3 velocity = fixedDirection * PlayerBehaviorData.MoveSpeed;
+            Quaternion rotation = Rotation3D;
+            if(null != Player.Viewer) {
+                // rotate with the camera instead of the movement
+                rotation = Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up);
+            }
             velocity = rotation * velocity;
 
             if(IsKinematic) {
-                MovePosition(Position + velocity * dt);
+                Teleport(Position + velocity * dt);
             } else {
                 velocity.y = Velocity.y;
                 Velocity = velocity;
             }
+
+            base.PhysicsUpdate(dt);
         }
     }
 }

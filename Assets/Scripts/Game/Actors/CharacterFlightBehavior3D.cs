@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-using pdxpartyparrot.Core;
+﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.Util;
@@ -13,12 +11,14 @@ using UnityEngine.Experimental.Input;
 namespace pdxpartyparrot.Game.Actors
 {
     // TODO: can this be a component?
-    public class CharacterFlightBehavior3D : ActorBehavior3D
+    public abstract class CharacterFlightBehavior3D : ActorBehavior3D
     {
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
 
         [SerializeField]
         private CharacterFlightBehaviorData _data;
+
+        protected CharacterFlightBehaviorData FlightBehaviorData => _data;
 
 #region Physics
         [SerializeField]
@@ -111,28 +111,7 @@ namespace pdxpartyparrot.Game.Actors
 #endif
 #endregion
 
-        public override void AnimationMove(Vector2 direction, float dt)
-        {
-            if(!CanMove || null == Owner.Model) {
-                return;
-            }
-
-            Transform modelTransform = Owner.Model.transform;
-
-            Quaternion rotation = modelTransform.localRotation;
-            Vector3 targetEuler = new Vector3
-            {
-                z = direction.x * -_data.MaxBankAngle,
-                x = direction.y * -_data.MaxAttackAngle
-            };
-
-            Quaternion targetRotation = Quaternion.Euler(targetEuler);
-            rotation = Quaternion.Lerp(rotation, targetRotation, _data.RotationAnimationSpeed * dt);
-
-            modelTransform.localRotation = rotation;
-        }
-
-        private void Turn(Vector2 direction, float dt)
+        protected void Turn(Vector2 direction, float dt)
         {
 #if true
             float turnSpeed = _data.TurnSpeed * direction.x;
@@ -142,7 +121,7 @@ namespace pdxpartyparrot.Game.Actors
             // TODO: this only works if Y rotation is unconstrained
             // it also breaks because the model rotates :(
             const float AngularThrust = 0.5f;
-            AddRelativeTorque(Vector3.up * AngularThrust * axes.x);
+            AddRelativeTorque(Vector3.up * AngularThrust * direction.x, ForceMode.Force);
 #endif
 
             Transform ownerTransform = Owner.transform;
@@ -151,30 +130,6 @@ namespace pdxpartyparrot.Game.Actors
             Vector3 relativeVelocity = ownerTransform.InverseTransformDirection(Velocity);
             _bankForce = -relativeVelocity.x * AngularDrag * ownerTransform.right;
             AddForce(_bankForce, ForceMode.Force);
-        }
-
-        public override void PhysicsMove(Vector2 direction, float dt)
-        {
-            if(!CanMove) {
-                return;
-            }
-
-            Turn(direction, dt);
-
-            float attackAngle = direction.y * -_data.MaxAttackAngle;
-            Vector3 attackVector = Quaternion.AngleAxis(attackAngle, Vector3.right) * Vector3.forward;
-            AddRelativeForce(attackVector * _data.LinearThrust, ForceMode.Force);
-
-            // lift if we're not falling
-            if(direction.y >= 0.0f) {
-                AddForce(-Physics.gravity, ForceMode.Acceleration);
-            }
-
-            // cap our fall speed
-            Vector3 velocity = Velocity;
-            if(velocity.y < -_data.TerminalVelocity) {
-                Velocity = new Vector3(velocity.x, -_data.TerminalVelocity, velocity.z);
-            }
         }
     }
 }

@@ -72,21 +72,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(null == _targetSwarm) {
                 SetState(BeeState.Idle);
             }
-
-            switch(_state)
-            {
-            case BeeState.Follow:
-                Vector3 swarmPosition = _targetSwarm.transform.position;
-                Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
-                SetMoveDirection(targetPosition - Position);
-                break;
-            }
         }
 
-        public override void DefaultAnimationMove(Vector2 direction, float dt)
+        protected override void AnimationUpdate(float dt)
         {
             if(null == _targetSwarm) {
-                base.DefaultAnimationMove(direction, dt);
+                base.AnimationUpdate(dt);
                 return;
             }
 
@@ -94,11 +85,21 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(null != AnimationHelper) {
                 AnimationHelper.SetFacing(swarmPosition - Position);
             }
+
+            base.AnimationUpdate(dt);
         }
 
-        public override void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
+        protected override void PhysicsUpdate(float dt)
         {
-            base.DefaultPhysicsMove(direction, _state == BeeState.Follow ? BeeData.SwarmSpeedModifier * speed : speed, dt);
+            if((!CanMove && !PartyParrotManager.Instance.IsPaused) || BeeState.Follow != _state) {
+                return;
+            }
+
+            Vector3 swarmPosition = _targetSwarm.Center.position;
+            Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
+            MoveTowards(targetPosition, BeeData.SwarmSpeed, dt);
+
+            base.PhysicsUpdate(dt);
         }
 
         private void SetState(BeeState state)

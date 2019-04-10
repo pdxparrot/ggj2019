@@ -4,9 +4,9 @@ using pdxpartyparrot.Game.Data;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace pdxpartyparrot.Game.Actors.BehaviorComponents
+namespace pdxpartyparrot.Game.Players.BehaviorComponents
 {
-    public sealed class BoundsBehaviorComponent2D : CharacterBehaviorComponent2D
+    public sealed class BoundsPlayerBehaviorComponent2D : PlayerBehaviorComponent2D
     {
         [SerializeField]
         [ReadOnly]
@@ -33,9 +33,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             _ownerHalfSize = new Vector2(Behavior.Owner.Radius, Behavior.Owner.Height / 2.0f);
         }
 
-        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
+        public override bool OnPhysicsUpdate(float dt)
         {
-            _lastVelocity = direction * speed;
+            _lastVelocity = PlayerBehavior.MoveDirection * PlayerBehavior.PlayerBehaviorData.MoveSpeed;
             _lastPosition = Behavior.Position + _lastVelocity * dt;
 
             // x-bounds
@@ -52,7 +52,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
                 _lastPosition.y = -_viewportSize.y + _ownerHalfSize.y;
             }
 
-            Behavior.MovePosition(_lastPosition);
+            Behavior.Teleport(_lastPosition);
 
             return true;
         }

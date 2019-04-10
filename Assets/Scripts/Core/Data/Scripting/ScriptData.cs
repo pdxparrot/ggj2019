@@ -11,9 +11,8 @@ namespace pdxpartyparrot.Core.Data.Scripting
     [Serializable]
     public sealed class ScriptData : ScriptableObject
     {
-        // TODO: this might need to be an array
         [SerializeField]
-        private readonly List<ScriptNodeData> _nodes = new List<ScriptNodeData>();
+        private /*readonly*/ ScriptNodeData[] _nodes;
 
         public IReadOnlyCollection<ScriptNodeData> Nodes => _nodes;
     }

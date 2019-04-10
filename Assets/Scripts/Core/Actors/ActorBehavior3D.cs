@@ -205,11 +205,16 @@ namespace pdxpartyparrot.Core.Actors
         {
         }
 
-        public void MovePosition(Vector3 position)
+        public override void Teleport(Vector3 position)
         {
             //Debug.Log($"Teleporting actor {Owner.Id} to {position} (interpolated)");
-
             _rigidbody.MovePosition(position);
+        }
+
+        public override void MoveTowards(Vector3 position, float speed, float dt)
+        {
+            Vector3 newPosition = Vector3.MoveTowards(Position, position, speed * dt);
+            _rigidbody.MovePosition(newPosition);
         }
 
         public void MoveRotation(Quaternion rot)

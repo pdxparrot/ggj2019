@@ -23,22 +23,12 @@ namespace pdxpartyparrot.Core.Actors
 
         public ActorBehaviorData BehaviorData => _behaviorData;
 
-        [Space(10)]
+        //[Space(10)]
 
 #region Movement
-        [Header("Movement")]
+        //[Header("Movement")]
 
-        [SerializeField]
-        [ReadOnly]
-        private Vector2 _moveDirection;
-
-        public Vector2 MoveDirection => _moveDirection;
-
-        [SerializeField]
-        [ReadOnly]
-        protected bool _isMoving;
-
-        public bool IsMoving => _isMoving;
+        public bool IsMoving { get; protected set; }
 
         public abstract bool CanMove { get; }
 #endregion
@@ -153,33 +143,31 @@ namespace pdxpartyparrot.Core.Actors
 
         protected virtual void Update()
         {
-            _isMoving = MoveDirection.sqrMagnitude > 0.001f;
-
             float dt = UnityEngine.Time.deltaTime;
 
-            AnimationMove(MoveDirection, dt);
+            AnimationUpdate(dt);
         }
 
         protected virtual void FixedUpdate()
         {
             float dt = UnityEngine.Time.fixedDeltaTime;
 
-            PhysicsMove(MoveDirection, dt);
+            PhysicsUpdate(dt);
         }
 #endregion
 
         public virtual void Initialize(ActorBehaviorData behaviorData)
         {
             _behaviorData = behaviorData;
-
             ResetFromData();
 
-            _moveDirection = Vector3.zero;
-            _isMoving = false;
+            IsMoving = false;
 
             Rotation3D = Quaternion.identity;
             Rotation2D = 0.0f;
+
             Velocity = Vector3.zero;
+
             AngularVelocity3D = Vector3.zero;
             AngularVelocity2D = 0.0f;
         }
@@ -193,29 +181,32 @@ namespace pdxpartyparrot.Core.Actors
             UseGravity = !BehaviorData.IsKinematic;
         }
 
-        public void SetMoveDirection(Vector2 moveDirection)
-        {
-            _moveDirection = Vector2.ClampMagnitude(moveDirection, 1.0f);
-        }
-
-        // NOTE: called by the ActorManager
+        // called by the ActorManager
         public virtual void Think(float dt)
         {
         }
 
+        // called in Update()
+        protected virtual void AnimationUpdate(float dt)
+        {
+        }
+
+        // called in FixedUpdate()
+        protected virtual void PhysicsUpdate(float dt)
+        {
+        }
+
 #region Movement
-        public void Teleport(Vector3 position)
+        public virtual void Teleport(Vector3 position)
         {
             Debug.Log($"Teleporting actor {Owner.Id} to {position}");
             _transform.position = position;
         }
 
-        public virtual void AnimationMove(Vector2 direction, float dt)
+        public virtual void MoveTowards(Vector3 position, float speed, float dt)
         {
-        }
-
-        public virtual void PhysicsMove(Vector2 direction, float dt)
-        {
+            Vector3 newPosition = Vector3.MoveTowards(Position, position, speed * dt);
+            _transform.position = newPosition;
         }
 #endregion
 

@@ -9,9 +9,9 @@ using pdxpartyparrot.Game.Data;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-namespace pdxpartyparrot.Game.Actors.BehaviorComponents
+namespace pdxpartyparrot.Game.Players.BehaviorComponents
 {
-    public sealed class GroundCheckBehaviorComponent2D : CharacterBehaviorComponent2D
+    public sealed class GroundCheckPlayerBehaviorComponent2D : PlayerBehaviorComponent2D
     {
         [SerializeField]
         private GroundCheckBehaviorComponentData _data;
@@ -80,7 +80,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
+        public override bool OnPhysicsUpdate(float dt)
         {
             if(!Behavior.IsGrounded || _groundSlope < _data.SlopeLimit) {
                 return false;
@@ -92,9 +92,9 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             }
 
             // prevent moving up slopes we can't move up
-            Vector3 fixedAxes = new Vector3(0.0f, direction.y);
-            Behavior.DefaultPhysicsMove(fixedAxes, speed, dt);
-            return true;
+            PlayerBehavior.SetMoveDirection(new Vector2(0.0f, PlayerBehavior.MoveDirection.y));
+
+            return false;
         }
 
         private IEnumerator RaycastRoutine()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.Core.Camera
 {
+    // TODO: rename FollowCameraTarget
     public abstract class FollowTarget : MonoBehaviour
     {
         [SerializeField]

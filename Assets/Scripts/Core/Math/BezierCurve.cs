@@ -24,31 +24,31 @@ namespace pdxpartyparrot.Core.Math
             _points[index] = point;
         }
 #endif
-	    
-	    public Vector3 GetPoint(float t)
+        
+        public Vector3 GetPoint(float t)
         {
-		    return transform.TransformPoint(Bezier.GetPoint(_points[0], _points[1], _points[2], _points[3], t));
-	    }
+            return transform.TransformPoint(Bezier.GetPoint(_points[0], _points[1], _points[2], _points[3], t));
+        }
 
-	    public Vector3 GetVelocity(float t)
+        public Vector3 GetVelocity(float t)
         {
             Vector3 position = transform.position;
-		    return transform.TransformPoint(Bezier.GetFirstDerivative(_points[0], _points[1], _points[2], _points[3], t)) - position;
-	    }
+            return transform.TransformPoint(Bezier.GetFirstDerivative(_points[0], _points[1], _points[2], _points[3], t)) - position;
+        }
 
-	    public Vector3 GetDirection(float t)
+        public Vector3 GetDirection(float t)
         {
-		    return GetVelocity(t).normalized;
-	    }
+            return GetVelocity(t).normalized;
+        }
 
-	    public void ResetCurve()
+        public void ResetCurve()
         {
-		    _points = new[] {
+            _points = new[] {
                        Vector3.right,
                 2.0f * Vector3.right,
                 3.0f * Vector3.right,
                 4.0f * Vector3.right
-		    };
-	    }
+            };
+        }
     }
 }

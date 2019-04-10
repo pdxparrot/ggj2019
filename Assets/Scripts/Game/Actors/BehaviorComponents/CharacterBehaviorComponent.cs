@@ -23,12 +23,12 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public virtual bool OnAnimationMove(Vector2 direction, float dt)
+        public virtual bool OnAnimationUpdate(float dt)
         {
             return false;
         }
 
-        public virtual bool OnPhysicsMove(Vector2 direction, float speed, float dt)
+        public virtual bool OnPhysicsUpdate(float dt)
         {
             return false;
         }

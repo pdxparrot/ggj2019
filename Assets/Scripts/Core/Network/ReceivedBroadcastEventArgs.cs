@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net;
 
-using pdxpartyparrot.Core.Util;
-
 namespace pdxpartyparrot.Core.Network
 {
     public sealed class ReceivedBroadcastEventArgs : EventArgs

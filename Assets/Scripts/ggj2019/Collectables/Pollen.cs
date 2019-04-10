@@ -16,7 +16,6 @@ using TMPro;
 
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Networking;
 
 namespace pdxpartyparrot.ggj2019.Collectables
 {
@@ -213,7 +212,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
             }
 
             position.y += _pollenData.FloatSpeed * dt;
-            PollenBehavior.MovePosition(position);
+            PollenBehavior.Teleport(position);
         }
 
         private void FollowPlayer(float dt)
@@ -226,7 +225,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _followPlayer.PollenTarget.position, _pollenData.FollowPlayerSpeed * dt);
-            PollenBehavior.MovePosition(position);
+            PollenBehavior.Teleport(position);
         }
 
         private void GoToHive(float dt)
@@ -238,7 +237,7 @@ namespace pdxpartyparrot.ggj2019.Collectables
 
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _hive.transform.position, _pollenData.GoToHiveSpeed * dt);
-            PollenBehavior.MovePosition(position);
+            PollenBehavior.Teleport(position);
         }
 
 #region Event Handlers

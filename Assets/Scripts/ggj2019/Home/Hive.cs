@@ -70,19 +70,11 @@ namespace pdxpartyparrot.ggj2019.Home
             Collider.isTrigger = true;
 
             _beeContainer = new GameObject("bees");
-            _beeContainer.transform.SetParent(transform);
 
             GameManager.Instance.GameStartEvent += GameStartEventHandler;
             GameManager.Instance.GameEndEvent += GameEndEventHandler;
 
             InitDebugMenu();
-        }
-
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            _beeSpawnTimer.Update(dt);
         }
 
         protected override void OnDestroy()
@@ -97,6 +89,13 @@ namespace pdxpartyparrot.ggj2019.Home
             Destroy(_beeContainer);
 
             base.OnDestroy();
+        }
+
+        private void Update()
+        {
+            float dt = Time.deltaTime;
+
+            _beeSpawnTimer.Update(dt);
         }
 #endregion
 

@@ -68,14 +68,14 @@ namespace pdxpartyparrot.Game.Players
                 // TODO: on pause tho we should maybe store this stuff out
                 // in order to reset it (otherwise we might not get new inputs)
                 LastControllerMove = Vector3.zero;
-                Player.Behavior.SetMoveDirection(Vector3.zero);
+                Player.PlayerBehavior.SetMoveDirection(Vector2.zero);
                 return;
             }
 
 
             float dt = Time.deltaTime;
 
-            Player.Behavior.SetMoveDirection(Vector3.Lerp(Player.Behavior.MoveDirection, _lastControllerMove, dt * _data.MovementLerpSpeed));
+            Player.PlayerBehavior.SetMoveDirection(Vector2.MoveTowards(Player.PlayerBehavior.MoveDirection, _lastControllerMove, dt * _data.MovementLerpSpeed));
         }
 
         protected virtual void OnDestroy()

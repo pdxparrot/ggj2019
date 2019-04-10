@@ -114,7 +114,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(LastControllerMove.x, context.performed ? 1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
-                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.PlayerBehavior.SetMoveDirection(LastControllerMove);
             }
         }
 
@@ -126,7 +126,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(LastControllerMove.x, context.performed ? -1.0f : 0.0f, 0.0f);
             if(context.cancelled) {
-                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.PlayerBehavior.SetMoveDirection(LastControllerMove);
             }
         }
 
@@ -138,7 +138,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(context.performed ? -1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
-                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.PlayerBehavior.SetMoveDirection(LastControllerMove);
             }
         }
 
@@ -150,7 +150,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             LastControllerMove = new Vector3(context.performed ? 1.0f : 0.0f, LastControllerMove.y, 0.0f);
             if(context.cancelled) {
-                GamePlayer.Behavior.SetMoveDirection(LastControllerMove);
+                GamePlayer.PlayerBehavior.SetMoveDirection(LastControllerMove);
             }
         }
 #endregion

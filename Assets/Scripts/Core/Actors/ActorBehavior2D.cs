@@ -170,7 +170,6 @@ namespace pdxpartyparrot.Core.Actors
         protected InternalPauseState PauseState => _pauseState;
 #endregion
 
-// TODO: allow bees to override the pause restriction here somehow
         public override bool CanMove => !PartyParrotManager.Instance.IsPaused && (null == _actorAnimator || !_actorAnimator.IsAnimating);
 
 #region Unity Lifecycle
@@ -211,11 +210,16 @@ namespace pdxpartyparrot.Core.Actors
         {
         }
 
-        public void MovePosition(Vector3 position)
+        public override void Teleport(Vector3 position)
         {
             //Debug.Log($"Teleporting actor {Owner.Id} to {position} (interpolated)");
-
             _rigidbody.MovePosition(position);
+        }
+
+        public override void MoveTowards(Vector3 position, float speed, float dt)
+        {
+            Vector3 newPosition = Vector3.MoveTowards(Position, position, speed * dt);
+            _rigidbody.MovePosition(newPosition);
         }
 
         public void MoveRotation(float angle)

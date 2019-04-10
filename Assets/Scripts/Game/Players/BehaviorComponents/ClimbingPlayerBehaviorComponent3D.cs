@@ -9,9 +9,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Profiling;
 
-namespace pdxpartyparrot.Game.Actors.BehaviorComponents
+namespace pdxpartyparrot.Game.Players.BehaviorComponents
 {
-    public sealed class ClimbingBehaviorComponent3D : CharacterBehaviorComponent3D
+    public sealed class ClimbingPlayerBehaviorComponent3D : PlayerBehaviorComponent3D
     {
 #region Actions
         public class GrabAction : CharacterBehaviorAction
@@ -266,28 +266,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public override bool OnAnimationMove(Vector2 direction, float dt)
-        {
-            switch(_climbMode)
-            {
-            case ClimbMode.None:
-                return false;
-            case ClimbMode.Climbing:
-                break;
-            case ClimbMode.Hanging:
-                Behavior.DefaultAnimationMove(direction, dt);
-                break;
-            }
-
-            if(null != Behavior.Animator) {
-                Behavior.Animator.SetFloat(Behavior.CharacterBehaviorData.MoveXAxisParam, Behavior.CanMove ? Mathf.Abs(direction.x) : 0.0f);
-                Behavior.Animator.SetFloat(Behavior.CharacterBehaviorData.MoveZAxisParam, Behavior.CanMove ? Mathf.Abs(direction.y) : 0.0f);
-            }
-
-            return true;
-        }
-
-        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
+        public override bool OnAnimationUpdate(float dt)
         {
             if(!IsClimbing) {
                 return false;
@@ -296,18 +275,38 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             switch(_climbMode)
             {
             case ClimbMode.Climbing:
-                Vector3 velocity = Behavior.Rotation3D * (direction * _data.ClimbSpeed);
-                if(_groundChecker.DidGroundCheckCollide && velocity.y < 0.0f) {
-                    velocity.y = 0.0f;
-                }
-                Behavior.MovePosition(Behavior.Position + velocity * dt);
-                break;
             case ClimbMode.Hanging:
-                Behavior.DefaultPhysicsMove(direction, _data.HangSpeed, dt);
                 break;
             }
 
+            if(null != Behavior.Animator) {
+                Behavior.Animator.SetFloat(Behavior.CharacterBehaviorData.MoveXAxisParam, Behavior.CanMove ? Mathf.Abs(PlayerBehavior.MoveDirection.x) : 0.0f);
+                Behavior.Animator.SetFloat(Behavior.CharacterBehaviorData.MoveZAxisParam, Behavior.CanMove ? Mathf.Abs(PlayerBehavior.MoveDirection.y) : 0.0f);
+            }
+
             return true;
+        }
+
+        public override bool OnPhysicsUpdate(float dt)
+        {
+            if(!IsClimbing) {
+                return false;
+            }
+
+            switch(_climbMode)
+            {
+            case ClimbMode.Climbing:
+                Vector3 velocity = Behavior.Rotation3D * (PlayerBehavior.MoveDirection * _data.ClimbSpeed);
+                if(_groundChecker.DidGroundCheckCollide && velocity.y < 0.0f) {
+                    velocity.y = 0.0f;
+                }
+                Behavior.Teleport(Behavior.Position + velocity * dt);
+                return true;
+            case ClimbMode.Hanging:
+                break;
+            }
+
+            return false;
         }
 
         public override bool OnPerformed(CharacterBehaviorAction action)
@@ -614,7 +613,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CheckWrapLeft()
         {
-            if(null == _rightHandHitResult || Behavior.MoveDirection.x >= 0.0f) {
+            if(null == _rightHandHitResult || PlayerBehavior.MoveDirection.x >= 0.0f) {
                 return false;
             }
 
@@ -643,7 +642,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CheckRotateLeft()
         {
-            if(null == _rightHandHitResult || Behavior.MoveDirection.x >= 0.0f) {
+            if(null == _rightHandHitResult || PlayerBehavior.MoveDirection.x >= 0.0f) {
                 return false;
             }
 
@@ -672,7 +671,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CheckWrapRight()
         {
-            if(null == _leftHandHitResult || Behavior.MoveDirection.x <= 0.0f) {
+            if(null == _leftHandHitResult || PlayerBehavior.MoveDirection.x <= 0.0f) {
                 return false;
             }
 
@@ -702,7 +701,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CheckRotateRight()
         {
-            if(null == _leftHandHitResult || Behavior.MoveDirection.x <= 0.0f) {
+            if(null == _leftHandHitResult || PlayerBehavior.MoveDirection.x <= 0.0f) {
                 return false;
             }
 
@@ -732,7 +731,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CheckClimbUp()
         {
-            if(Behavior.MoveDirection.y <= 0.0f) {
+            if(PlayerBehavior.MoveDirection.y <= 0.0f) {
                 return false;
             }
 
@@ -756,7 +755,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
 
         private bool CheckHang()
         {
-            if((!CanHangLeft && !CanHangRight) || Behavior.MoveDirection.y <= 0.0f) {
+            if((!CanHangLeft && !CanHangRight) || PlayerBehavior.MoveDirection.y <= 0.0f) {
                 return false;
             }
 

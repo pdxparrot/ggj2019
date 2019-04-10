@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace pdxpartyparrot.Core.Loading
+﻿namespace pdxpartyparrot.Core.Loading
 {
-    [Serializable]
     public class LoadStatus
     {
         public float LoadPercent { get; }

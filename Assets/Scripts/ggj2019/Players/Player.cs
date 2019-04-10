@@ -13,7 +13,6 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    [RequireComponent(typeof(Swarm))]
     [RequireComponent(typeof(SpineAnimationHelper))]
     [RequireComponent(typeof(SpineSkinHelper))]
     public sealed class Player : Player2D
@@ -32,13 +31,16 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public Interactables Interactables => _interactables;
 
+        [SerializeField]
+        private Swarm _swarm;
+
+        public Swarm Swarm => _swarm;
+
         public bool IsDead => GamePlayerBehavior.IsDead;
 
         public bool CanGather => !GamePlayerBehavior.IsDead && (GamePlayerBehavior.GamePlayerBehaviorData.MaxPollen < 0 || GamePlayerBehavior.PollenCount < GamePlayerBehavior.GamePlayerBehaviorData.MaxPollen);
 
         public int SkinIndex => NetworkPlayer.playerControllerId;
-
-        public Swarm Swarm { get; private set; }
 
         private SpineSkinHelper _skinHelper;
 
@@ -50,7 +52,6 @@ namespace pdxpartyparrot.ggj2019.Players
             Assert.IsTrue(PlayerBehavior is PlayerBehavior);
             Assert.IsTrue(PlayerDriver is PlayerDriver);
 
-            Swarm = GetComponent<Swarm>();
             _skinHelper = GetComponent<SpineSkinHelper>();
         }
 #endregion

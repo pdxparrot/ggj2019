@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Actors
 {
-    public class CharacterBehavior3D : ActorBehavior3D
+    public abstract class CharacterBehavior3D : ActorBehavior3D
     {
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
 
@@ -125,9 +125,7 @@ namespace pdxpartyparrot.Game.Actors
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             rb.detectCollisions = true;
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-
-            // we run the follow cam in FixedUpdate() and interpolation interferes with that
-            rb.interpolation = RigidbodyInterpolation.None;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
         }
 
 #region Components
@@ -154,14 +152,13 @@ namespace pdxpartyparrot.Game.Actors
             }
         }
 
-        public bool RunOnComponents(Func<CharacterBehaviorComponent, bool> f)
+        public void RunOnComponents(Func<CharacterBehaviorComponent, bool> f)
         {
-            foreach(var component in _components) {
+            foreach(CharacterBehaviorComponent3D component in _components) {
                 if(f(component)) {
-                    return true;
+                    return;
                 }
             }
-            return false;
         }
 #endregion
 
@@ -182,66 +179,22 @@ namespace pdxpartyparrot.Game.Actors
         }
 #endregion
 
-        public override void AnimationMove(Vector2 direction, float dt)
+        protected override void AnimationUpdate(float dt)
         {
             if(!CanMove) {
                 return;
             }
 
-            if(RunOnComponents(c => c.OnAnimationMove(direction, dt))) {
-                return;
-            }
-
-            DefaultAnimationMove(direction, dt);
+            RunOnComponents(c => c.OnAnimationUpdate(dt));
         }
 
-        public virtual void DefaultAnimationMove(Vector2 direction, float dt)
-        {
-            // align with the movement
-            Vector3 forward = new Vector3(direction.x, 0.0f, direction.y);
-            if(forward.sqrMagnitude > float.Epsilon) {
-                Owner.transform.forward = forward;
-            }
-
-            if(null != Animator) {
-                Animator.SetFloat(CharacterBehaviorData.MoveXAxisParam, CanMove ? Mathf.Abs(direction.x) : 0.0f);
-                Animator.SetFloat(CharacterBehaviorData.MoveZAxisParam, CanMove ? Mathf.Abs(direction.y) : 0.0f);
-            }
-        }
-
-        public override void PhysicsMove(Vector2 direction, float dt)
+        protected override void PhysicsUpdate(float dt)
         {
             if(!CanMove) {
                 return;
             }
 
-            float speed = CharacterBehaviorData.MoveSpeed;
-
-            if(RunOnComponents(c => c.OnPhysicsMove(direction, speed, dt))) {
-                return;
-            }
-
-            if(!CharacterBehaviorData.AllowAirControl && IsFalling) {
-                return;
-            }
-
-            DefaultPhysicsMove(direction, speed, dt);
-        }
-
-        public virtual void DefaultPhysicsMove(Vector2 direction, float speed, float dt)
-        {
-            Vector3 fixedDirection = new Vector3(direction.x, 0.0f, direction.y);
-
-            Vector3 velocity = fixedDirection * speed;
-            Quaternion rotation = Owner.Behavior.Rotation3D;
-            velocity = rotation * velocity;
-
-            if(IsKinematic) {
-                MovePosition(Position + velocity * dt);
-            } else {
-                velocity.y = Velocity.y;
-                Velocity = velocity;
-            }
+            RunOnComponents(c => c.OnPhysicsUpdate(dt));
         }
 
         public virtual void Jump(float height)

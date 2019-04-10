@@ -40,7 +40,6 @@ namespace pdxpartyparrot.Game.Players
 
         public PlayerDriver PlayerDriver => _driver;
 
-        [CanBeNull]
         public IPlayerBehavior PlayerBehavior => (PlayerBehavior2D)Behavior;
 #endregion
 

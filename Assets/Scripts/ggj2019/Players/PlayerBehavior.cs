@@ -9,7 +9,7 @@ using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Actors.BehaviorComponents;
+using pdxpartyparrot.Game.Players.BehaviorComponents;
 using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
@@ -21,7 +21,7 @@ using UnityEngine.Networking;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    [RequireComponent(typeof(BoundsBehaviorComponent2D))]
+    [RequireComponent(typeof(BoundsPlayerBehaviorComponent2D))]
     public sealed class PlayerBehavior : Game.Players.PlayerBehavior2D
     {
         public Data.PlayerBehaviorData GamePlayerBehaviorData => (Data.PlayerBehaviorData)PlayerBehaviorData;
@@ -104,7 +104,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             base.Initialize(behaviorData);
 
-            BoundsBehaviorComponent2D boundsBehavior = GetBehaviorComponent<BoundsBehaviorComponent2D>();
+            BoundsPlayerBehaviorComponent2D boundsBehavior = GetBehaviorComponent<BoundsPlayerBehaviorComponent2D>();
             boundsBehavior.Initialize(GameManager.Instance.GameGameData);
         }
 
@@ -134,9 +134,9 @@ namespace pdxpartyparrot.ggj2019.Players
             viewerShakeEffect.Viewer = GamePlayer.Viewer;
         }
 
-        public override void DefaultAnimationMove(Vector2 direction, float dt)
+        protected override void AnimationUpdate(float dt)
         {
-            base.DefaultAnimationMove(direction, dt);
+            base.AnimationUpdate(dt);
 
             if(IsMoving) {
                 SetFlyingAnimation();

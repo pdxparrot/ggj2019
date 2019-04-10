@@ -1,5 +1,7 @@
 ﻿using pdxpartyparrot.Game.Data;
 
+using UnityEngine;
+
 namespace pdxpartyparrot.Game.Players
 {
     public interface IPlayerBehavior
@@ -7,5 +9,9 @@ namespace pdxpartyparrot.Game.Players
         PlayerBehaviorData PlayerBehaviorData { get; }
 
         IPlayer Player { get; }
+
+        Vector2 MoveDirection { get; }
+
+        void SetMoveDirection(Vector2 moveDirection);
     }
 }

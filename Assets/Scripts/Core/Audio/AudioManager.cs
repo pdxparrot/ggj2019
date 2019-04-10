@@ -247,7 +247,7 @@ namespace pdxpartyparrot.Core.Audio
 #endregion
 
 #region Music
-        // Plays a music clip on the first audio source at no crossfade
+        // plays a music clip on the first audio source at no crossfade
         public void PlayMusic(AudioClip musicAudioClip)
         {
             StopAllMusic();
@@ -258,7 +258,7 @@ namespace pdxpartyparrot.Core.Audio
             MusicCrossFade = 0.0f;
         }
 
-        // Plays a music clip on the second audio source at full crossfade
+        // plays a music clip on the second audio source at full crossfade
         public void PlayMusic2(AudioClip musicAudioClip)
         {
             StopAllMusic();
@@ -269,7 +269,7 @@ namespace pdxpartyparrot.Core.Audio
             MusicCrossFade = 1.0f;
         }
 
-        // Plays 2 music clips at 50% crossfade
+        // plays 2 music clips at 50% crossfade
         public void PlayMusic(AudioClip music1AudioClip, AudioClip music2AudioClip)
         {
             StopAllMusic();
@@ -348,6 +348,7 @@ namespace pdxpartyparrot.Core.Audio
             }
         }
 
+        // TODO: not 100% sure this works correctly
         private IEnumerator MusicTransitionRoutine(float targetCrossfade, float seconds, Action onComplete)
         {
             if(seconds <= 0.0f) {

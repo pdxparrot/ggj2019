@@ -32,9 +32,9 @@ namespace pdxpartyparrot.Core.Effects.EffectTriggerComponents
         {
             _timeRemaining = _transitionTime;
             _difference = new Color(Mathf.Abs(_fadeTo.r - _skinHelper.Color.r),
-                              Mathf.Abs(_fadeTo.g - _skinHelper.Color.g),
-                              Mathf.Abs(_fadeTo.b - _skinHelper.Color.b),
-                              Mathf.Abs(_fadeTo.a - _skinHelper.Color.a));
+                                    Mathf.Abs(_fadeTo.g - _skinHelper.Color.g),
+                                    Mathf.Abs(_fadeTo.b - _skinHelper.Color.b),
+                                    Mathf.Abs(_fadeTo.a - _skinHelper.Color.a));
         }
 
         public override void OnStop()

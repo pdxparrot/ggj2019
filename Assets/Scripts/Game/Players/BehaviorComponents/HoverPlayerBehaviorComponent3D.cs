@@ -1,14 +1,15 @@
 ﻿using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Actors.BehaviorComponents;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;
 
-namespace pdxpartyparrot.Game.Actors.BehaviorComponents
+namespace pdxpartyparrot.Game.Players.BehaviorComponents
 {
     [RequireComponent(typeof(JumpBehaviorComponent3D))]
-    public sealed class HoverBehaviorComponent3D : CharacterBehaviorComponent3D
+    public sealed class HoverPlayerBehaviorComponent3D : PlayerBehaviorComponent3D
     {
 #region Actions
         public class HoverAction : CharacterBehaviorAction
@@ -87,7 +88,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public override bool OnPhysicsMove(Vector2 direction, float speed, float dt)
+        public override bool OnPhysicsUpdate(float dt)
         {
             if(!IsHovering) {
                 return false;
@@ -97,9 +98,7 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
             // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
             Behavior.AddForce(acceleration, ForceMode.Force);
 
-            Behavior.DefaultPhysicsMove(direction, _data.HoverMoveSpeed, dt);
-
-            return true;
+            return false;
         }
 
         public override bool OnStarted(CharacterBehaviorAction action)

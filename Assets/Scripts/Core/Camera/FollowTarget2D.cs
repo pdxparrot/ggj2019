@@ -2,6 +2,7 @@
 
 namespace pdxpartyparrot.Core.Camera
 {
+    // TODO: rename FollowCameraTarget2D
     public class FollowTarget2D : FollowTarget
     {
         [SerializeField]

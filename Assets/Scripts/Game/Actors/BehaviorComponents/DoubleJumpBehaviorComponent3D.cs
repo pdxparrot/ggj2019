@@ -39,7 +39,8 @@ namespace pdxpartyparrot.Game.Actors.BehaviorComponents
         }
 #endregion
 
-        public void Reset()
+        // TODO: this is never called?
+        public void ResetComponent()
         {
             _doubleJumpCount = 0;
         }

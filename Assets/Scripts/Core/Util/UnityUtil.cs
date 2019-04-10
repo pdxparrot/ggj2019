@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace pdxpartyparrot.Core.Util
+﻿namespace pdxpartyparrot.Core.Util
 {
     public static class UnityUtil
     {
@@ -9,7 +7,7 @@ namespace pdxpartyparrot.Core.Util
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+            UnityEngine.Application.Quit();
 #endif
         }
     }

@@ -9,23 +9,23 @@ namespace pdxpartyparrot.Game.World
 {
     public class CitySpawner : MonoBehaviour
     {
-	    [Serializable]
+        [Serializable]
         public struct BlockPrefab
         {
-		    public GameObject prefab;
-		    public int frequency;
-	    }
+            public GameObject prefab;
+            public int frequency;
+        }
 
         [SerializeField]
         private bool _generateOnAwake = true;
 
-	    [SerializeField]
+        [SerializeField]
         private List<BlockPrefab> _blockPrefabs;
 
-	    [SerializeField]
+        [SerializeField]
         private int _blockDimensions;
 
-	    [SerializeField]
+        [SerializeField]
         private Vector2Int _citySize;
 
         [SerializeField]
@@ -47,12 +47,12 @@ namespace pdxpartyparrot.Game.World
             }
         }
 
-	    private void Start()
+        private void Start()
         {
             if(_generateOnAwake) {
                 Generate(false);
             }
-	    }
+        }
 #endregion
 
         public void Generate(bool fromEditorGenerate)
@@ -65,43 +65,43 @@ namespace pdxpartyparrot.Game.World
             Spawn(fromEditorGenerate);
         }
 
-        public void Reset(bool fromEditorReset)
+        public void ResetSpawner(bool fromEditorReset)
         {
             DestroyRoot(true);
         }
 
-	    private GameObject RandomBlock()
+        private GameObject RandomBlock()
         {
-		    var rnd = _random.NextDouble(0.0f, _maxFrequency - 1.0f);
-		    int i = 0;
+            var rnd = _random.NextDouble(0.0f, _maxFrequency - 1.0f);
+            int i = 0;
 
-		    for(; i < _blockPrefabs.Count; ++i) {
-			    rnd -= _blockPrefabs[i].frequency;
-			    if(rnd < 0.0f)
-				    break;
-		    }
+            for(; i < _blockPrefabs.Count; ++i) {
+                rnd -= _blockPrefabs[i].frequency;
+                if(rnd < 0.0f)
+                    break;
+            }
 
-		    return _blockPrefabs[i].prefab;
-	    }
+            return _blockPrefabs[i].prefab;
+        }
 
         private void Spawn(bool fromEditorGenerate)
         {
             DestroyRoot(fromEditorGenerate);
 
-		    Vector2Int max = new Vector2Int(_citySize.x, _citySize.y);
-		    Vector2Int min = new Vector2Int(-max.x, -max.y);
+            Vector2Int max = new Vector2Int(_citySize.x, _citySize.y);
+            Vector2Int min = new Vector2Int(-max.x, -max.y);
 
             _root = new GameObject("City");
 
-		    for(int x = min.x; x <= max.x; ++x) {
-			    for(int y = min.y; y <= max.y; ++y) {
+            for(int x = min.x; x <= max.x; ++x) {
+                for(int y = min.y; y <= max.y; ++y) {
                     Vector3 pos = new Vector3(x * _blockDimensions, 0,
                                               y * _blockDimensions);
 
                     Spawn(RandomBlock(), pos, fromEditorGenerate);
-			    }
-		    }
-	    } 
+                }
+            }
+        } 
 
         private GameObject Spawn(GameObject p, Vector3 pos, bool fromEditorGenerate)
         {
