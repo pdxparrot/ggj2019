@@ -1,6 +1,6 @@
 ﻿using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Camera;
-using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Characters.Players;
 
 namespace pdxpartyparrot.ggj2019.Camera
 {

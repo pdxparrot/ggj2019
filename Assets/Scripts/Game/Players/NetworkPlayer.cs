@@ -5,6 +5,7 @@ using System;
 using JetBrains.Annotations;
 
 using pdxpartyparrot.Core.Network;
+using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.State;
 
 using UnityEngine;

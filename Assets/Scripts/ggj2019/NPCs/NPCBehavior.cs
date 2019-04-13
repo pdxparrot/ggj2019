@@ -2,8 +2,8 @@
 
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.NPCs;
-using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Characters.NPCs;
+using pdxpartyparrot.Game.Characters.Players;
 
 using UnityEngine;
 

@@ -4,7 +4,7 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Data;
 

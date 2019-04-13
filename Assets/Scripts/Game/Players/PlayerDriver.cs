@@ -2,6 +2,7 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
 using pdxpartyparrot.Core.Util;
+using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.Data;
 
 using UnityEngine;

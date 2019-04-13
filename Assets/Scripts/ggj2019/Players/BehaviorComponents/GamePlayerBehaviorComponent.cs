@@ -1,4 +1,4 @@
-﻿using pdxpartyparrot.Game.Players.BehaviorComponents;
+﻿using pdxpartyparrot.Game.Characters.Players.BehaviorComponents;
 
 namespace pdxpartyparrot.ggj2019.Players.BehaviorComponents
 {

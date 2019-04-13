@@ -3,7 +3,7 @@ using System;
 using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Game.Interactables;
-using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.NPCs;

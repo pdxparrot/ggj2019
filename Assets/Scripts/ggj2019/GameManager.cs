@@ -10,7 +10,7 @@ using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
-using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.Game.World;

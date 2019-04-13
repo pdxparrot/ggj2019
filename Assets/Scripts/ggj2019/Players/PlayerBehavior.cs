@@ -9,7 +9,8 @@ using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Players.BehaviorComponents;
+using pdxpartyparrot.Game.Characters.Players;
+using pdxpartyparrot.Game.Characters.Players.BehaviorComponents;
 using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
@@ -22,7 +23,7 @@ using UnityEngine.Networking;
 namespace pdxpartyparrot.ggj2019.Players
 {
     [RequireComponent(typeof(BoundsPlayerBehaviorComponent2D))]
-    public sealed class PlayerBehavior : Game.Players.PlayerBehavior2D
+    public sealed class PlayerBehavior : PlayerBehavior2D
     {
         public Data.PlayerBehaviorData GamePlayerBehaviorData => (Data.PlayerBehaviorData)PlayerBehaviorData;
 

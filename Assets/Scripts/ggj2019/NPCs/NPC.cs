@@ -2,7 +2,8 @@
 
 using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.ObjectPool;
-using pdxpartyparrot.Game.NPCs;
+using pdxpartyparrot.Game.Characters.NPCs;
+using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
