@@ -56,7 +56,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private Bee BeeNPC => (Bee)NPC;
 
-        public BeeData BeeData => (BeeData)NPCBehaviorData;
+        public BeeBehaviorData BeeBehaviorData => (BeeBehaviorData)NPCBehaviorData;
 
         public override void Kill(IPlayer player)
         {
@@ -97,7 +97,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             Vector3 swarmPosition = _targetSwarm.Center.position;
             Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
-            MoveTowards(targetPosition, BeeData.SwarmSpeed, dt);
+            MoveTowards(targetPosition, BeeBehaviorData.SwarmSpeed, dt);
 
             base.PhysicsUpdate(dt);
         }
@@ -132,21 +132,21 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 PartyParrotManager.Instance.Random.NextSingle(-_swarmOffsetRadius, _swarmOffsetRadius),
                 PartyParrotManager.Instance.Random.NextSingle(-_swarmOffsetRadius, _swarmOffsetRadius)
             );
-            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
+            TimeManager.Instance.RunAfterDelay(BeeBehaviorData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
         }
 
 #region Animation
         private void SetIdleAnimation()
         {
             if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(BeeData.IdleAnimationName, true);
+                AnimationHelper.SetAnimation(BeeBehaviorData.IdleAnimationName, true);
             }
         }
 
         private void SetFlyingAnimation()
         {
             if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(BeeData.FlyingAnimationName, true);
+                AnimationHelper.SetAnimation(BeeBehaviorData.FlyingAnimationName, true);
             }
         }
 #endregion
@@ -162,7 +162,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             SetState(BeeState.Idle);
 
-            TimeManager.Instance.RunAfterDelay(BeeData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
+            TimeManager.Instance.RunAfterDelay(BeeBehaviorData.OffsetUpdateRange.GetRandomValue(), UpdateSwarmOffset);
         }
 
         public override void OnDeSpawn()

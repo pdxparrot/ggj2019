@@ -36,7 +36,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void Initialize(Guid id, ActorBehaviorData data)
         {
-            Assert.IsTrue(data is BeetleData);
+            Assert.IsTrue(data is BeetleBehaviorData);
 
             base.Initialize(id, data);
         }

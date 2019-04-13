@@ -40,7 +40,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private Flower FlowerNPC => (Flower)NPC;
 
-        public FlowerData FlowerData => (FlowerData)NPCBehaviorData;
+        public FlowerBehaviorData FlowerBehaviorData => (FlowerBehaviorData)NPCBehaviorData;
 
 #region Unity Lifecycle
         protected override void Update()
@@ -79,17 +79,17 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 }
             }
 
-            _pollenSpawnTimer.Start(FlowerData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
+            _pollenSpawnTimer.Start(FlowerBehaviorData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
         }
 
         private bool DoSpawnPollen()
         {
-            if(!_canSpawnPollen || ActorManager.Instance.ActorCount<Pollen>() >= FlowerData.MaxPollen) {
+            if(!_canSpawnPollen || ActorManager.Instance.ActorCount<Pollen>() >= FlowerBehaviorData.MaxPollen) {
                 return false;
             }
 
             Pollen pollen = ObjectPoolManager.Instance.GetPooledObject<Pollen>("pollen");
-            FlowerNPC.SpawnPollen(pollen, FlowerData.PollenData);
+            FlowerNPC.SpawnPollen(pollen, FlowerBehaviorData.PollenData);
 
             return true;
         }
@@ -108,7 +108,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             FlowerNPC.AcquireBeetleSpawnpoint(true);
             _canSpawnPollen = false;
 
-            _pollen = FlowerData.Pollen;
+            _pollen = FlowerBehaviorData.Pollen;
         }
 
         protected override void OnSpawnComplete()
@@ -120,10 +120,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _canSpawnPollen = true;
 
             if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(FlowerData.IdleAnimationName, true);
+                AnimationHelper.SetAnimation(FlowerBehaviorData.IdleAnimationName, true);
             }
 
-            _pollenSpawnTimer.Start(FlowerData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
+            _pollenSpawnTimer.Start(FlowerBehaviorData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
         }
 
         public override void OnDeSpawn()

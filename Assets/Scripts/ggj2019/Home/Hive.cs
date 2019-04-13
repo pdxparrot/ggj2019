@@ -1,4 +1,4 @@
-﻿#pragma warning disable 0618    // disable obsolete warning for now
+#pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
 
@@ -168,7 +168,7 @@ namespace pdxpartyparrot.ggj2019.Home
             SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
 
             Bee bee = ObjectPoolManager.Instance.GetPooledObject<Bee>("bees", _beeContainer.transform);
-            spawnPoint.Spawn(bee, Guid.NewGuid(), GameManager.Instance.GameGameData.BeeData);
+            spawnPoint.Spawn(bee, Guid.NewGuid(), GameManager.Instance.GameGameData.BeeBehaviorData);
 
             bee.SetDefaultSkin();
             //bee.SetRandomSkin();

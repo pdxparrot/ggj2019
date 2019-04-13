@@ -45,17 +45,25 @@ namespace pdxpartyparrot.ggj2019.Data
 
         [Space(10)]
 
+#region Hive
+        [Header("Hive")]
+
         [SerializeField]
         private HiveBehaviorData _hiveBehaviorData;
 
         public HiveBehaviorData HiveBehaviorData => _hiveBehaviorData;
+#endregion
 
         [Space(10)]
 
-        [SerializeField]
-        private BeeData _beeData;
+#region Bees
+        [Header("Bees")]
 
-        public BeeData BeeData => _beeData;
+        [SerializeField]
+        [FormerlySerializedAs("_beeData")]
+        private BeeBehaviorData _beeBehaviorData;
+
+        public BeeBehaviorData BeeBehaviorData => _beeBehaviorData;
 
         [SerializeField]
         private Bee _beePrefab;
@@ -66,18 +74,17 @@ namespace pdxpartyparrot.ggj2019.Data
         private int _beePoolSize = 20;
 
         public int BeePoolSize => _beePoolSize;
-
-        [Space(10)]
-
-        [SerializeField]
-        private PollenBehaviorData _pollenBehaviorData;
-
-        public PollenBehaviorData PollenBehaviorData => _pollenBehaviorData;
+#endregion
 
         [Space(10)]
 
 #region Pollen
         [Header("Pollen")]
+
+        [SerializeField]
+        private PollenBehaviorData _pollenBehaviorData;
+
+        public PollenBehaviorData PollenBehaviorData => _pollenBehaviorData;
 
         [SerializeField]
         private Pollen _pollenPrefab;

@@ -5,9 +5,9 @@ using UnityEngine.Serialization;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
-    [CreateAssetMenu(fileName="BeetleData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Beetle Data")]
+    [CreateAssetMenu(fileName="BeetleBehaviorData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/BeetleBehavior Data")]
     [Serializable]
-    public sealed class BeetleData : EnemyData
+    public sealed class BeetleBehaviorData : EnemyBehaviorData
     {
         [Space(10)]
 

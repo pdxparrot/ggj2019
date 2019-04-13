@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
-    [CreateAssetMenu(fileName="BeeData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Bee Data")]
+    [CreateAssetMenu(fileName="BeeBehaviorData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/BeeBehavior Data")]
     [Serializable]
-    public sealed class BeeData : NPCBehaviorData
+    public sealed class BeeBehaviorData : NPCBehaviorData
     {
         [Space(10)]
 

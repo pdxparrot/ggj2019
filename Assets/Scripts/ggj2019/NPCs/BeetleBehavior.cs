@@ -53,7 +53,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private Beetle BeetleNPC => (Beetle)NPC;
 
-        public BeetleData BeetleData => (BeetleData)NPCBehaviorData;
+        public BeetleBehaviorData BeetleBehaviorData => (BeetleBehaviorData)NPCBehaviorData;
 
 #region Unity Lifecycle
         protected override void Update()
@@ -127,7 +127,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            _attackCooldownTimer.Start(BeetleData.AttackCooldown);
+            _attackCooldownTimer.Start(BeetleBehaviorData.AttackCooldown);
             SetState(BeetleState.Idle);
         }
 #endregion
@@ -136,7 +136,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         private void SetIdleAnimation()
         {
             if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(BeetleData.IdleAnimation, true);
+                AnimationHelper.SetAnimation(BeetleBehaviorData.IdleAnimation, true);
             }
         }
 #endregion
@@ -152,7 +152,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             SetState(BeetleState.Idle);
 
-            _attackCooldownTimer.Start(BeetleData.AttackCooldown);
+            _attackCooldownTimer.Start(BeetleBehaviorData.AttackCooldown);
         }
 
         public override void OnDeSpawn()

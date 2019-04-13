@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
-    [CreateAssetMenu(fileName="NPCWaspData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/Wasp Data")]
+    [CreateAssetMenu(fileName="WaspBehaviorData", menuName="pdxpartyparrot/ggj2019/Data/NPCs/WaspBehavior Data")]
     [Serializable]
-    public sealed class WaspData : EnemyData
+    public sealed class WaspBehaviorData : EnemyBehaviorData
     {
         [Space(10)]
 

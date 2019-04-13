@@ -50,7 +50,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public override void Initialize(Guid id, ActorBehaviorData data)
         {
-            Assert.IsTrue(data is FlowerData);
+            Assert.IsTrue(data is FlowerBehaviorData);
 
             base.Initialize(id, data);
         }

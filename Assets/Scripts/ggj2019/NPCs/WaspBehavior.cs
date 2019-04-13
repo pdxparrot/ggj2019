@@ -79,7 +79,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         private Wasp WaspNPC => (Wasp)NPC;
 
-        public WaspData WaspData => (WaspData)NPCBehaviorData;
+        public WaspBehaviorData WaspBehaviorData => (WaspBehaviorData)NPCBehaviorData;
 
 #region Unity Lifecycle
         protected override void Update()
@@ -130,7 +130,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            _splinePosition += WaspData.MoveSpeed * dt;
+            _splinePosition += WaspBehaviorData.MoveSpeed * dt;
 
             float t = _splinePosition / _splineLength;
 
@@ -162,14 +162,14 @@ namespace pdxpartyparrot.ggj2019.NPCs
         private void SetIdleAnimation()
         {
             if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(WaspData.IdleAnimationName, true);
+                AnimationHelper.SetAnimation(WaspBehaviorData.IdleAnimationName, true);
             }
         }
 
         private void SetFlyingAnimation()
         {
             if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(WaspData.FlyingAnimationName, true);
+                AnimationHelper.SetAnimation(WaspBehaviorData.FlyingAnimationName, true);
             }
         }
 #endregion
@@ -193,7 +193,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 return;
             }
 
-            _attackCooldownTimer.Start(WaspData.AttackCooldown);
+            _attackCooldownTimer.Start(WaspBehaviorData.AttackCooldown);
             SetState(WaspState.Idle);
         }
 #endregion
