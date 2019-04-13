@@ -31,9 +31,9 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private SpawnPoint _spawnpoint;
 
-        public bool IsDead => FlowerBehavior.IsDead;
-
         private FlowerBehavior FlowerBehavior => (FlowerBehavior)GameNPCBehavior;
+
+        public bool IsDead => FlowerBehavior.IsDead;
 
         private SpineSkinHelper _skinHelper;
 
@@ -55,19 +55,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
             base.Initialize(id, data);
         }
 
-        public void SpawnPollen(Pollen pollen, PollenData pollenData)
+        public void SpawnPollen(Pollen pollen, PollenBehaviorData behaviorData)
         {
-// TODO: most of the pollen data right now is actually behavior data
-// so this should swap (we get the behavior data passed in
-// and get the collectable data from the GameManager)
-
-            _pollenSpawn.Spawn(pollen, Guid.NewGuid(), GameManager.Instance.GameGameData.PollenBehaviorData);
+            _pollenSpawn.Spawn(pollen, Guid.NewGuid(), behaviorData);
             pollen.transform.SetParent(GameManager.Instance.PollenContainer.transform);
 
-            pollen.Initialize(pollenData);
-
-            // TODO: this goes away once we move over to the behavior
-            pollen.Initialize(GameManager.Instance.GameGameData.PollenBehaviorData);
+            pollen.Initialize(GameManager.Instance.GameGameData.PollenData);
         }
 
         public void AcquirePollenSpawnpoint(Actor owner)

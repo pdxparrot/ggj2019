@@ -53,17 +53,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Kill(IPlayer player)
-        {
-            // forcefully acquire our spawnpoints while we die
-            FlowerNPC.AcquireBeetleSpawnpoint(true);
-            _canSpawnPollen = false;
-
-            base.Kill(player);
-
-            _isDead = true;
-        }
-
 #region Actions
         private void SpawnPollen()
         {
@@ -74,7 +63,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(DoSpawnPollen()) {
                 _pollen--;
                 if(_pollen <= 0) {
-                    Kill(null);
+                    FlowerNPC.Kill(null);
                     return;
                 }
             }
@@ -89,13 +78,24 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             Pollen pollen = ObjectPoolManager.Instance.GetPooledObject<Pollen>("pollen");
-            FlowerNPC.SpawnPollen(pollen, FlowerBehaviorData.PollenData);
+            FlowerNPC.SpawnPollen(pollen, FlowerBehaviorData.PollenBehaviorData);
 
             return true;
         }
 #endregion
 
 #region Events
+        public override void OnKill(IPlayer player)
+        {
+            // forcefully acquire our spawnpoints while we die
+            FlowerNPC.AcquireBeetleSpawnpoint(true);
+            _canSpawnPollen = false;
+
+            base.OnKill(player);
+
+            _isDead = true;
+        }
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
@@ -153,7 +153,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             if(_pollen <= 0) {
                 GameManager.Instance.FlowerDestroyed(FlowerNPC);
 
-                Kill(null);
+                FlowerNPC.Kill(null);
                 return;
             }
 

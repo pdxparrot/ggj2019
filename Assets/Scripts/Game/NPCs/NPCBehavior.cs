@@ -7,5 +7,9 @@ namespace pdxpartyparrot.Game.NPCs
         NPCBehaviorData NPCBehaviorData { get; }
 
         INPC NPC { get; }
+
+#region Events
+        void OnRecycle();
+#endregion
     }
 }

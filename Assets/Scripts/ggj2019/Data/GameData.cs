@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using pdxpartyparrot.Core.Camera;
 using pdxpartyparrot.Game.Data;
@@ -82,9 +82,9 @@ namespace pdxpartyparrot.ggj2019.Data
         [Header("Pollen")]
 
         [SerializeField]
-        private PollenBehaviorData _pollenBehaviorData;
+        private PollenData _pollenData;
 
-        public PollenBehaviorData PollenBehaviorData => _pollenBehaviorData;
+        public PollenData PollenData => _pollenData;
 
         [SerializeField]
         private Pollen _pollenPrefab;

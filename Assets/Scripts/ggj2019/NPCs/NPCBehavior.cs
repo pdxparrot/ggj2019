@@ -22,7 +22,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public virtual bool IsDead { get; }
 
-        public virtual void Kill([CanBeNull] IPlayer player)
+#region Events
+        public virtual void OnKill([CanBeNull] IPlayer player)
         {
             if(IsDead) {
                 return;
@@ -31,7 +32,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _deathEffect.Trigger(OnDeathComplete);
         }
 
-#region Events
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             // reset this before calling OnSpawn so that we don't interfere

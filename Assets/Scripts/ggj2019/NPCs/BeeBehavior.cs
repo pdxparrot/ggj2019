@@ -58,48 +58,32 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public BeeBehaviorData BeeBehaviorData => (BeeBehaviorData)NPCBehaviorData;
 
-        public override void Kill(IPlayer player)
-        {
-            base.Kill(player);
-
-            SetState(BeeState.Dead);
-        }
-
-        public override void Think(float dt)
-        {
-            base.Think(dt);
-
-            if(null == _targetSwarm) {
-                SetState(BeeState.Idle);
-            }
-        }
-
         protected override void AnimationUpdate(float dt)
         {
-            if(null == _targetSwarm) {
-                base.AnimationUpdate(dt);
+            base.AnimationUpdate(dt);
+
+            if(BeeState.Follow != _state) {
                 return;
             }
 
             Vector3 swarmPosition = _targetSwarm.transform.position;
-            if(null != AnimationHelper) {
-                AnimationHelper.SetFacing(swarmPosition - Position);
-            }
-
-            base.AnimationUpdate(dt);
+            AnimationHelper.SetFacing(swarmPosition - Position);
         }
 
         protected override void PhysicsUpdate(float dt)
         {
-            if((!CanMove && !PartyParrotManager.Instance.IsPaused) || BeeState.Follow != _state) {
+            base.PhysicsUpdate(dt);
+
+            // swarming while the game is paused is kinda cool
+            // so we should allow it
+            bool canMove = CanMove || PartyParrotManager.Instance.IsPaused;
+            if(!canMove || BeeState.Follow != _state) {
                 return;
             }
 
             Vector3 swarmPosition = _targetSwarm.Center.position;
             Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
             MoveTowards(targetPosition, BeeBehaviorData.SwarmSpeed, dt);
-
-            base.PhysicsUpdate(dt);
         }
 
         private void SetState(BeeState state)
@@ -138,27 +122,28 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Animation
         private void SetIdleAnimation()
         {
-            if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(BeeBehaviorData.IdleAnimationName, true);
-            }
+            AnimationHelper.SetAnimation(BeeBehaviorData.IdleAnimationName, true);
         }
 
         private void SetFlyingAnimation()
         {
-            if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(BeeBehaviorData.FlyingAnimationName, true);
-            }
+            AnimationHelper.SetAnimation(BeeBehaviorData.FlyingAnimationName, true);
         }
 #endregion
 
 #region Events
+        public override void OnKill(IPlayer player)
+        {
+            base.OnKill(player);
+
+            SetState(BeeState.Dead);
+        }
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);
 
-            if(null != AnimationHelper) {
-                AnimationHelper.SetFacing(Vector3.zero - transform.position);
-            }
+            AnimationHelper.SetFacing(Vector3.zero - transform.position);
 
             SetState(BeeState.Idle);
 
@@ -182,7 +167,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         public void OnRemoveFromSwarm()
         {
-            Kill(null);
+            BeeNPC.Kill(null);
         }
 #endregion
     }

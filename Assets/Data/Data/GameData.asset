@@ -27,12 +27,11 @@ MonoBehaviour:
     type: 3}
   _viewerPosition: {x: 0, y: 0, z: -10}
   _hiveBehaviorData: {fileID: 11400000, guid: 4df4e3e52ca8fc4479f847fe1e53811d, type: 2}
-  _beeData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
+  _beeBehaviorData: {fileID: 11400000, guid: a0ac685f8f1d6404b973bd086fe8f933, type: 2}
   _beePrefab: {fileID: 5995247377756831436, guid: 92c82d225375bfb4b96857a331637003,
     type: 3}
   _beePoolSize: 10
-  _pollenBehaviorData: {fileID: 11400000, guid: 8e3a438e456e93a43b57978fc765e9a3,
-    type: 2}
+  _pollenData: {fileID: 11400000, guid: 3d7a83e9d9636d1408273be9067c6675, type: 2}
   _pollenPrefab: {fileID: 6248351965066697453, guid: 7c1c873417b7ce844968e893ebb54512,
     type: 3}
   _pollenPoolSize: 10

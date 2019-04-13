@@ -14,6 +14,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         protected bool IsImmune => _immunityTimer.IsRunning;
 
+        private Enemy EnemyNPC => (Enemy)NPC;
+
 #region Unity Lifecycle
         protected override void Update()
         {
@@ -34,7 +36,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             player.Damage();
             if(!IsImmune) {
-                Kill(player);
+                EnemyNPC.Kill(player);
             }
         }
 

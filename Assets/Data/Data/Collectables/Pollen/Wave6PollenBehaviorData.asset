@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61dab43e0f9d2e6499d23479198687b4, type: 3}
-  m_Name: PollenBehaviorData
+  m_Name: Wave6PollenBehaviorData
   m_EditorClassIdentifier: 
   _actorLayer:
     serializedVersion: 2
@@ -19,3 +19,6 @@ MonoBehaviour:
   _drag: 0
   _angularDrag: 0
   _isKinematic: 1
+  _floatSpeed: 1.5
+  _goToHiveSpeed: 5
+  _followPlayerSpeed: 6

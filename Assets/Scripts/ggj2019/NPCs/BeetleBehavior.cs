@@ -28,8 +28,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private BeetleState _state = BeetleState.Idle;
 
-        public bool IsIdle => BeetleState.Idle == _state;
-
         public override bool IsDead => BeetleState.Dead == _state;
 #endregion
 
@@ -66,17 +64,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Kill(IPlayer player)
-        {
-            if(null != player) {
-                GameManager.Instance.BeetleKilled(player);
-            }
-
-            base.Kill(player);
-
-            SetState(BeetleState.Dead);
-        }
-
         public override void Think(float dt)
         {
             if(GameManager.Instance.IsGameOver) {
@@ -101,9 +88,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             case BeetleState.Idle:
                 SetIdleAnimation();
                 break;
-            case BeetleState.Attacking:
-                _attackStartEffect.Trigger(DoAttackFlower);
-                break;
             }
         }
 
@@ -115,6 +99,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             SetState(BeetleState.Attacking);
+
+            _attackStartEffect.Trigger(DoAttackFlower);
         }
 
         private void DoAttackFlower()
@@ -123,7 +109,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             _flower.BeetleHarvest(BeetleNPC);
             if(_flower.IsDead) {
-                Kill(null);
+                BeetleNPC.Kill(null);
                 return;
             }
 
@@ -135,13 +121,22 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #region Animations
         private void SetIdleAnimation()
         {
-            if(null != AnimationHelper) {
-                AnimationHelper.SetAnimation(BeetleBehaviorData.IdleAnimation, true);
-            }
+            AnimationHelper.SetAnimation(BeetleBehaviorData.IdleAnimation, true);
         }
 #endregion
 
 #region Events
+        public override void OnKill(IPlayer player)
+        {
+            if(null != player) {
+                GameManager.Instance.BeetleKilled(player);
+            }
+
+            base.OnKill(player);
+
+            SetState(BeetleState.Dead);
+        }
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);

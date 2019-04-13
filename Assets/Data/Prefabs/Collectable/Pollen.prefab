@@ -272,14 +272,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 801320992511596393}
   _behavior: {fileID: 9034120295645033049}
-  _pickupEffect: {fileID: 8625049844941809157}
-  _collectEffect: {fileID: 1153777927961132368}
-  _oscillator: {fileID: 4619501727304245245}
-  _collectText: {fileID: 1550372849720445680}
-  _followPlayer: {fileID: 0}
-  _hive: {fileID: 0}
-  _state: 0
   _pollenData: {fileID: 0}
+  _collectText: {fileID: 1550372849720445680}
 --- !u!1 &5213612787452115136
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,8 +319,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _owner: {fileID: 6248351965066697453}
   _behaviorData: {fileID: 0}
-  _moveDirection: {x: 0, y: 0}
-  _isMoving: 0
   _spawnEffect: {fileID: 0}
   _respawnEffect: {fileID: 0}
   _despawnEffect: {fileID: 0}
@@ -338,6 +330,12 @@ MonoBehaviour:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
     AngularVelocity: 0
+  _state: 0
+  _pickupEffect: {fileID: 8625049844941809157}
+  _collectEffect: {fileID: 1153777927961132368}
+  _oscillator: {fileID: 4619501727304245245}
+  _followPlayer: {fileID: 0}
+  _hive: {fileID: 0}
 --- !u!1 &8950322107541760296
 GameObject:
   m_ObjectHideFlags: 0

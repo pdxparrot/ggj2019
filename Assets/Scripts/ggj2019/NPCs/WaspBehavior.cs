@@ -32,8 +32,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private WaspState _state = WaspState.Idle;
 
-        public bool IsIdle => WaspState.Idle == _state;
-
         public override bool IsDead => WaspState.Dead == _state;
 #endregion
 
@@ -92,17 +90,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public override void Kill(IPlayer player)
-        {
-            if(null != player) {
-                GameManager.Instance.WaspKilled(player);
-            }
-
-            base.Kill(player);
-
-            SetState(WaspState.Dead);
-        }
-
         public override void Think(float dt)
         {
             if(GameManager.Instance.IsGameOver) {
@@ -126,6 +113,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
         protected override void PhysicsUpdate(float dt)
         {
+            base.PhysicsUpdate(dt);
+
             if(!CanMove || WaspState.FollowingSpline != _state) {
                 return;
             }
@@ -137,8 +126,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
             Vector3 targetPosition = _spline.GetPoint(t);
             targetPosition.y += _splineYOffset;
             Teleport(targetPosition);
-
-            base.PhysicsUpdate(dt);
         }
 
         private void SetState(WaspState state)
@@ -151,9 +138,6 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 break;
             case WaspState.FollowingSpline:
                 SetFlyingAnimation();
-                break;
-            case WaspState.Attacking:
-                _attackStartEffect.Trigger(DoAttackHive);
                 break;
             }
         }
@@ -182,6 +166,8 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             SetState(WaspState.Attacking);
+
+            _attackStartEffect.Trigger(DoAttackHive);
         }
 
         private void DoAttackHive()
@@ -189,7 +175,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             _attackEndEffect.Trigger();
 
             if(_armorToAttack.Damage()) {
-                Kill(null);
+                WaspNPC.Kill(null);
                 return;
             }
 
@@ -199,6 +185,17 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #endregion
 
 #region Events
+        public override void OnKill(IPlayer player)
+        {
+            if(null != player) {
+                GameManager.Instance.WaspKilled(player);
+            }
+
+            base.OnKill(player);
+
+            SetState(WaspState.Dead);
+        }
+
         public override void OnSpawn(SpawnPoint spawnpoint)
         {
             base.OnSpawn(spawnpoint);

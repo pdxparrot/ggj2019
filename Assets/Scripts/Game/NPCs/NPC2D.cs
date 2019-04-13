@@ -22,7 +22,6 @@ namespace pdxpartyparrot.Game.NPCs
 #endregion
 
 #region Behavior
-        [CanBeNull]
         public INPCBehavior NPCBehavior => (NPCBehavior2D)Behavior;
 #endregion
 
@@ -52,6 +51,7 @@ namespace pdxpartyparrot.Game.NPCs
 
         public void Recycle()
         {
+            NPCBehavior.OnRecycle();
             if(null != _pooledObject) {
                 _pooledObject.Recycle();
             }

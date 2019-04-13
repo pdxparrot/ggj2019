@@ -34,6 +34,7 @@ MonoBehaviour:
   _pollenSpawnCooldown:
     _min: 1
     _max: 5
-  _pollenData: {fileID: 11400000, guid: 7281765ef48236b4393e202ad4b1b731, type: 2}
+  _pollenBehaviorData: {fileID: 11400000, guid: 02aab5344efe4e147ab98faef01137d3,
+    type: 2}
   _maxPollen: 3
   _idleAnimationName: flower_idle

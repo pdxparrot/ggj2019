@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace pdxpartyparrot.ggj2019.Data
 {
-    [CreateAssetMenu(fileName="HiveBehaviorData", menuName="pdxpartyparrot/ggj2019/Data/HiveBehavior Data")]
+    [CreateAssetMenu(fileName="HiveBehaviorData", menuName="pdxpartyparrot/ggj2019/Data/Home/HiveBehavior Data")]
     [Serializable]
     public sealed class HiveBehaviorData : ActorBehaviorData
     {

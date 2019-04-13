@@ -1,6 +1,9 @@
-﻿using pdxpartyparrot.Core.Animation;
+﻿using JetBrains.Annotations;
+
+using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Game.NPCs;
+using pdxpartyparrot.Game.Players;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,5 +24,10 @@ namespace pdxpartyparrot.ggj2019.NPCs
             Assert.IsTrue(NPCBehavior is NPCBehavior);
         }
 #endregion
+
+        public void Kill([CanBeNull] IPlayer player)
+        {
+            GameNPCBehavior.OnKill(player);
+        }
     }
 }

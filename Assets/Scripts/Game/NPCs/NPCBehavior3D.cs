@@ -28,5 +28,11 @@ namespace pdxpartyparrot.Game.NPCs
             AngularVelocity3D = Vector3.zero;
         }
 #endregion
+
+#region Events
+        public virtual void OnRecycle()
+        {
+        }
+#endregion
     }
 }

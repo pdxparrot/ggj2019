@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37bb2ae2ca36d8f4fa1f74fe58a3ec90, type: 3}
-  m_Name: Wave_Flower_slow_pollen_spawn
+  m_Name: Wave3Flower
   m_EditorClassIdentifier: 
   _actorLayer:
     serializedVersion: 2
@@ -32,8 +32,9 @@ MonoBehaviour:
   _allowAirControl: 1
   _pollen: 3
   _pollenSpawnCooldown:
-    _min: 10
-    _max: 30
-  _pollenData: {fileID: 11400000, guid: 7281765ef48236b4393e202ad4b1b731, type: 2}
+    _min: 1
+    _max: 20
+  _pollenBehaviorData: {fileID: 11400000, guid: 02aab5344efe4e147ab98faef01137d3,
+    type: 2}
   _maxPollen: 3
   _idleAnimationName: flower_idle
