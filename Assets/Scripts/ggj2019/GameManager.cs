@@ -65,6 +65,8 @@ namespace pdxpartyparrot.ggj2019
 
         public WaveSpawner WaveSpawner { get; private set; }
 
+        public GameObject BeeContainer { get; private set; }
+
         public GameObject PollenContainer { get; private set; }
 
 #region Unity Lifecycle
@@ -100,6 +102,9 @@ namespace pdxpartyparrot.ggj2019
 
             InitWaveSpawner();
 
+            BeeContainer = new GameObject("bees");
+            BeeContainer.transform.SetParent(transform);
+
             PollenContainer = new GameObject("pollen");
             PollenContainer.transform.SetParent(transform);
         }
@@ -111,6 +116,9 @@ namespace pdxpartyparrot.ggj2019
 
             Destroy(PollenContainer);
             PollenContainer = null;
+
+            Destroy(BeeContainer);
+            BeeContainer = null;
 
             DestroyWaveSpawner();
 
@@ -185,7 +193,7 @@ namespace pdxpartyparrot.ggj2019
             // hives are built into the scene :(
             Hive[] hives = FindObjectsOfType<Hive>();
             foreach(Hive hive in hives) {
-                hive.Initialize(GameGameData.HiveBehaviorData);
+                hive.Initialize(Guid.NewGuid(), GameGameData.HiveBehaviorData);
             }
 
             SpawnManager.Instance.Initialize();

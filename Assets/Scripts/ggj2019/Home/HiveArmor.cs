@@ -59,7 +59,7 @@ namespace pdxpartyparrot.ggj2019.Home
                 _health--;
                 if(Health <= 0) {
                     DestroyArmor();
-                    _owner.ArmorDestroyed();
+                    _owner.OnArmorDestroyed();
                     return true;
                 }
 

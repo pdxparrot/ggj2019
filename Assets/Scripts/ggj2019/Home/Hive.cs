@@ -1,17 +1,11 @@
-#pragma warning disable 0618    // disable obsolete warning for now
+﻿#pragma warning disable 0618    // disable obsolete warning for now
 
 using System;
 
 using pdxpartyparrot.Core.Actors;
+using pdxpartyparrot.Core.Data;
 using pdxpartyparrot.Core.DebugMenu;
-using pdxpartyparrot.Core.Effects;
-using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
-using pdxpartyparrot.Core.ObjectPool;
-using pdxpartyparrot.Core.Time;
-using pdxpartyparrot.Core.Util;
-using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.Data;
-using pdxpartyparrot.ggj2019.NPCs;
 using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
@@ -22,29 +16,12 @@ namespace pdxpartyparrot.ggj2019.Home
 {
     public sealed class Hive : Actor2D
     {
+#region Actor
         public override bool IsLocalActor => false;
+#endregion
 
         [SerializeField]
         private HiveArmor[] _armor;
-
-#region Effects
-        [SerializeField]
-        private EffectTrigger _endGameExplosion;
-
-        [SerializeField]
-        private EffectTrigger _endGameExplosionBig;
-
-        [SerializeField]
-        private EffectTrigger _damageEffect;
-#endregion
-
-#region Bee Spawning
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _beeSpawnTimer = new Timer();
-
-        private GameObject _beeContainer;
-#endregion
 
 #region Debug
         [SerializeField]
@@ -54,6 +31,8 @@ namespace pdxpartyparrot.ggj2019.Home
 
         [SerializeField]
         private bool _logBeeSpawn;
+
+        public bool LogBeeSpawn => _logBeeSpawn;
 
         private DebugMenuNode _debugMenuNode;
 #endregion
@@ -69,11 +48,6 @@ namespace pdxpartyparrot.ggj2019.Home
 
             Collider.isTrigger = true;
 
-            _beeContainer = new GameObject("bees");
-
-            GameManager.Instance.GameStartEvent += GameStartEventHandler;
-            GameManager.Instance.GameEndEvent += GameEndEventHandler;
-
             InitDebugMenu();
         }
 
@@ -81,123 +55,53 @@ namespace pdxpartyparrot.ggj2019.Home
         {
             DestroyDebugMenu();
 
-            if(GameManager.HasInstance) {
-                GameManager.Instance.GameEndEvent -= GameEndEventHandler;
-                GameManager.Instance.GameStartEvent -= GameStartEventHandler;
-            }
-
-            Destroy(_beeContainer);
-
             base.OnDestroy();
-        }
-
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            _beeSpawnTimer.Update(dt);
         }
 #endregion
 
-        public void Initialize(HiveBehaviorData behaviorData)
+        public override void Initialize(Guid id, ActorBehaviorData data)
         {
-            Behavior.Initialize(behaviorData);
+            Assert.IsTrue(data is HiveBehaviorData);
+
+            base.Initialize(id, data);
+
+            foreach(HiveArmor armor in _armor) {
+                armor.Initialize();
+            }
         }
 
         public void InitializeClient()
         {
             Assert.IsTrue(NetworkClient.active);
 
-            ViewerShakeEffectTriggerComponent viewerShakeEffect = _damageEffect.GetEffectTriggerComponent<ViewerShakeEffectTriggerComponent>();
-            viewerShakeEffect.Viewer = GameManager.Instance.Viewer;
+            HiveBehavior.InitializeEffects();
         }
 
-        public void ArmorDestroyed()
+        public void CollectPollen(Player player)
         {
-            GameManager.Instance.HiveDamage(this);
+            HiveBehavior.OnCollectPollen(player);
+        }
 
-            _damageEffect.Trigger();
-
-            // check to see if we have any armor left
+#region Events
+        public void OnArmorDestroyed()
+        {
+            bool armorRemaining = false;
             foreach(HiveArmor armor in _armor) {
-                if(armor.Health > 0) {
-                    return;
+                if(armor.Health <= 0) {
+                    continue;
                 }
+
+                armorRemaining = true;
+                break;
             }
 
-            // no armor left, the game is over
-            _endGameExplosion.Trigger(() => {
-                _endGameExplosionBig.Trigger();
-            });
-            GameManager.Instance.EndGame();
-        }
-
-        public void CollectPollen(Players.Player player)
-        {
-            GameManager.Instance.PollenCollected(player);
-
-            Bee bee = DoSpawnBee();
-            if(null == bee) {
-                return;
-            }
-
-            if(null != player && !player.IsDead) {
-                player.AddBeeToSwarm(bee);
-            }
-        }
-
-#region Bee Spawning
-        private void SpawnBee()
-        {
-            if(GameManager.Instance.IsGameOver) {
-                return;
-            }
-
-            int activeBeeCount = ActorManager.Instance.ActorCount<Bee>();
-            if(activeBeeCount < HiveBehavior.HiveBehaviorData.MinBees * PlayerManager.Instance.Players.Count) {
-                DoSpawnBee();
-            } else if(_logBeeSpawn) {
-                Debug.Log($"not spawning bees {activeBeeCount} of {HiveBehavior.HiveBehaviorData.MinBees} active");
-            }
-
-            _beeSpawnTimer.Start(HiveBehavior.HiveBehaviorData.BeeSpawnCooldown, SpawnBee);
-        }
-
-        private Bee DoSpawnBee()
-        {
-            SpawnPoint spawnPoint = SpawnManager.Instance.GetSpawnPoint("bee");
-
-            Bee bee = ObjectPoolManager.Instance.GetPooledObject<Bee>("bees", _beeContainer.transform);
-            spawnPoint.Spawn(bee, Guid.NewGuid(), GameManager.Instance.GameGameData.BeeBehaviorData);
-
-            bee.SetDefaultSkin();
-            //bee.SetRandomSkin();
-
-            return bee;
-        }
-#endregion
-
-#region Event Handlers
-        private void GameStartEventHandler(object sender, EventArgs args)
-        {
-            foreach(HiveArmor armor in _armor) {
-                armor.Initialize();
-            }
-
-            DoSpawnBee();
-
-            _beeSpawnTimer.Start(HiveBehavior.HiveBehaviorData.BeeSpawnCooldown, SpawnBee);
-        }
-
-        private void GameEndEventHandler(object sender, EventArgs args)
-        {
-            _beeSpawnTimer.Stop();
+            HiveBehavior.OnArmorDestroyed(armorRemaining);
         }
 #endregion
 
         private void InitDebugMenu()
         {
-            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "ggj2019.Hive");
+            _debugMenuNode = DebugMenuManager.Instance.AddNode(() => "ggj2019.Home.Hive");
             _debugMenuNode.RenderContentsAction = () => {
                 _immune = GUILayout.Toggle(_immune, "Immune");
                 _logBeeSpawn = GUILayout.Toggle(_logBeeSpawn, "Log Bee Spawn");

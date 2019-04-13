@@ -642,13 +642,6 @@ MonoBehaviour:
   - {fileID: 8225517208215956489}
   - {fileID: 4306621114502026989}
   - {fileID: 5307148196061404249}
-  _endGameExplosion: {fileID: 2206304893020714399}
-  _endGameExplosionBig: {fileID: 2656730975056662005}
-  _damageEffect: {fileID: 2403922866198067095}
-  _beeSpawnTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
   _immune: 0
   _logBeeSpawn: 0
 --- !u!1 &1397474388637695682
@@ -1978,8 +1971,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _owner: {fileID: 466468310539365403}
   _behaviorData: {fileID: 0}
-  _moveDirection: {x: 0, y: 0}
-  _isMoving: 0
   _spawnEffect: {fileID: 0}
   _respawnEffect: {fileID: 0}
   _despawnEffect: {fileID: 0}
@@ -1991,6 +1982,13 @@ MonoBehaviour:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
     AngularVelocity: 0
+  _endGameExplosion: {fileID: 2206304893020714399}
+  _endGameExplosionBig: {fileID: 2656730975056662005}
+  _damageEffect: {fileID: 2403922866198067095}
+  _beeSpawnTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
 --- !u!1 &5758726252704988937
 GameObject:
   m_ObjectHideFlags: 0
