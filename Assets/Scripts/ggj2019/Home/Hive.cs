@@ -49,10 +49,16 @@ namespace pdxpartyparrot.ggj2019.Home
             Collider.isTrigger = true;
 
             InitDebugMenu();
+
+            ActorManager.Instance.Register(this);
         }
 
         protected override void OnDestroy()
         {
+            if(ActorManager.HasInstance) {
+                ActorManager.Instance.Unregister(this);
+            }
+
             DestroyDebugMenu();
 
             base.OnDestroy();
