@@ -5,7 +5,7 @@ namespace pdxpartyparrot.Core.Scripting.Nodes
     public sealed class Start : ScriptNode
     {
         [Output]
-        ScriptNode _next;
+        private ScriptNode _next;
 
         public override void Init(ScriptRunner runner, ScriptNodeData data)
         {

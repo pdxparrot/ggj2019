@@ -5,7 +5,7 @@ using UnityEngine;
 namespace pdxpartyparrot.Core.Util
 {
 // TODO: these can't have setters because we use them in data
-// so we probably need a separate RangeData class for that
+// so we probably need to add a read-only interface for them
 
     // TODO: rename IntRange
     [Serializable]
