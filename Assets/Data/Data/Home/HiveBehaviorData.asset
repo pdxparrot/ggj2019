@@ -21,5 +21,4 @@ MonoBehaviour:
   _isKinematic: 1
   _hiveArmorHealth: 2
   _minBees: 1
-  _beePoolSize: 10
   _beeSpawnCooldown: 5
