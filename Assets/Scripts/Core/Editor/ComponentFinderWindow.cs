@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 using JetBrains.Annotations;
 
-using pdxpartyparrot.Core.Actors;
-using pdxpartyparrot.Core.Effects;
-using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.UI;
+using pdxpartyparrot.Core.Util;
 
 using TMPro;
 
@@ -16,53 +14,40 @@ using UnityEngine.AI;
 
 namespace pdxpartyparrot.Core.Editor
 {
-    // TODO: how do we get Game / game components in here?
-    public class ComponentFinderWindow : Window.EditorWindow
+    public sealed class ComponentFinderWindow : Window.EditorWindow
     {
-        public enum ComponentType
-        {
-            None,
+        private const string BaseNamespace = "pdxpartyparrot";
 
+        private static readonly Type[] BuiltinComponents = {
             // audio
-            AudioSource,
+            typeof(AudioSource),
 
             // physics
-            Rigidbody,
+            typeof(Rigidbody),
 
             // 2d physics
-            Rigidbody2D,
+            typeof(Rigidbody2D),
 
             // colliders
-            Collider,
-            BoxCollider,
-            CapsuleCollider,
-            SphereCollider,
-            MeshCollider,
+            typeof(Collider),
+            typeof(BoxCollider),
+            typeof(CapsuleCollider),
+            typeof(SphereCollider),
+            typeof(MeshCollider),
 
             // 2d colliders
-            Collider2D,
+            typeof(Collider2D),
 
             // particles
-            ParticleSystem,
+            typeof(ParticleSystem),
 
             // ai
-            NavMeshAgent,
-            NavMeshObstacle,
+            typeof(NavMeshAgent),
+            typeof(NavMeshObstacle),
 
             // ui
-            TextMeshPro_Text,
-            ButtonHelper,
-            TextHelper,
-
-            // actors
-            Actor,
-
-            // pooled objects
-            PooledObject,
-
-            // effects
-            EffectTrigger,
-        }
+            typeof(TextMeshProUGUI),
+        };
 
         private struct ComponentLookupResult
         {
@@ -80,24 +65,59 @@ namespace pdxpartyparrot.Core.Editor
 
         public override string Title => "Component Finder";
 
-        private ComponentType _selectedType = ComponentType.None;
+        [CanBeNull]
+        Type SelectedComponentType => _componentTypes[_selectedType];
+
+        private int _selectedType;
+
+        private readonly List<Type> _componentTypes = new List<Type>();
+        private string[] _componentNames = new string[0];
 
         private readonly List<ComponentLookupResult> _selectedPrefabs = new List<ComponentLookupResult>();
 
         private Vector2 _scrollPosition;
 
 #region Unity Lifecycle
+        protected override void Awake()
+        {
+            base.Awake();
+
+            // TODO: this is super inefficient with like 40 loops on loops
+
+            _componentTypes.Add(null);
+            foreach(Type t in BuiltinComponents) {
+                _componentTypes.Add(t);
+            }
+            ReflectionUtils.FindSubClassesOfInNamespace<Component>(_componentTypes, BaseNamespace);
+
+            List<string> componentNames = new List<string>();
+            foreach(Type t in _componentTypes) {
+                if(null == t) {
+                    componentNames.Add("None");
+                    continue;
+                }
+
+                if(t.Namespace.StartsWith(BaseNamespace)) {
+                    componentNames.Add(t.FullName);
+                } else {
+                    componentNames.Add(t.Name);
+                }
+            }
+
+            _componentNames = componentNames.ToArray();
+        }
+
         protected override void OnGUI()
         {
             EditorGUILayout.BeginVertical();
-                // TODO: this should be overrideable
-                _selectedType = (ComponentType)EditorGUILayout.EnumPopup("Component Type:", _selectedType);
+                _selectedType = EditorGUILayout.Popup("Component Type:" ,_selectedType, _componentNames);
 
                 _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
                     foreach(ComponentLookupResult result in _selectedPrefabs) {
                         EditorGUILayout.BeginHorizontal();
                             if(GUIUtils.LayoutButton(result.Prefab.name)) {
                                 Selection.activeGameObject = result.Prefab;
+                                // TODO: how do we open the prefab?
                             }
                             EditorGUILayout.LabelField($"{AssetDatabase.GetAssetPath(result.Prefab)} has {result.Count} instances");
                         EditorGUILayout.EndHorizontal();
@@ -111,56 +131,9 @@ namespace pdxpartyparrot.Core.Editor
         }
 #endregion
 
-        [CanBeNull]
-        protected virtual Type GetSelectedComponentType()
-        {
-            switch(_selectedType)
-            {
-            case ComponentType.None:
-                return null;
-            case ComponentType.AudioSource:
-                return typeof(AudioSource);
-            case ComponentType.Rigidbody:
-                return typeof(Rigidbody);
-            case ComponentType.Rigidbody2D:
-                return typeof(Rigidbody2D);
-            case ComponentType.Collider:
-                return typeof(Collider);
-            case ComponentType.BoxCollider:
-                return typeof(BoxCollider);
-            case ComponentType.CapsuleCollider:
-                return typeof(CapsuleCollider);
-            case ComponentType.SphereCollider:
-                return typeof(SphereCollider);
-            case ComponentType.MeshCollider:
-                return typeof(MeshCollider);
-            case ComponentType.Collider2D:
-                return typeof(Collider2D);
-            case ComponentType.ParticleSystem:
-                return typeof(ParticleSystem);
-            case ComponentType.NavMeshAgent:
-                return typeof(NavMeshAgent);
-            case ComponentType.NavMeshObstacle:
-                return typeof(NavMeshObstacle);
-            case ComponentType.TextMeshPro_Text:
-                return typeof(TextMeshProUGUI);
-            case ComponentType.ButtonHelper:
-                return typeof(ButtonHelper);
-            case ComponentType.TextHelper:
-                return typeof(TextHelper);
-            case ComponentType.Actor:
-                return typeof(Actor);
-            case ComponentType.PooledObject:
-                return typeof(PooledObject);
-            case ComponentType.EffectTrigger:
-                return typeof(EffectTrigger);
-            }
-            return null;
-        }
-
         private void Refresh()
         {
-            Type selectedType = GetSelectedComponentType();
+            Type selectedType = SelectedComponentType;
             if(null == selectedType) {
                 return;
             }
