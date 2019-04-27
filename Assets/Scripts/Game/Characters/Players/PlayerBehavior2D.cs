@@ -51,15 +51,6 @@ namespace pdxpartyparrot.Game.Characters.Players
             _moveDirection = Vector3.zero;
         }
 
-        // TODO: this goes into PlayerMovement2D
-        /*protected override void InitRigidbody(Rigidbody2D rb)
-        {
-            base.InitRigidbody(rb);
-
-            // we run the follow cam in FixedUpdate() and interpolation interferes with that
-            rb.interpolation = RigidbodyInterpolation2D.None;
-        }*/
-
         public void SetMoveDirection(Vector2 moveDirection)
         {
             _moveDirection = Vector2.ClampMagnitude(moveDirection, 1.0f);
