@@ -4,9 +4,9 @@ using pdxpartyparrot.Core.Splines;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.Home;
+using pdxpartyparrot.ggj2019.Players;
 using pdxpartyparrot.ggj2019.World;
 
 using UnityEngine;
@@ -125,7 +125,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             Vector3 targetPosition = _spline.GetPoint(t);
             targetPosition.y += _splineYOffset;
-            Teleport(targetPosition);
+            Movement2D.Teleport(targetPosition);
         }
 
         private void SetState(WaspState state)
@@ -185,7 +185,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #endregion
 
 #region Events
-        public override void OnKill(IPlayer player)
+        public override void OnKill(Player player)
         {
             if(null != player) {
                 GameManager.Instance.WaspKilled(player);
@@ -215,7 +215,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             // so falling back on just forcing the transform position to move :(
             Vector3 targetPosition = _spline.GetPoint(0.0f);
             targetPosition.y += _splineYOffset;
-            Teleport(targetPosition);
+            Movement2D.Teleport(targetPosition);
 
             if(null != AnimationHelper) {
                 AnimationHelper.SetFacing(Vector3.zero - transform.position);

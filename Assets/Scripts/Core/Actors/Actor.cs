@@ -74,7 +74,7 @@ namespace pdxpartyparrot.Core.Actors
         // TODO: would be better if we id radius (x) and height (y) separately
         public bool Collides(Actor other, float distance=float.Epsilon)
         {
-            Vector3 offset = other.Behavior.Position - Behavior.Position;
+            Vector3 offset = other.Behavior.Movement.Position - Behavior.Movement.Position;
             float r = other.Radius + Radius;
             float d = r * r;
             return offset.sqrMagnitude < d;

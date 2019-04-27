@@ -4,9 +4,9 @@ using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.Swarm;
 using pdxpartyparrot.ggj2019.Data;
+using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 
@@ -67,7 +67,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             Vector3 swarmPosition = _targetSwarm.transform.position;
-            AnimationHelper.SetFacing(swarmPosition - Position);
+            AnimationHelper.SetFacing(swarmPosition - Movement2D.Position);
         }
 
         protected override void PhysicsUpdate(float dt)
@@ -83,7 +83,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             Vector3 swarmPosition = _targetSwarm.Center.position;
             Vector3 targetPosition = swarmPosition + _swarmOffsetPosition;
-            MoveTowards(targetPosition, BeeBehaviorData.SwarmSpeed, dt);
+            Movement2D.MoveTowards(targetPosition, BeeBehaviorData.SwarmSpeed, dt);
         }
 
         private void SetState(BeeState state)
@@ -132,7 +132,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #endregion
 
 #region Events
-        public override void OnKill(IPlayer player)
+        public override void OnKill(Player player)
         {
             base.OnKill(player);
 

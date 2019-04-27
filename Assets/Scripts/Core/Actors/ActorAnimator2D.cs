@@ -48,37 +48,32 @@ namespace pdxpartyparrot.Core.Actors
         }
 #endregion
 
-        public override void StartAnimation2D(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete=null)
+        public void StartAnimation(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete=null)
         {
             if(IsAnimating) {
                 return;
             }
 
-            Debug.Log($"Starting manual animation from {Behavior2D.Position}:{Behavior2D.Rotation2D} to {targetPosition}:{targetRotation} over {timeSeconds} seconds");
+            Debug.Log($"Starting manual animation from {Behavior2D.Movement2D.Position}:{Behavior2D.Movement2D.Rotation} to {targetPosition}:{targetRotation} over {timeSeconds} seconds");
 
             _animationState.IsAnimating = true;
 
-            _animationState.StartPosition = Behavior2D.Position;
+            _animationState.StartPosition = Behavior2D.Movement2D.Position;
             _animationState.EndPosition = targetPosition;
 
-            _animationState.StartRotation = Behavior2D.Rotation2D;
+            _animationState.StartRotation = Behavior2D.Movement2D.Rotation;
             _animationState.EndRotation = targetRotation;
 
             _animationState.AnimationSeconds = timeSeconds;
             _animationState.AnimationSecondsRemaining = timeSeconds;
 
-            _animationState.IsKinematic = Behavior2D.IsKinematic;
-            Behavior2D.IsKinematic = true;
+            _animationState.IsKinematic = Behavior2D.Movement2D.IsKinematic;
+            Behavior2D.Movement2D.IsKinematic = true;
 
             _animationState.OnComplete = onComplete;
         }
 
-        public override void StartAnimation3D(Vector3 targetPosition, Quaternion targetRotation, float timeSeconds, Action onComplete=null)
-        {
-            Debug.Assert(false, "ActorAnimator2D does not support 3D animations");
-        }
-
-        public override void UpdateAnimation(float dt)
+        protected override void UpdateAnimation(float dt)
         {
             if(!IsAnimating || PartyParrotManager.Instance.IsPaused) {
                 return;
@@ -91,9 +86,9 @@ namespace pdxpartyparrot.Core.Actors
 
                     _animationState.IsAnimating = false;
 
-                    Behavior2D.Position = _animationState.EndPosition;
-                    Behavior2D.Rotation2D = _animationState.EndRotation;
-                    Behavior2D.IsKinematic = _animationState.IsKinematic;
+                    Behavior2D.Movement2D.Position = _animationState.EndPosition;
+                    Behavior2D.Movement2D.Rotation = _animationState.EndRotation;
+                    Behavior2D.Movement2D.IsKinematic = _animationState.IsKinematic;
 
                     _animationState.OnComplete?.Invoke();
                     _animationState.OnComplete = null;
@@ -106,8 +101,8 @@ namespace pdxpartyparrot.Core.Actors
                     _animationState.AnimationSecondsRemaining = 0.0f;
                 }
 
-                Behavior2D.Position = Vector3.Slerp(_animationState.StartPosition, _animationState.EndPosition, _animationState.PercentComplete);
-                Behavior2D.Rotation2D = Mathf.LerpAngle(_animationState.StartRotation, _animationState.EndRotation, _animationState.PercentComplete);
+                Behavior2D.Movement2D.Position = Vector3.Slerp(_animationState.StartPosition, _animationState.EndPosition, _animationState.PercentComplete);
+                Behavior2D.Movement2D.Rotation = Mathf.LerpAngle(_animationState.StartRotation, _animationState.EndRotation, _animationState.PercentComplete);
             } finally {
                 Profiler.EndSample();
             }

@@ -17,6 +17,8 @@ namespace pdxpartyparrot.Game.Characters
 {
     public abstract class CharacterBehavior3D : ActorBehavior3D
     {
+        public CharacterMovement3D CharacterMovement3D => (CharacterMovement3D)Movement3D;
+
         public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
 
         [Space(10)]
@@ -44,19 +46,7 @@ namespace pdxpartyparrot.Game.Characters
             set => _isSliding = value;
         }
 
-        public override bool UseGravity
-        {
-            get => base.UseGravity;
-            set
-            {
-                base.UseGravity = value;
-                if(!value) {
-                    Velocity = Vector3.zero;
-                }
-            }
-        }
-
-        public bool IsFalling => UseGravity && (!IsGrounded && !IsSliding && Velocity.y < 0.0f);
+        public bool IsFalling => CharacterMovement3D.UseGravity && (!IsGrounded && !IsSliding && CharacterMovement3D.Velocity.y < 0.0f);
 #endregion
 
         public override bool CanMove => base.CanMove && !GameStateManager.Instance.GameManager.IsGameOver;
@@ -67,6 +57,8 @@ namespace pdxpartyparrot.Game.Characters
 #region Unity Lifecycle
         protected override void Awake()
         {
+            Assert.IsTrue(Movement3D is CharacterMovement3D);
+
             base.Awake();
 
             _components = GetComponents<CharacterBehaviorComponent3D>();
@@ -81,32 +73,6 @@ namespace pdxpartyparrot.Game.Characters
                 Animator.SetBool(CharacterBehaviorData.FallingParam, IsFalling);
             }
         }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            float dt = Time.fixedDeltaTime;
-
-            FudgeVelocity(dt);
-
-            // turn off gravity if we're grounded and not moving and not sliding
-            // this should stop us sliding down slopes we shouldn't slide down
-            UseGravity = !IsKinematic && (!IsGrounded || IsMoving || IsSliding);
-        }
-
-        protected virtual void OnDrawGizmos()
-        {
-            if(!Application.isPlaying) {
-                return;
-            }
-
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(Position, Position + AngularVelocity3D);
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(Position, Position + Velocity);
-        }
 #endregion
 
         public override void Initialize(ActorBehaviorData behaviorData)
@@ -114,18 +80,6 @@ namespace pdxpartyparrot.Game.Characters
             Assert.IsTrue(behaviorData is CharacterBehaviorData);
 
             base.Initialize(behaviorData);
-        }
-
-        protected override void InitRigidbody(Rigidbody rb)
-        {
-            base.InitRigidbody(rb);
-
-            rb.isKinematic = BehaviorData.IsKinematic;
-            rb.useGravity = !BehaviorData.IsKinematic;
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            rb.detectCollisions = true;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
         }
 
 #region Components
@@ -195,43 +149,6 @@ namespace pdxpartyparrot.Game.Characters
             }
 
             RunOnComponents(c => c.OnPhysicsUpdate(dt));
-        }
-
-        public virtual void Jump(float height)
-        {
-            if(!CanMove) {
-                return;
-            }
-
-            // force physics to a sane state for the first frame of the jump
-            UseGravity = true;
-            IsGrounded = false;
-
-            // factor in fall speed adjust
-            float gravity = -Physics.gravity.y + CharacterBehaviorData.FallSpeedAdjustment;
-
-            // v = sqrt(2gh)
-            Velocity = Vector3.up * Mathf.Sqrt(height * 2.0f * gravity);
-        }
-
-        private void FudgeVelocity(float dt)
-        {
-            Vector3 adjustedVelocity = Velocity;
-            if(IsGrounded && !IsMoving) {
-                // prevent any weird ground adjustment shenanigans
-                // when we're grounded and not moving
-                adjustedVelocity.y = 0.0f;
-            } else if(UseGravity) {
-                // do some fudging to jumping/falling so it feels better
-                float adjustment = CharacterBehaviorData.FallSpeedAdjustment * dt;
-                adjustedVelocity.y -= adjustment;
-
-                // apply terminal velocity
-                if(adjustedVelocity.y < -CharacterBehaviorData.TerminalVelocity) {
-                    adjustedVelocity.y = -CharacterBehaviorData.TerminalVelocity;
-                }
-            }
-            Velocity = adjustedVelocity;
         }
     }
 }

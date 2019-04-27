@@ -23,14 +23,37 @@ namespace pdxpartyparrot.Core.Actors
 
         public ActorBehaviorData BehaviorData => _behaviorData;
 
-        //[Space(10)]
+        [Space(10)]
 
 #region Movement
-        //[Header("Movement")]
+        [Header("Movement")]
+
+        [SerializeField]
+        private ActorMovement _movement;
+
+        public ActorMovement Movement => _movement;
 
         public bool IsMoving { get; protected set; }
 
-        public abstract bool CanMove { get; }
+        public virtual bool CanMove => !PartyParrotManager.Instance.IsPaused && (null == _actorAnimator || !_actorAnimator.IsAnimating);
+#endregion
+
+        [Space(10)]
+
+#region Animation
+        [Header("Animation")]
+
+        [SerializeField]
+        [CanBeNull]
+        private ActorAnimator _actorAnimator;
+
+        [CanBeNull]
+        public ActorAnimator ActorAnimator => _actorAnimator;
+
+        [SerializeField]
+        private bool _pauseAnimationOnPause = true;
+
+        protected bool PauseAnimationOnPause => _pauseAnimationOnPause;
 #endregion
 
         [Space(10)]
@@ -51,94 +74,11 @@ namespace pdxpartyparrot.Core.Actors
         protected EffectTrigger _despawnEffect;
 #endregion
 
-        //[Space(10)]
-
-#region Physics
-        //[Header("Physics")]
-
-        private Transform _transform;
-
-        public virtual Vector3 Position
-        {
-            get => _transform.position;
-            set
-            {
-                Debug.Log($"Teleporting actor {Owner.Id} to {value}");
-                _transform.position = value;
-            }
-        }
-
-        public virtual Quaternion Rotation3D
-        {
-            get => _transform.rotation;
-            set => _transform.rotation = value;
-        }
-
-        public virtual float Rotation2D
-        {
-            get => 0.0f;
-            set {}
-        }
-
-        public virtual Vector3 Velocity
-        {
-            get => Vector3.zero;
-            set {}
-        }
-
-        public virtual Vector3 AngularVelocity3D
-        {
-            get => Vector3.zero;
-            set {}
-        }
-
-        public virtual float AngularVelocity2D
-        {
-            get => 0.0f;
-            set {}
-        }
-
-        public virtual float Mass
-        {
-            get => 1.0f;
-            set {}
-        }
-
-        public virtual float LinearDrag
-        {
-            get => 0.0f;
-            set {}
-        }
-
-        public virtual float AngularDrag
-        {
-            get => 0.0f;
-            set {}
-        }
-
-        public virtual bool IsKinematic
-        {
-            get => true;
-            set {}
-        }
-
-        public virtual bool UseGravity
-        {
-            get => false;
-            set {}
-        }
-#endregion
-
 #region Unity Lifecycle
         protected virtual void Awake()
         {
             Assert.IsNotNull(Owner);
-
-            _transform = Owner.GetComponent<Transform>();
-
-            // always start out kinematic so that we don't
-            // fall while we're loading
-            IsKinematic = true;
+            Assert.IsNotNull(Movement);
         }
 
         protected virtual void Update()
@@ -159,26 +99,10 @@ namespace pdxpartyparrot.Core.Actors
         public virtual void Initialize(ActorBehaviorData behaviorData)
         {
             _behaviorData = behaviorData;
-            ResetFromData();
 
             IsMoving = false;
 
-            Rotation3D = Quaternion.identity;
-            Rotation2D = 0.0f;
-
-            Velocity = Vector3.zero;
-
-            AngularVelocity3D = Vector3.zero;
-            AngularVelocity2D = 0.0f;
-        }
-
-        protected virtual void ResetFromData()
-        {
-            Mass = BehaviorData.Mass;
-            LinearDrag = BehaviorData.Drag;
-            AngularDrag = BehaviorData.AngularDrag;
-            IsKinematic = BehaviorData.IsKinematic;
-            UseGravity = !BehaviorData.IsKinematic;
+            Movement.Initialize(behaviorData);
         }
 
         // called by the ActorManager
@@ -195,20 +119,6 @@ namespace pdxpartyparrot.Core.Actors
         protected virtual void PhysicsUpdate(float dt)
         {
         }
-
-#region Movement
-        public virtual void Teleport(Vector3 position)
-        {
-            Debug.Log($"Teleporting actor {Owner.Id} to {position}");
-            _transform.position = position;
-        }
-
-        public virtual void MoveTowards(Vector3 position, float speed, float dt)
-        {
-            Vector3 newPosition = Vector3.MoveTowards(Position, position, speed * dt);
-            _transform.position = newPosition;
-        }
-#endregion
 
 #region Events
         public virtual void OnSpawn(SpawnPoint spawnpoint)

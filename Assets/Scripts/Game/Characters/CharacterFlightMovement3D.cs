@@ -10,15 +10,14 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.Game.Characters
 {
-    // TODO: can this be a component?
-    public abstract class CharacterFlightBehavior3D : ActorBehavior3D
+    public abstract class CharacterFlightMovement3D : ActorMovement3D
     {
-        public CharacterBehaviorData CharacterBehaviorData => (CharacterBehaviorData)BehaviorData;
+        public CharacterBehavior3D CharacterBehavior3D => (CharacterBehavior3D)Behavior3D;
 
         [SerializeField]
-        private CharacterFlightBehaviorData _data;
+        private CharacterFlightMovementData _data;
 
-        protected CharacterFlightBehaviorData FlightBehaviorData => _data;
+        public CharacterFlightMovementData FlightMovementData => _data;
 
 #region Physics
         [SerializeField]
@@ -27,16 +26,21 @@ namespace pdxpartyparrot.Game.Characters
 
         public Vector3 BankForce => _bankForce;
 
-        public float Speed => CanMove ? 0.0f : (PartyParrotManager.Instance.IsPaused ? PauseState.Velocity.magnitude : Velocity.magnitude);
+        public float Speed => CharacterBehavior3D.CanMove ? 0.0f : (PartyParrotManager.Instance.IsPaused ? PauseState.Velocity.magnitude : Velocity.magnitude);
 
         public float Altitude => Position.y;
 #endregion
 
 #region Unity Lifecycle
-        protected override void Update()
+        protected override void Awake()
         {
-            base.Update();
+            Assert.IsNotNull(_data);
 
+            base.Awake();
+        }
+
+        private void Update()
+        {
 #if DEBUG
             CheckForDebug();
 #endif
@@ -49,7 +53,7 @@ namespace pdxpartyparrot.Game.Characters
             }
 
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(Position, Position + AngularVelocity3D);
+            Gizmos.DrawLine(Position, Position + AngularVelocity);
 
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(Position, Position + Velocity);
@@ -59,16 +63,9 @@ namespace pdxpartyparrot.Game.Characters
         }
 #endregion
 
-        public override void Initialize(ActorBehaviorData behaviorData)
+        protected override void InitRigidbody(Rigidbody rb, ActorBehaviorData behaviorData)
         {
-            Assert.IsTrue(behaviorData is CharacterFlightBehaviorData);
-
-            base.Initialize(behaviorData);
-        }
-
-        protected override void InitRigidbody(Rigidbody rb)
-        {
-            base.InitRigidbody(rb);
+            base.InitRigidbody(rb, behaviorData);
 
             rb.isKinematic = false;
             rb.useGravity = true;
@@ -82,18 +79,18 @@ namespace pdxpartyparrot.Game.Characters
 
         public void Redirect(Vector3 velocity)
         {
-            Debug.Log($"Redirecting player {Owner.Id}: {velocity}");
+            Debug.Log($"Redirecting player {CharacterBehavior3D.Owner3D.Id}: {velocity}");
 
             // unwind all of the rotations
-            if(null != Owner.Model) {
-                Transform modelTransform = Owner.Model.transform;
+            if(null != CharacterBehavior3D.Owner3D.Model) {
+                Transform modelTransform = CharacterBehavior3D.Owner3D.Model.transform;
                 modelTransform.localRotation = Quaternion.Euler(0.0f, modelTransform.localEulerAngles.y, 0.0f);
             }
-            Rotation3D = Quaternion.Euler(0.0f, Owner.transform.eulerAngles.y, 0.0f);
+            Rotation = Quaternion.Euler(0.0f, CharacterBehavior3D.Owner.transform.eulerAngles.y, 0.0f);
 
             // stop moving
             Velocity = Vector3.zero;
-            AngularVelocity3D = Vector3.zero;
+            AngularVelocity = Vector3.zero;
 
             // move in an orderly fashion!
             Velocity = velocity;
@@ -104,19 +101,19 @@ namespace pdxpartyparrot.Game.Characters
         private void CheckForDebug()
         {
             if(Keyboard.current[Key.B].isPressed) {
-                AngularVelocity3D = Vector3.zero;
+                AngularVelocity = Vector3.zero;
                 Velocity = Vector3.zero;
             }
         }
 #endif
 #endregion
 
-        protected void Turn(Vector2 direction, float dt)
+        public void Turn(Vector2 direction, float dt)
         {
 #if true
             float turnSpeed = _data.TurnSpeed * direction.x;
             Quaternion rotation = Quaternion.AngleAxis(turnSpeed * dt, Vector3.up);
-            MoveRotation(Rotation3D * rotation);
+            MoveRotation(Rotation * rotation);
 #else
             // TODO: this only works if Y rotation is unconstrained
             // it also breaks because the model rotates :(
@@ -124,7 +121,7 @@ namespace pdxpartyparrot.Game.Characters
             AddRelativeTorque(Vector3.up * AngularThrust * direction.x, ForceMode.Force);
 #endif
 
-            Transform ownerTransform = Owner.transform;
+            Transform ownerTransform = CharacterBehavior3D.Owner3D.transform;
 
             // adding a force opposite our current x velocity should help stop us drifting
             Vector3 relativeVelocity = ownerTransform.InverseTransformDirection(Velocity);

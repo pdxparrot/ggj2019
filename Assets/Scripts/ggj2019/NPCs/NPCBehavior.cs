@@ -3,7 +3,7 @@
 using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game.Characters.NPCs;
-using pdxpartyparrot.Game.Characters.Players;
+using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 
@@ -23,7 +23,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         public virtual bool IsDead { get; }
 
 #region Events
-        public virtual void OnKill([CanBeNull] IPlayer player)
+        public virtual void OnKill([CanBeNull] Player player)
         {
             if(IsDead) {
                 return;
@@ -40,12 +40,12 @@ namespace pdxpartyparrot.ggj2019.NPCs
 
             base.OnSpawn(spawnpoint);
 
-            Velocity = Vector3.zero;
+            Movement2D.Velocity = Vector3.zero;
         }
 
         public override void OnDeSpawn()
         {
-            Velocity = Vector3.zero;
+            Movement2D.Velocity = Vector3.zero;
 
             _deathEffect.StopTrigger();
 

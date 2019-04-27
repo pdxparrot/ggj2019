@@ -29,6 +29,7 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
         private EffectTrigger _jumpEffect;
 #endregion
 
+#region Actions
         public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(!(action is JumpAction)) {
@@ -39,12 +40,13 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
                 return false;
             }
 
-            Behavior.Jump(_data.JumpHeight);
+            Behavior.CharacterMovement3D.Jump(_data.JumpHeight);
             if(null != _jumpEffect) {
                 _jumpEffect.Trigger();
             }
 
             return true;
         }
+#endregion
     }
 }

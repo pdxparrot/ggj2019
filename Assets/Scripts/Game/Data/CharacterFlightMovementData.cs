@@ -1,14 +1,12 @@
 ﻿using System;
 
-using pdxpartyparrot.Core.Data;
-
 using UnityEngine;
 
 namespace pdxpartyparrot.Game.Data
 {
-    [CreateAssetMenu(fileName="CharacterFlightBehaviorData", menuName="pdxpartyparrot/Game/Data/CharacterFlightBehavior Data")]
+    [CreateAssetMenu(fileName="CharacterFlightMovementData", menuName="pdxpartyparrot/Game/Data/CharacterFlightMovement Data")]
     [Serializable]
-    public class CharacterFlightBehaviorData : ActorBehaviorData
+    public class CharacterFlightMovementData : ScriptableObject
     {
         [SerializeField]
         private LayerMask _collisionCheckLayerMask;
@@ -18,7 +16,7 @@ namespace pdxpartyparrot.Game.Data
         [Space(10)]
 
 #region Animations
-        [Header("Character Animations")]
+        [Header("Animations")]
 
         [SerializeField]
         private string _moveXAxisParam = "InputX";
@@ -37,7 +35,7 @@ namespace pdxpartyparrot.Game.Data
 #endregion
 
 #region Movement
-        [Header("Character Flight Movement")]
+        [Header("Movement")]
 
         [SerializeField]
         private float _maxAttackAngle = 45.0f;

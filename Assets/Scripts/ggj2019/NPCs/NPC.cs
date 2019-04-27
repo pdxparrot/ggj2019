@@ -3,8 +3,7 @@
 using pdxpartyparrot.Core.Animation;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Game.Characters.NPCs;
-using pdxpartyparrot.Game.Characters.Players;
-using pdxpartyparrot.Game.Players;
+using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,7 +25,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
         }
 #endregion
 
-        public void Kill([CanBeNull] IPlayer player)
+        public void Kill([CanBeNull] Player player)
         {
             GameNPCBehavior.OnKill(player);
         }

@@ -7,8 +7,10 @@ using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Characters.Players
 {
-    public abstract class PlayerFlightBehavior3D : CharacterFlightBehavior3D, IPlayerBehavior
+    public abstract class PlayerFlightBehavior3D : CharacterBehavior3D, IPlayerBehavior
     {
+        private CharacterFlightMovement3D CharacterFlightMovement3D => (CharacterFlightMovement3D)Movement3D;
+
         [SerializeField]
         [ReadOnly]
         private Vector2 _moveDirection;
@@ -26,6 +28,7 @@ namespace pdxpartyparrot.Game.Characters.Players
 
             Assert.IsTrue(BehaviorData is PlayerBehaviorData);
             Assert.IsTrue(Owner is IPlayer);
+            Assert.IsTrue(Movement3D is CharacterFlightMovement3D);
         }
 #endregion
 
@@ -52,12 +55,12 @@ namespace pdxpartyparrot.Game.Characters.Players
             Quaternion rotation = modelTransform.localRotation;
             Vector3 targetEuler = new Vector3
             {
-                z = MoveDirection.x * -FlightBehaviorData.MaxBankAngle,
-                x = MoveDirection.y * -FlightBehaviorData.MaxAttackAngle
+                z = MoveDirection.x * -CharacterFlightMovement3D.FlightMovementData.MaxBankAngle,
+                x = MoveDirection.y * -CharacterFlightMovement3D.FlightMovementData.MaxAttackAngle
             };
 
             Quaternion targetRotation = Quaternion.Euler(targetEuler);
-            rotation = Quaternion.Lerp(rotation, targetRotation, FlightBehaviorData.RotationAnimationSpeed * dt);
+            rotation = Quaternion.Lerp(rotation, targetRotation, CharacterFlightMovement3D.FlightMovementData.RotationAnimationSpeed * dt);
 
             modelTransform.localRotation = rotation;
 
@@ -70,21 +73,21 @@ namespace pdxpartyparrot.Game.Characters.Players
                 return;
             }
 
-            Turn(MoveDirection, dt);
+            CharacterFlightMovement3D.Turn(MoveDirection, dt);
 
-            float attackAngle = MoveDirection.y * -FlightBehaviorData.MaxAttackAngle;
+            float attackAngle = MoveDirection.y * -CharacterFlightMovement3D.FlightMovementData.MaxAttackAngle;
             Vector3 attackVector = Quaternion.AngleAxis(attackAngle, Vector3.right) * Vector3.forward;
-            AddRelativeForce(attackVector * FlightBehaviorData.LinearThrust, ForceMode.Force);
+            CharacterFlightMovement3D.AddRelativeForce(attackVector * CharacterFlightMovement3D.FlightMovementData.LinearThrust, ForceMode.Force);
 
             // lift if we're not falling
             if(MoveDirection.y >= 0.0f) {
-                AddForce(-Physics.gravity, ForceMode.Acceleration);
+                CharacterFlightMovement3D.AddForce(-Physics.gravity, ForceMode.Acceleration);
             }
 
             // cap our fall speed
-            Vector3 velocity = Velocity;
-            if(velocity.y < -FlightBehaviorData.TerminalVelocity) {
-                Velocity = new Vector3(velocity.x, -FlightBehaviorData.TerminalVelocity, velocity.z);
+            Vector3 velocity = CharacterFlightMovement3D.Velocity;
+            if(velocity.y < -CharacterFlightMovement3D.FlightMovementData.TerminalVelocity) {
+                CharacterFlightMovement3D.Velocity = new Vector3(velocity.x, -CharacterFlightMovement3D.FlightMovementData.TerminalVelocity, velocity.z);
             }
 
             base.PhysicsUpdate(dt);

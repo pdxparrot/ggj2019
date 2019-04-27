@@ -296,11 +296,11 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             switch(_climbMode)
             {
             case ClimbMode.Climbing:
-                Vector3 velocity = Behavior.Rotation3D * (PlayerBehavior.MoveDirection * _data.ClimbSpeed);
+                Vector3 velocity = Behavior.Movement3D.Rotation * (PlayerBehavior.MoveDirection * _data.ClimbSpeed);
                 if(_groundChecker.DidGroundCheckCollide && velocity.y < 0.0f) {
                     velocity.y = 0.0f;
                 }
-                Behavior.Teleport(Behavior.Position + velocity * dt);
+                Behavior.Movement3D.Teleport(Behavior.Movement3D.Position + velocity * dt);
                 return true;
             case ClimbMode.Hanging:
                 break;
@@ -353,7 +353,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
         private void StartClimbing()
         {
             _climbMode = ClimbMode.Climbing;
-            Behavior.UseGravity = false;
+            Behavior.Movement3D.UseGravity = false;
 
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetBool(_data.ClimbingParam, true);
@@ -364,7 +364,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
         private void StartHanging()
         {
             _climbMode = ClimbMode.Hanging;
-            Behavior.UseGravity = false;
+            Behavior.Movement3D.UseGravity = false;
 
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetBool(_data.ClimbingParam, false);
@@ -375,7 +375,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
         public void StopClimbing()
         {
             _climbMode = ClimbMode.None;
-            Behavior.UseGravity = true;
+            Behavior.Movement3D.UseGravity = true;
 
             if(null != Behavior.Animator) {
                 Behavior.Animator.SetBool(_data.ClimbingParam, false);
@@ -635,7 +635,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             _leftHandHitResult = hit;
 
             Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
 
             return true;
         }
@@ -664,7 +664,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             _leftHandHitResult = hit;
 
             Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
 
             return true;
         }
@@ -693,7 +693,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             _rightHandHitResult = hit;
 
             Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) + offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
 
             return true;
 
@@ -723,7 +723,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             _rightHandHitResult = hit;
 
             Vector3 offset = (Behavior.Owner.Radius * 2.0f) * transform.forward;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Quaternion.LookRotation(-hit.normal), _data.WrapTimeSeconds);
 
             return true;
 
@@ -746,7 +746,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             }
 
             Vector3 offset = Behavior.Owner.Radius * 2.0f * transform.forward;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, offset), Behavior.Rotation3D, _data.ClimbUpTimeSeconds, () => {
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, offset), Behavior.Movement3D.Rotation, _data.ClimbUpTimeSeconds, () => {
                 StopClimbing();
             });
 
@@ -762,7 +762,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             RaycastHit hit = (_leftHandHangHitResult ?? _rightHandHangHitResult).Value;
 
             Vector3 offset = -_hangTransform.localPosition;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, offset), Behavior.Rotation3D, _data.HangTimeSeconds, () => {
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, offset), Behavior.Movement3D.Rotation, _data.HangTimeSeconds, () => {
                 StartHanging();
             });
 
@@ -778,7 +778,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             RaycastHit hit = (_leftHandHitResult ?? _rightHandHitResult).Value;
 
             Vector3 offset = Behavior.Owner.Radius * transform.up;
-            Behavior.ActorAnimator.StartAnimation3D(Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Behavior.Rotation3D, _data.ClimbDownTimeSeconds, () => {
+            Behavior.ActorAnimator3D.StartAnimation(Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal) - offset, Behavior.Movement3D.Rotation, _data.ClimbDownTimeSeconds, () => {
                 StartClimbing();
             });
 
@@ -790,7 +790,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
         {
             // keep a set distance away from the surface
             Vector3 targetPoint = hit.point + (hit.normal * _data.AttachDistance);
-            Vector3 a = targetPoint - Behavior.Position;
+            Vector3 a = targetPoint - Behavior.Movement3D.Position;
             Vector3 p = Vector3.Project(a, hit.normal);
 
             return p + offset;
@@ -802,10 +802,10 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
 
             // TODO: we can probably infer this using the dot product
             if(isHang) {
-                Behavior.Position = Behavior.Position + GetSurfaceAttachmentPosition(hit, -_hangTransform.localPosition);
+                Behavior.Movement3D.Position = Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, -_hangTransform.localPosition);
             } else {
                 transform.forward = -hit.normal;
-                Behavior.Position = Behavior.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal);
+                Behavior.Movement3D.Position = Behavior.Movement3D.Position + GetSurfaceAttachmentPosition(hit, Behavior.Owner.Radius * hit.normal);
             }
         }
 

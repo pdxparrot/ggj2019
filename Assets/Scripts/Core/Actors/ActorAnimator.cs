@@ -1,6 +1,4 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace pdxpartyparrot.Core.Actors
 {
@@ -22,10 +20,6 @@ namespace pdxpartyparrot.Core.Actors
         }
 #endregion
 
-        public abstract void StartAnimation2D(Vector3 targetPosition, float targetRotation, float timeSeconds, Action onComplete=null);
-
-        public abstract void StartAnimation3D(Vector3 targetPosition, Quaternion targetRotation, float timeSeconds, Action onComplete=null);
-
-        public abstract void UpdateAnimation(float dt);
+        protected abstract void UpdateAnimation(float dt);
     }
 }

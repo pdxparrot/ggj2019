@@ -3,9 +3,9 @@ using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
-using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.ggj2019.Collectables;
 using pdxpartyparrot.ggj2019.Data;
+using pdxpartyparrot.ggj2019.Players;
 
 using UnityEngine;
 
@@ -85,7 +85,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
 #endregion
 
 #region Events
-        public override void OnKill(IPlayer player)
+        public override void OnKill(Player player)
         {
             // forcefully acquire our spawnpoints while we die
             FlowerNPC.AcquireBeetleSpawnpoint(true);

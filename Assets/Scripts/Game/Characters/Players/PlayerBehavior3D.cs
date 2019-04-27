@@ -40,7 +40,7 @@ namespace pdxpartyparrot.Game.Characters.Players
             base.FixedUpdate();
 
             // fixes sketchy rigidbody angular momentum shit
-            AngularVelocity3D = Vector3.zero;
+            Movement3D.AngularVelocity = Vector3.zero;
         }
 #endregion
 
@@ -51,13 +51,14 @@ namespace pdxpartyparrot.Game.Characters.Players
             _moveDirection = Vector2.zero;
         }
 
-        protected override void InitRigidbody(Rigidbody rb)
+        // TODO: this goes into PlayerMovement3D
+        /*protected override void InitRigidbody(Rigidbody rb)
         {
             base.InitRigidbody(rb);
 
             // we run the follow cam in FixedUpdate() and interpolation interferes with that
             rb.interpolation = RigidbodyInterpolation.None;
-        }
+        }*/
 
         public void SetMoveDirection(Vector2 moveDirection)
         {
@@ -104,18 +105,18 @@ namespace pdxpartyparrot.Game.Characters.Players
 
             Vector3 fixedDirection = new Vector3(MoveDirection.x, 0.0f, MoveDirection.y);
             Vector3 velocity = fixedDirection * PlayerBehaviorData.MoveSpeed;
-            Quaternion rotation = Rotation3D;
+            Quaternion rotation = Movement3D.Rotation;
             if(null != Player.Viewer) {
                 // rotate with the camera instead of the movement
                 rotation = Quaternion.AngleAxis(Player.Viewer.transform.localEulerAngles.y, Vector3.up);
             }
             velocity = rotation * velocity;
 
-            if(IsKinematic) {
-                Teleport(Position + velocity * dt);
+            if(Movement3D.IsKinematic) {
+                Movement3D.Teleport(Movement3D.Position + velocity * dt);
             } else {
-                velocity.y = Velocity.y;
-                Velocity = velocity;
+                velocity.y = Movement3D.Velocity.y;
+                Movement3D.Velocity = velocity;
             }
 
             base.PhysicsUpdate(dt);

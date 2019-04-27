@@ -138,21 +138,21 @@ namespace pdxpartyparrot.ggj2019.Collectables
             }
 
             position.y += PollenBehaviorData.FloatSpeed * dt;
-            Teleport(position);
+            Movement2D.Teleport(position);
         }
 
         private void FollowPlayer(float dt)
         {
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _followPlayer.PollenTarget.position, PollenBehaviorData.FollowPlayerSpeed * dt);
-            Teleport(position);
+            Movement2D.Teleport(position);
         }
 
         private void GoToHive(float dt)
         {
             Vector3 position = transform.position;
             position = Vector3.MoveTowards(position, _hive.transform.position, PollenBehaviorData.GoToHiveSpeed * dt);
-            Teleport(position);
+            Movement2D.Teleport(position);
         }
 
 #region Actions

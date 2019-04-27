@@ -92,7 +92,7 @@ namespace pdxpartyparrot.Core.Actors
                 foreach(var kvp in _actors) {
                     GUILayout.BeginVertical($"{kvp.Key}", GUI.skin.box);
                         foreach(Actor actor in kvp.Value) {
-                            GUILayout.Label($"{actor.Id} {actor.Behavior.Position}");
+                            GUILayout.Label($"{actor.Id} {actor.Behavior.Movement.Position}");
                         }
                     GUILayout.EndVertical();
                 }

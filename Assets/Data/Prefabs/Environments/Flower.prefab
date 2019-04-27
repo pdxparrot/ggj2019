@@ -312,13 +312,6 @@ MonoBehaviour:
   _behavior: {fileID: 2858599132453069081}
   _beetleSpawn: {fileID: 4261586379689094825}
   _pollenSpawn: {fileID: 2927692061490181078}
-  _pollen: 0
-  _canSpawnPollen: 0
-  _isDead: 0
-  _pollenSpawnTimer:
-    _timerSeconds: 0
-    _secondsRemaining: 0
-    _isRunning: 0
   _spawnpoint: {fileID: 0}
 --- !u!1 &5062219595769442791
 GameObject:
@@ -436,6 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6541002869878015609}
   - component: {fileID: 2858599132453069081}
+  - component: {fileID: 5460250176261806390}
   m_Layer: 17
   m_Name: Behavior
   m_TagString: Untagged
@@ -469,23 +463,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af6e01a734571046a820b401f807794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behaviorData: {fileID: 0}
   _owner: {fileID: 5512433957614832504}
-  _lastMoveAxes: {x: 0, y: 0, z: 0}
-  _isMoving: 0
-  _animationHelper: {fileID: 5411031095954356327}
+  _behaviorData: {fileID: 0}
+  _movement: {fileID: 5460250176261806390}
   _actorAnimator: {fileID: 0}
   _pauseAnimationOnPause: 0
+  _spawnEffect: {fileID: 2922206198979121348}
+  _respawnEffect: {fileID: 0}
+  _despawnEffect: {fileID: 0}
+  _animationHelper: {fileID: 5411031095954356327}
+  _isGrounded: 0
+  _isSliding: 0
+  _deathEffect: {fileID: 4962521947015905426}
+  _canSpawnPollen: 0
+  _isDead: 1
+  _pollen: 0
+  _pollenSpawnTimer:
+    _timerSeconds: 0
+    _secondsRemaining: 0
+    _isRunning: 0
+--- !u!114 &5460250176261806390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928157766598199679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba0b7074a1100340a5f0e4c31da2fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _behavior: {fileID: 2858599132453069081}
+  _lastGravityScale: 0
+  _rigidbody: {fileID: 1118841071641675669}
   _pauseState:
     IsKinematic: 0
     Velocity: {x: 0, y: 0, z: 0}
     AngularVelocity: 0
-  _isGrounded: 0
-  _isSliding: 0
-  _spawnEffect: {fileID: 2922206198979121348}
-  _respawnEffect: {fileID: 0}
-  _despawnEffect: {fileID: 0}
-  _deathEffect: {fileID: 4962521947015905426}
 --- !u!1 &8612808877648277100
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,12 +661,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d123fa3f85024444b9cb6efa2700489, type: 3}
---- !u!4 &8682405549410555323 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
-    type: 3}
-  m_PrefabInstance: {fileID: 1013333371945013934}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2414059694599493084 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3427349086043637618, guid: 3d123fa3f85024444b9cb6efa2700489,
@@ -664,3 +673,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8682405549410555323 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8533772146624415509, guid: 3d123fa3f85024444b9cb6efa2700489,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013333371945013934}
+  m_PrefabAsset: {fileID: 0}

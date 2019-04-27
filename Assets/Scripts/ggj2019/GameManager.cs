@@ -242,14 +242,14 @@ namespace pdxpartyparrot.ggj2019
 
 #region Score
         //[Server]
-        public void PlayerDeath(IPlayer player)
+        public void PlayerDeath(Player player)
         {
             _score -= GameGameData.DeathPenalty;
             if(_score < 0) {
                 _score = 0;
             }
 
-            Vector3 position = player.Behavior.Position;
+            Vector3 position = player.Behavior2D.Movement2D.Position;
             ShowScoreText(-GameGameData.DeathPenalty, GameGameData.NegativeFloatingTextColor, () => position);
         }
 
@@ -266,26 +266,26 @@ namespace pdxpartyparrot.ggj2019
         }
 
         //[Server]
-        public void PollenCollected(IPlayer player)
+        public void PollenCollected(Player player)
         {
             _score += GameGameData.PollenScore;
 
-            Vector3 position = player.Behavior.Position;
+            Vector3 position = player.Behavior2D.Movement2D.Position;
             ShowScoreText(GameGameData.PollenScore, GameGameData.PositiveFloatingTextColor, () => {
                 Players.Player gamePlayer = (Players.Player)player;
-                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior.Position;
+                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior2D.Movement2D.Position;
             });
         }
 
         //[Server]
-        public void BeetleKilled(IPlayer player)
+        public void BeetleKilled(Player player)
         {
             _score += GameGameData.BeetleScore;
 
-            Vector3 position = player.Behavior.Position;
+            Vector3 position = player.Behavior2D.Movement2D.Position;
             ShowScoreText(GameGameData.BeetleScore, GameGameData.PositiveFloatingTextColor, () => {
                 Players.Player gamePlayer = (Players.Player)player;
-                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior.Position;
+                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior2D.Movement2D.Position;
             });
         }
 
@@ -304,14 +304,14 @@ namespace pdxpartyparrot.ggj2019
         }
 
         //[Server]
-        public void WaspKilled(IPlayer player)
+        public void WaspKilled(Player player)
         {
             _score += GameGameData.WaspScore;
 
-            Vector3 position = player.Behavior.Position;
+            Vector3 position = player.Behavior2D.Movement2D.Position;
             ShowScoreText(GameGameData.WaspScore, GameGameData.PositiveFloatingTextColor, () => {
                 Players.Player gamePlayer = (Players.Player)player;
-                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior.Position;
+                return null == gamePlayer || gamePlayer.IsDead ? position : player.Behavior2D.Movement2D.Position;
             });
         }
 

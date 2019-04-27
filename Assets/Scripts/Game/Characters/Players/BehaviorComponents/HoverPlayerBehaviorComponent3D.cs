@@ -96,7 +96,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
 
             Vector3 acceleration = (_data.HoverAcceleration + Behavior.CharacterBehaviorData.FallSpeedAdjustment) * Vector3.up;
             // TODO: this probably needs to be * or / mass since it's ForceMode.Force instead of ForceMode.Acceleration
-            Behavior.AddForce(acceleration, ForceMode.Force);
+            Behavior.Movement3D.AddForce(acceleration, ForceMode.Force);
 
             return false;
         }
@@ -155,7 +155,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             }
 
             // stop all vertical movement immediately
-            Behavior.Velocity = new Vector3(Behavior.Velocity.x, 0.0f, Behavior.Velocity.z);
+            Behavior.Movement3D.Velocity = new Vector3(Behavior.Movement3D.Velocity.x, 0.0f, Behavior.Movement3D.Velocity.z);
         }
 
         public void StopHovering()

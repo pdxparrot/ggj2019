@@ -150,7 +150,7 @@ namespace pdxpartyparrot.Game.Players
             _debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Players", GUI.skin.box);
                     foreach(IPlayer player in _players) {
-                        GUILayout.Label($"{player.Id} {player.Behavior.Position}");
+                        GUILayout.Label($"{player.Id} {player.Behavior.Movement.Position}");
                     }
                 GUILayout.EndVertical();
             };

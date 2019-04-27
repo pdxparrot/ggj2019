@@ -349,6 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3896798955410091845}
   - component: {fileID: 6052567686960130795}
+  - component: {fileID: 1345567061590233521}
   m_Layer: 15
   m_Name: Behavior
   m_TagString: Untagged
@@ -382,20 +383,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfb557f4b512d248b33aea5f914528d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behaviorData: {fileID: 0}
   _owner: {fileID: 3673602363583183421}
-  _lastMoveAxes: {x: 0, y: 0, z: 0}
-  _isMoving: 0
+  _behaviorData: {fileID: 0}
+  _movement: {fileID: 1345567061590233521}
+  _actorAnimator: {fileID: 0}
+  _pauseAnimationOnPause: 0
   _spawnEffect: {fileID: 5929246219283272664}
   _respawnEffect: {fileID: 0}
   _despawnEffect: {fileID: 0}
   _animationHelper: {fileID: 8380525285020896805}
-  _actorAnimator: {fileID: 0}
-  _pauseAnimationOnPause: 0
-  _pauseState:
-    IsKinematic: 0
-    Velocity: {x: 0, y: 0, z: 0}
-    AngularVelocity: 0
   _isGrounded: 0
   _isSliding: 0
   _deathEffect: {fileID: 4934757118172737203}
@@ -415,6 +411,25 @@ MonoBehaviour:
     _timerSeconds: 0
     _secondsRemaining: 0
     _isRunning: 0
+--- !u!114 &1345567061590233521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153155842844293517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba0b7074a1100340a5f0e4c31da2fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _behavior: {fileID: 6052567686960130795}
+  _lastGravityScale: 0
+  _rigidbody: {fileID: 123389723390280652}
+  _pauseState:
+    IsKinematic: 0
+    Velocity: {x: 0, y: 0, z: 0}
+    AngularVelocity: 0
 --- !u!1 &4930866472083934510
 GameObject:
   m_ObjectHideFlags: 0

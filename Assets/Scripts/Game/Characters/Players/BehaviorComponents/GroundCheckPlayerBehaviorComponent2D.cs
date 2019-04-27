@@ -46,7 +46,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
 
         private float GroundCheckRadius => Behavior.Owner.Height - 0.1f;
 
-        private Vector3 GroundCheckCenter => Behavior.Position + (GroundCheckRadius * Vector3.up);
+        private Vector3 GroundCheckCenter => Behavior.Movement2D.Position + (GroundCheckRadius * Vector3.up);
 
         private Coroutine _raycastCoroutine;
 
@@ -117,7 +117,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
 
                 _didGroundCheckCollide = CheckIsGrounded(out _groundCheckMinDistance);
 
-                if(Behavior.IsKinematic) {
+                if(Behavior.Movement2D.IsKinematic) {
                     // something else is handling this case?
                 } else {
                     Behavior.IsGrounded = _didGroundCheckCollide && _groundCheckMinDistance < _data.GroundedEpsilon;

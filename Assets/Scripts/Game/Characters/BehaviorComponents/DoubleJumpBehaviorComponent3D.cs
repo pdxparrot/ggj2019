@@ -45,6 +45,7 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
             _doubleJumpCount = 0;
         }
 
+#region Actions
         public override bool OnPerformed(CharacterBehaviorAction action)
         {
             if(!(action is JumpBehaviorComponent3D.JumpAction)) {
@@ -55,7 +56,7 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
                 return false;
             }
 
-            Behavior.Jump(_data.DoubleJumpHeight);
+            Behavior.CharacterMovement3D.Jump(_data.DoubleJumpHeight);
             if(null != _doubleJumpEffect) {
                 _doubleJumpEffect.Trigger();
             }
@@ -63,5 +64,6 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
             _doubleJumpCount++;
             return true;
         }
+#endregion
     }
 }

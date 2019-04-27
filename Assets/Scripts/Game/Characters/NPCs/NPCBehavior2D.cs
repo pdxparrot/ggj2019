@@ -23,7 +23,7 @@ namespace pdxpartyparrot.Game.Characters.NPCs
             base.FixedUpdate();
 
             // fixes sketchy rigidbody angular momentum shit
-            AngularVelocity2D = 0.0f;
+            Movement2D.AngularVelocity = 0.0f;
         }
 #endregion
 

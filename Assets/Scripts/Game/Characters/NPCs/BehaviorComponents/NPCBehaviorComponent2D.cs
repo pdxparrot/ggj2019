@@ -13,9 +13,9 @@ namespace pdxpartyparrot.Game.Characters.NPCs.BehaviorComponents
 #region Unity Lifecycle
         protected override void Awake()
         {
-            base.Awake();
-
             Assert.IsTrue(Behavior is NPCBehavior2D);
+
+            base.Awake();
         }
 #endregion
     }

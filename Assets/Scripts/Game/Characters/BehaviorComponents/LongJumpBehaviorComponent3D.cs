@@ -57,7 +57,7 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
                 _heldSeconds += dt;
 
                 if(CanLongJump) {
-                    Behavior.Jump(_data.LongJumpHeight);
+                    Behavior.CharacterMovement3D.Jump(_data.LongJumpHeight);
                     if(null != _longJumpEffect) {
                         _longJumpEffect.Trigger();
                     }
@@ -68,6 +68,7 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
         }
 #endregion
 
+#region Actions
         public override bool OnStarted(CharacterBehaviorAction action)
         {
             if(!(action is JumpBehaviorComponent3D.JumpAction)) {
@@ -96,5 +97,6 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
 
             return _didLongJump;
         }
+#endregion
     }
 }

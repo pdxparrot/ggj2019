@@ -177,7 +177,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.OnSpawn(spawnpoint);
 
-            Velocity = Vector3.zero;
+            Movement2D.Velocity = Vector3.zero;
 
             _isDead = false;
 
@@ -205,7 +205,7 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             _pollen.Clear();
 
-            Velocity = Vector3.zero;
+            Movement2D.Velocity = Vector3.zero;
 
             _respawnTimer.Start(GamePlayerBehaviorData.RespawnSeconds, ReSpawn);
 
