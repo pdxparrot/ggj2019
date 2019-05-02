@@ -1,256 +1,387 @@
 // GENERATED AUTOMATICALLY FROM 'Assets/Data/Input/Player2d.inputactions'
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Experimental.Input;
-
+using UnityEngine.Experimental.Input.Utilities;
 
 namespace pdxpartyparrot.ggj2019.Input
 {
-    [Serializable]
-    public class PlayerControls : InputActionAssetReference
+    public class PlayerControls : IInputActionCollection
     {
+        private InputActionAsset asset;
         public PlayerControls()
         {
-        }
-        public PlayerControls(InputActionAsset asset)
-            : base(asset)
+            asset = InputActionAsset.FromJson(@"{
+    ""name"": ""Player2d"",
+    ""maps"": [
         {
+            ""name"": ""Player"",
+            ""id"": ""eb0fa0dc-a089-4476-beeb-f045a8d5bdb8"",
+            ""actions"": [
+                {
+                    ""name"": ""move"",
+                    ""id"": ""28e9668b-c2ab-4765-9c01-0e223f59a602"",
+                    ""expectedControlLayout"": ""Stick"",
+                    ""continuous"": true,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""id"": ""cd3f0036-5277-4d0a-8437-1fc31195d39c"",
+                    ""expectedControlLayout"": ""Button"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move up"",
+                    ""id"": ""5a814028-acec-4506-a2f0-80a948e20861"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move down"",
+                    ""id"": ""68e65cea-0ad5-44fe-976e-c615d0c3ca38"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move left"",
+                    ""id"": ""5e473936-00f1-461c-8a3b-d25e014fcf10"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move right"",
+                    ""id"": ""728c72d4-35c0-40a8-ad7a-a063b63d9ed2"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""gather"",
+                    ""id"": ""35df6f66-304c-434d-8bf4-c790b692e261"",
+                    ""expectedControlLayout"": ""Button"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""context"",
+                    ""id"": ""bb0c3b7e-2f68-4586-84c5-b2442ffcde2a"",
+                    ""expectedControlLayout"": ""Button"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""movedpad"",
+                    ""id"": ""9cc5316b-1a69-4dc1-966f-f2bb1164e765"",
+                    ""expectedControlLayout"": ""Dpad"",
+                    ""continuous"": true,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""bindings"": []
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""700dfbcd-2961-476b-a783-aee4af4b6d05"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afb62351-903f-4d97-a8cc-695cc062debc"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e4db294-84fe-4e9a-87ff-055aba0cffee"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3440d9f-c72f-496b-8965-f16f8faca119"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c9c5fe8-ceae-409d-b614-2d6b52c4873d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""434e2c5b-f802-4570-8935-b2c315d6ae64"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""356920fb-2099-42a5-a234-bdc66d94b0af"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a519bfdb-17af-43fe-9b95-c96b49bca087"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""gather"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5a6ed3f-7b04-4081-95ad-f9089453f2c6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""gather"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4f5f20f-8c81-45b6-aeba-07430a5b6500"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""gather"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""055217d8-64f0-4554-a0f2-a1332224545d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""context"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f536365-f61f-42e6-9440-b2bd634f3899"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""context"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c39badd2-8e07-468b-b9eb-5c8a142e99bc"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""context"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a0a58f3-c075-4e06-bd11-60631e3f642e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""context"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8329d3b-1874-45bb-8971-ec6188f1ff9c"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""movedpad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                }
+            ]
         }
-        private bool m_Initialized;
-        private void Initialize()
-        {
+    ],
+    ""controlSchemes"": []
+}");
             // Player
             m_Player = asset.GetActionMap("Player");
             m_Player_move = m_Player.GetAction("move");
-            if (m_PlayerMoveActionStarted != null)
-                m_Player_move.started += m_PlayerMoveActionStarted.Invoke;
-            if (m_PlayerMoveActionPerformed != null)
-                m_Player_move.performed += m_PlayerMoveActionPerformed.Invoke;
-            if (m_PlayerMoveActionCancelled != null)
-                m_Player_move.cancelled += m_PlayerMoveActionCancelled.Invoke;
             m_Player_Pause = m_Player.GetAction("Pause");
-            if (m_PlayerPauseActionStarted != null)
-                m_Player_Pause.started += m_PlayerPauseActionStarted.Invoke;
-            if (m_PlayerPauseActionPerformed != null)
-                m_Player_Pause.performed += m_PlayerPauseActionPerformed.Invoke;
-            if (m_PlayerPauseActionCancelled != null)
-                m_Player_Pause.cancelled += m_PlayerPauseActionCancelled.Invoke;
             m_Player_moveup = m_Player.GetAction("move up");
-            if (m_PlayerMoveupActionStarted != null)
-                m_Player_moveup.started += m_PlayerMoveupActionStarted.Invoke;
-            if (m_PlayerMoveupActionPerformed != null)
-                m_Player_moveup.performed += m_PlayerMoveupActionPerformed.Invoke;
-            if (m_PlayerMoveupActionCancelled != null)
-                m_Player_moveup.cancelled += m_PlayerMoveupActionCancelled.Invoke;
             m_Player_movedown = m_Player.GetAction("move down");
-            if (m_PlayerMovedownActionStarted != null)
-                m_Player_movedown.started += m_PlayerMovedownActionStarted.Invoke;
-            if (m_PlayerMovedownActionPerformed != null)
-                m_Player_movedown.performed += m_PlayerMovedownActionPerformed.Invoke;
-            if (m_PlayerMovedownActionCancelled != null)
-                m_Player_movedown.cancelled += m_PlayerMovedownActionCancelled.Invoke;
             m_Player_moveleft = m_Player.GetAction("move left");
-            if (m_PlayerMoveleftActionStarted != null)
-                m_Player_moveleft.started += m_PlayerMoveleftActionStarted.Invoke;
-            if (m_PlayerMoveleftActionPerformed != null)
-                m_Player_moveleft.performed += m_PlayerMoveleftActionPerformed.Invoke;
-            if (m_PlayerMoveleftActionCancelled != null)
-                m_Player_moveleft.cancelled += m_PlayerMoveleftActionCancelled.Invoke;
             m_Player_moveright = m_Player.GetAction("move right");
-            if (m_PlayerMoverightActionStarted != null)
-                m_Player_moveright.started += m_PlayerMoverightActionStarted.Invoke;
-            if (m_PlayerMoverightActionPerformed != null)
-                m_Player_moveright.performed += m_PlayerMoverightActionPerformed.Invoke;
-            if (m_PlayerMoverightActionCancelled != null)
-                m_Player_moveright.cancelled += m_PlayerMoverightActionCancelled.Invoke;
             m_Player_gather = m_Player.GetAction("gather");
-            if (m_PlayerGatherActionStarted != null)
-                m_Player_gather.started += m_PlayerGatherActionStarted.Invoke;
-            if (m_PlayerGatherActionPerformed != null)
-                m_Player_gather.performed += m_PlayerGatherActionPerformed.Invoke;
-            if (m_PlayerGatherActionCancelled != null)
-                m_Player_gather.cancelled += m_PlayerGatherActionCancelled.Invoke;
             m_Player_context = m_Player.GetAction("context");
-            if (m_PlayerContextActionStarted != null)
-                m_Player_context.started += m_PlayerContextActionStarted.Invoke;
-            if (m_PlayerContextActionPerformed != null)
-                m_Player_context.performed += m_PlayerContextActionPerformed.Invoke;
-            if (m_PlayerContextActionCancelled != null)
-                m_Player_context.cancelled += m_PlayerContextActionCancelled.Invoke;
             m_Player_movedpad = m_Player.GetAction("movedpad");
-            if (m_PlayerMovedpadActionStarted != null)
-                m_Player_movedpad.started += m_PlayerMovedpadActionStarted.Invoke;
-            if (m_PlayerMovedpadActionPerformed != null)
-                m_Player_movedpad.performed += m_PlayerMovedpadActionPerformed.Invoke;
-            if (m_PlayerMovedpadActionCancelled != null)
-                m_Player_movedpad.cancelled += m_PlayerMovedpadActionCancelled.Invoke;
-            m_Initialized = true;
         }
-        private void Uninitialize()
+        ~PlayerControls()
         {
-            if (m_PlayerActionsCallbackInterface != null)
-            {
-                Player.SetCallbacks(null);
-            }
-            m_Player = null;
-            m_Player_move = null;
-            if (m_PlayerMoveActionStarted != null)
-                m_Player_move.started -= m_PlayerMoveActionStarted.Invoke;
-            if (m_PlayerMoveActionPerformed != null)
-                m_Player_move.performed -= m_PlayerMoveActionPerformed.Invoke;
-            if (m_PlayerMoveActionCancelled != null)
-                m_Player_move.cancelled -= m_PlayerMoveActionCancelled.Invoke;
-            m_Player_Pause = null;
-            if (m_PlayerPauseActionStarted != null)
-                m_Player_Pause.started -= m_PlayerPauseActionStarted.Invoke;
-            if (m_PlayerPauseActionPerformed != null)
-                m_Player_Pause.performed -= m_PlayerPauseActionPerformed.Invoke;
-            if (m_PlayerPauseActionCancelled != null)
-                m_Player_Pause.cancelled -= m_PlayerPauseActionCancelled.Invoke;
-            m_Player_moveup = null;
-            if (m_PlayerMoveupActionStarted != null)
-                m_Player_moveup.started -= m_PlayerMoveupActionStarted.Invoke;
-            if (m_PlayerMoveupActionPerformed != null)
-                m_Player_moveup.performed -= m_PlayerMoveupActionPerformed.Invoke;
-            if (m_PlayerMoveupActionCancelled != null)
-                m_Player_moveup.cancelled -= m_PlayerMoveupActionCancelled.Invoke;
-            m_Player_movedown = null;
-            if (m_PlayerMovedownActionStarted != null)
-                m_Player_movedown.started -= m_PlayerMovedownActionStarted.Invoke;
-            if (m_PlayerMovedownActionPerformed != null)
-                m_Player_movedown.performed -= m_PlayerMovedownActionPerformed.Invoke;
-            if (m_PlayerMovedownActionCancelled != null)
-                m_Player_movedown.cancelled -= m_PlayerMovedownActionCancelled.Invoke;
-            m_Player_moveleft = null;
-            if (m_PlayerMoveleftActionStarted != null)
-                m_Player_moveleft.started -= m_PlayerMoveleftActionStarted.Invoke;
-            if (m_PlayerMoveleftActionPerformed != null)
-                m_Player_moveleft.performed -= m_PlayerMoveleftActionPerformed.Invoke;
-            if (m_PlayerMoveleftActionCancelled != null)
-                m_Player_moveleft.cancelled -= m_PlayerMoveleftActionCancelled.Invoke;
-            m_Player_moveright = null;
-            if (m_PlayerMoverightActionStarted != null)
-                m_Player_moveright.started -= m_PlayerMoverightActionStarted.Invoke;
-            if (m_PlayerMoverightActionPerformed != null)
-                m_Player_moveright.performed -= m_PlayerMoverightActionPerformed.Invoke;
-            if (m_PlayerMoverightActionCancelled != null)
-                m_Player_moveright.cancelled -= m_PlayerMoverightActionCancelled.Invoke;
-            m_Player_gather = null;
-            if (m_PlayerGatherActionStarted != null)
-                m_Player_gather.started -= m_PlayerGatherActionStarted.Invoke;
-            if (m_PlayerGatherActionPerformed != null)
-                m_Player_gather.performed -= m_PlayerGatherActionPerformed.Invoke;
-            if (m_PlayerGatherActionCancelled != null)
-                m_Player_gather.cancelled -= m_PlayerGatherActionCancelled.Invoke;
-            m_Player_context = null;
-            if (m_PlayerContextActionStarted != null)
-                m_Player_context.started -= m_PlayerContextActionStarted.Invoke;
-            if (m_PlayerContextActionPerformed != null)
-                m_Player_context.performed -= m_PlayerContextActionPerformed.Invoke;
-            if (m_PlayerContextActionCancelled != null)
-                m_Player_context.cancelled -= m_PlayerContextActionCancelled.Invoke;
-            m_Player_movedpad = null;
-            if (m_PlayerMovedpadActionStarted != null)
-                m_Player_movedpad.started -= m_PlayerMovedpadActionStarted.Invoke;
-            if (m_PlayerMovedpadActionPerformed != null)
-                m_Player_movedpad.performed -= m_PlayerMovedpadActionPerformed.Invoke;
-            if (m_PlayerMovedpadActionCancelled != null)
-                m_Player_movedpad.cancelled -= m_PlayerMovedpadActionCancelled.Invoke;
-            m_Initialized = false;
+            UnityEngine.Object.Destroy(asset);
         }
-        public void SetAsset(InputActionAsset newAsset)
+        public InputBinding? bindingMask
         {
-            if (newAsset == asset) return;
-            var PlayerCallbacks = m_PlayerActionsCallbackInterface;
-            if (m_Initialized) Uninitialize();
-            asset = newAsset;
-            Player.SetCallbacks(PlayerCallbacks);
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
         }
-        public override void MakePrivateCopyOfActions()
+        public ReadOnlyArray<InputDevice>? devices
         {
-            SetAsset(ScriptableObject.Instantiate(asset));
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+        public ReadOnlyArray<InputControlScheme> controlSchemes
+        {
+            get => asset.controlSchemes;
+        }
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public void Enable()
+        {
+            asset.Enable();
+        }
+        public void Disable()
+        {
+            asset.Disable();
         }
         // Player
         private InputActionMap m_Player;
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private InputAction m_Player_move;
-        [SerializeField] private ActionEvent m_PlayerMoveActionStarted;
-        [SerializeField] private ActionEvent m_PlayerMoveActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerMoveActionCancelled;
         private InputAction m_Player_Pause;
-        [SerializeField] private ActionEvent m_PlayerPauseActionStarted;
-        [SerializeField] private ActionEvent m_PlayerPauseActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerPauseActionCancelled;
         private InputAction m_Player_moveup;
-        [SerializeField] private ActionEvent m_PlayerMoveupActionStarted;
-        [SerializeField] private ActionEvent m_PlayerMoveupActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerMoveupActionCancelled;
         private InputAction m_Player_movedown;
-        [SerializeField] private ActionEvent m_PlayerMovedownActionStarted;
-        [SerializeField] private ActionEvent m_PlayerMovedownActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerMovedownActionCancelled;
         private InputAction m_Player_moveleft;
-        [SerializeField] private ActionEvent m_PlayerMoveleftActionStarted;
-        [SerializeField] private ActionEvent m_PlayerMoveleftActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerMoveleftActionCancelled;
         private InputAction m_Player_moveright;
-        [SerializeField] private ActionEvent m_PlayerMoverightActionStarted;
-        [SerializeField] private ActionEvent m_PlayerMoverightActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerMoverightActionCancelled;
         private InputAction m_Player_gather;
-        [SerializeField] private ActionEvent m_PlayerGatherActionStarted;
-        [SerializeField] private ActionEvent m_PlayerGatherActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerGatherActionCancelled;
         private InputAction m_Player_context;
-        [SerializeField] private ActionEvent m_PlayerContextActionStarted;
-        [SerializeField] private ActionEvent m_PlayerContextActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerContextActionCancelled;
         private InputAction m_Player_movedpad;
-        [SerializeField] private ActionEvent m_PlayerMovedpadActionStarted;
-        [SerializeField] private ActionEvent m_PlayerMovedpadActionPerformed;
-        [SerializeField] private ActionEvent m_PlayerMovedpadActionCancelled;
         public struct PlayerActions
         {
             private PlayerControls m_Wrapper;
             public PlayerActions(PlayerControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @move { get { return m_Wrapper.m_Player_move; } }
-            public ActionEvent moveStarted { get { return m_Wrapper.m_PlayerMoveActionStarted; } }
-            public ActionEvent movePerformed { get { return m_Wrapper.m_PlayerMoveActionPerformed; } }
-            public ActionEvent moveCancelled { get { return m_Wrapper.m_PlayerMoveActionCancelled; } }
             public InputAction @Pause { get { return m_Wrapper.m_Player_Pause; } }
-            public ActionEvent PauseStarted { get { return m_Wrapper.m_PlayerPauseActionStarted; } }
-            public ActionEvent PausePerformed { get { return m_Wrapper.m_PlayerPauseActionPerformed; } }
-            public ActionEvent PauseCancelled { get { return m_Wrapper.m_PlayerPauseActionCancelled; } }
             public InputAction @moveup { get { return m_Wrapper.m_Player_moveup; } }
-            public ActionEvent moveupStarted { get { return m_Wrapper.m_PlayerMoveupActionStarted; } }
-            public ActionEvent moveupPerformed { get { return m_Wrapper.m_PlayerMoveupActionPerformed; } }
-            public ActionEvent moveupCancelled { get { return m_Wrapper.m_PlayerMoveupActionCancelled; } }
             public InputAction @movedown { get { return m_Wrapper.m_Player_movedown; } }
-            public ActionEvent movedownStarted { get { return m_Wrapper.m_PlayerMovedownActionStarted; } }
-            public ActionEvent movedownPerformed { get { return m_Wrapper.m_PlayerMovedownActionPerformed; } }
-            public ActionEvent movedownCancelled { get { return m_Wrapper.m_PlayerMovedownActionCancelled; } }
             public InputAction @moveleft { get { return m_Wrapper.m_Player_moveleft; } }
-            public ActionEvent moveleftStarted { get { return m_Wrapper.m_PlayerMoveleftActionStarted; } }
-            public ActionEvent moveleftPerformed { get { return m_Wrapper.m_PlayerMoveleftActionPerformed; } }
-            public ActionEvent moveleftCancelled { get { return m_Wrapper.m_PlayerMoveleftActionCancelled; } }
             public InputAction @moveright { get { return m_Wrapper.m_Player_moveright; } }
-            public ActionEvent moverightStarted { get { return m_Wrapper.m_PlayerMoverightActionStarted; } }
-            public ActionEvent moverightPerformed { get { return m_Wrapper.m_PlayerMoverightActionPerformed; } }
-            public ActionEvent moverightCancelled { get { return m_Wrapper.m_PlayerMoverightActionCancelled; } }
             public InputAction @gather { get { return m_Wrapper.m_Player_gather; } }
-            public ActionEvent gatherStarted { get { return m_Wrapper.m_PlayerGatherActionStarted; } }
-            public ActionEvent gatherPerformed { get { return m_Wrapper.m_PlayerGatherActionPerformed; } }
-            public ActionEvent gatherCancelled { get { return m_Wrapper.m_PlayerGatherActionCancelled; } }
             public InputAction @context { get { return m_Wrapper.m_Player_context; } }
-            public ActionEvent contextStarted { get { return m_Wrapper.m_PlayerContextActionStarted; } }
-            public ActionEvent contextPerformed { get { return m_Wrapper.m_PlayerContextActionPerformed; } }
-            public ActionEvent contextCancelled { get { return m_Wrapper.m_PlayerContextActionCancelled; } }
             public InputAction @movedpad { get { return m_Wrapper.m_Player_movedpad; } }
-            public ActionEvent movedpadStarted { get { return m_Wrapper.m_PlayerMovedpadActionStarted; } }
-            public ActionEvent movedpadPerformed { get { return m_Wrapper.m_PlayerMovedpadActionPerformed; } }
-            public ActionEvent movedpadCancelled { get { return m_Wrapper.m_PlayerMovedpadActionCancelled; } }
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -326,25 +457,20 @@ namespace pdxpartyparrot.ggj2019.Input
         {
             get
             {
-                if (!m_Initialized) Initialize();
                 return new PlayerActions(this);
             }
         }
-        [Serializable]
-        public class ActionEvent : UnityEvent<InputAction.CallbackContext>
+        public interface IPlayerActions
         {
+            void OnMove(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
+            void OnMoveup(InputAction.CallbackContext context);
+            void OnMovedown(InputAction.CallbackContext context);
+            void OnMoveleft(InputAction.CallbackContext context);
+            void OnMoveright(InputAction.CallbackContext context);
+            void OnGather(InputAction.CallbackContext context);
+            void OnContext(InputAction.CallbackContext context);
+            void OnMovedpad(InputAction.CallbackContext context);
         }
-    }
-    public interface IPlayerActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
-        void OnMoveup(InputAction.CallbackContext context);
-        void OnMovedown(InputAction.CallbackContext context);
-        void OnMoveleft(InputAction.CallbackContext context);
-        void OnMoveright(InputAction.CallbackContext context);
-        void OnGather(InputAction.CallbackContext context);
-        void OnContext(InputAction.CallbackContext context);
-        void OnMovedpad(InputAction.CallbackContext context);
     }
 }

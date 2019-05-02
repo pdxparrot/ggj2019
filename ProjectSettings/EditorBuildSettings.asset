@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/beeswarm01.unity
     guid: 77ee5396822289a4e87c45e59550ea02
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 4067ce886912a9c43ad35d99420ba537,
+      type: 2}

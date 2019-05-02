@@ -72,62 +72,93 @@ MonoBehaviour:
       m_Name: Action
       m_ExpectedControlLayout: 
       m_Id: 
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 11400008, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+    m_Reference: {fileID: 4966952374325631482, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_MoveAction:
     m_UseReference: 1
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
       m_Id: 
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 11400012, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+    m_Reference: {fileID: 2229702709233489588, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_SubmitAction:
     m_UseReference: 1
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
       m_Id: 
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 11400002, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+    m_Reference: {fileID: 2120017185817435429, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_CancelAction:
     m_UseReference: 1
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
       m_Id: 
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 11400004, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+    m_Reference: {fileID: -1294172846562020232, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_LeftClickAction:
     m_UseReference: 1
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
       m_Id: 
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 11400010, guid: 5dc583e21b932a44c81606d815850780, type: 3}
+    m_Reference: {fileID: 4185467919300065769, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_MiddleClickAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
-      m_Id: 
+      m_Id: 304f2d20-2217-4e07-b877-94a992ea2c2f
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -574432483186120142, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_RightClickAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
-      m_Id: 
+      m_Id: dbd24d33-ff71-425e-a1d8-e16c13de4ceb
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -3686034771180533437, guid: 5dc583e21b932a44c81606d815850780,
+      type: 3}
   m_ScrollWheelAction:
     m_UseReference: 0
     m_Action:
       m_Name: Action
       m_ExpectedControlLayout: 
-      m_Id: 
+      m_Id: 57440089-9fdc-4377-9425-44fc71017be9
+      m_Flags: 0
+      m_Processors: 
+      m_Interactions: 
       m_SingletonActionBindings: []
     m_Reference: {fileID: 0}
   m_Touches: []

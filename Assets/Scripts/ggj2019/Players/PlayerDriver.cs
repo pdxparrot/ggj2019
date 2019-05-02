@@ -11,9 +11,8 @@ using UnityEngine.Experimental.Input;
 
 namespace pdxpartyparrot.ggj2019.Players
 {
-    public sealed class PlayerDriver : Game.Players.PlayerDriver, IPlayerActions, IPauseActionHandler
+    public sealed class PlayerDriver : Game.Players.PlayerDriver, PlayerControls.IPlayerActions, IPauseActionHandler
     {
-        [SerializeField]
         private PlayerControls _controls;
 
         private Player GamePlayer => (Player)Player;
@@ -29,6 +28,8 @@ namespace pdxpartyparrot.ggj2019.Players
 
             Assert.IsTrue(Player is Player);
             Assert.IsNull(GetComponent<GamepadListener>());
+
+            _controls = new PlayerControls();
         }
 
         protected override void OnDestroy()
@@ -51,7 +52,6 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            _controls.MakePrivateCopyOfActions();
             _controls.Player.SetCallbacks(this);
             _controls.Player.Enable();
 

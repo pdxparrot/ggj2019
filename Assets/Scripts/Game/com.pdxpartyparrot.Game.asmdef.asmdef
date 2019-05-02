@@ -4,7 +4,8 @@
         "com.pdxpartyparrot.Core.asmdef",
         "Unity.InputSystem",
         "Unity.TextMeshPro",
-        "spine-unity"
+        "spine-unity",
+        "com.unity.multiplayer-hlapi.Runtime"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -13,5 +14,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

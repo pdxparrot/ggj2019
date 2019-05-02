@@ -17,7 +17,7 @@ namespace pdxpartyparrot.Game.Actors
 {
     [RequireComponent(typeof(NetworkIdentity))]
     [RequireComponent(typeof(FollowTarget3D))]
-    public sealed class ServerSpectator : MonoBehaviour, IServerSpectatorActions
+    public sealed class ServerSpectator : MonoBehaviour, ServerSpectatorControls.IServerSpectatorActions
     {
         private const string InvertLookYKey = "serverspectator.invertlooky";
 
@@ -43,7 +43,6 @@ namespace pdxpartyparrot.Game.Actors
         [CanBeNull]
         private ServerSpectatorViewer _viewer;
 
-        [SerializeField]
         private ServerSpectatorControls _controls;
 
 #region Unity Lifecycle
@@ -56,7 +55,7 @@ namespace pdxpartyparrot.Game.Actors
                 _viewer.Initialize(this);
             }
 
-            _controls.MakePrivateCopyOfActions();
+            _controls = new ServerSpectatorControls();
             _controls.ServerSpectator.SetCallbacks(this);
         }
 

@@ -1,212 +1,263 @@
 // GENERATED AUTOMATICALLY FROM 'Assets/Data/Input/ServerSpectator.inputactions'
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Experimental.Input;
-
+using UnityEngine.Experimental.Input.Utilities;
 
 namespace pdxpartyparrot.Game.Input
 {
-    [Serializable]
-    public class ServerSpectatorControls : InputActionAssetReference
+    public class ServerSpectatorControls : IInputActionCollection
     {
+        private InputActionAsset asset;
         public ServerSpectatorControls()
         {
-        }
-        public ServerSpectatorControls(InputActionAsset asset)
-            : base(asset)
+            asset = InputActionAsset.FromJson(@"{
+    ""name"": ""ServerSpectator"",
+    ""maps"": [
         {
+            ""name"": ""ServerSpectator"",
+            ""id"": ""1681b34d-9556-4729-bf48-7fc6079996dc"",
+            ""actions"": [
+                {
+                    ""name"": ""move forward"",
+                    ""id"": ""c906fce0-1fa7-4721-bc5c-fdd745b3220d"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move backward"",
+                    ""id"": ""b4899855-b309-4bd4-94a7-2b5341fbc775"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move left"",
+                    ""id"": ""1c1b3cbe-4d7f-4448-92fe-ea91564e9ae6"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move right"",
+                    ""id"": ""da70e428-8b6d-4756-bfc4-8f56b518cfd3"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move up"",
+                    ""id"": ""22baea98-a69a-4b2a-a1b6-ef5122658f18"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""move down"",
+                    ""id"": ""1ebdadea-885b-49a7-b01f-0d0d40ddd991"",
+                    ""expectedControlLayout"": ""Key"",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""bindings"": []
+                },
+                {
+                    ""name"": ""look"",
+                    ""id"": ""46873143-1856-417e-952d-3b450dfb3b8d"",
+                    ""expectedControlLayout"": """",
+                    ""continuous"": false,
+                    ""passThrough"": false,
+                    ""initialStateCheck"": false,
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""bindings"": []
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c333c19e-5ba4-4b7e-8ad0-0858dcb5ffad"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move forward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd88da66-a790-48a1-a070-183bc4fd29af"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move backward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49556d81-82ca-4551-82ed-782e7763f397"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""005436b5-d072-4907-a7d5-b84feebe6998"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7d50103-87e5-4343-b32b-19ea9a150233"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7983e4b6-f24f-4663-9156-e138a085d92d"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ec930a1-0dc7-42ff-9011-20257ed5658a"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false,
+                    ""modifiers"": """"
+                }
+            ]
         }
-        private bool m_Initialized;
-        private void Initialize()
-        {
+    ],
+    ""controlSchemes"": []
+}");
             // ServerSpectator
             m_ServerSpectator = asset.GetActionMap("ServerSpectator");
             m_ServerSpectator_moveforward = m_ServerSpectator.GetAction("move forward");
-            if (m_ServerSpectatorMoveforwardActionStarted != null)
-                m_ServerSpectator_moveforward.started += m_ServerSpectatorMoveforwardActionStarted.Invoke;
-            if (m_ServerSpectatorMoveforwardActionPerformed != null)
-                m_ServerSpectator_moveforward.performed += m_ServerSpectatorMoveforwardActionPerformed.Invoke;
-            if (m_ServerSpectatorMoveforwardActionCancelled != null)
-                m_ServerSpectator_moveforward.cancelled += m_ServerSpectatorMoveforwardActionCancelled.Invoke;
             m_ServerSpectator_movebackward = m_ServerSpectator.GetAction("move backward");
-            if (m_ServerSpectatorMovebackwardActionStarted != null)
-                m_ServerSpectator_movebackward.started += m_ServerSpectatorMovebackwardActionStarted.Invoke;
-            if (m_ServerSpectatorMovebackwardActionPerformed != null)
-                m_ServerSpectator_movebackward.performed += m_ServerSpectatorMovebackwardActionPerformed.Invoke;
-            if (m_ServerSpectatorMovebackwardActionCancelled != null)
-                m_ServerSpectator_movebackward.cancelled += m_ServerSpectatorMovebackwardActionCancelled.Invoke;
             m_ServerSpectator_moveleft = m_ServerSpectator.GetAction("move left");
-            if (m_ServerSpectatorMoveleftActionStarted != null)
-                m_ServerSpectator_moveleft.started += m_ServerSpectatorMoveleftActionStarted.Invoke;
-            if (m_ServerSpectatorMoveleftActionPerformed != null)
-                m_ServerSpectator_moveleft.performed += m_ServerSpectatorMoveleftActionPerformed.Invoke;
-            if (m_ServerSpectatorMoveleftActionCancelled != null)
-                m_ServerSpectator_moveleft.cancelled += m_ServerSpectatorMoveleftActionCancelled.Invoke;
             m_ServerSpectator_moveright = m_ServerSpectator.GetAction("move right");
-            if (m_ServerSpectatorMoverightActionStarted != null)
-                m_ServerSpectator_moveright.started += m_ServerSpectatorMoverightActionStarted.Invoke;
-            if (m_ServerSpectatorMoverightActionPerformed != null)
-                m_ServerSpectator_moveright.performed += m_ServerSpectatorMoverightActionPerformed.Invoke;
-            if (m_ServerSpectatorMoverightActionCancelled != null)
-                m_ServerSpectator_moveright.cancelled += m_ServerSpectatorMoverightActionCancelled.Invoke;
             m_ServerSpectator_moveup = m_ServerSpectator.GetAction("move up");
-            if (m_ServerSpectatorMoveupActionStarted != null)
-                m_ServerSpectator_moveup.started += m_ServerSpectatorMoveupActionStarted.Invoke;
-            if (m_ServerSpectatorMoveupActionPerformed != null)
-                m_ServerSpectator_moveup.performed += m_ServerSpectatorMoveupActionPerformed.Invoke;
-            if (m_ServerSpectatorMoveupActionCancelled != null)
-                m_ServerSpectator_moveup.cancelled += m_ServerSpectatorMoveupActionCancelled.Invoke;
             m_ServerSpectator_movedown = m_ServerSpectator.GetAction("move down");
-            if (m_ServerSpectatorMovedownActionStarted != null)
-                m_ServerSpectator_movedown.started += m_ServerSpectatorMovedownActionStarted.Invoke;
-            if (m_ServerSpectatorMovedownActionPerformed != null)
-                m_ServerSpectator_movedown.performed += m_ServerSpectatorMovedownActionPerformed.Invoke;
-            if (m_ServerSpectatorMovedownActionCancelled != null)
-                m_ServerSpectator_movedown.cancelled += m_ServerSpectatorMovedownActionCancelled.Invoke;
             m_ServerSpectator_look = m_ServerSpectator.GetAction("look");
-            if (m_ServerSpectatorLookActionStarted != null)
-                m_ServerSpectator_look.started += m_ServerSpectatorLookActionStarted.Invoke;
-            if (m_ServerSpectatorLookActionPerformed != null)
-                m_ServerSpectator_look.performed += m_ServerSpectatorLookActionPerformed.Invoke;
-            if (m_ServerSpectatorLookActionCancelled != null)
-                m_ServerSpectator_look.cancelled += m_ServerSpectatorLookActionCancelled.Invoke;
-            m_Initialized = true;
         }
-        private void Uninitialize()
+        ~ServerSpectatorControls()
         {
-            if (m_ServerSpectatorActionsCallbackInterface != null)
-            {
-                ServerSpectator.SetCallbacks(null);
-            }
-            m_ServerSpectator = null;
-            m_ServerSpectator_moveforward = null;
-            if (m_ServerSpectatorMoveforwardActionStarted != null)
-                m_ServerSpectator_moveforward.started -= m_ServerSpectatorMoveforwardActionStarted.Invoke;
-            if (m_ServerSpectatorMoveforwardActionPerformed != null)
-                m_ServerSpectator_moveforward.performed -= m_ServerSpectatorMoveforwardActionPerformed.Invoke;
-            if (m_ServerSpectatorMoveforwardActionCancelled != null)
-                m_ServerSpectator_moveforward.cancelled -= m_ServerSpectatorMoveforwardActionCancelled.Invoke;
-            m_ServerSpectator_movebackward = null;
-            if (m_ServerSpectatorMovebackwardActionStarted != null)
-                m_ServerSpectator_movebackward.started -= m_ServerSpectatorMovebackwardActionStarted.Invoke;
-            if (m_ServerSpectatorMovebackwardActionPerformed != null)
-                m_ServerSpectator_movebackward.performed -= m_ServerSpectatorMovebackwardActionPerformed.Invoke;
-            if (m_ServerSpectatorMovebackwardActionCancelled != null)
-                m_ServerSpectator_movebackward.cancelled -= m_ServerSpectatorMovebackwardActionCancelled.Invoke;
-            m_ServerSpectator_moveleft = null;
-            if (m_ServerSpectatorMoveleftActionStarted != null)
-                m_ServerSpectator_moveleft.started -= m_ServerSpectatorMoveleftActionStarted.Invoke;
-            if (m_ServerSpectatorMoveleftActionPerformed != null)
-                m_ServerSpectator_moveleft.performed -= m_ServerSpectatorMoveleftActionPerformed.Invoke;
-            if (m_ServerSpectatorMoveleftActionCancelled != null)
-                m_ServerSpectator_moveleft.cancelled -= m_ServerSpectatorMoveleftActionCancelled.Invoke;
-            m_ServerSpectator_moveright = null;
-            if (m_ServerSpectatorMoverightActionStarted != null)
-                m_ServerSpectator_moveright.started -= m_ServerSpectatorMoverightActionStarted.Invoke;
-            if (m_ServerSpectatorMoverightActionPerformed != null)
-                m_ServerSpectator_moveright.performed -= m_ServerSpectatorMoverightActionPerformed.Invoke;
-            if (m_ServerSpectatorMoverightActionCancelled != null)
-                m_ServerSpectator_moveright.cancelled -= m_ServerSpectatorMoverightActionCancelled.Invoke;
-            m_ServerSpectator_moveup = null;
-            if (m_ServerSpectatorMoveupActionStarted != null)
-                m_ServerSpectator_moveup.started -= m_ServerSpectatorMoveupActionStarted.Invoke;
-            if (m_ServerSpectatorMoveupActionPerformed != null)
-                m_ServerSpectator_moveup.performed -= m_ServerSpectatorMoveupActionPerformed.Invoke;
-            if (m_ServerSpectatorMoveupActionCancelled != null)
-                m_ServerSpectator_moveup.cancelled -= m_ServerSpectatorMoveupActionCancelled.Invoke;
-            m_ServerSpectator_movedown = null;
-            if (m_ServerSpectatorMovedownActionStarted != null)
-                m_ServerSpectator_movedown.started -= m_ServerSpectatorMovedownActionStarted.Invoke;
-            if (m_ServerSpectatorMovedownActionPerformed != null)
-                m_ServerSpectator_movedown.performed -= m_ServerSpectatorMovedownActionPerformed.Invoke;
-            if (m_ServerSpectatorMovedownActionCancelled != null)
-                m_ServerSpectator_movedown.cancelled -= m_ServerSpectatorMovedownActionCancelled.Invoke;
-            m_ServerSpectator_look = null;
-            if (m_ServerSpectatorLookActionStarted != null)
-                m_ServerSpectator_look.started -= m_ServerSpectatorLookActionStarted.Invoke;
-            if (m_ServerSpectatorLookActionPerformed != null)
-                m_ServerSpectator_look.performed -= m_ServerSpectatorLookActionPerformed.Invoke;
-            if (m_ServerSpectatorLookActionCancelled != null)
-                m_ServerSpectator_look.cancelled -= m_ServerSpectatorLookActionCancelled.Invoke;
-            m_Initialized = false;
+            UnityEngine.Object.Destroy(asset);
         }
-        public void SetAsset(InputActionAsset newAsset)
+        public InputBinding? bindingMask
         {
-            if (newAsset == asset) return;
-            var ServerSpectatorCallbacks = m_ServerSpectatorActionsCallbackInterface;
-            if (m_Initialized) Uninitialize();
-            asset = newAsset;
-            ServerSpectator.SetCallbacks(ServerSpectatorCallbacks);
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
         }
-        public override void MakePrivateCopyOfActions()
+        public ReadOnlyArray<InputDevice>? devices
         {
-            SetAsset(ScriptableObject.Instantiate(asset));
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+        public ReadOnlyArray<InputControlScheme> controlSchemes
+        {
+            get => asset.controlSchemes;
+        }
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public void Enable()
+        {
+            asset.Enable();
+        }
+        public void Disable()
+        {
+            asset.Disable();
         }
         // ServerSpectator
         private InputActionMap m_ServerSpectator;
         private IServerSpectatorActions m_ServerSpectatorActionsCallbackInterface;
         private InputAction m_ServerSpectator_moveforward;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveforwardActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveforwardActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveforwardActionCancelled;
         private InputAction m_ServerSpectator_movebackward;
-        [SerializeField] private ActionEvent m_ServerSpectatorMovebackwardActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorMovebackwardActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorMovebackwardActionCancelled;
         private InputAction m_ServerSpectator_moveleft;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveleftActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveleftActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveleftActionCancelled;
         private InputAction m_ServerSpectator_moveright;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoverightActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoverightActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoverightActionCancelled;
         private InputAction m_ServerSpectator_moveup;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveupActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveupActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorMoveupActionCancelled;
         private InputAction m_ServerSpectator_movedown;
-        [SerializeField] private ActionEvent m_ServerSpectatorMovedownActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorMovedownActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorMovedownActionCancelled;
         private InputAction m_ServerSpectator_look;
-        [SerializeField] private ActionEvent m_ServerSpectatorLookActionStarted;
-        [SerializeField] private ActionEvent m_ServerSpectatorLookActionPerformed;
-        [SerializeField] private ActionEvent m_ServerSpectatorLookActionCancelled;
         public struct ServerSpectatorActions
         {
             private ServerSpectatorControls m_Wrapper;
             public ServerSpectatorActions(ServerSpectatorControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @moveforward { get { return m_Wrapper.m_ServerSpectator_moveforward; } }
-            public ActionEvent moveforwardStarted { get { return m_Wrapper.m_ServerSpectatorMoveforwardActionStarted; } }
-            public ActionEvent moveforwardPerformed { get { return m_Wrapper.m_ServerSpectatorMoveforwardActionPerformed; } }
-            public ActionEvent moveforwardCancelled { get { return m_Wrapper.m_ServerSpectatorMoveforwardActionCancelled; } }
             public InputAction @movebackward { get { return m_Wrapper.m_ServerSpectator_movebackward; } }
-            public ActionEvent movebackwardStarted { get { return m_Wrapper.m_ServerSpectatorMovebackwardActionStarted; } }
-            public ActionEvent movebackwardPerformed { get { return m_Wrapper.m_ServerSpectatorMovebackwardActionPerformed; } }
-            public ActionEvent movebackwardCancelled { get { return m_Wrapper.m_ServerSpectatorMovebackwardActionCancelled; } }
             public InputAction @moveleft { get { return m_Wrapper.m_ServerSpectator_moveleft; } }
-            public ActionEvent moveleftStarted { get { return m_Wrapper.m_ServerSpectatorMoveleftActionStarted; } }
-            public ActionEvent moveleftPerformed { get { return m_Wrapper.m_ServerSpectatorMoveleftActionPerformed; } }
-            public ActionEvent moveleftCancelled { get { return m_Wrapper.m_ServerSpectatorMoveleftActionCancelled; } }
             public InputAction @moveright { get { return m_Wrapper.m_ServerSpectator_moveright; } }
-            public ActionEvent moverightStarted { get { return m_Wrapper.m_ServerSpectatorMoverightActionStarted; } }
-            public ActionEvent moverightPerformed { get { return m_Wrapper.m_ServerSpectatorMoverightActionPerformed; } }
-            public ActionEvent moverightCancelled { get { return m_Wrapper.m_ServerSpectatorMoverightActionCancelled; } }
             public InputAction @moveup { get { return m_Wrapper.m_ServerSpectator_moveup; } }
-            public ActionEvent moveupStarted { get { return m_Wrapper.m_ServerSpectatorMoveupActionStarted; } }
-            public ActionEvent moveupPerformed { get { return m_Wrapper.m_ServerSpectatorMoveupActionPerformed; } }
-            public ActionEvent moveupCancelled { get { return m_Wrapper.m_ServerSpectatorMoveupActionCancelled; } }
             public InputAction @movedown { get { return m_Wrapper.m_ServerSpectator_movedown; } }
-            public ActionEvent movedownStarted { get { return m_Wrapper.m_ServerSpectatorMovedownActionStarted; } }
-            public ActionEvent movedownPerformed { get { return m_Wrapper.m_ServerSpectatorMovedownActionPerformed; } }
-            public ActionEvent movedownCancelled { get { return m_Wrapper.m_ServerSpectatorMovedownActionCancelled; } }
             public InputAction @look { get { return m_Wrapper.m_ServerSpectator_look; } }
-            public ActionEvent lookStarted { get { return m_Wrapper.m_ServerSpectatorLookActionStarted; } }
-            public ActionEvent lookPerformed { get { return m_Wrapper.m_ServerSpectatorLookActionPerformed; } }
-            public ActionEvent lookCancelled { get { return m_Wrapper.m_ServerSpectatorLookActionCancelled; } }
             public InputActionMap Get() { return m_Wrapper.m_ServerSpectator; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -270,23 +321,18 @@ namespace pdxpartyparrot.Game.Input
         {
             get
             {
-                if (!m_Initialized) Initialize();
                 return new ServerSpectatorActions(this);
             }
         }
-        [Serializable]
-        public class ActionEvent : UnityEvent<InputAction.CallbackContext>
+        public interface IServerSpectatorActions
         {
+            void OnMoveforward(InputAction.CallbackContext context);
+            void OnMovebackward(InputAction.CallbackContext context);
+            void OnMoveleft(InputAction.CallbackContext context);
+            void OnMoveright(InputAction.CallbackContext context);
+            void OnMoveup(InputAction.CallbackContext context);
+            void OnMovedown(InputAction.CallbackContext context);
+            void OnLook(InputAction.CallbackContext context);
         }
-    }
-    public interface IServerSpectatorActions
-    {
-        void OnMoveforward(InputAction.CallbackContext context);
-        void OnMovebackward(InputAction.CallbackContext context);
-        void OnMoveleft(InputAction.CallbackContext context);
-        void OnMoveright(InputAction.CallbackContext context);
-        void OnMoveup(InputAction.CallbackContext context);
-        void OnMovedown(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
     }
 }

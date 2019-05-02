@@ -1,25 +1,14 @@
 fileFormatVersion: 2
 guid: 5dc583e21b932a44c81606d815850780
 ScriptedImporter:
-  fileIDToRecycleName:
-    11400000: <root>
-    11400002: ui/submit
-    11400004: ui/cancel
-    11400006: ui/right click
-    11400008: ui/point
-    11400010: ui/left click
-    11400012: ui/navigate
-    11400014: ui/middle click
+  internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  script: {fileID: 11500000, guid: 8404be70184654265930450def6a9037, type: 3}
   generateWrapperCode: 1
-  wrapperCodePath: Assets\Scripts\Core\Input\UIInput.cs
+  wrapperCodePath: Assets/Scripts/Core/Input/UIInput.cs
   wrapperClassName: UIInput
   wrapperCodeNamespace: pdxpartyparrot.Core.Input
-  generateActionEvents: 1
-  generateInterfaces: 0
-  actionGuids: []
-  actionMapGuids: []
