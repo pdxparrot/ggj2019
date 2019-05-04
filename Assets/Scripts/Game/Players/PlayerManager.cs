@@ -26,6 +26,18 @@ namespace pdxpartyparrot.Game.Players
 
     public abstract class PlayerManager<T, TV> : SingletonBehavior<T>, IPlayerManager where T: PlayerManager<T, TV> where TV: Actor, IPlayer
     {
+#region Debug
+        [SerializeField]
+        private bool _playersImmune;
+
+        public bool PlayersImmune => _playersImmune;
+
+        [SerializeField]
+        private bool _debugInput;
+
+        public bool DebugInput => _debugInput;
+#endregion
+
         [SerializeField]
         private PlayerBehaviorData _playerBehaviorData;
 
@@ -153,6 +165,9 @@ namespace pdxpartyparrot.Game.Players
                         GUILayout.Label($"{player.Id} {player.Behavior.Movement.Position}");
                     }
                 GUILayout.EndVertical();
+
+                _playersImmune = GUILayout.Toggle(_playersImmune, "Players Immune");
+                _debugInput = GUILayout.Toggle(_debugInput, "Debug Input");
             };
         }
 

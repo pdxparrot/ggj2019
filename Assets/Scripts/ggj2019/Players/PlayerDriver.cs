@@ -78,6 +78,10 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
+            if(PlayerManager.Instance.DebugInput) {
+                Debug.Log($"Pause: {context.action.phase}");
+            }
+
             if(context.performed) {
                 PartyParrotManager.Instance.TogglePause();
             }
@@ -161,8 +165,11 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            // action on release
-            if(context.cancelled) {
+            if(PlayerManager.Instance.DebugInput) {
+                Debug.Log($"Gather: {context.action.phase}");
+            }
+
+            if(context.performed) {
                 GamePlayer.GamePlayerBehavior.ActionPerformed(GatherBehaviorComponent.GatherAction.Default);
             }
         }
@@ -173,8 +180,11 @@ namespace pdxpartyparrot.ggj2019.Players
                 return;
             }
 
-            // action on release
-            if(context.cancelled) {
+            if(PlayerManager.Instance.DebugInput) {
+                Debug.Log($"Context: {context.action.phase}");
+            }
+
+            if(context.performed) {
                 GamePlayer.GamePlayerBehavior.ActionPerformed(ContextBehaviorComponent.ContextAction.Default);
             }
         }

@@ -79,7 +79,7 @@
                     "passThrough": false,
                     "initialStateCheck": false,
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press(behavior=1)",
                     "bindings": []
                 },
                 {
@@ -90,7 +90,7 @@
                     "passThrough": false,
                     "initialStateCheck": false,
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press(behavior=1)",
                     "bindings": []
                 },
                 {

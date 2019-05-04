@@ -95,7 +95,7 @@ namespace pdxpartyparrot.ggj2019.Input
                     ""passThrough"": false,
                     ""initialStateCheck"": false,
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""bindings"": []
                 },
                 {
@@ -106,7 +106,7 @@ namespace pdxpartyparrot.ggj2019.Input
                     ""passThrough"": false,
                     ""initialStateCheck"": false,
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""bindings"": []
                 },
                 {
