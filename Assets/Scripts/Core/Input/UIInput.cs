@@ -102,7 +102,7 @@ namespace pdxpartyparrot.Core.Input
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""374a614d-7166-410a-ad7b-c2afc26b083f"",
+                    ""id"": ""5ffe388f-21b0-4abc-a800-2e73fcd273c5"",
                     ""path"": ""*/{Submit}"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -114,7 +114,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7c08df92-4ee7-4c0a-b7d0-511a3ee8575c"",
+                    ""id"": ""0f5d74eb-ad80-4bb5-981a-6ea2cf65fc79"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -126,7 +126,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e42f6191-2106-437b-bef8-f48f9bdb4bfb"",
+                    ""id"": ""07efc56b-d123-4034-82f4-7922938f939e"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -138,7 +138,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6e8fb544-5b83-4071-9cf5-abe807b132bf"",
+                    ""id"": ""05a2ed26-2b85-4b6c-907c-4466e636ec2f"",
                     ""path"": ""*/{Cancel}"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -150,7 +150,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""813ab012-9c5b-4930-a6a4-52696b16b24e"",
+                    ""id"": ""00a5e3f1-21f0-4c60-aefa-076ca568ee29"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -162,7 +162,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5e3ba4e8-475c-4e56-a206-436bdd576ef0"",
+                    ""id"": ""977fc740-2c79-4615-89cb-cb847d1d793d"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -174,7 +174,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0866b341-462e-446c-8d35-a8f5d95e0781"",
+                    ""id"": ""a9997c9c-a329-4b87-b7ee-12a729f6bdff"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
@@ -186,7 +186,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1db40e59-0f58-4f45-bc6b-2a16cd90f55e"",
+                    ""id"": ""4905fc64-21b6-4a15-afc1-bc73c4046dcd"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -198,7 +198,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9f74059a-0a5c-4c0e-88fb-2c24dfc28739"",
+                    ""id"": ""9d969b09-9d0d-4e12-8ed0-7958b5f0316b"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -210,7 +210,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f35a5900-fd90-4fb7-b2e3-c9a66e02729f"",
+                    ""id"": ""6fcb1bfd-3e0d-4f14-8a04-20b083c2bbd4"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -222,7 +222,7 @@ namespace pdxpartyparrot.Core.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3f4c1b31-533e-4f97-ae64-c568af34e7c6"",
+                    ""id"": ""16e2fd4c-ddec-4ee9-b11b-cd94e680173a"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",

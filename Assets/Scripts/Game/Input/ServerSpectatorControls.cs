@@ -102,7 +102,7 @@ namespace pdxpartyparrot.Game.Input
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""c333c19e-5ba4-4b7e-8ad0-0858dcb5ffad"",
+                    ""id"": ""6e1ba600-c06c-49aa-83da-a696f2128fa5"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -114,7 +114,7 @@ namespace pdxpartyparrot.Game.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cd88da66-a790-48a1-a070-183bc4fd29af"",
+                    ""id"": ""6bcb9f0a-dacf-4902-adba-5194db095eb7"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -126,7 +126,7 @@ namespace pdxpartyparrot.Game.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""49556d81-82ca-4551-82ed-782e7763f397"",
+                    ""id"": ""6efcf6fd-624b-4e1a-a5bb-b2216bf5e71d"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -138,7 +138,7 @@ namespace pdxpartyparrot.Game.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""005436b5-d072-4907-a7d5-b84feebe6998"",
+                    ""id"": ""14a64c4a-d579-4dc1-a401-e810f58069fd"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -150,7 +150,7 @@ namespace pdxpartyparrot.Game.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a7d50103-87e5-4343-b32b-19ea9a150233"",
+                    ""id"": ""568c5cf2-b34f-40c8-8569-e07463ab4576"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -162,7 +162,7 @@ namespace pdxpartyparrot.Game.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7983e4b6-f24f-4663-9156-e138a085d92d"",
+                    ""id"": ""a5bc43a3-2ebb-4de6-b55d-9ad7c7d88628"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -174,7 +174,7 @@ namespace pdxpartyparrot.Game.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8ec930a1-0dc7-42ff-9011-20257ed5658a"",
+                    ""id"": ""72d5e532-5ad8-4725-911b-57df15c6a8f0"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
