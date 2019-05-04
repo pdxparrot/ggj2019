@@ -1,5 +1,6 @@
 #pragma warning disable 0618    // disable obsolete warning for now
 
+using System;
 using System.Collections.Generic;
 
 using pdxpartyparrot.Core.Collections;
@@ -70,13 +71,9 @@ namespace pdxpartyparrot.ggj2019.Players
 
         public int PollenCount => _pollen.Count;
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _respawnTimer = new Timer();
+        private ITimer _respawnTimer;
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _immunityTimer = new Timer();
+        private ITimer _immunityTimer;
 
         public bool IsImmune => PlayerManager.Instance.PlayersImmune ||  _immunityTimer.IsRunning;
 
@@ -85,17 +82,24 @@ namespace pdxpartyparrot.ggj2019.Players
         {
             base.Awake();
 
-            Assert.IsTrue(PlayerBehaviorData is Data.PlayerBehaviorData);
+            Assert.IsTrue(PlayerBehaviorData is PlayerBehaviorData);
+
+            _respawnTimer = TimeManager.Instance.AddTimer();
+            _respawnTimer.TimesUpEvent += RespawnTimerTimesUpEventHandler;
+
+            _immunityTimer = TimeManager.Instance.AddTimer();
         }
 
-        protected override void Update()
+        protected override void OnDestroy()
         {
-            base.Update();
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_immunityTimer);
+                TimeManager.Instance.RemoveTimer(_respawnTimer);
+            }
+            _immunityTimer = null;
+            _respawnTimer = null;
 
-            float dt = Time.deltaTime;
-
-            _respawnTimer.Update(dt);
-            _immunityTimer.Update(dt);
+            base.OnDestroy();
         }
 #endregion
 
@@ -207,7 +211,7 @@ namespace pdxpartyparrot.ggj2019.Players
 
             Movement2D.Velocity = Vector3.zero;
 
-            _respawnTimer.Start(GamePlayerBehaviorData.RespawnSeconds, ReSpawn);
+            _respawnTimer.Start(GamePlayerBehaviorData.RespawnSeconds);
 
             base.OnDeSpawn();
         }
@@ -306,6 +310,13 @@ namespace pdxpartyparrot.ggj2019.Players
                 pollen.Unload(hive);
             }
             _pollen.Clear();
+        }
+#endregion
+
+#region EventHandlers
+        private void RespawnTimerTimesUpEventHandler(object sender, EventArgs args)
+        {
+            ReSpawn();
         }
 #endregion
     }

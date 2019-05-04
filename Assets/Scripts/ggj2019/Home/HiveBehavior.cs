@@ -6,7 +6,6 @@ using pdxpartyparrot.Core.Effects;
 using pdxpartyparrot.Core.Effects.EffectTriggerComponents;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
-using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.ggj2019.Data;
 using pdxpartyparrot.ggj2019.NPCs;
@@ -35,9 +34,7 @@ namespace pdxpartyparrot.ggj2019.Home
 #endregion
 
 #region Bee Spawning
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _beeSpawnTimer = new Timer();
+        private ITimer _beeSpawnTimer;
 #endregion
 
         private Hive Hive => (Hive)Owner;
@@ -50,26 +47,25 @@ namespace pdxpartyparrot.ggj2019.Home
             GameManager.Instance.GameStartEvent += GameStartEventHandler;
             GameManager.Instance.GameEndEvent += GameEndEventHandler;
 
+            _beeSpawnTimer = TimeManager.Instance.AddTimer();
+            _beeSpawnTimer.TimesUpEvent += BeeSpawnTimerTimesUpEventHandler;
+
             base.Awake();
         }
 
         protected override void OnDestroy()
         {
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_beeSpawnTimer);
+            }
+            _beeSpawnTimer = null;
+
             if(GameManager.HasInstance) {
                 GameManager.Instance.GameEndEvent -= GameEndEventHandler;
                 GameManager.Instance.GameStartEvent -= GameStartEventHandler;
             }
 
             base.OnDestroy();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-
-            float dt = Time.deltaTime;
-
-            _beeSpawnTimer.Update(dt);
         }
 #endregion
 
@@ -100,7 +96,7 @@ namespace pdxpartyparrot.ggj2019.Home
                 Debug.Log($"not spawning bees {activeBeeCount} of {HiveBehaviorData.MinBees} active");
             }
 
-            _beeSpawnTimer.Start(HiveBehaviorData.BeeSpawnCooldown, SpawnBee);
+            _beeSpawnTimer.Start(HiveBehaviorData.BeeSpawnCooldown);
         }
 
         private Bee DoSpawnBee()
@@ -156,12 +152,17 @@ namespace pdxpartyparrot.ggj2019.Home
         {
             DoSpawnBee();
 
-            _beeSpawnTimer.Start(HiveBehaviorData.BeeSpawnCooldown, SpawnBee);
+            _beeSpawnTimer.Start(HiveBehaviorData.BeeSpawnCooldown);
         }
 
         private void GameEndEventHandler(object sender, EventArgs args)
         {
             _beeSpawnTimer.Stop();
+        }
+
+        private void BeeSpawnTimerTimesUpEventHandler(object sender, EventArgs args)
+        {
+            SpawnBee();
         }
 #endregion
     }

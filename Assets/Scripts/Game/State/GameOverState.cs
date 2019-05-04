@@ -1,6 +1,7 @@
+using System;
+
 using pdxpartyparrot.Core.Audio;
 using pdxpartyparrot.Core.Time;
-using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
 
@@ -11,9 +12,7 @@ namespace pdxpartyparrot.Game.State
         [SerializeField]
         private float _completeWaitTimeSeconds = 5.0f;
 
-        [SerializeField]
-        [ReadOnly]
-        private Timer _completeTimer;
+        private ITimer _completeTimer;
 
         [SerializeField]
         private AudioClip _endGameMusic;
@@ -25,25 +24,30 @@ namespace pdxpartyparrot.Game.State
             AudioManager.Instance.StopAllMusic();
             AudioManager.Instance.PlayMusic(_endGameMusic);
 
-            _completeTimer.Start(_completeWaitTimeSeconds, () => {
-                GameStateManager.Instance.TransitionToInitialStateAsync();
-            });
+            _completeTimer = TimeManager.Instance.AddTimer();
+            _completeTimer.TimesUpEvent += CompleteTimerTimesUpEventHandler;
+            _completeTimer.Start(_completeWaitTimeSeconds);
         }
 
         public override void OnExit()
         {
+            TimeManager.Instance.RemoveTimer(_completeTimer);
+            _completeTimer = null;
+
             AudioManager.Instance.StopAllMusic();
 
             base.OnExit();
         }
 
-        public override void OnUpdate(float dt)
-        {
-            _completeTimer.Update(dt);
-        }
-
         public virtual void Initialize()
         {
         }
+
+#region Event Handlers
+        private void CompleteTimerTimesUpEventHandler(object sender, EventArgs args)
+        {
+            GameStateManager.Instance.TransitionToInitialStateAsync();
+        }
+#endregion
     }
 }

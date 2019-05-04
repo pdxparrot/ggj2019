@@ -33,7 +33,7 @@ namespace pdxpartyparrot.Game.World
 
                 [SerializeField]
                 [ReadOnly]
-                private /*readonly*/ Timer _spawnTimer = new Timer();
+                private ITimer _spawnTimer;
 
                 private string PoolTag => $"spawnGroup_{_spawnGroupData.Tag}";
 
@@ -61,10 +61,18 @@ namespace pdxpartyparrot.Game.World
                             ObjectPoolManager.Instance.InitializePoolAsync(PoolTag, pooledObject, count);
                         }
                     }
+
+                    _spawnTimer = TimeManager.Instance.AddTimer();
+                    _spawnTimer.TimesUpEvent += SpawnTimerTimesUpEventHandler;
                 }
 
                 public void Shutdown()
                 {
+                    if(TimeManager.HasInstance) {
+                        TimeManager.Instance.RemoveTimer(_spawnTimer);
+                    }
+                    _spawnTimer = null;
+
                     if(null != _poolContainer) {
                         if(ObjectPoolManager.HasInstance) {
                             ObjectPoolManager.Instance.DestroyPool(PoolTag);
@@ -77,12 +85,7 @@ namespace pdxpartyparrot.Game.World
 
                 public void Start()
                 {
-                    _spawnTimer.Start(_spawnGroupData.Delay, Spawn);
-                }
-
-                public void Update(float dt)
-                {
-                    _spawnTimer.Update(dt);
+                    _spawnTimer.Start(_spawnGroupData.Delay);
                 }
 
                 public void Stop()
@@ -120,10 +123,17 @@ namespace pdxpartyparrot.Game.World
                         }
 
                         if(!_spawnGroupData.Once) {
-                            _spawnTimer.Start(_spawnGroupData.Delay, Spawn);
+                            _spawnTimer.Start(_spawnGroupData.Delay);
                         }
                     }
                 }
+
+#region Event Handlers
+                private void SpawnTimerTimesUpEventHandler(object sender, EventArgs args)
+                {
+                    Spawn();
+                }
+#endregion
             }
 
             private readonly WaveSpawnData.SpawnWave _spawnWaveData;
@@ -168,13 +178,6 @@ namespace pdxpartyparrot.Game.World
                 AudioManager.Instance.TransitionMusicAsync(_spawnWaveData.WaveMusic, _owner.WaveSpawnData.MusicTransitionSeconds);
             }
 
-            public void Update(float dt)
-            {
-                foreach(SpawnGroup spawnGroup in _spawnGroups) {
-                    spawnGroup.Update(dt);
-                }
-            }
-
             public void Stop()
             {
                 foreach(SpawnGroup spawnGroup in _spawnGroups) {
@@ -199,9 +202,7 @@ namespace pdxpartyparrot.Game.World
         [CanBeNull]
         private SpawnWave CurrentWave => HasCurrentWave ? _spawnWaves[_currentWaveIndex] : null;
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _waveTimer = new Timer();
+        private ITimer _waveTimer;
 
         private readonly List<SpawnWave> _spawnWaves = new List<SpawnWave>();
 
@@ -218,16 +219,6 @@ namespace pdxpartyparrot.Game.World
             Shutdown();
 
             _spawnWaves.Clear();
-        }
-
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            _waveTimer.Update(dt);
-            if(HasCurrentWave) {
-                CurrentWave.Update(dt);
-            }
         }
 #endregion
 
@@ -251,6 +242,9 @@ namespace pdxpartyparrot.Game.World
 
         public void StartSpawner()
         {
+            _waveTimer = TimeManager.Instance.AddTimer();
+            _waveTimer.TimesUpEvent += WaveTimerTimesUpEventHandler;
+
             Run();
         }
 
@@ -259,7 +253,11 @@ namespace pdxpartyparrot.Game.World
             if(HasCurrentWave) {
                 CurrentWave.Stop();
             }
-            _waveTimer.Stop();
+
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_waveTimer);
+            }
+            _waveTimer = null;
         }
 
         private void Run()
@@ -282,9 +280,16 @@ namespace pdxpartyparrot.Game.World
 
             // start the next wave of timers
             CurrentWave.Start();
-            _waveTimer.Start(CurrentWave.Duration, Run);
+            _waveTimer.Start(CurrentWave.Duration);
 
             WaveStartEvent?.Invoke(this, new SpawnWaveEventArgs(_currentWaveIndex, _currentWaveIndex >= _spawnWaves.Count - 1));
         }
+
+#region Event Handlers
+        private void WaveTimerTimesUpEventHandler(object sender, EventArgs args)
+        {
+            Run();
+        }
+#endregion
     }
 }

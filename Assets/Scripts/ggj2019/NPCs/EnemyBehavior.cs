@@ -1,5 +1,4 @@
 ﻿using pdxpartyparrot.Core.Time;
-using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 
 using UnityEngine;
@@ -8,23 +7,28 @@ namespace pdxpartyparrot.ggj2019.NPCs
 {
     public abstract class EnemyBehavior : NPCBehavior
     {
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _immunityTimer = new Timer();
+        private ITimer _immunityTimer;
 
         protected bool IsImmune => _immunityTimer.IsRunning;
 
         private Enemy EnemyNPC => (Enemy)NPC;
 
 #region Unity Lifecycle
-        protected override void Update()
+        protected override void Awake()
         {
-            base.Update();
+            base.Awake();
 
-            float dt = Time.deltaTime;
+            _immunityTimer = TimeManager.Instance.AddTimer();
+        }
 
-            _immunityTimer.Update(dt);
+        protected override void OnDestroy()
+        {
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_immunityTimer);
+            }
+            _immunityTimer = null;
 
+            base.OnDestroy();
         }
 #endregion
 

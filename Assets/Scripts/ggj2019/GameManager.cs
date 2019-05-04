@@ -10,7 +10,6 @@ using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
 using pdxpartyparrot.Core.World;
 using pdxpartyparrot.Game;
-using pdxpartyparrot.Game.Characters.Players;
 using pdxpartyparrot.Game.State;
 using pdxpartyparrot.Game.UI;
 using pdxpartyparrot.Game.World;
@@ -53,9 +52,7 @@ namespace pdxpartyparrot.ggj2019
         private EffectTrigger _newWaveEffect;
 #endregion
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Stopwatch _gameTimer = new Stopwatch();
+        private IStopwatch _gameTimer;
 
         [SerializeField]
         [ReadOnly]
@@ -75,17 +72,17 @@ namespace pdxpartyparrot.ggj2019
             GameStateManager.Instance.RegisterGameManager(this);
 
             Assert.IsTrue(GameData is GameData);
-        }
 
-        private void Update()
-        {
-            float dt = Time.deltaTime;
-
-            _gameTimer.Update(dt);
+            _gameTimer = TimeManager.Instance.AddStopwatch();
         }
 
         protected override void OnDestroy()
         {
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveStopwatch(_gameTimer);
+            }
+            _gameTimer = null;
+
             if(GameStateManager.HasInstance) {
                 GameStateManager.Instance.UnregisterGameManager();
             }

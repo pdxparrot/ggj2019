@@ -1,4 +1,6 @@
-﻿using pdxpartyparrot.Core.Actors;
+﻿using System;
+
+using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.ObjectPool;
 using pdxpartyparrot.Core.Time;
 using pdxpartyparrot.Core.Util;
@@ -34,22 +36,29 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private int _pollen;
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _pollenSpawnTimer = new Timer();
+        private ITimer _pollenSpawnTimer;
 
         private Flower FlowerNPC => (Flower)NPC;
 
         public FlowerBehaviorData FlowerBehaviorData => (FlowerBehaviorData)NPCBehaviorData;
 
 #region Unity Lifecycle
-        protected override void Update()
+        protected override void Awake()
         {
-            float dt = Time.deltaTime;
+            base.Awake();
 
-            _pollenSpawnTimer.Update(dt);
+            _pollenSpawnTimer = TimeManager.Instance.AddTimer();
+            _pollenSpawnTimer.TimesUpEvent += PollSpawnTimerTimesUpEventHandler;
+        }
 
-            base.Update();
+        protected override void OnDestroy()
+        {
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_pollenSpawnTimer);
+            }
+            _pollenSpawnTimer = null;
+
+            base.OnDestroy();
         }
 #endregion
 
@@ -68,7 +77,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 }
             }
 
-            _pollenSpawnTimer.Start(FlowerBehaviorData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
+            _pollenSpawnTimer.Start(FlowerBehaviorData.PollenSpawnCooldown.GetRandomValue());
         }
 
         private bool DoSpawnPollen()
@@ -123,7 +132,7 @@ namespace pdxpartyparrot.ggj2019.NPCs
                 AnimationHelper.SetAnimation(FlowerBehaviorData.IdleAnimationName, true);
             }
 
-            _pollenSpawnTimer.Start(FlowerBehaviorData.PollenSpawnCooldown.GetRandomValue(), SpawnPollen);
+            _pollenSpawnTimer.Start(FlowerBehaviorData.PollenSpawnCooldown.GetRandomValue());
         }
 
         public override void OnDeSpawn()
@@ -158,6 +167,13 @@ namespace pdxpartyparrot.ggj2019.NPCs
             }
 
             GameManager.Instance.BeetleHarvest(beetle, 1);
+        }
+#endregion
+
+#region Event Handlers
+        private void PollSpawnTimerTimesUpEventHandler(object sender, EventArgs args)
+        {
+            SpawnPollen();
         }
 #endregion
     }

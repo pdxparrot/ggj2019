@@ -37,9 +37,7 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
 
         public float RemainingPercent => 1.0f - (_hoverTimeSeconds / _data.HoverTimeSeconds);
 
-        [SerializeField]
-        [ReadOnly]
-        private Timer _cooldownTimer;
+        private ITimer _cooldownTimer;
 
         private bool IsHoverCooldown => _cooldownTimer.SecondsRemaining > 0.0f;
 
@@ -50,6 +48,23 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
         public bool IsHovering => _isHovering;
 
 #region Unity Lifecycle
+        protected override void Awake()
+        {
+            _cooldownTimer = TimeManager.Instance.AddTimer();
+
+            base.Awake();
+        }
+
+        protected override void OnDestroy()
+        {
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_cooldownTimer);
+            }
+            _cooldownTimer = null;
+
+            base.OnDestroy();
+        }
+
         private void Update()
         {
             if(PartyParrotManager.Instance.IsPaused) {
@@ -57,8 +72,6 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
             }
 
             float dt = Time.deltaTime;
-
-            _cooldownTimer.Update(dt);
 
             if(Behavior.IsGrounded) {
                 _isHeld = false;

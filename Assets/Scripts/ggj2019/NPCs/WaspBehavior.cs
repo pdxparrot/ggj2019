@@ -71,22 +71,28 @@ namespace pdxpartyparrot.ggj2019.NPCs
         [ReadOnly]
         private HiveArmor _armorToAttack;
 
-        [SerializeField]
-        [ReadOnly]
-        private /*readonly*/ Timer _attackCooldownTimer = new Timer();
+        private ITimer _attackCooldownTimer;
 
         private Wasp WaspNPC => (Wasp)NPC;
 
         public WaspBehaviorData WaspBehaviorData => (WaspBehaviorData)NPCBehaviorData;
 
 #region Unity Lifecycle
-        protected override void Update()
+        protected override void Awake()
         {
-            float dt = Time.deltaTime;
+            base.Awake();
 
-            _attackCooldownTimer.Update(dt);
+            _attackCooldownTimer = TimeManager.Instance.AddTimer();
+        }
 
-            base.Update();
+        protected override void OnDestroy()
+        {
+            if(TimeManager.HasInstance) {
+                TimeManager.Instance.RemoveTimer(_attackCooldownTimer);
+            }
+            _attackCooldownTimer = null;
+
+            base.OnDestroy();
         }
 #endregion
 

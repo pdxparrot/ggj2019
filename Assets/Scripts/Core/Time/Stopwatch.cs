@@ -1,48 +1,23 @@
 ﻿using System;
 
-using pdxpartyparrot.Core.Util;
-
-using UnityEngine;
-
 namespace pdxpartyparrot.Core.Time
 {
-    [Serializable]
-    public class Stopwatch
+    public interface IStopwatch
     {
-        [SerializeField]
-        [ReadOnly]
-        private float _stopwatchSeconds;
+#region Events
+        event EventHandler StartEvent;
+        event EventHandler StopEvent;
+        event EventHandler ResetEvent;
+#endregion
 
-        public float StopwatchSeconds => _stopwatchSeconds;
+        float StopwatchSeconds { get; }
 
-        [SerializeField]
-        [ReadOnly]
-        private bool _isRunning;
+        bool IsRunning { get; }
 
-        public bool IsRunning => _isRunning;
+        void Start();
 
-        public void Start()
-        {
-            _isRunning = true;
-        }
+        void Stop();
 
-        public void Stop()
-        {
-            _isRunning = false;
-        }
-
-        public void Reset()
-        {
-            _stopwatchSeconds = 0.0f;
-        }
-
-        public void Update(float dt)
-        {
-            if(PartyParrotManager.Instance.IsPaused || !_isRunning) {
-                return;
-            }
-
-            _stopwatchSeconds += dt;
-        }
+        void Reset();
     }
 }
