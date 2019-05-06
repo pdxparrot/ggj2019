@@ -1,3 +1,5 @@
+using System;
+
 using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Actors;
 using pdxpartyparrot.Core.DebugMenu;
@@ -30,12 +32,18 @@ namespace pdxpartyparrot.ggj2019.Players
             Assert.IsNull(GetComponent<GamepadListener>());
 
             _controls = new PlayerControls();
+
+            PartyParrotManager.Instance.PauseEvent += PauseEventHandler;
         }
 
         protected override void OnDestroy()
         {
-            _controls.Player.SetCallbacks(null);
+            if(PartyParrotManager.HasInstance) {
+                PartyParrotManager.Instance.PauseEvent -= PauseEventHandler;
+            }
+
             _controls.Player.Disable();
+            _controls.Player.SetCallbacks(null);
 
             Destroy(GamepadListener);
             GamepadListener = null;
@@ -186,6 +194,23 @@ namespace pdxpartyparrot.ggj2019.Players
 
             if(context.performed) {
                 GamePlayer.GamePlayerBehavior.ActionPerformed(ContextBehaviorComponent.ContextAction.Default);
+            }
+        }
+#endregion
+
+#region Event Handlers
+        private void PauseEventHandler(object sender, EventArgs args)
+        {
+            if(PartyParrotManager.Instance.IsPaused) {
+                if(InputManager.Instance.DebugInput) {
+                    Debug.Log("Disabling player controls");
+                }
+                _controls.Disable();
+            } else {
+                if(InputManager.Instance.DebugInput) {
+                    Debug.Log("Enabling player controls");
+                }
+                _controls.Enable();
             }
         }
 #endregion
