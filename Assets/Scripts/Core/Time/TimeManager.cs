@@ -12,6 +12,7 @@ namespace pdxpartyparrot.Core.Time
 {
     public sealed class TimeManager : SingletonBehavior<TimeManager>
     {
+        [Serializable]
         private sealed class Timer : ITimer
         {
 #region Events
@@ -20,11 +21,20 @@ namespace pdxpartyparrot.Core.Time
             public event EventHandler TimesUpEvent;
 #endregion
 
-            public float TimerSeconds { get; private set; }
+            [SerializeField]
+            private float _timerSeconds;
 
-            public float SecondsRemaining { get; private set; }
+            public float TimerSeconds => _timerSeconds;
 
-            public bool IsRunning { get; private set; }
+            [SerializeField]
+            private float _secondsRemaining;
+
+            public float SecondsRemaining => _secondsRemaining;
+
+            [SerializeField]
+            private bool _isRunning;
+
+            public bool IsRunning => _isRunning;
 
             public void Start(float timerSeconds)
             {
@@ -32,9 +42,9 @@ namespace pdxpartyparrot.Core.Time
                     return;
                 }
 
-                TimerSeconds = timerSeconds;
-                SecondsRemaining = TimerSeconds;
-                IsRunning = true;
+                _timerSeconds = timerSeconds;
+                _secondsRemaining = TimerSeconds;
+                _isRunning = true;
 
                 StartEvent?.Invoke(this, EventArgs.Empty);
             }
@@ -45,9 +55,9 @@ namespace pdxpartyparrot.Core.Time
                     return;
                 }
 
-                TimerSeconds = timerSeconds.GetRandomValue();
-                SecondsRemaining = TimerSeconds;
-                IsRunning = true;
+                _timerSeconds = timerSeconds.GetRandomValue();
+                _secondsRemaining = TimerSeconds;
+                _isRunning = true;
 
                 StartEvent?.Invoke(this, EventArgs.Empty);
             }
@@ -57,7 +67,7 @@ namespace pdxpartyparrot.Core.Time
                 if(!IsRunning) {
                     return;
                 }
-                IsRunning = false;
+                _isRunning = false;
 
                 StopEvent?.Invoke(this, EventArgs.Empty);
             }
@@ -67,14 +77,14 @@ namespace pdxpartyparrot.Core.Time
                 if(IsRunning) {
                     return;
                 }
-                IsRunning = true;
+                _isRunning = true;
 
                 StartEvent?.Invoke(this, EventArgs.Empty);
             }
 
             public void AddTime(float seconds)
             {
-                SecondsRemaining += seconds;
+                _secondsRemaining += seconds;
             }
 
             public void Update(float dt)
@@ -83,17 +93,18 @@ namespace pdxpartyparrot.Core.Time
                     return;
                 }
 
-                SecondsRemaining -= dt;
+                _secondsRemaining -= dt;
                 if(SecondsRemaining > 0.0f) {
                     return;
                 }
-                SecondsRemaining = 0.0f;
-                IsRunning = false;
+                _secondsRemaining = 0.0f;
+                _isRunning = false;
 
                 TimesUpEvent?.Invoke(this, EventArgs.Empty);
             }
         }
 
+        [Serializable]
         private sealed class Stopwatch : IStopwatch
         {
 #region Events
@@ -102,16 +113,22 @@ namespace pdxpartyparrot.Core.Time
             public event EventHandler ResetEvent;
 #endregion
 
-            public float StopwatchSeconds { get; private set; }
+            [SerializeField]
+            private float _stopwatchSeconds;
 
-            public bool IsRunning { get; private set; }
+            public float StopwatchSeconds => _stopwatchSeconds;
+
+            [SerializeField]
+            private bool _isRunning;
+
+            public bool IsRunning => _isRunning;
 
             public void Start()
             {
                 if(IsRunning) {
                     return;
                 }
-                IsRunning = true;
+                _isRunning = true;
 
                 StartEvent?.Invoke(this, EventArgs.Empty);
             }
@@ -121,14 +138,14 @@ namespace pdxpartyparrot.Core.Time
                 if(!IsRunning) {
                     return;
                 }
-                IsRunning = false;
+                _isRunning = false;
 
                 StopEvent?.Invoke(this, EventArgs.Empty);
             }
 
             public void Reset()
             {
-                StopwatchSeconds = 0.0f;
+                _stopwatchSeconds = 0.0f;
 
                 ResetEvent?.Invoke(this, EventArgs.Empty);
             }
@@ -139,7 +156,7 @@ namespace pdxpartyparrot.Core.Time
                     return;
                 }
 
-                StopwatchSeconds += dt;
+                _stopwatchSeconds += dt;
             }
         }
 
@@ -149,6 +166,21 @@ namespace pdxpartyparrot.Core.Time
         {
             return (long)(seconds * 1000.0f);
         }
+
+        private enum UpdateType
+        {
+            Update,
+            Coroutine
+        }
+
+        [SerializeField]
+        private UpdateType _updateType = UpdateType.Coroutine;
+
+        [SerializeField]
+        [Tooltip("How often to update when running in coroutine mode")]
+        private float _updateRateMs = 100.0f;
+
+        private Coroutine _updateRoutine;
 
         [SerializeField]
         private float _offsetSeconds = 0;
@@ -167,21 +199,56 @@ namespace pdxpartyparrot.Core.Time
         private void Awake()
         {
             InitDebugMenu();
+
+            if(UpdateType.Coroutine == _updateType) {
+                _updateRoutine = StartCoroutine(UpdateRoutine());
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            StopCoroutine(_updateRoutine);
+            _updateRoutine = null;
+
+            base.OnDestroy();
         }
 
         private void Update()
         {
-            if(PartyParrotManager.Instance.IsPaused) {
+            if(_updateType != UpdateType.Update) {
                 return;
             }
 
             float dt = UnityEngine.Time.deltaTime;
 
+            DoUpdate(dt);
+        }
+#endregion
+
+        private IEnumerator UpdateRoutine()
+        {
+            WaitForSeconds wait = new WaitForSeconds(_updateRateMs / 1000.0f);
+
+            float lastRun = UnityEngine.Time.time;
+            while(true) {
+                yield return wait;
+
+                float now = UnityEngine.Time.time;
+                DoUpdate(now - lastRun);
+                lastRun = now;
+            }
+        }
+
+        private void DoUpdate(float dt)
+        {
+            if(PartyParrotManager.Instance.IsPaused) {
+                return;
+            }
+
             UpdateStopwatches(dt);
 
             UpdateTimers(dt);
         }
-#endregion
 
         // NOTE: this ignores the game being paused
         public void RunAfterDelay(float seconds, Action action)

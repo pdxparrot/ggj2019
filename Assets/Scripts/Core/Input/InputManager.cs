@@ -52,6 +52,13 @@ namespace pdxpartyparrot.Core.Input
         private readonly List<GamepadListener> _gamepadListeners = new List<GamepadListener>();
 #endregion
 
+#region Debug
+        [SerializeField]
+        private bool _debugInput;
+
+        public bool DebugInput => _debugInput;
+#endregion
+
 #region Unity Lifecycle
         private void Awake()
         {
@@ -246,6 +253,7 @@ namespace pdxpartyparrot.Core.Input
             DebugMenuNode debugMenuNode = DebugMenuManager.Instance.AddNode(() => "Core.InputManager");
             debugMenuNode.RenderContentsAction = () => {
                 GUILayout.BeginVertical("Gamepads", GUI.skin.box);
+                    _debugInput = GUILayout.Toggle(_debugInput, "Debug Input");
                     EnableVibration = GUILayout.Toggle(EnableVibration, "Enable Vibration");
 
                     GUILayout.Label($"Queued listeners: {_gamepadListeners.Count}");

@@ -101,7 +101,7 @@ namespace pdxpartyparrot.Core.ObjectPool
 
             public IEnumerator ExpandRoutine()
             {
-                WaitForSeconds wait = new WaitForSeconds(ObjectPoolManager.Instance.ExpandCooldown);
+                WaitForSeconds wait = new WaitForSeconds(Instance.ExpandCooldownSeconds);
                 while(true) {
                     yield return wait;
 
@@ -109,7 +109,7 @@ namespace pdxpartyparrot.Core.ObjectPool
                         continue;
                     }
 
-                    int amount = Mathf.Min(TargetSize - Size, ObjectPoolManager.Instance.MaxExpandAmount);
+                    int amount = Mathf.Min(TargetSize - Size, Instance.MaxExpandAmount);
                     Debug.Log($"Expanding object pool {Tag} by {amount}");
                     DoExpand(amount);
                 }
@@ -158,9 +158,9 @@ namespace pdxpartyparrot.Core.ObjectPool
 
         [SerializeField]
         [Tooltip("The time between expand routine frames")]
-        private float _expandCooldown = 0.01f;
+        private float _expandCooldownMs = 100.0f;
 
-        public float ExpandCooldown => _expandCooldown;
+        public float ExpandCooldownSeconds => _expandCooldownMs / 1000.0f;
 
         [SerializeField]
         [Tooltip("The number of pooled objects to expand by each frame of the expand routine")]

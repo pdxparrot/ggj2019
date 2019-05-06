@@ -73,13 +73,6 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
 
             float dt = Time.deltaTime;
 
-            if(Behavior.IsGrounded) {
-                _isHeld = false;
-                _heldSeconds = 0;
-
-                StopHovering();
-            }
-
             if(_isHeld && !IsHoverCooldown) {
                 _heldSeconds += dt;
             }
@@ -97,6 +90,16 @@ namespace pdxpartyparrot.Game.Characters.Players.BehaviorComponents
                 if(_hoverTimeSeconds < 0.0f) {
                     _hoverTimeSeconds = 0.0f;
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if(Behavior.IsGrounded) {
+                _isHeld = false;
+                _heldSeconds = 0;
+
+                StopHovering();
             }
         }
 #endregion

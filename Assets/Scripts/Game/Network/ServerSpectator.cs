@@ -79,7 +79,7 @@ namespace pdxpartyparrot.Game.Actors
             _viewer = null;
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             float dt = Time.deltaTime;
 

@@ -48,11 +48,6 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
 
             float dt = Time.deltaTime;
 
-            if(!Behavior.IsGrounded) {
-                _isHeld = false;
-                _heldSeconds = 0;
-            }
-
             if(_isHeld) {
                 _heldSeconds += dt;
 
@@ -64,6 +59,14 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
 
                     _didLongJump = true;
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if(!Behavior.IsGrounded) {
+                _isHeld = false;
+                _heldSeconds = 0;
             }
         }
 #endregion

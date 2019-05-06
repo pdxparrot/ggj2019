@@ -31,7 +31,7 @@ namespace pdxpartyparrot.Game.Characters.BehaviorComponents
         private bool CanDoubleJump => !Behavior.IsGrounded && (_data.DoubleJumpCount < 0 || _doubleJumpCount < _data.DoubleJumpCount);
 
 #region Unity Lifecycle
-        private void Update()
+        private void LateUpdate()
         {
             if(Behavior.IsGrounded) {
                 _doubleJumpCount = 0;

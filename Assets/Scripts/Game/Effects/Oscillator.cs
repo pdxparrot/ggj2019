@@ -1,8 +1,9 @@
-﻿using pdxpartyparrot.Core;
+using pdxpartyparrot.Core;
 using pdxpartyparrot.Core.Math;
 using pdxpartyparrot.Core.Util;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace pdxpartyparrot.Game.Effects
 {
@@ -29,6 +30,10 @@ namespace pdxpartyparrot.Game.Effects
 #region Unity Lifecycle
         private void Awake()
         {
+            // can't oscillate rigidbodies with this component
+            Assert.IsNull(GetComponent<Rigidbody>());
+            Assert.IsNull(GetComponent<Rigidbody2D>());
+
             _transform = GetComponent<Transform>();
         }
 

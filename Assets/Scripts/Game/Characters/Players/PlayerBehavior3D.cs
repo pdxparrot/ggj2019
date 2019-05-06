@@ -28,10 +28,8 @@ namespace pdxpartyparrot.Game.Characters.Players
             Assert.IsTrue(Owner is IPlayer);
         }
 
-        protected override void Update()
+        private void LateUpdate()
         {
-            base.Update();
-
             IsMoving = MoveDirection.sqrMagnitude > 0.001f;
         }
 
